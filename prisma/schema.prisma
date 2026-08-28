@@ -1,0 +1,768 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== ENUMS ====================
+
+enum UserRole {
+  PATIENT
+  THERAPIST
+  ADMIN
+}
+
+enum UserStatus {
+  PENDING_VERIFICATION
+  ACTIVE
+  SUSPENDED
+  DEACTIVATED
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum SessionStatus {
+  PENDING_THERAPIST_APPROVAL
+  APPROVED
+  REJECTED
+  CANCELLED_BY_PATIENT
+  CANCELLED_BY_THERAPIST
+  COMPLETED
+  NO_SHOW
+}
+
+enum SessionType {
+  INITIAL_CONSULTATION
+  REGULAR
+  EMERGENCY
+}
+
+enum DocumentType {
+  LICENSE
+  CERTIFICATION
+  INSURANCE
+  DIPLOMA
+  OTHER
+}
+
+enum DocumentStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  REQUIRES_UPDATE
+}
+
+enum TherapistApprovalStatus {
+  PENDING_INFO        // Therapist needs to complete profile
+  AWAITING_APPROVAL   // Profile complete, waiting for admin review
+  APPROVED            // Fully approved and active
+  REJECTED            // Rejected by admin
+  SUSPENDED           // Temporarily suspended
+}
+
+enum NotificationType {
+  SESSION_REQUEST
+  SESSION_APPROVED
+  SESSION_REJECTED
+  SESSION_CANCELLED
+  SESSION_REMINDER
+  DOCUMENT_STATUS
+  PROFILE_UPDATE
+  MATCH_FOUND
+  THERAPIST_APPROVED
+  THERAPIST_REJECTED
+  MESSAGE_RECEIVED
+}
+
+enum HealthFund {
+  CLALIT
+  MACCABI
+  MEUHEDET
+  LEUMIT
+  PRIVATE
+}
+
+enum TherapyApproach {
+  CBT                 // Cognitive Behavioral Therapy
+  PSYCHODYNAMIC
+  HUMANISTIC
+  INTEGRATIVE
+  GESTALT
+  DBT                 // Dialectical Behavior Therapy
+  EMDR
+  FAMILY_SYSTEMS
+  MINDFULNESS
+  ART_THERAPY
+  PLAY_THERAPY
+  ACCEPTANCE_COMMITMENT  // ACT
+  SOLUTION_FOCUSED
+  NARRATIVE
+  OTHER
+}
+
+enum Specialization {
+  ANXIETY
+  DEPRESSION
+  TRAUMA_PTSD
+  RELATIONSHIPS
+  GRIEF
+  ADDICTION
+  EATING_DISORDERS
+  OCD
+  ADHD
+  AUTISM
+  CHILDREN
+  ADOLESCENTS
+  COUPLES
+  FAMILY
+  LGBTQ
+  STRESS
+  CAREER
+  LIFE_TRANSITIONS
+  ANGER_MANAGEMENT
+  SLEEP_DISORDERS
+  CHRONIC_ILLNESS
+  PERINATAL
+  MILITARY_VETERANS  // Important for Israeli context
+  SEXUAL_ISSUES
+}
+
+enum DayOfWeek {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
+enum QuestionType {
+  SCALE           // Likert scale (1-5 or 1-7)
+  MULTIPLE_CHOICE // Single selection
+  MULTI_SELECT    // Multiple selections allowed
+  TEXT            // Free text
+  RANKING         // Rank options in order
+  YES_NO          // Simple boolean
+}
+
+// ==================== CORE USER ENTITIES ====================
+
+model User {
+  id                String      @id @default(cuid())
+  email             String      @unique
+  emailVerified     DateTime?
+  passwordHash      String?
+  role              UserRole
+  status            UserStatus  @default(PENDING_VERIFICATION)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  lastLoginAt       DateTime?
+
+  // Relations
+  patient           Patient?
+  therapist         Therapist?
+  admin             Admin?
+  accounts          Account[]
+  sessions          UserSession[]
+  notifications     Notification[]
+  auditLogs         AuditLog[]
+
+  // Consent tracking (GDPR/Israeli Privacy Law compliance)
+  privacyConsent    DateTime?
+  cookieConsent     DateTime?
+  marketingConsent  Boolean     @default(false)
+
+  @@index([email])
+  @@index([role])
+  @@index([status])
+}
+
+// OAuth Account (for NextAuth.js)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+// Session for NextAuth.js
+model UserSession {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ==================== PATIENT ====================
+
+model Patient {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal info
+  firstName             String
+  lastName              String
+  phone                 String?
+  dateOfBirth           DateTime?
+  gender                Gender?
+
+  // Health fund
+  healthFund            HealthFund?
+  healthFundMemberId    String?
+
+  // Location (for matching)
+  city                  String?
+  preferredOnline       Boolean   @default(false)
+
+  // Preferences
+  preferredGender       Gender?
+  preferredLanguages    String[]  @default(["he"])
+  preferredApproaches   TherapyApproach[]
+  preferredDays         DayOfWeek[]
+  preferredTimeStart    String?   // HH:MM format
+  preferredTimeEnd      String?   // HH:MM format
+
+  // Status
+  onboardingCompleted   Boolean   @default(false)
+  questionnaireCompleted Boolean  @default(false)
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relations
+  questionnaireResponses QuestionnaireResponse[]
+  xFactorProfile        XFactorProfile?
+  matches               Match[]
+  therapySessions       TherapySession[]
+  messageThreads        MessageThread[]
+
+  @@index([userId])
+  @@index([healthFund])
+  @@index([city])
+}
+
+// X-Factor Profile - Computed psychological dimensions
+model XFactorProfile {
+  id                  String   @id @default(cuid())
+  patientId           String   @unique
+  patient             Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+  // Computed psychological dimensions (0-100 scales)
+  openness            Float    @default(50)
+  emotionalIntensity  Float    @default(50)
+  structurePreference Float    @default(50)  // High = structured, Low = flexible
+  relationshipStyle   Float    @default(50)  // High = collaborative, Low = directive
+  communicationStyle  Float    @default(50)  // High = verbal, Low = non-verbal/experiential
+  changeReadiness     Float    @default(50)
+
+  // Additional dimensions
+  sleepQuality        Float?   // From X-Factor questionnaire
+  stressLevel         Float?
+  militaryStress      Float?   // Important for Israeli context
+  emotionalLoad       Float?
+
+  // Raw dimension scores stored as JSON for detailed analysis
+  rawScores           Json?
+
+  // Metadata
+  version             Int      @default(1)
+  calculatedAt        DateTime @default(now())
+
+  @@index([patientId])
+}
+
+// ==================== THERAPIST ====================
+
+model Therapist {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Personal info
+  firstName             String
+  lastName              String
+  phone                 String    // Mandatory as per spec
+  dateOfBirth           DateTime?
+  gender                Gender
+
+  // Professional profile
+  title                 String?   // e.g., "Clinical Psychologist", "Social Worker"
+  licenseNumber         String
+  yearsOfExperience     Int       @default(0)
+  bio                   String?   @db.Text
+  bioHebrew             String?   @db.Text
+
+  // Photo (with crop info)
+  photoUrl              String?
+  photoThumbnailUrl     String?
+  photoCropData         Json?     // Stores crop coordinates for the frame
+
+  // Location
+  city                  String
+  address               String?
+  offersOnline          Boolean   @default(true)
+  offersInPerson        Boolean   @default(true)
+
+  // Professional details
+  languages             String[]  @default(["he"])
+  approaches            TherapyApproach[]
+  specializations       Specialization[]
+
+  // Health funds accepted (as per spec)
+  acceptedHealthFunds   HealthFund[]
+  sessionPrice          Int?      // In ILS, for private pay
+  sessionDuration       Int       @default(50) // Minutes
+
+  // Therapist's therapeutic style (for matching algorithm)
+  therapeuticStyle      Json?     // Structured profile data for matching
+
+  // Approval status
+  approvalStatus        TherapistApprovalStatus @default(PENDING_INFO)
+  approvalNote          String?   @db.Text  // Admin feedback/rejection reason
+  approvedAt            DateTime?
+  approvedBy            String?   // Admin userId
+
+  // Settings
+  isAcceptingPatients   Boolean   @default(true)
+  profileCompleted      Boolean   @default(false)
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relations
+  documents             TherapistDocument[]
+  availability          AvailabilitySlot[]
+  blockedTimes          BlockedTime[]
+  matches               Match[]
+  therapySessions       TherapySession[]
+  messageThreads        MessageThread[]
+
+  @@index([userId])
+  @@index([city])
+  @@index([approvalStatus])
+  @@index([isAcceptingPatients])
+}
+
+model TherapistDocument {
+  id              String         @id @default(cuid())
+  therapistId     String
+  therapist       Therapist      @relation(fields: [therapistId], references: [id], onDelete: Cascade)
+
+  type            DocumentType
+  name            String
+  fileUrl         String
+  fileKey         String         // S3 key for deletion
+  fileSize        Int
+  mimeType        String
+  status          DocumentStatus @default(PENDING_REVIEW)
+
+  // Review info
+  reviewedAt      DateTime?
+  reviewedBy      String?        // Admin userId
+  rejectionReason String?        @db.Text
+
+  expiresAt       DateTime?      // For licenses/certifications that expire
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([therapistId])
+  @@index([status])
+}
+
+model AvailabilitySlot {
+  id            String      @id @default(cuid())
+  therapistId   String
+  therapist     Therapist   @relation(fields: [therapistId], references: [id], onDelete: Cascade)
+
+  dayOfWeek     DayOfWeek
+  startTime     String      // HH:MM format
+  endTime       String      // HH:MM format
+  isOnline      Boolean     @default(true)
+  isInPerson    Boolean     @default(true)
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([therapistId, dayOfWeek, startTime])
+  @@index([therapistId])
+}
+
+model BlockedTime {
+  id            String      @id @default(cuid())
+  therapistId   String
+  therapist     Therapist   @relation(fields: [therapistId], references: [id], onDelete: Cascade)
+
+  startDateTime DateTime
+  endDateTime   DateTime
+  reason        String?
+  isRecurring   Boolean     @default(false)
+
+  createdAt     DateTime    @default(now())
+
+  @@index([therapistId])
+  @@index([startDateTime, endDateTime])
+}
+
+// ==================== ADMIN ====================
+
+model Admin {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  firstName   String
+  lastName    String
+  permissions String[] @default([])  // Granular permissions
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// ==================== QUESTIONNAIRE (Database-Driven) ====================
+
+model QuestionnaireVersion {
+  id          String    @id @default(cuid())
+  version     Int       @unique @default(autoincrement())
+  name        String
+  nameHebrew  String
+  description String?   @db.Text
+  descriptionHebrew String? @db.Text
+  isActive    Boolean   @default(false)
+
+  // Intro text as per spec
+  introText   String    @default("כל השדות הם אופציונליים. מתן מידע נוסף מאפשר התאמה מדויקת יותר, מבוססת מדע.")
+
+  questions   QuestionnaireQuestion[]
+  responses   QuestionnaireResponse[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  @@index([isActive])
+}
+
+model QuestionnaireQuestion {
+  id              String    @id @default(cuid())
+  versionId       String
+  version         QuestionnaireVersion @relation(fields: [versionId], references: [id], onDelete: Cascade)
+
+  order           Int
+  sectionId       String
+  sectionName     String    // English section name
+  sectionNameHe   String    // Hebrew section name
+
+  questionText    String    @db.Text  // English
+  questionTextHe  String    @db.Text  // Hebrew
+  helpText        String?   @db.Text
+  helpTextHe      String?   @db.Text
+
+  questionType    QuestionType
+  options         Json?     // For multiple choice / ranking / multi-select
+
+  // X-Factor dimension this question affects
+  dimension       String    // e.g., "openness", "structure", "stress"
+  scoringWeight   Float     @default(1.0)
+  scoringFormula  String?   // Custom scoring logic if needed
+
+  isRequired      Boolean   @default(false)  // All fields optional per spec
+  isActive        Boolean   @default(true)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  answers         QuestionnaireAnswer[]
+
+  @@unique([versionId, order])
+  @@index([versionId])
+  @@index([dimension])
+}
+
+model QuestionnaireResponse {
+  id            String    @id @default(cuid())
+  patientId     String
+  patient       Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  versionId     String
+  version       QuestionnaireVersion @relation(fields: [versionId], references: [id])
+
+  status        String    @default("in_progress") // 'in_progress', 'completed'
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime?
+  lastSavedAt   DateTime  @default(now())  // For auto-save
+
+  answers       QuestionnaireAnswer[]
+
+  @@unique([patientId, versionId])
+  @@index([patientId])
+  @@index([status])
+}
+
+model QuestionnaireAnswer {
+  id            String    @id @default(cuid())
+  responseId    String
+  response      QuestionnaireResponse @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  questionId    String
+  question      QuestionnaireQuestion @relation(fields: [questionId], references: [id])
+
+  value         Json      // Flexible to store different answer types
+
+  answeredAt    DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([responseId, questionId])
+  @@index([responseId])
+}
+
+// ==================== MATCHING ====================
+
+model Match {
+  id              String    @id @default(cuid())
+  patientId       String
+  patient         Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  therapistId     String
+  therapist       Therapist @relation(fields: [therapistId], references: [id], onDelete: Cascade)
+
+  // Scores (0-100)
+  overallScore    Float
+  xFactorScore    Float     // Psychological compatibility
+  healthFundScore Float     // Health fund match
+  availabilityScore Float   // Schedule compatibility
+  locationScore   Float     // Location/online preference match
+  preferenceScore Float     // Other preferences (gender, language, etc.)
+
+  // Detailed breakdown for hover tooltip
+  scoreBreakdown  Json
+
+  // Match explanation text (dynamic based on patient + therapist)
+  explanationHe   String?   @db.Text  // Hebrew explanation for hover
+  explanationEn   String?   @db.Text  // English explanation
+
+  // Status
+  isViewed        Boolean   @default(false)
+  viewedAt        DateTime?
+  isFavorited     Boolean   @default(false)
+  isHidden        Boolean   @default(false)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([patientId, therapistId])
+  @@index([patientId])
+  @@index([therapistId])
+  @@index([overallScore])
+}
+
+// ==================== THERAPY SESSIONS ====================
+
+model TherapySession {
+  id              String        @id @default(cuid())
+  patientId       String
+  patient         Patient       @relation(fields: [patientId], references: [id])
+  therapistId     String
+  therapist       Therapist     @relation(fields: [therapistId], references: [id])
+
+  // Scheduling
+  scheduledAt     DateTime
+  duration        Int           @default(50) // minutes
+  type            SessionType   @default(REGULAR)
+  isOnline        Boolean       @default(true)
+
+  // Status workflow
+  status          SessionStatus @default(PENDING_THERAPIST_APPROVAL)
+
+  // Request/approval flow
+  requestedAt     DateTime      @default(now())
+  requestedBy     String        // userId who made the request
+  respondedAt     DateTime?
+  responseNote    String?       @db.Text
+
+  // Cancellation
+  cancelledAt     DateTime?
+  cancelledBy     String?       // userId who cancelled
+  cancellationReason String?    @db.Text
+
+  // Completion
+  completedAt     DateTime?
+
+  // Meeting details
+  meetingUrl      String?
+  meetingLocation String?
+
+  // Notes (private to therapist)
+  therapistNotes  String?       @db.Text
+
+  // Billing
+  healthFund      HealthFund?
+  price           Int?
+  isPaid          Boolean       @default(false)
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  notifications   Notification[]
+
+  @@index([patientId])
+  @@index([therapistId])
+  @@index([scheduledAt])
+  @@index([status])
+}
+
+// ==================== NOTIFICATIONS ====================
+
+model Notification {
+  id          String            @id @default(cuid())
+  userId      String
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type        NotificationType
+  title       String
+  titleHe     String
+  message     String            @db.Text
+  messageHe   String            @db.Text
+
+  // Related entities
+  sessionId   String?
+  session     TherapySession?   @relation(fields: [sessionId], references: [id])
+
+  // Delivery status
+  isRead      Boolean           @default(false)
+  readAt      DateTime?
+  emailSent   Boolean           @default(false)
+  emailSentAt DateTime?
+  emailError  String?           // Store error if email failed
+
+  // Action
+  actionUrl   String?
+
+  createdAt   DateTime          @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+// ==================== AUDIT & SYSTEM ====================
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+
+  action      String   // e.g., "CREATE", "UPDATE", "DELETE", "LOGIN"
+  entityType  String   // e.g., "User", "Therapist", "Session"
+  entityId    String?
+
+  oldValue    Json?
+  newValue    Json?
+
+  ipAddress   String?
+  userAgent   String?
+
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}
+
+model SystemSetting {
+  key         String   @id
+  value       Json
+  description String?
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?  // Admin userId
+}
+
+// Matching weights configuration (admin adjustable)
+model MatchingConfig {
+  id                String   @id @default(cuid())
+  name              String   @unique
+  description       String?
+
+  // Weights (must sum to 1.0)
+  xFactorWeight     Float    @default(0.40)
+  healthFundWeight  Float    @default(0.25)
+  availabilityWeight Float   @default(0.20)
+  preferenceWeight  Float    @default(0.15)
+
+  isActive          Boolean  @default(false)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([isActive])
+}
+
+// In-app messaging between patients and therapists
+model MessageThread {
+  id          String    @id @default(cuid())
+  patientId   String
+  therapistId String
+  subject     String?
+  lastMessageAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  patient     Patient   @relation(fields: [patientId], references: [id])
+  therapist   Therapist @relation(fields: [therapistId], references: [id])
+  messages    Message[]
+
+  @@unique([patientId, therapistId])
+  @@index([patientId])
+  @@index([therapistId])
+}
+
+model Message {
+  id         String        @id @default(cuid())
+  threadId   String
+  senderId   String
+  senderRole UserRole
+  content    String
+  readAt     DateTime?
+  createdAt  DateTime      @default(now())
+
+  thread     MessageThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([threadId, createdAt])
+  @@index([senderId])
+}

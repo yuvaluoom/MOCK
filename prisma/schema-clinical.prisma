@@ -1,0 +1,593 @@
+// =============================================================================
+// MATCHMIND CLINICAL SESSION DOCUMENTATION SCHEMA
+// =============================================================================
+//
+// Medical-grade session documentation system designed for:
+// - Israeli healthcare regulations compliance
+// - GDPR compliance
+// - Health fund (HMO) integration readiness
+// - Audit trail and versioning
+//
+// SECURITY CLASSIFICATION: HIGHLY SENSITIVE MEDICAL DATA
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// ENUMS
+// -----------------------------------------------------------------------------
+
+enum SessionType {
+  IN_PERSON       // פגישה פרונטלית
+  REMOTE_VIDEO    // טיפול מרחוק - וידאו
+  REMOTE_PHONE    // טיפול מרחוק - טלפון
+  HOME_VISIT      // ביקור בית
+}
+
+enum SessionStatus {
+  SCHEDULED       // מתוכננת
+  IN_PROGRESS     // בתהליך
+  COMPLETED       // הושלמה
+  CANCELLED       // בוטלה
+  NO_SHOW         // לא הגיע
+}
+
+enum DocumentationStatus {
+  DRAFT           // טיוטה - ניתן לעריכה
+  SUBMITTED       // הוגש - נעול לעריכה רגילה
+  AMENDED         // תוקן - נעול עם תיקון מתועד
+  LOCKED          // נעול סופית
+}
+
+enum TherapeuticMethod {
+  CBT                    // טיפול קוגניטיבי-התנהגותי
+  DBT                    // טיפול דיאלקטי-התנהגותי
+  PSYCHODYNAMIC          // פסיכודינמי
+  HUMANISTIC             // הומניסטי
+  EMDR                   // EMDR
+  MINDFULNESS            // מיינדפולנס
+  FAMILY_THERAPY         // טיפול משפחתי
+  COUPLES_THERAPY        // טיפול זוגי
+  PLAY_THERAPY           // טיפול במשחק
+  ART_THERAPY            // טיפול באמנות
+  NARRATIVE              // טיפול נרטיבי
+  SOLUTION_FOCUSED       // ממוקד פתרון
+  INTEGRATIVE            // אינטגרטיבי
+  OTHER                  // אחר
+}
+
+enum ProgressIndicator {
+  SIGNIFICANT_IMPROVEMENT   // שיפור משמעותי
+  MODERATE_IMPROVEMENT      // שיפור מתון
+  SLIGHT_IMPROVEMENT        // שיפור קל
+  NO_CHANGE                 // ללא שינוי
+  SLIGHT_DECLINE            // הידרדרות קלה
+  MODERATE_DECLINE          // הידרדרות מתונה
+  SIGNIFICANT_DECLINE       // הידרדרות משמעותית
+  UNABLE_TO_ASSESS          // לא ניתן להעריך
+}
+
+enum RiskLevel {
+  NONE            // ללא סיכון
+  LOW             // סיכון נמוך
+  MODERATE        // סיכון בינוני
+  HIGH            // סיכון גבוה
+  CRITICAL        // סיכון קריטי - דורש התערבות מיידית
+}
+
+enum ConsentType {
+  TREATMENT           // הסכמה לטיפול
+  DOCUMENTATION       // הסכמה לתיעוד
+  DATA_SHARING        // הסכמה לשיתוף נתונים
+  RESEARCH            // הסכמה למחקר
+  RECORDING           // הסכמה להקלטה
+}
+
+enum ExportFormat {
+  JSON
+  PDF
+  HL7_FHIR    // Future: Health Level 7 FHIR format
+}
+
+// -----------------------------------------------------------------------------
+// CORE SESSION RECORD
+// -----------------------------------------------------------------------------
+
+/// Clinical session record - the primary documentation entity
+/// Contains encrypted clinical content with strict access control
+model SessionRecord {
+  id                    String              @id @default(cuid())
+
+  // Relationships
+  therapistId           String
+  therapist             Therapist           @relation(fields: [therapistId], references: [id])
+  patientId             String
+  patient               Patient             @relation(fields: [patientId], references: [id])
+  treatmentPlanId       String?
+  treatmentPlan         TreatmentPlan?      @relation(fields: [treatmentPlanId], references: [id])
+
+  // Session metadata (not encrypted - needed for scheduling/compliance)
+  sessionNumber         Int                 // Sequential session number for this patient
+  sessionDate           DateTime
+  scheduledStartTime    DateTime
+  scheduledEndTime      DateTime
+  actualStartTime       DateTime?
+  actualEndTime         DateTime?
+  actualDurationMinutes Int?
+
+  sessionType           SessionType
+  sessionStatus         SessionStatus       @default(SCHEDULED)
+  documentationStatus   DocumentationStatus @default(DRAFT)
+
+  // Clinical notes (encrypted at application level)
+  clinicalNotes         SessionClinicalNotes?
+
+  // Versioning
+  currentVersion        Int                 @default(1)
+  versions              SessionRecordVersion[]
+
+  // Audit
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  submittedAt           DateTime?           // When documentation was submitted
+  lockedAt              DateTime?           // When record was locked
+  lockedBy              String?             // Who locked the record
+
+  // Compliance
+  documentationDeadline DateTime            // Usually 24-48 hours after session
+  isOverdue             Boolean             @default(false)
+  complianceFlags       SessionComplianceFlag[]
+
+  // Patient visibility
+  patientSummary        PatientSessionSummary?
+
+  // Export tracking
+  exports               SessionExport[]
+
+  // Indexes for performance
+  @@index([therapistId, sessionDate])
+  @@index([patientId, sessionDate])
+  @@index([documentationStatus])
+  @@index([isOverdue])
+  @@map("session_records")
+}
+
+// -----------------------------------------------------------------------------
+// CLINICAL NOTES (ENCRYPTED CONTENT)
+// -----------------------------------------------------------------------------
+
+/// Clinical notes - the actual medical documentation
+/// Stored separately for encryption and access control
+model SessionClinicalNotes {
+  id                    String              @id @default(cuid())
+  sessionRecordId       String              @unique
+  sessionRecord         SessionRecord       @relation(fields: [sessionRecordId], references: [id], onDelete: Cascade)
+
+  // ===== ENCRYPTED FIELDS =====
+  // These fields are encrypted at the application level before storage
+  // The encryption key is derived from a combination of:
+  // 1. Master key (HSM-stored)
+  // 2. Therapist-specific key
+  // 3. Patient-specific key component
+
+  // Presenting issue / reason for visit
+  presentingIssueEncrypted      Bytes?
+  presentingIssueIV             Bytes?      // Initialization vector
+
+  // Clinical summary / session content
+  clinicalSummaryEncrypted      Bytes?
+  clinicalSummaryIV             Bytes?
+
+  // Structured clinical assessment
+  assessmentEncrypted           Bytes?
+  assessmentIV                  Bytes?
+
+  // Interventions used
+  interventionsEncrypted        Bytes?
+  interventionsIV               Bytes?
+
+  // Patient response to interventions
+  patientResponseEncrypted      Bytes?
+  patientResponseIV             Bytes?
+
+  // Follow-up recommendations
+  followUpEncrypted             Bytes?
+  followUpIV                    Bytes?
+
+  // ===== NON-ENCRYPTED STRUCTURED FIELDS =====
+  // These are structured codes, not free-text clinical content
+
+  therapeuticMethods    TherapeuticMethod[]
+  progressIndicator     ProgressIndicator?
+  riskLevel             RiskLevel           @default(NONE)
+  riskAssessmentDate    DateTime?
+
+  // ICD/DSM placeholders (codes only, not descriptions)
+  icdCodes              String[]            // ICD-10/11 codes
+  dsmCodes              String[]            // DSM-5 codes
+
+  // Homework/tasks assigned
+  homeworkAssigned      Boolean             @default(false)
+
+  // Next session planning
+  nextSessionFocus      String?             // Encrypted separately if needed
+  recommendedInterval   Int?                // Days until next session
+
+  // Encryption metadata
+  encryptionVersion     String              @default("v1")
+  encryptionKeyId       String?             // Reference to key in key management system
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@map("session_clinical_notes")
+}
+
+// -----------------------------------------------------------------------------
+// VERSION HISTORY
+// -----------------------------------------------------------------------------
+
+/// Immutable version history for audit trail
+/// Every edit after submission creates a new version
+model SessionRecordVersion {
+  id                    String              @id @default(cuid())
+  sessionRecordId       String
+  sessionRecord         SessionRecord       @relation(fields: [sessionRecordId], references: [id], onDelete: Cascade)
+
+  versionNumber         Int
+
+  // Snapshot of the record at this version (encrypted)
+  snapshotEncrypted     Bytes
+  snapshotIV            Bytes
+
+  // Change tracking
+  changeType            String              // 'created', 'updated', 'amended', 'locked'
+  changeReason          String?             // Required for amendments
+  changedFields         String[]            // List of fields that changed
+
+  // Who made the change
+  changedById           String
+  changedByName         String              // Denormalized for audit
+  changedByRole         String
+
+  // When
+  createdAt             DateTime            @default(now())
+
+  // Digital signature for integrity
+  signatureHash         String              // SHA-256 of content + previous hash
+  previousVersionHash   String?             // Chain for tamper detection
+
+  @@unique([sessionRecordId, versionNumber])
+  @@index([sessionRecordId])
+  @@map("session_record_versions")
+}
+
+// -----------------------------------------------------------------------------
+// PATIENT-VISIBLE SUMMARY
+// -----------------------------------------------------------------------------
+
+/// Optional summary that therapist can share with patient
+/// Separate from clinical notes - designed for patient understanding
+model PatientSessionSummary {
+  id                    String              @id @default(cuid())
+  sessionRecordId       String              @unique
+  sessionRecord         SessionRecord       @relation(fields: [sessionRecordId], references: [id], onDelete: Cascade)
+
+  // Summary content (can be unencrypted as it's patient-facing)
+  summaryHebrewEncrypted    Bytes?          // Still encrypted for storage
+  summaryHebrewIV           Bytes?
+
+  // What we discussed (patient-friendly language)
+  topicsDiscussed       String[]
+
+  // Homework/exercises for patient
+  homework              PatientHomework[]
+
+  // Key takeaways
+  keyTakeaways          String[]
+
+  // Visibility control
+  isVisibleToPatient    Boolean             @default(false)
+  sharedAt              DateTime?
+  sharedByTherapist     Boolean             @default(false)
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@map("patient_session_summaries")
+}
+
+/// Homework items assigned to patient
+model PatientHomework {
+  id                    String              @id @default(cuid())
+  summaryId             String
+  summary               PatientSessionSummary @relation(fields: [summaryId], references: [id], onDelete: Cascade)
+
+  title                 String
+  description           String?
+  dueDate               DateTime?
+  isCompleted           Boolean             @default(false)
+  completedAt           DateTime?
+  patientNotes          String?             // Patient can add notes
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@map("patient_homework")
+}
+
+// -----------------------------------------------------------------------------
+// TREATMENT PLAN
+// -----------------------------------------------------------------------------
+
+/// Treatment plan that sessions are part of
+model TreatmentPlan {
+  id                    String              @id @default(cuid())
+  therapistId           String
+  therapist             Therapist           @relation(fields: [therapistId], references: [id])
+  patientId             String
+  patient               Patient             @relation(fields: [patientId], references: [id])
+
+  // Plan details (encrypted)
+  titleEncrypted        Bytes?
+  titleIV               Bytes?
+  goalsEncrypted        Bytes?              // JSON array of goals
+  goalsIV               Bytes?
+
+  // Timeline
+  startDate             DateTime
+  targetEndDate         DateTime?
+  actualEndDate         DateTime?
+
+  // Status
+  isActive              Boolean             @default(true)
+
+  // Sessions under this plan
+  sessions              SessionRecord[]
+
+  // Review schedule
+  nextReviewDate        DateTime?
+  reviews               TreatmentPlanReview[]
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@index([therapistId, patientId])
+  @@map("treatment_plans")
+}
+
+/// Treatment plan reviews
+model TreatmentPlanReview {
+  id                    String              @id @default(cuid())
+  treatmentPlanId       String
+  treatmentPlan         TreatmentPlan       @relation(fields: [treatmentPlanId], references: [id], onDelete: Cascade)
+
+  reviewDate            DateTime
+
+  // Review content (encrypted)
+  progressSummaryEncrypted  Bytes?
+  progressSummaryIV         Bytes?
+  goalUpdatesEncrypted      Bytes?
+  goalUpdatesIV             Bytes?
+
+  reviewedById          String
+
+  createdAt             DateTime            @default(now())
+
+  @@map("treatment_plan_reviews")
+}
+
+// -----------------------------------------------------------------------------
+// CONSENT MANAGEMENT
+// -----------------------------------------------------------------------------
+
+/// Patient consent records
+model PatientConsent {
+  id                    String              @id @default(cuid())
+  patientId             String
+  patient               Patient             @relation(fields: [patientId], references: [id])
+  therapistId           String
+  therapist             Therapist           @relation(fields: [therapistId], references: [id])
+
+  consentType           ConsentType
+
+  // Consent details
+  isGranted             Boolean
+  grantedAt             DateTime?
+  revokedAt             DateTime?
+  expiresAt             DateTime?
+
+  // Scope of consent
+  scope                 String?             // JSON describing specific scope
+
+  // Signature
+  signatureMethod       String?             // 'digital', 'written', 'verbal'
+  signatureReference    String?             // Reference to stored signature
+
+  // Witness (if applicable)
+  witnessName           String?
+  witnessRole           String?
+
+  // Document
+  consentDocumentUrl    String?             // Signed PDF storage
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@index([patientId, consentType])
+  @@map("patient_consents")
+}
+
+// -----------------------------------------------------------------------------
+// COMPLIANCE & AUDIT
+// -----------------------------------------------------------------------------
+
+/// Compliance flags for admin oversight
+model SessionComplianceFlag {
+  id                    String              @id @default(cuid())
+  sessionRecordId       String
+  sessionRecord         SessionRecord       @relation(fields: [sessionRecordId], references: [id], onDelete: Cascade)
+
+  flagType              String              // 'overdue', 'incomplete', 'risk_not_assessed', etc.
+  flagSeverity          String              // 'info', 'warning', 'critical'
+  description           String
+
+  isResolved            Boolean             @default(false)
+  resolvedAt            DateTime?
+  resolvedById          String?
+  resolutionNotes       String?
+
+  createdAt             DateTime            @default(now())
+
+  @@index([sessionRecordId])
+  @@index([flagType, isResolved])
+  @@map("session_compliance_flags")
+}
+
+/// Audit log for clinical data access
+model ClinicalAuditLog {
+  id                    String              @id @default(cuid())
+
+  // Who accessed
+  userId                String
+  userRole              String
+  userName              String              // Denormalized
+
+  // What was accessed
+  entityType            String              // 'session_record', 'clinical_notes', etc.
+  entityId              String
+  patientId             String?             // Denormalized for quick queries
+
+  // Action
+  action                String              // 'view', 'create', 'update', 'export', 'print'
+  actionDetails         String?             // JSON with additional details
+
+  // Context
+  ipAddress             String?
+  userAgent             String?
+  sessionId             String?
+
+  // Result
+  wasSuccessful         Boolean
+  failureReason         String?
+
+  // Timestamp
+  occurredAt            DateTime            @default(now())
+
+  @@index([userId, occurredAt])
+  @@index([entityType, entityId])
+  @@index([patientId, occurredAt])
+  @@map("clinical_audit_logs")
+}
+
+// -----------------------------------------------------------------------------
+// DATA EXPORT
+// -----------------------------------------------------------------------------
+
+/// Track all exports of clinical data
+model SessionExport {
+  id                    String              @id @default(cuid())
+  sessionRecordId       String
+  sessionRecord         SessionRecord       @relation(fields: [sessionRecordId], references: [id], onDelete: Cascade)
+
+  // Export details
+  format                ExportFormat
+  exportedById          String
+  exportedByName        String              // Denormalized
+
+  // Purpose
+  purpose               String              // 'patient_request', 'health_fund', 'legal', etc.
+  recipientType         String?             // 'patient', 'health_fund', 'institution'
+  recipientDetails      String?             // Encrypted recipient info
+
+  // Consent reference
+  consentId             String?
+
+  // File reference (stored encrypted in secure storage)
+  fileReference         String?
+  fileHash              String?             // SHA-256 for integrity
+
+  // Retention
+  expiresAt             DateTime?           // When the export file should be deleted
+  wasDeleted            Boolean             @default(false)
+  deletedAt             DateTime?
+
+  createdAt             DateTime            @default(now())
+
+  @@index([sessionRecordId])
+  @@index([exportedById])
+  @@map("session_exports")
+}
+
+// -----------------------------------------------------------------------------
+// DATA RETENTION
+// -----------------------------------------------------------------------------
+
+/// Data retention policy configuration
+model DataRetentionPolicy {
+  id                    String              @id @default(cuid())
+
+  entityType            String              // 'session_record', 'clinical_notes', etc.
+
+  // Retention periods (in days)
+  activeRetentionDays   Int                 // While treatment is active
+  archiveRetentionDays  Int                 // After treatment ends
+  legalMinimumDays      Int                 // Legal requirement (usually 7 years in Israel)
+
+  // Actions
+  archiveAfterDays      Int?                // Move to archive after X days
+  deleteAfterDays       Int?                // Permanently delete after X days
+
+  // Scope
+  organizationId        String?             // Null = global policy
+
+  isActive              Boolean             @default(true)
+
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+
+  @@unique([entityType, organizationId])
+  @@map("data_retention_policies")
+}
+
+/// Scheduled data retention actions
+model DataRetentionAction {
+  id                    String              @id @default(cuid())
+
+  entityType            String
+  entityId              String
+
+  actionType            String              // 'archive', 'delete', 'anonymize'
+  scheduledFor          DateTime
+
+  isCompleted           Boolean             @default(false)
+  completedAt           DateTime?
+
+  // Approval (for deletions)
+  requiresApproval      Boolean             @default(false)
+  approvedById          String?
+  approvedAt            DateTime?
+
+  createdAt             DateTime            @default(now())
+
+  @@index([actionType, scheduledFor, isCompleted])
+  @@map("data_retention_actions")
+}
+
+// -----------------------------------------------------------------------------
+// RELATIONS TO EXISTING MODELS (Placeholders)
+// -----------------------------------------------------------------------------
+
+// These would be added to existing Therapist and Patient models:
+//
+// model Therapist {
+//   ...existing fields...
+//   sessionRecords        SessionRecord[]
+//   treatmentPlans        TreatmentPlan[]
+//   patientConsents       PatientConsent[]
+// }
+//
+// model Patient {
+//   ...existing fields...
+//   sessionRecords        SessionRecord[]
+//   treatmentPlans        TreatmentPlan[]
+//   consents              PatientConsent[]
+// }
