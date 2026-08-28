@@ -67,7 +67,7 @@ function generateApprovalEmail(therapist: DbTherapist): {
   bodyHe: string;
 } {
   return {
-    subject: 'Welcome to MatchMind - Your Application Has Been Approved! / ברוכים הבאים ל-MatchMind',
+    subject: 'Welcome to MatchMind - Your Application Has Been Approved! / Welcome ל-MatchMind',
     body: `
 Dear ${therapist.firstName} ${therapist.lastName},
 
@@ -86,21 +86,21 @@ Best regards,
 The MatchMind Team
     `.trim(),
     bodyHe: `
-שלום ${therapist.firstName} ${therapist.lastName},
+Hello ${therapist.firstName} ${therapist.lastName},
 
-מזל טוב! בקשתך להצטרף ל-MatchMind כמטפל/ת אושרה.
+מזל Good! Your request to join-MatchMind כTherapist orSarah.
 
-הפרופיל שלך כעת פעיל ומטופלים יכולים למצוא אותך במערכת ההתאמות שלנו.
+הפרופיל Your כעת Active וPatients יכולs למצוא orתך במערכת ההתאמs שלנו.
 
-השלבים הבאים:
-1. התחבר/י ללוח הבקרה שלך כדי לבדוק את הפרופיל
-2. הגדר/י את לוח הזמינות שלך
-3. התחל/י לקבל בקשות התאמה ממטופלים
+השלבs Nexts:
+1. התחבר/י לYour Dashboard כדי לReview את הפרופיל
+2. הגדר/י את לוח הAvailability Your
+3. התחל/י לקבל בקשs Match מPatients
 
 תודה שהצטרפת ל-MatchMind!
 
-בברכה,
-צוות MatchMind
+Welcome,
+Team MatchMind
     `.trim(),
   };
 }
@@ -110,7 +110,7 @@ function generateRejectionEmail(
   reason: string
 ): { subject: string; body: string; bodyHe: string } {
   return {
-    subject: 'MatchMind Application Status Update / עדכון סטטוס בקשה ל-MatchMind',
+    subject: 'MatchMind Application Status Update / up toכון Status בקשה ל-MatchMind',
     body: `
 Dear ${therapist.firstName} ${therapist.lastName},
 
@@ -126,18 +126,18 @@ Best regards,
 The MatchMind Team
     `.trim(),
     bodyHe: `
-שלום ${therapist.firstName} ${therapist.lastName},
+Hello ${therapist.firstName} ${therapist.lastName},
 
-תודה על התעניינותך להצטרף ל-MatchMind כמטפל/ת.
+תודה על התעניינsך להצטרף ל-MatchMind כTherapist.
 
-לאחר בדיקה מעמיקה, אנו מצטערים להודיע לך שאיננו יכולים לאשר את בקשתך בשלב זה.
+Noחר בדיקה מעמיקה, אנו מצטערs להודיע לך שאיננו יכולs לApprove את בקשתך בשלב זה.
 
-סיבה: ${reason}
+Reason: ${reason}
 
-אם את/ה מאמין/ה שהוחלטה בטעות, או אם הנסיבות שלך השתנו, את/ה מוזמן/ת להגיש בקשה חדשה בעתיד.
+אם את/ה מאGender/ה שהוחלטה בטעs, or אם הנסיבs Your השתנו, את/ה edזמן/ת להגיש בקשה New בעתיד.
 
-בברכה,
-צוות MatchMind
+Welcome,
+Team MatchMind
     `.trim(),
   };
 }
@@ -149,7 +149,7 @@ function generateDocumentsRequestEmail(
 ): { subject: string; body: string; bodyHe: string } {
   const documentList = documents.map((d) => `- ${d}`).join('\n');
   return {
-    subject: 'MatchMind - Additional Documents Required / נדרשים מסמכים נוספים',
+    subject: 'MatchMind - Additional Documents Required / Requireds מסמכs נוספs',
     body: `
 Dear ${therapist.firstName} ${therapist.lastName},
 
@@ -166,19 +166,19 @@ Best regards,
 The MatchMind Team
     `.trim(),
     bodyHe: `
-שלום ${therapist.firstName} ${therapist.lastName},
+Hello ${therapist.firstName} ${therapist.lastName},
 
-תודה על בקשתך להצטרף ל-MatchMind.
+תודה על Your request to join-MatchMind.
 
-להשלמת הבקשה, אנו צריכים את המסמכים הבאים:
+להשלמת הבקשה, אנו צריכs את המסמכs Nexts:
 ${documentList}
 
-הערה מהצוות שלנו: ${note}
+הערה מהTeam שלנו: ${note}
 
-אנא התחבר/י ללוח הבקרה שלך והעלה/י את המסמכים הנדרשים.
+אנא התחבר/י לYour Dashboard והעלה/י את המסמכs הRequireds.
 
-בברכה,
-צוות MatchMind
+Welcome,
+Team MatchMind
     `.trim(),
   };
 }
@@ -188,7 +188,7 @@ function generateSuspensionEmail(
   reason: string
 ): { subject: string; body: string; bodyHe: string } {
   return {
-    subject: 'MatchMind Account Suspended / החשבון שלך הושעה',
+    subject: 'MatchMind Account Suspended / החשבון Your הוTime',
     body: `
 Dear ${therapist.firstName} ${therapist.lastName},
 
@@ -207,21 +207,21 @@ Best regards,
 The MatchMind Team
     `.trim(),
     bodyHe: `
-שלום ${therapist.firstName} ${therapist.lastName},
+Hello ${therapist.firstName} ${therapist.lastName},
 
-חשבון המטפל שלך ב-MatchMind הושעה באופן זמני.
+חשבון הTherapist Your ב-MatchMind הוTime בorפן זמני.
 
-סיבה: ${reason}
+Reason: ${reason}
 
 במהלך ההשעיה:
-- הפרופיל שלך לא יהיה גלוי למטופלים
-- לא תוכל/י לקבל בקשות מטופלים חדשות
-- פגישות קיימות נשארות מתוכננות
+- הפרופיל Your No יהיה גלוי לPatients
+- No תוכל/י לקבל בקשs Patients חדשs
+- Sessions קיימs נשארs מתוכננs
 
-אם יש לך שאלות לגבי ההשעיה, אנא פנה/י לצוות התמיכה שלנו.
+אם You have שאלs לגבי ההשעיה, אנא פנה/י לTeam התמיכה שלנו.
 
-בברכה,
-צוות MatchMind
+Welcome,
+Team MatchMind
     `.trim(),
   };
 }
@@ -310,9 +310,9 @@ class AdminService {
       recipientRole: 'THERAPIST',
       type: 'THERAPIST_APPROVED',
       title: 'Application Approved',
-      titleHe: 'הבקשה אושרה',
+      titleHe: 'הבקשה orSarah',
       message: 'Congratulations! Your application has been approved.',
-      messageHe: 'מזל טוב! בקשתך אושרה.',
+      messageHe: 'מזל Good! בקשתך orSarah.',
       priority: 'high',
       data: { therapistId, approvedBy: ctx.adminName },
       isRead: false,
@@ -424,9 +424,9 @@ class AdminService {
       recipientRole: 'THERAPIST',
       type: 'THERAPIST_REJECTED',
       title: 'Application Status Update',
-      titleHe: 'עדכון סטטוס בקשה',
+      titleHe: 'up toכון Status בקשה',
       message: `Your application has been reviewed. Reason: ${reason}`,
-      messageHe: `הבקשה שלך נבדקה. סיבה: ${reason}`,
+      messageHe: `הבקשה Your נבדקה. Reason: ${reason}`,
       priority: 'high',
       data: { therapistId, reason, rejectedBy: ctx.adminName },
       isRead: false,
@@ -540,9 +540,9 @@ class AdminService {
       recipientRole: 'THERAPIST',
       type: 'THERAPIST_DOCUMENTS_REQUESTED',
       title: 'Documents Required',
-      titleHe: 'נדרשים מסמכים',
+      titleHe: 'Requireds מסמכs',
       message: `Please upload the following documents: ${documents.join(', ')}`,
-      messageHe: `אנא העלה/י את המסמכים הבאים: ${documents.join(', ')}`,
+      messageHe: `אנא העלה/י את המסמכs Nexts: ${documents.join(', ')}`,
       priority: 'high',
       data: { therapistId, documents, note },
       isRead: false,
@@ -649,9 +649,9 @@ class AdminService {
       recipientRole: 'THERAPIST',
       type: 'THERAPIST_SUSPENDED',
       title: 'Account Suspended',
-      titleHe: 'החשבון הושעה',
+      titleHe: 'החשבון הוTime',
       message: `Your account has been suspended. Reason: ${reason}`,
-      messageHe: `החשבון שלך הושעה. סיבה: ${reason}`,
+      messageHe: `החשבון Your הוTime. Reason: ${reason}`,
       priority: 'urgent',
       data: { therapistId, reason, suspendedBy: ctx.adminName },
       isRead: false,
@@ -755,7 +755,7 @@ class AdminService {
       title: 'Account Restored',
       titleHe: 'החשבון שוחזר',
       message: 'Your account suspension has been lifted. You are now active again.',
-      messageHe: 'ההשעיה על החשבון שלך הוסרה. החשבון שלך פעיל שוב.',
+      messageHe: 'ההשעיה על החשבון Your הוסרה. החשבון Your Active שוב.',
       priority: 'high',
       data: { therapistId, restoredBy: ctx.adminName },
       isRead: false,

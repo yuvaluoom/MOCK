@@ -202,8 +202,8 @@ class SessionManager {
         recipientId: therapist.userId,
         recipientType: 'THERAPIST',
         type: 'SESSION_REQUESTED',
-        title: 'בקשה לפגישה חדשה',
-        message: `${patient.firstName} ${patient.lastName} מבקש/ת לקבוע פגישה בתאריך ${this.formatDate(input.scheduledAt)}`,
+        title: 'בקשה לSession New',
+        message: `${patient.firstName} ${patient.lastName} מבקש/ת לקבוע Session בDate ${this.formatDate(input.scheduledAt)}`,
         metadata: { patientName: `${patient.firstName} ${patient.lastName}` },
       });
 
@@ -213,7 +213,7 @@ class SessionManager {
         therapistName: `${therapist.firstName} ${therapist.lastName}`,
         patientName: `${patient.firstName} ${patient.lastName}`,
         scheduledAt: input.scheduledAt,
-        sessionType: input.isOnline ? 'מקוון' : 'פרונטלי',
+        sessionType: input.isOnline ? 'Online' : 'In-Person',
       });
 
       console.log(`[SessionManager] Session ${sessionId} created - Pending approval`);
@@ -274,8 +274,8 @@ class SessionManager {
         recipientId: patient.userId,
         recipientType: 'PATIENT',
         type: 'SESSION_APPROVED',
-        title: 'הפגישה אושרה!',
-        message: `הפגישה עם ${therapist.firstName} ${therapist.lastName} בתאריך ${this.formatDate(session.scheduledAt)} אושרה. ניתן להוסיף ליומן.`,
+        title: 'הSession orSarah!',
+        message: `הSession With ${therapist.firstName} ${therapist.lastName} בDate ${this.formatDate(session.scheduledAt)} orSarah. ניתן להוסיף לLog.`,
         metadata: {
           therapistName: `${therapist.firstName} ${therapist.lastName}`,
           calendarDataAvailable: true,
@@ -289,7 +289,7 @@ class SessionManager {
         therapistName: `${therapist.firstName} ${therapist.lastName}`,
         scheduledAt: session.scheduledAt,
         duration: session.duration,
-        sessionType: session.isOnline ? 'מקוון' : 'פרונטלי',
+        sessionType: session.isOnline ? 'Online' : 'In-Person',
         meetingUrl: options.meetingUrl,
         location: options.location,
         calendarAttachment: enhancedSession.calendarData?.icsContent,
@@ -340,10 +340,10 @@ class SessionManager {
         recipientId: patient.userId,
         recipientType: 'PATIENT',
         type: 'SESSION_REJECTED',
-        title: 'הפגישה לא אושרה',
+        title: 'הSession No orSarah',
         message: reason
-          ? `הפגישה עם ${therapist.firstName} ${therapist.lastName} לא אושרה. סיבה: ${reason}`
-          : `הפגישה עם ${therapist.firstName} ${therapist.lastName} לא אושרה. ניתן לנסות לקבוע מועד אחר.`,
+          ? `הSession With ${therapist.firstName} ${therapist.lastName} No orSarah. Reason: ${reason}`
+          : `הSession With ${therapist.firstName} ${therapist.lastName} No orSarah. ניתן לנסs לקבוע edup to Other.`,
       });
 
       // Email patient
@@ -411,8 +411,8 @@ class SessionManager {
         recipientId,
         recipientType,
         type: 'SESSION_CANCELLED',
-        title: 'פגישה בוטלה',
-        message: `הפגישה בתאריך ${this.formatDate(session.scheduledAt)} בוטלה על ידי ${cancellerName}`,
+        title: 'Session Cancelledה',
+        message: `הSession בDate ${this.formatDate(session.scheduledAt)} Cancelledה על ידי ${cancellerName}`,
       });
 
       // Email both parties
@@ -479,8 +479,8 @@ class SessionManager {
         recipientId: patient.userId,
         recipientType: 'PATIENT',
         type: 'SESSION_COMPLETED',
-        title: 'הפגישה הסתיימה',
-        message: `הפגישה עם ${therapist.firstName} ${therapist.lastName} סומנה כהושלמה. תודה!`,
+        title: 'הSession הסתיימה',
+        message: `הSession With ${therapist.firstName} ${therapist.lastName} סומנה כהושלמה. תודה!`,
       });
 
       console.log(`[SessionManager] Session ${sessionId} completed`);
@@ -582,12 +582,12 @@ class SessionManager {
   private generateCalendarData(session: EnhancedSession): SessionCalendarData {
     const event: CalendarEvent = {
       uid: `session-${session.id}@matchmind.co.il`,
-      title: `פגישה טיפולית עם ${session.therapist.name}`,
+      title: `Therapy session with ${session.therapist.name}`,
       description: this.buildEventDescription(session),
       startDate: session.scheduledAt,
       endDate: new Date(session.scheduledAt.getTime() + session.duration * 60000),
       isOnline: session.isOnline,
-      location: session.isOnline ? 'פגישה מקוונת' : session.location,
+      location: session.isOnline ? 'Online Session' : session.location,
       meetingUrl: session.meetingUrl,
       organizerName: session.therapist.name,
       organizerEmail: session.therapist.email,
@@ -608,24 +608,24 @@ class SessionManager {
   }
 
   private buildEventDescription(session: EnhancedSession): string {
-    let desc = `פגישה טיפולית עם ${session.therapist.name}`;
+    let desc = `Therapy session with ${session.therapist.name}`;
     if (session.therapist.title) {
       desc += ` (${session.therapist.title})`;
     }
-    desc += `\n\nמשך הפגישה: ${session.duration} דקות`;
-    desc += `\nסוג: ${session.isOnline ? 'פגישה מקוונת' : 'פגישה פרונטלית'}`;
+    desc += `\n\nמשך הSession: ${session.duration} Minutes`;
+    desc += `\nType: ${session.isOnline ? 'Online Session' : 'In-Person Session'}`;
 
     if (session.meetingUrl) {
-      desc += `\n\nקישור להצטרפות: ${session.meetingUrl}`;
+      desc += `\n\nקישור להצטרOptions: ${session.meetingUrl}`;
     }
 
     if (session.payment.type === 'HMO') {
-      desc += `\n\nתשלום: קופת חולים (${session.payment.healthFund})`;
+      desc += `\n\nתHello: Health Fund (${session.payment.healthFund})`;
     } else {
-      desc += `\n\nתשלום: פרטי - ₪${session.payment.price}`;
+      desc += `\n\nתHello: Private - ₪${session.payment.price}`;
     }
 
-    desc += '\n\n---\nMatchMind - התאמה מושלמת לטיפול';
+    desc += '\n\n---\nMatchMind - Match edשלמת לTherapy';
 
     return desc;
   }
@@ -753,13 +753,13 @@ class SessionManager {
 
   private getEmailSubject(template: string): string {
     const subjects: Record<string, string> = {
-      SESSION_REQUESTED: 'בקשה לפגישה חדשה - MatchMind',
-      SESSION_APPROVED: 'הפגישה אושרה! - MatchMind',
-      SESSION_REJECTED: 'עדכון לגבי הפגישה - MatchMind',
-      SESSION_CANCELLED: 'פגישה בוטלה - MatchMind',
-      SESSION_REMINDER: 'תזכורת לפגישה - MatchMind',
+      SESSION_REQUESTED: 'בקשה לSession New - MatchMind',
+      SESSION_APPROVED: 'הSession orSarah! - MatchMind',
+      SESSION_REJECTED: 'up toכון לגבי הSession - MatchMind',
+      SESSION_CANCELLED: 'Session Cancelledה - MatchMind',
+      SESSION_REMINDER: 'תזכורת לSession - MatchMind',
     };
-    return subjects[template] ?? 'עדכון מ-MatchMind';
+    return subjects[template] ?? 'up toכון מ-MatchMind';
   }
 
   private formatDate(date: Date): string {

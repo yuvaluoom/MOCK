@@ -15,42 +15,36 @@ type ApprovalStatus = 'PENDING_INFO' | 'AWAITING_APPROVAL' | 'APPROVED' | 'REJEC
 
 const statusConfig: Record<ApprovalStatus, {
   label: string;
-  labelHe: string;
   color: string;
   icon: string;
   bgColor: string;
 }> = {
   PENDING_INFO: {
     label: 'Missing Info',
-    labelHe: 'חסרים פרטים',
     color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
     bgColor: 'bg-yellow-500',
     icon: '📋',
   },
   AWAITING_APPROVAL: {
     label: 'Awaiting Approval',
-    labelHe: 'ממתין לאישור',
     color: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
     bgColor: 'bg-amber-500',
     icon: '⏳',
   },
   APPROVED: {
     label: 'Approved',
-    labelHe: 'מאושר',
     color: 'bg-green-500/20 text-green-400 border-green-500/30',
     bgColor: 'bg-green-500',
     icon: '✅',
   },
   REJECTED: {
     label: 'Rejected',
-    labelHe: 'נדחה',
     color: 'bg-red-500/20 text-red-400 border-red-500/30',
     bgColor: 'bg-red-500',
     icon: '❌',
   },
   SUSPENDED: {
     label: 'Suspended',
-    labelHe: 'מושעה',
     color: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
     bgColor: 'bg-slate-500',
     icon: '⛔',
@@ -201,7 +195,7 @@ export default function TherapistApplicationsPage() {
 
   // Handlers
   const handleApprove = async (therapistId: string) => {
-    if (confirm('אשר מטפל זה? / Approve this therapist?')) {
+    if (confirm('Approve Therapist זה? / Approve this therapist?')) {
       await approveMutation.mutateAsync({ therapistId });
     }
   };
@@ -223,7 +217,7 @@ export default function TherapistApplicationsPage() {
   };
 
   const handleUnsuspend = async (therapistId: string) => {
-    if (confirm('בטל השעיה של מטפל זה? / Unsuspend this therapist?')) {
+    if (confirm('Cancel השעיה של Therapist זה? / Unsuspend this therapist?')) {
       await unsuspendMutation.mutateAsync({ therapistId });
     }
   };
@@ -240,13 +234,13 @@ export default function TherapistApplicationsPage() {
   const statusCounts: Record<string, number> = data?.statusCounts ?? {};
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">בקשות מטפלים</h1>
+          <h1 className="text-2xl font-bold text-white">בקשs Therapists</h1>
           <p className="text-slate-400 mt-1">
-            Therapist Applications - סקירה ואישור הרשמות מטפלים
+            Therapist Applications - סקירה וConfirm הרשמs Therapists
           </p>
         </div>
         <button
@@ -278,7 +272,7 @@ export default function TherapistApplicationsPage() {
                 {statusCounts[status] ?? 0}
               </span>
             </div>
-            <p className="text-sm text-white font-medium">{statusConfig[status].labelHe}</p>
+            <p className="text-sm text-white font-medium">{statusConfig[status].label}</p>
             <p className="text-xs text-slate-400">{statusConfig[status].label}</p>
           </button>
         ))}
@@ -294,14 +288,13 @@ export default function TherapistApplicationsPage() {
             </div>
             <input
               type="text"
-              placeholder="חיפוש לפי שם או רישיון... / Search by name or license..."
+              placeholder="Search לפי Name or License... / Search by name or license..."
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
               className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              dir="rtl"
             />
           </div>
 
@@ -317,7 +310,7 @@ export default function TherapistApplicationsPage() {
                 : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
             }`}
           >
-            הכל ({statusCounts['ALL'] ?? 0})
+            All ({statusCounts['ALL'] ?? 0})
           </button>
         </div>
       </div>
@@ -328,12 +321,12 @@ export default function TherapistApplicationsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">מטפל / Therapist</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">רישיון / License</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">שלמות פרופיל</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">ימים בתור</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">סטטוס</th>
-                <th className="text-center px-6 py-4 text-sm font-medium text-slate-400">פעולות / Actions</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Therapist / Therapist</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">License / License</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">שלמs פרופיל</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">ימs בתור</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Status</th>
+                <th className="text-center px-6 py-4 text-sm font-medium text-slate-400">Actions / Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -341,14 +334,14 @@ export default function TherapistApplicationsPage() {
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500 mx-auto"></div>
-                    <p className="text-slate-400 mt-2">טוען נתונים...</p>
+                    <p className="text-slate-400 mt-2">Loading נתונs...</p>
                   </td>
                 </tr>
               ) : data?.applications.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center">
                     <div className="text-4xl mb-4">✨</div>
-                    <p className="text-white font-medium">אין בקשות לסקירה</p>
+                    <p className="text-white font-medium">אין בקשs לסקירה</p>
                     <p className="text-slate-400 text-sm mt-1">No applications to review</p>
                   </td>
                 </tr>
@@ -393,7 +386,7 @@ export default function TherapistApplicationsPage() {
                       {/* License */}
                       <td className="px-6 py-4">
                         <span className="text-sm text-white font-mono">{therapist.licenseNumber}</span>
-                        <p className="text-xs text-slate-400">{therapist.yearsOfExperience} שנות ניסיון</p>
+                        <p className="text-xs text-slate-400">{therapist.yearsOfExperience} years experience</p>
                       </td>
 
                       {/* Profile Completeness */}
@@ -406,7 +399,7 @@ export default function TherapistApplicationsPage() {
                         <div className="flex items-center gap-2">
                           <ClockIcon />
                           <span className={`text-sm ${isUrgent ? 'text-red-400 font-bold' : 'text-white'}`}>
-                            {therapist.daysInQueue} ימים
+                            {therapist.daysInQueue} ימs
                           </span>
                         </div>
                         {isUrgent && (
@@ -417,7 +410,7 @@ export default function TherapistApplicationsPage() {
                       {/* Status */}
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-full border ${statusConfig[status]?.color}`}>
-                          {statusConfig[status]?.icon} {statusConfig[status]?.labelHe}
+                          {statusConfig[status]?.icon} {statusConfig[status]?.label}
                         </span>
                       </td>
 
@@ -428,7 +421,7 @@ export default function TherapistApplicationsPage() {
                           <a
                             href={`/admin/therapists/${therapist.id}`}
                             className="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition-colors"
-                            title="צפה בפרטים"
+                            title="צפה בDetails"
                           >
                             <EyeIcon />
                           </a>
@@ -440,7 +433,7 @@ export default function TherapistApplicationsPage() {
                                 onClick={() => handleApprove(therapist.id)}
                                 disabled={approveMutation.isPending}
                                 className="p-2 text-green-400 hover:text-green-300 hover:bg-green-500/20 rounded-lg transition-colors disabled:opacity-50"
-                                title="אשר מטפל"
+                                title="Approve Therapist"
                               >
                                 <CheckIcon />
                               </button>
@@ -450,7 +443,7 @@ export default function TherapistApplicationsPage() {
                                   setShowRejectModal(true);
                                 }}
                                 className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors"
-                                title="דחה בקשה"
+                                title="Decline בקשה"
                               >
                                 <XIcon />
                               </button>
@@ -460,7 +453,7 @@ export default function TherapistApplicationsPage() {
                                   setShowDocumentModal(true);
                                 }}
                                 className="p-2 text-amber-400 hover:text-amber-300 hover:bg-amber-500/20 rounded-lg transition-colors"
-                                title="בקש מסמכים"
+                                title="בקש מסמכs"
                               >
                                 <FileIcon />
                               </button>
@@ -474,7 +467,7 @@ export default function TherapistApplicationsPage() {
                                 setShowSuspendModal(true);
                               }}
                               className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-500/20 rounded-lg transition-colors"
-                              title="השעה מטפל"
+                              title="הTime Therapist"
                             >
                               <SuspendIcon />
                             </button>
@@ -485,7 +478,7 @@ export default function TherapistApplicationsPage() {
                               onClick={() => handleUnsuspend(therapist.id)}
                               disabled={unsuspendMutation.isPending}
                               className="p-2 text-green-400 hover:text-green-300 hover:bg-green-500/20 rounded-lg transition-colors disabled:opacity-50"
-                              title="בטל השעיה"
+                              title="Cancel השעיה"
                             >
                               <CheckIcon />
                             </button>
@@ -498,7 +491,7 @@ export default function TherapistApplicationsPage() {
                                 setShowDocumentModal(true);
                               }}
                               className="p-2 text-amber-400 hover:text-amber-300 hover:bg-amber-500/20 rounded-lg transition-colors"
-                              title="שלח תזכורת"
+                              title="Send תזכורת"
                             >
                               <FileIcon />
                             </button>
@@ -517,9 +510,9 @@ export default function TherapistApplicationsPage() {
         {data && data.pagination.totalPages > 1 && (
           <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700">
             <p className="text-sm text-slate-400">
-              מציג {(page - 1) * data.pagination.limit + 1} עד{' '}
-              {Math.min(page * data.pagination.limit, data.pagination.total)} מתוך{' '}
-              {data.pagination.total} בקשות
+              Displays {(page - 1) * data.pagination.limit + 1} up to{' '}
+              {Math.min(page * data.pagination.limit, data.pagination.total)} of{' '}
+              {data.pagination.total} בקשs
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -527,17 +520,17 @@ export default function TherapistApplicationsPage() {
                 disabled={page === data.pagination.totalPages}
                 className="px-4 py-2 text-sm bg-slate-700 text-white rounded-lg hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                הבא ←
+                Next ←
               </button>
               <span className="text-sm text-white px-4">
-                עמוד {page} מתוך {data.pagination.totalPages}
+                Page {page} of {data.pagination.totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
                 className="px-4 py-2 text-sm bg-slate-700 text-white rounded-lg hover:bg-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                → הקודם
+                → Previous
               </button>
             </div>
           </div>
@@ -551,19 +544,18 @@ export default function TherapistApplicationsPage() {
       {/* Reject Modal */}
       {showRejectModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md mx-4" dir="rtl">
-            <h3 className="text-lg font-semibold text-white mb-2">❌ דחה בקשת מטפל</h3>
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-white mb-2">❌ Decline בקשת Therapist</h3>
             <p className="text-sm text-slate-400 mb-4">Reject Therapist Application</p>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              placeholder="סיבת הדחייה (לפחות 10 תווים)..."
+              placeholder="סיבת הRejection (at least 10 characters)..."
               rows={4}
               className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
-              dir="rtl"
             />
             <p className="text-xs text-slate-500 mt-2">
-              המטפל יקבל הודעה עם סיבת הדחייה
+              הTherapist יקבל Message With סיבת הRejection
             </p>
             <div className="flex justify-start gap-3 mt-4">
               <button
@@ -571,7 +563,7 @@ export default function TherapistApplicationsPage() {
                 disabled={rejectReason.length < 10 || rejectMutation.isPending}
                 className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
               >
-                {rejectMutation.isPending ? '...מעבד' : 'אשר דחייה'}
+                {rejectMutation.isPending ? '...מעבד' : 'Approve Rejection'}
               </button>
               <button
                 onClick={() => {
@@ -581,7 +573,7 @@ export default function TherapistApplicationsPage() {
                 }}
                 className="px-4 py-2 text-sm bg-slate-700 text-white rounded-lg hover:bg-slate-600"
               >
-                ביטול
+                Cancel
               </button>
             </div>
           </div>
@@ -591,19 +583,18 @@ export default function TherapistApplicationsPage() {
       {/* Suspend Modal */}
       {showSuspendModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md mx-4" dir="rtl">
-            <h3 className="text-lg font-semibold text-white mb-2">⛔ השעה מטפל</h3>
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-white mb-2">⛔ הTime Therapist</h3>
             <p className="text-sm text-slate-400 mb-4">Suspend Therapist</p>
             <textarea
               value={suspendReason}
               onChange={(e) => setSuspendReason(e.target.value)}
-              placeholder="סיבת ההשעיה (לפחות 10 תווים)..."
+              placeholder="סיבת ההשעיה (at least 10 characters)..."
               rows={4}
               className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
-              dir="rtl"
             />
             <p className="text-xs text-slate-500 mt-2">
-              המטפל לא יהיה גלוי במערכת עד לביטול ההשעיה
+              הTherapist No יהיה גלוי במערכת up to לCancel ההשעיה
             </p>
             <div className="flex justify-start gap-3 mt-4">
               <button
@@ -611,7 +602,7 @@ export default function TherapistApplicationsPage() {
                 disabled={suspendReason.length < 10 || suspendMutation.isPending}
                 className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
               >
-                {suspendMutation.isPending ? '...מעבד' : 'אשר השעיה'}
+                {suspendMutation.isPending ? '...מעבד' : 'Approve השעיה'}
               </button>
               <button
                 onClick={() => {
@@ -621,7 +612,7 @@ export default function TherapistApplicationsPage() {
                 }}
                 className="px-4 py-2 text-sm bg-slate-700 text-white rounded-lg hover:bg-slate-600"
               >
-                ביטול
+                Cancel
               </button>
             </div>
           </div>
@@ -631,19 +622,18 @@ export default function TherapistApplicationsPage() {
       {/* Request Documents Modal */}
       {showDocumentModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md mx-4" dir="rtl">
-            <h3 className="text-lg font-semibold text-white mb-2">📋 בקש מסמכים נוספים</h3>
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md mx-4">
+            <h3 className="text-lg font-semibold text-white mb-2">📋 בקש מסמכs נוספs</h3>
             <p className="text-sm text-slate-400 mb-4">Request Additional Documents</p>
             <textarea
               value={documentNote}
               onChange={(e) => setDocumentNote(e.target.value)}
-              placeholder="פרט אילו מסמכים נדרשים..."
+              placeholder="פרט אילו מסמכs Requireds..."
               rows={4}
               className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
-              dir="rtl"
             />
             <p className="text-xs text-slate-500 mt-2">
-              המטפל יקבל הודעה עם בקשת המסמכים
+              הTherapist יקבל Message With בקשת המסמכs
             </p>
             <div className="flex justify-start gap-3 mt-4">
               <button
@@ -651,7 +641,7 @@ export default function TherapistApplicationsPage() {
                 disabled={documentNote.length < 5 || requestDocumentsMutation.isPending}
                 className="px-4 py-2 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50"
               >
-                {requestDocumentsMutation.isPending ? '...שולח' : 'שלח בקשה'}
+                {requestDocumentsMutation.isPending ? '...שולח' : 'Send בקשה'}
               </button>
               <button
                 onClick={() => {
@@ -661,7 +651,7 @@ export default function TherapistApplicationsPage() {
                 }}
                 className="px-4 py-2 text-sm bg-slate-700 text-white rounded-lg hover:bg-slate-600"
               >
-                ביטול
+                Cancel
               </button>
             </div>
           </div>

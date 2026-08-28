@@ -41,10 +41,10 @@ const MapPinIcon = () => (
 );
 
 const DAY_NAMES_HE = ['א\'', 'ב\'', 'ג\'', 'ד\'', 'ה\'', 'ו\'', 'ש\''];
-const DAY_NAMES_FULL_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+const DAY_NAMES_FULL_HE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTH_NAMES_HE = [
   'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
-  'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'
+  'יולי', 'orגוסט', 'ספטמבר', 'orקGoodר', 'נובמבר', 'דצמבר'
 ];
 
 interface PatientBookingProps {
@@ -168,25 +168,25 @@ export function PatientBooking({
 
   if (bookingSuccess) {
     return (
-      <Card dir="rtl">
+      <Card>
         <CardContent className="py-12 text-center">
           <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-green-600">
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">הפגישה נקבעה בהצלחה!</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">הSession נקבעה בהצלחה!</h3>
           <p className="text-gray-600 mb-4">
-            קבעתם פגישה עם {therapistName}
+            קבעתם Session With {therapistName}
             <br />
             {selectedSlot && (
               <>
-                יום {DAY_NAMES_FULL_HE[new Date(selectedSlot.date).getDay()]} בשעה {selectedSlot.startTime}
+                יום {DAY_NAMES_FULL_HE[new Date(selectedSlot.date).getDay()]} בTime {selectedSlot.startTime}
               </>
             )}
           </p>
           <p className="text-sm text-gray-500">
-            תקבלו הודעה עם אישור הפגישה בקרוב.
+            תקבלו Message With Confirm הSession Coming soon.
           </p>
         </CardContent>
       </Card>
@@ -194,10 +194,10 @@ export function PatientBooking({
   }
 
   return (
-    <Card dir="rtl">
+    <Card>
       <CardHeader className="border-b">
-        <CardTitle className="text-lg">קביעת פגישה</CardTitle>
-        <CardDescription>בחרו תאריך ושעה מהזמינות של {therapistName}</CardDescription>
+        <CardTitle className="text-lg">Booking Session</CardTitle>
+        <CardDescription>בחרו Date וTime מהAvailability של {therapistName}</CardDescription>
       </CardHeader>
 
       <CardContent className="p-0">
@@ -259,7 +259,7 @@ export function PatientBooking({
                   {/* Time slots */}
                   <div className="p-1.5 space-y-1">
                     {daySlots.length === 0 && !isPast && (
-                      <p className="text-xs text-gray-400 text-center py-4">אין זמינות</p>
+                      <p className="text-xs text-gray-400 text-center py-4">אין Availability</p>
                     )}
                     {daySlots.map((slot) => {
                       const isSelected = selectedSlot?.date === slot.date && selectedSlot?.startTime === slot.startTime;
@@ -306,7 +306,7 @@ export function PatientBooking({
 
             {/* Session type selection */}
             <div className="mb-4">
-              <p className="text-sm font-medium text-gray-700 mb-2">סוג פגישה</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">Type Session</p>
               <div className="flex gap-2">
                 <button
                   type="button"
@@ -319,7 +319,7 @@ export function PatientBooking({
                   )}
                 >
                   <VideoIcon />
-                  <span>מקוון</span>
+                  <span>Online</span>
                 </button>
                 <button
                   type="button"
@@ -332,7 +332,7 @@ export function PatientBooking({
                   )}
                 >
                   <MapPinIcon />
-                  <span>פרונטלי</span>
+                  <span>In-Person</span>
                 </button>
               </div>
             </div>
@@ -340,12 +340,12 @@ export function PatientBooking({
             {/* Notes */}
             <div className="mb-4">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
-                הערות (אופציונלי)
+                הערs (Optional)
               </label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="מה תרצו לשתף עם המטפל/ת לפני הפגישה?"
+                placeholder="מה תרצו לשתף With הTherapist לפני הSession?"
                 className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-calm-500 focus:border-transparent"
                 rows={2}
               />
@@ -358,7 +358,7 @@ export function PatientBooking({
               onClick={handleBook}
               loading={bookMutation.isPending}
             >
-              אישור קביעת פגישה
+              Confirm Booking Session
             </Button>
 
             {bookMutation.error && (

@@ -231,18 +231,18 @@ export function createSessionEvent(session: {
   const endDate = new Date(session.scheduledAt);
   endDate.setMinutes(endDate.getMinutes() + session.duration);
 
-  let description = `פגישה טיפולית עם ${session.therapistName}`;
+  let description = `Therapy session with ${session.therapistName}`;
   if (session.notes) {
     description += `\n\n${session.notes}`;
   }
 
   return {
-    title: `פגישה עם ${session.therapistName}`,
+    title: `Session With ${session.therapistName}`,
     description,
     startDate: session.scheduledAt,
     endDate,
     isOnline: session.isOnline,
-    location: session.isOnline ? 'פגישה מקוונת' : session.location,
+    location: session.isOnline ? 'Online Session' : session.location,
     meetingUrl: session.meetingUrl,
     reminder: 60, // 1 hour before
   };

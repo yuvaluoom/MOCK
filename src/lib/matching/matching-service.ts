@@ -210,37 +210,37 @@ export class MatchingService {
       components: [
         {
           key: 'specialization',
-          label: 'התמחות / Specialization',
+          label: 'Specialization / Specialization',
           score: result.componentScores.specialization,
           weight: this.weights.specializationWeight,
         },
         {
           key: 'availability',
-          label: 'זמינות / Availability',
+          label: 'Availability / Availability',
           score: result.componentScores.availability,
           weight: this.weights.availabilityWeight,
         },
         {
           key: 'language',
-          label: 'שפה / Language',
+          label: 'Language / Language',
           score: result.componentScores.language,
           weight: this.weights.languageWeight,
         },
         {
           key: 'location',
-          label: 'מיקום / Location',
+          label: 'Location / Location',
           score: result.componentScores.location,
           weight: this.weights.locationWeight,
         },
         {
           key: 'experience',
-          label: 'ניסיון / Experience',
+          label: 'Experience / Experience',
           score: result.componentScores.experience,
           weight: this.weights.experienceWeight,
         },
         {
           key: 'price',
-          label: 'מחיר / Price',
+          label: 'Price / Price',
           score: result.componentScores.price,
           weight: this.weights.priceWeight,
         },

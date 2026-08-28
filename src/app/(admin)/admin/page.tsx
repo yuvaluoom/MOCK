@@ -164,45 +164,45 @@ function StatCard({
 
 // ============ APPROVAL STATUS BADGE ============
 function StatusBadge({ status }: { status: string }) {
-  const statusConfig: Record<string, { color: string; label: string; labelHe: string }> = {
-    PENDING_INFO: { color: 'bg-yellow-500/20 text-yellow-400', label: 'Pending Info', labelHe: 'ממתין למידע' },
-    AWAITING_APPROVAL: { color: 'bg-amber-500/20 text-amber-400', label: 'Awaiting Review', labelHe: 'ממתין לאישור' },
-    APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'Approved', labelHe: 'מאושר' },
-    REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'Rejected', labelHe: 'נדחה' },
-    SUSPENDED: { color: 'bg-gray-500/20 text-gray-400', label: 'Suspended', labelHe: 'מושעה' },
+  const statusConfig: Record<string, { color: string; label: string }> = {
+    PENDING_INFO: { color: 'bg-yellow-500/20 text-yellow-400', label: 'Pending Info' },
+    AWAITING_APPROVAL: { color: 'bg-amber-500/20 text-amber-400', label: 'Awaiting Review' },
+    APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'Approved' },
+    REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'Rejected' },
+    SUSPENDED: { color: 'bg-gray-500/20 text-gray-400', label: 'Suspended' },
   };
 
-  const config = statusConfig[status] || { color: 'bg-slate-500/20 text-slate-400', label: status, labelHe: status };
+  const config = statusConfig[status] || { color: 'bg-slate-500/20 text-slate-400', label: status };
 
   return (
     <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${config.color}`}>
-      {config.labelHe}
+      {config.label}
     </span>
   );
 }
 
 // ============ TAB DEFINITIONS ============
 const tabs = [
-  { id: 'overview' as TabId, name: 'סקירה כללית', nameEn: 'Overview', icon: DashboardIcon },
-  { id: 'therapists' as TabId, name: 'אישור מטפלים', nameEn: 'Therapist Approvals', icon: TherapistIcon },
-  { id: 'sessions' as TabId, name: 'ניטור פגישות', nameEn: 'Sessions', icon: CalendarIcon },
-  { id: 'notifications' as TabId, name: 'יומן התראות', nameEn: 'Notifications', icon: BellIcon },
-  { id: 'realtime' as TabId, name: 'זמן אמת', nameEn: 'Real-Time', icon: LiveIcon },
-  { id: 'match-insights' as TabId, name: 'תובנות התאמה', nameEn: 'Match Insights', icon: MatchIcon },
+  { id: 'overview' as TabId, name: 'Overview', icon: DashboardIcon },
+  { id: 'therapists' as TabId, name: 'Therapist Approvals', icon: TherapistIcon },
+  { id: 'sessions' as TabId, name: 'Session Monitoring', icon: CalendarIcon },
+  { id: 'notifications' as TabId, name: 'Alert Log', icon: BellIcon },
+  { id: 'realtime' as TabId, name: 'Real-Time', icon: LiveIcon },
+  { id: 'match-insights' as TabId, name: 'Match Insights', icon: MatchIcon },
 ];
 
 // ============ MAIN DASHBOARD COMPONENT ============
 // ============ EVENT TYPE LABELS ============
-const EVENT_LABELS: Record<string, { label: string; labelHe: string; color: string }> = {
-  USER_CREATED:              { label: 'User Created',        labelHe: 'משתמש נוצר',        color: 'text-blue-400' },
-  USER_UPDATED:              { label: 'User Updated',        labelHe: 'משתמש עודכן',        color: 'text-blue-300' },
-  THERAPIST_STATUS_CHANGED:  { label: 'Status Changed',      labelHe: 'סטטוס מטפל שונה',    color: 'text-amber-400' },
-  THERAPIST_PROFILE_UPDATED: { label: 'Profile Updated',     labelHe: 'פרופיל עודכן',       color: 'text-purple-400' },
-  SESSION_STATUS_CHANGED:    { label: 'Session Update',      labelHe: 'פגישה עודכנה',       color: 'text-green-400' },
-  NOTIFICATION_CREATED:      { label: 'Notification',        labelHe: 'התראה חדשה',         color: 'text-cyan-400' },
-  MATCH_UPDATED:             { label: 'Match Updated',       labelHe: 'התאמה עודכנה',       color: 'text-pink-400' },
-  EMAIL_SENT:                { label: 'Email Sent',          labelHe: 'אימייל נשלח',        color: 'text-green-300' },
-  AUDIT_LOG_CREATED:         { label: 'Audit Log',           labelHe: 'יומן ביקורת',        color: 'text-slate-400' },
+const EVENT_LABELS: Record<string, { label: string; color: string }> = {
+  USER_CREATED:              { label: 'User Created',        color: 'text-blue-400' },
+  USER_UPDATED:              { label: 'User Updated',        color: 'text-blue-300' },
+  THERAPIST_STATUS_CHANGED:  { label: 'Status Changed',      color: 'text-amber-400' },
+  THERAPIST_PROFILE_UPDATED: { label: 'Profile Updated',     color: 'text-purple-400' },
+  SESSION_STATUS_CHANGED:    { label: 'Session Update',      color: 'text-green-400' },
+  NOTIFICATION_CREATED:      { label: 'Notification',        color: 'text-cyan-400' },
+  MATCH_UPDATED:             { label: 'Match Updated',       color: 'text-pink-400' },
+  EMAIL_SENT:                { label: 'Email Sent',          color: 'text-green-300' },
+  AUDIT_LOG_CREATED:         { label: 'Audit Log',           color: 'text-slate-400' },
 };
 
 export default function AdminDashboard() {
@@ -240,13 +240,13 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">לוח בקרה / Dashboard</h1>
+          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
           <p className="text-slate-400 mt-1">
-            ניהול ומעקב אחר פעילות הפלטפורמה
+            Manage and monitor platform activity
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -261,14 +261,14 @@ export default function AdminDashboard() {
             <span className={`w-2 h-2 rounded-full ${
               isConnected ? 'bg-green-400 animate-pulse' : connectionStatus === 'reconnecting' ? 'bg-amber-400 animate-pulse' : 'bg-red-400'
             }`} />
-            {isConnected ? 'LIVE' : connectionStatus === 'reconnecting' ? 'מתחבר...' : 'מנותק'}
+            {isConnected ? 'LIVE' : connectionStatus === 'reconnecting' ? 'Connecting...' : 'Disconnected'}
           </span>
 
           {/* Event counter */}
           {eventCount > 0 && (
             <span className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-blue-500/20 text-blue-400 rounded-full">
               <LiveIcon className="w-3 h-3" />
-              {eventCount} אירועים
+              {eventCount} events
             </span>
           )}
         </div>
@@ -312,28 +312,28 @@ export default function AdminDashboard() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard
-                title="סה״כ מטופלים"
+                title="Total Patients"
                 value={stats?.patients.total ?? 0}
                 icon={UsersIcon}
                 color="blue"
                 href="/admin/users"
               />
               <StatCard
-                title="מטפלים פעילים"
+                title="Active Therapists"
                 value={stats?.therapists.approved ?? 0}
                 icon={TherapistIcon}
                 color="green"
                 href="/admin/therapists"
               />
               <StatCard
-                title="סה״כ פגישות"
+                title="Total Sessions"
                 value={stats?.sessions.total ?? 0}
                 icon={CalendarIcon}
                 color="purple"
                 href="/admin/sessions"
               />
               <StatCard
-                title="ממתינים לאישור"
+                title="Pending Approval"
                 value={stats?.therapists.awaitingApproval ?? 0}
                 icon={ClockIcon}
                 color="amber"
@@ -348,13 +348,13 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between p-4 border-b border-slate-700">
                   <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                     <ClockIcon className="w-5 h-5 text-amber-400" />
-                    ממתינים לאישור
+                    Pending Approval
                   </h3>
                   <Link
                     href="/admin/therapists"
                     className="text-sm text-amber-400 hover:text-amber-300 flex items-center gap-1"
                   >
-                    הצג הכל
+                    Show All
                     <ChevronRightIcon className="w-4 h-4 rotate-180" />
                   </Link>
                 </div>
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                   {pendingTherapists?.applications.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-8 text-slate-400">
                       <CheckIcon className="w-12 h-12 mb-4 text-green-400" />
-                      <p>אין מטפלים הממתינים לאישור</p>
+                      <p>No therapists pending approval</p>
                     </div>
                   ) : (
                     <div className="space-y-3">
@@ -382,7 +382,7 @@ export default function AdminDashboard() {
                                 {therapist.firstName} {therapist.lastName}
                               </p>
                               <p className="text-xs text-slate-400">
-                                {therapist.city} • {therapist.daysInQueue} ימים בתור
+                                {therapist.city} • {therapist.daysInQueue} days in queue
                               </p>
                             </div>
                           </div>
@@ -390,7 +390,7 @@ export default function AdminDashboard() {
                             href={`/admin/therapists/${therapist.id}`}
                             className="px-3 py-1.5 text-xs font-medium bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
                           >
-                            בדוק
+                            Review
                           </Link>
                         </div>
                       ))}
@@ -404,13 +404,13 @@ export default function AdminDashboard() {
                 <div className="flex items-center justify-between p-4 border-b border-slate-700">
                   <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                     <AlertIcon className="w-5 h-5 text-blue-400" />
-                    פעילות אחרונה
+                    Recent Activity
                   </h3>
                   <Link
                     href="/admin/audit"
                     className="text-sm text-amber-400 hover:text-amber-300 flex items-center gap-1"
                   >
-                    יומן מלא
+                    Full Log
                     <ChevronRightIcon className="w-4 h-4 rotate-180" />
                   </Link>
                 </div>
@@ -418,7 +418,7 @@ export default function AdminDashboard() {
                   {auditLogs?.logs.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-8 text-slate-400">
                       <AlertIcon className="w-12 h-12 mb-4" />
-                      <p>אין פעילות אחרונה</p>
+                      <p>No recent activity</p>
                     </div>
                   ) : (
                     <div className="space-y-3">
@@ -437,7 +437,7 @@ export default function AdminDashboard() {
                               <span className="font-medium">{log.action}</span>
                             </p>
                             <p className="text-xs text-slate-500 mt-0.5">
-                              {log.userName} • {new Date(log.createdAt).toLocaleString('he-IL')}
+                              {log.userName} • {new Date(log.createdAt).toLocaleString('en-US')}
                             </p>
                           </div>
                           {log.emailTriggered && (
@@ -454,7 +454,7 @@ export default function AdminDashboard() {
             {/* System Health — Live */}
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                בריאות המערכת
+                System Health
                 {isConnected && (
                   <span className="px-2 py-0.5 text-[10px] font-bold bg-green-500/20 text-green-400 rounded-full uppercase tracking-wider">live</span>
                 )}
@@ -463,30 +463,30 @@ export default function AdminDashboard() {
                 <div className="flex items-center gap-4">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                   <div>
-                    <p className="text-sm font-medium text-white">שרת API</p>
-                    <p className="text-xs text-slate-400">פעיל • זמינות 99.9%</p>
+                    <p className="text-sm font-medium text-white">API Server</p>
+                    <p className="text-xs text-slate-400">Active • 99.9% uptime</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                   <div>
-                    <p className="text-sm font-medium text-white">מסד נתונים</p>
-                    <p className="text-xs text-slate-400">מחובר • 12ms השהיה</p>
+                    <p className="text-sm font-medium text-white">Database</p>
+                    <p className="text-xs text-slate-400">Connected • 12ms latency</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                   <div>
-                    <p className="text-sm font-medium text-white">שירות אימייל</p>
-                    <p className="text-xs text-slate-400">פעיל • 0 בתור</p>
+                    <p className="text-sm font-medium text-white">Email Service</p>
+                    <p className="text-xs text-slate-400">Active • 0 in queue</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-green-400 animate-pulse' : 'bg-red-400'}`} />
                   <div>
-                    <p className="text-sm font-medium text-white">ערוץ זמן-אמת</p>
+                    <p className="text-sm font-medium text-white">Real-Time Channel</p>
                     <p className="text-xs text-slate-400">
-                      {isConnected ? `מחובר • ${eventCount} אירועים` : connectionStatus === 'reconnecting' ? 'מתחבר מחדש...' : 'מנותק'}
+                      {isConnected ? `Connected • ${eventCount} events` : connectionStatus === 'reconnecting' ? 'Reconnecting...' : 'Disconnected'}
                     </p>
                   </div>
                 </div>
@@ -497,8 +497,8 @@ export default function AdminDashboard() {
                 <div className="mt-4 pt-4 border-t border-slate-700 flex items-center gap-3">
                   <LiveIcon className="w-4 h-4 text-amber-400 animate-pulse" />
                   <p className="text-xs text-slate-400">
-                    אירוע אחרון: <span className={EVENT_LABELS[lastEvent.type]?.color ?? 'text-white'}>{EVENT_LABELS[lastEvent.type]?.labelHe ?? lastEvent.type}</span>
-                    {' '}• {new Date(lastEvent.timestamp).toLocaleTimeString('he-IL')}
+                    Last event: <span className={EVENT_LABELS[lastEvent.type]?.color ?? 'text-white'}>{EVENT_LABELS[lastEvent.type]?.label ?? lastEvent.type}</span>
+                    {' '}• {new Date(lastEvent.timestamp).toLocaleTimeString('en-US')}
                   </p>
                 </div>
               )}
@@ -512,11 +512,11 @@ export default function AdminDashboard() {
             {/* Status Summary Cards */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { status: 'PENDING_INFO', label: 'ממתין למידע', count: stats?.therapists.pendingInfo ?? 0, color: 'yellow' },
-                { status: 'AWAITING_APPROVAL', label: 'ממתין לאישור', count: stats?.therapists.awaitingApproval ?? 0, color: 'amber' },
-                { status: 'APPROVED', label: 'מאושר', count: stats?.therapists.approved ?? 0, color: 'green' },
-                { status: 'REJECTED', label: 'נדחה', count: stats?.therapists.rejected ?? 0, color: 'red' },
-                { status: 'SUSPENDED', label: 'מושעה', count: stats?.therapists.suspended ?? 0, color: 'gray' },
+                { status: 'PENDING_INFO', label: 'Pending Info', count: stats?.therapists.pendingInfo ?? 0, color: 'yellow' },
+                { status: 'AWAITING_APPROVAL', label: 'Awaiting Approval', count: stats?.therapists.awaitingApproval ?? 0, color: 'amber' },
+                { status: 'APPROVED', label: 'Approved', count: stats?.therapists.approved ?? 0, color: 'green' },
+                { status: 'REJECTED', label: 'Rejected', count: stats?.therapists.rejected ?? 0, color: 'red' },
+                { status: 'SUSPENDED', label: 'Suspended', count: stats?.therapists.suspended ?? 0, color: 'gray' },
               ].map((item) => (
                 <div
                   key={item.status}
@@ -531,23 +531,23 @@ export default function AdminDashboard() {
             {/* Therapist Applications Table */}
             <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
               <div className="p-4 border-b border-slate-700 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white">כל הבקשות</h3>
+                <h3 className="text-lg font-semibold text-white">All Applications</h3>
                 <Link
                   href="/admin/therapists"
                   className="text-sm text-amber-400 hover:text-amber-300"
                 >
-                  צפייה מפורטת →
+                  Detailed View →
                 </Link>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-slate-700/50">
                     <tr>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">מטפל</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">עיר</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">סטטוס</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">שלמות פרופיל</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">פעולות</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">Therapist</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">City</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">Status</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">Profile Completeness</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-slate-400">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-700">
@@ -591,20 +591,20 @@ export default function AdminDashboard() {
                                   onClick={() => approveMutation.mutate({ therapistId: therapist.id })}
                                   disabled={approveMutation.isPending}
                                   className="p-1.5 text-green-400 hover:bg-green-500/20 rounded transition-colors disabled:opacity-50"
-                                  title="אשר"
+                                  title="Approve"
                                 >
                                   <CheckIcon className="w-4 h-4" />
                                 </button>
                                 <button
                                   onClick={() => {
-                                    const reason = window.prompt('סיבת דחייה:');
+                                    const reason = window.prompt('Rejection reason:');
                                     if (reason) {
                                       rejectMutation.mutate({ therapistId: therapist.id, reason });
                                     }
                                   }}
                                   disabled={rejectMutation.isPending}
                                   className="p-1.5 text-red-400 hover:bg-red-500/20 rounded transition-colors disabled:opacity-50"
-                                  title="דחה"
+                                  title="Reject"
                                 >
                                   <XIcon className="w-4 h-4" />
                                 </button>
@@ -613,7 +613,7 @@ export default function AdminDashboard() {
                             <Link
                               href={`/admin/therapists/${therapist.id}`}
                               className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-600 rounded transition-colors"
-                              title="צפה בפרטים"
+                              title="View Details"
                             >
                               <ChevronRightIcon className="w-4 h-4 rotate-180" />
                             </Link>
@@ -631,10 +631,10 @@ export default function AdminDashboard() {
               <div className="flex items-start gap-3">
                 <AlertIcon className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-sm font-medium text-amber-400">הערה חשובה</h4>
+                  <h4 className="text-sm font-medium text-amber-400">Important note</h4>
                   <p className="text-sm text-slate-300 mt-1">
-                    כל פעולת אישור או דחייה מעדכנת את מסד הנתונים באופן מיידי, שולחת אימייל למטפל,
-                    ומתעדת ביומן הביקורת. מטפלים מאושרים מופיעים מיידית במערכת ההתאמות.
+                    כל פעולת Confirm or Rejection מup toכנת את מסד הנתונs בorפן מיידי, שולחת Email לTherapist,
+                    ומתup toת בLog הביקורת. Therapists Approveds edפיעs מיידית במערכת ההתאמs.
                   </p>
                 </div>
               </div>
@@ -649,34 +649,34 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-white">{stats?.sessions.total ?? 0}</p>
-                <p className="text-xs text-slate-400">סה״כ פגישות</p>
+                <p className="text-xs text-slate-400">Total״כ Sessions</p>
               </div>
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-amber-400">{stats?.sessions.pending ?? 0}</p>
-                <p className="text-xs text-slate-400">ממתינות לאישור</p>
+                <p className="text-xs text-slate-400">Pending Approval</p>
               </div>
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-green-400">{stats?.sessions.approved ?? 0}</p>
-                <p className="text-xs text-slate-400">מאושרות</p>
+                <p className="text-xs text-slate-400">Approveds</p>
               </div>
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-blue-400">{stats?.sessions.completed ?? 0}</p>
-                <p className="text-xs text-slate-400">הושלמו</p>
+                <p className="text-xs text-slate-400">הושלed</p>
               </div>
             </div>
 
             {/* Link to full sessions page */}
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 text-center">
               <CalendarIcon className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">ניטור פגישות מלא</h3>
+              <h3 className="text-lg font-medium text-white mb-2">Session Monitoring מNo</h3>
               <p className="text-sm text-slate-400 mb-4">
-                צפה בכל הפגישות, סנן לפי מטפל או מטופל, ועקוב אחר סטטוסים
+                צפה בAll theSessions, סנן לפי Therapist or Patient, ועקוב Other Statuss
               </p>
               <Link
                 href="/admin/sessions"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
               >
-                לדף הפגישות המלא
+                לדף הSessions המNo
                 <ChevronRightIcon className="w-4 h-4 rotate-180" />
               </Link>
             </div>
@@ -689,12 +689,12 @@ export default function AdminDashboard() {
             {/* Recent Audit Logs */}
             <div className="bg-slate-800 border border-slate-700 rounded-xl">
               <div className="p-4 border-b border-slate-700 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white">יומן פעולות</h3>
+                <h3 className="text-lg font-semibold text-white">Log Actions</h3>
                 <Link
                   href="/admin/audit"
                   className="text-sm text-amber-400 hover:text-amber-300"
                 >
-                  יומן מלא →
+                  Full Log →
                 </Link>
               </div>
               <div className="divide-y divide-slate-700">
@@ -722,7 +722,7 @@ export default function AdminDashboard() {
                           <span className="text-xs text-slate-400">{log.entityType}</span>
                         </div>
                         <p className="text-sm text-slate-400 mt-1">
-                          בוצע ע״י {log.userName}
+                          Completed ע״י {log.userName}
                         </p>
                         <p className="text-xs text-slate-500 mt-1">
                           {new Date(log.createdAt).toLocaleString('he-IL', {
@@ -735,7 +735,7 @@ export default function AdminDashboard() {
                         {log.emailTriggered && (
                           <span className="flex items-center gap-1 px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded">
                             <MailIcon className="w-3 h-3" />
-                            אימייל נשלח
+                            Email נSend
                           </span>
                         )}
                       </div>
@@ -764,19 +764,19 @@ export default function AdminDashboard() {
                     </h3>
                     <p className="text-sm text-slate-400 mt-0.5">
                       {isConnected
-                        ? 'כל פעולה בפלטפורמה מופיעה כאן מיידית ללא ריענון'
-                        : 'מנסה להתחבר מחדש...'}
+                        ? 'כל פעולה בפלטפורמה edפיעה כאן מיידית לNo ריענון'
+                        : 'מנTotal להתחבר מחדש...'}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-white">{eventCount}</p>
-                    <p className="text-xs text-slate-400">אירועים</p>
+                    <p className="text-xs text-slate-400">אירועs</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-white">{eventLog.filter(e => e.entityType !== 'SYSTEM').length}</p>
-                    <p className="text-xs text-slate-400">פעולות</p>
+                    <p className="text-xs text-slate-400">Actions</p>
                   </div>
                 </div>
               </div>
@@ -788,7 +788,7 @@ export default function AdminDashboard() {
               <div className="flex items-center justify-center gap-4 text-sm">
                 <div className="px-4 py-3 bg-blue-500/20 text-blue-400 rounded-lg border border-blue-500/30 text-center">
                   <p className="font-bold">User Platform</p>
-                  <p className="text-xs text-slate-400 mt-1">פעולות משתמש</p>
+                  <p className="text-xs text-slate-400 mt-1">Actions User</p>
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <span className="text-amber-400 text-lg">⟷</span>
@@ -806,19 +806,19 @@ export default function AdminDashboard() {
               <div className="p-4 border-b border-slate-700 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                   <LiveIcon className="w-5 h-5 text-amber-400" />
-                  זרם אירועים חי / Live Event Stream
+                  זרם אירועs חי / Live Event Stream
                 </h3>
                 <span className="text-xs text-slate-500">
-                  {eventLog.length} אירועים בזיכרון
+                  {eventLog.length} אירועs בזיכרון
                 </span>
               </div>
 
               {eventLog.length === 0 ? (
                 <div className="p-12 text-center">
                   <LiveIcon className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                  <h4 className="text-lg font-medium text-slate-400 mb-2">ממתין לאירועים...</h4>
+                  <h4 className="text-lg font-medium text-slate-400 mb-2">Pending Noירועs...</h4>
                   <p className="text-sm text-slate-500 max-w-md mx-auto">
-                    בצע פעולה בפלטפורמה (רישום מטפל, אישור, שליחת הודעה) והיא תופיע כאן מיידית
+                    בצע פעולה בפלטפורמה (רישום Therapist, Confirm, Sending Message) והיא תופיע כאן מיידית
                   </p>
                 </div>
               ) : (
@@ -826,7 +826,7 @@ export default function AdminDashboard() {
                   {eventLog
                     .filter(e => e.entityType !== 'SYSTEM')
                     .map((event) => {
-                      const meta = EVENT_LABELS[event.type] || { label: event.type, labelHe: event.type, color: 'text-slate-400' };
+                      const meta = EVENT_LABELS[event.type] || { label: event.type, color: 'text-slate-400' };
                       return (
                         <div key={event.id} className="p-4 hover:bg-slate-700/30 transition-colors animate-in fade-in slide-in-from-top-2 duration-300">
                           <div className="flex items-start gap-4">
@@ -850,7 +850,7 @@ export default function AdminDashboard() {
                             {/* Event details */}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className={`text-sm font-semibold ${meta.color}`}>{meta.labelHe}</span>
+                                <span className={`text-sm font-semibold ${meta.color}`}>{meta.label}</span>
                                 <span className="text-[10px] text-slate-600 font-mono">{event.type}</span>
                               </div>
                               <p className="text-xs text-slate-400 mt-1">
@@ -915,7 +915,7 @@ function MatchInsightsTab() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-400">מחשב תובנות התאמה...</p>
+          <p className="text-slate-400">מחשב Match Insights...</p>
         </div>
       </div>
     );
@@ -938,11 +938,11 @@ function MatchInsightsTab() {
 
   const qualityLabel = (quality: string) => {
     switch (quality) {
-      case 'excellent': return 'מצוין';
-      case 'great': return 'טוב מאוד';
-      case 'good': return 'טוב';
-      case 'moderate': return 'סביר';
-      case 'low': return 'נמוך';
+      case 'excellent': return 'Excellent';
+      case 'great': return 'Good מorד';
+      case 'good': return 'Good';
+      case 'moderate': return 'Moderate';
+      case 'low': return 'Low';
       default: return quality;
     }
   };
@@ -959,23 +959,23 @@ function MatchInsightsTab() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">ציון ממוצע</p>
+          <p className="text-sm text-slate-400">Average Score</p>
           <p className={`text-3xl font-bold mt-2 ${scoreColor(summary.averageScore)}`}>
             {summary.averageScore}%
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">סה&quot;כ זוגות</p>
+          <p className="text-sm text-slate-400">Total&quot;כ Thisגs</p>
           <p className="text-3xl font-bold text-white mt-2">{summary.totalPairs}</p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">מצוינים + טוב מאוד</p>
+          <p className="text-sm text-slate-400">Excellent + Very Good</p>
           <p className="text-3xl font-bold text-green-400 mt-2">
             {summary.qualityDistribution.excellent + summary.qualityDistribution.great}
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">נמוכים</p>
+          <p className="text-sm text-slate-400">Low</p>
           <p className="text-3xl font-bold text-red-400 mt-2">
             {summary.qualityDistribution.low}
           </p>
@@ -984,30 +984,30 @@ function MatchInsightsTab() {
 
       {/* Quality Distribution Bar */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">התפלגות איכות התאמה</h3>
+        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Match Quality Distribution</h3>
         <div className="flex h-4 rounded-full overflow-hidden gap-0.5">
           {summary.qualityDistribution.excellent > 0 && (
-            <div className="bg-green-500 transition-all" style={{ flex: summary.qualityDistribution.excellent }} title={`מצוין: ${summary.qualityDistribution.excellent}`} />
+            <div className="bg-green-500 transition-all" style={{ flex: summary.qualityDistribution.excellent }} title={`Excellent: ${summary.qualityDistribution.excellent}`} />
           )}
           {summary.qualityDistribution.great > 0 && (
-            <div className="bg-blue-500 transition-all" style={{ flex: summary.qualityDistribution.great }} title={`טוב מאוד: ${summary.qualityDistribution.great}`} />
+            <div className="bg-blue-500 transition-all" style={{ flex: summary.qualityDistribution.great }} title={`Good מorד: ${summary.qualityDistribution.great}`} />
           )}
           {summary.qualityDistribution.good > 0 && (
-            <div className="bg-cyan-500 transition-all" style={{ flex: summary.qualityDistribution.good }} title={`טוב: ${summary.qualityDistribution.good}`} />
+            <div className="bg-cyan-500 transition-all" style={{ flex: summary.qualityDistribution.good }} title={`Good: ${summary.qualityDistribution.good}`} />
           )}
           {summary.qualityDistribution.moderate > 0 && (
-            <div className="bg-amber-500 transition-all" style={{ flex: summary.qualityDistribution.moderate }} title={`סביר: ${summary.qualityDistribution.moderate}`} />
+            <div className="bg-amber-500 transition-all" style={{ flex: summary.qualityDistribution.moderate }} title={`Moderate: ${summary.qualityDistribution.moderate}`} />
           )}
           {summary.qualityDistribution.low > 0 && (
-            <div className="bg-red-500 transition-all" style={{ flex: summary.qualityDistribution.low }} title={`נמוך: ${summary.qualityDistribution.low}`} />
+            <div className="bg-red-500 transition-all" style={{ flex: summary.qualityDistribution.low }} title={`Low: ${summary.qualityDistribution.low}`} />
           )}
         </div>
         <div className="flex justify-between mt-2 text-xs text-slate-500">
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" /> מצוין ({summary.qualityDistribution.excellent})</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500 inline-block" /> טוב מאוד ({summary.qualityDistribution.great})</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-cyan-500 inline-block" /> טוב ({summary.qualityDistribution.good})</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500 inline-block" /> סביר ({summary.qualityDistribution.moderate})</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" /> נמוך ({summary.qualityDistribution.low})</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" /> Excellent ({summary.qualityDistribution.excellent})</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500 inline-block" /> Good מorד ({summary.qualityDistribution.great})</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-cyan-500 inline-block" /> Good ({summary.qualityDistribution.good})</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500 inline-block" /> Moderate ({summary.qualityDistribution.moderate})</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" /> Low ({summary.qualityDistribution.low})</span>
         </div>
       </div>
 
@@ -1016,7 +1016,7 @@ function MatchInsightsTab() {
         <div className="p-4 border-b border-slate-700">
           <h3 className="text-lg font-semibold text-white flex items-center gap-2">
             <MatchIcon className="w-5 h-5 text-amber-400" />
-            פירוט זוגות התאמה
+            Match Pairs Detail
           </h3>
         </div>
 
@@ -1024,13 +1024,13 @@ function MatchInsightsTab() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700 text-right">
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">מטפל/ת</th>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">מטופל/ת</th>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">ציון כולל</th>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">אובייקטיבי</th>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">סובייקטיבי</th>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">איכות</th>
-                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">פרטים</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Therapist</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Patient</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Overall Score</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Objective</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Subjective</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Quality</th>
+                <th className="px-4 py-3 text-xs font-semibold text-slate-400 uppercase tracking-wider text-center">Details</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-700/50">
@@ -1072,7 +1072,7 @@ function MatchInsightsTab() {
                         <div className="bg-slate-900/50 rounded-lg p-4 space-y-4">
                           {/* Factor Breakdown Bars */}
                           <div>
-                            <h4 className="text-sm font-semibold text-slate-300 mb-3">פירוט גורמים</h4>
+                            <h4 className="text-sm font-semibold text-slate-300 mb-3">פירוט גורמs</h4>
                             <div className="grid grid-cols-2 gap-3">
                               {r.factors.map((f) => (
                                 <div key={f.key} className="space-y-1">
@@ -1098,7 +1098,7 @@ function MatchInsightsTab() {
                           {/* Explanation Items */}
                           {r.explanationItems.length > 0 && (
                             <div>
-                              <h4 className="text-sm font-semibold text-slate-300 mb-3">פרטי התאמה</h4>
+                              <h4 className="text-sm font-semibold text-slate-300 mb-3">Private Match</h4>
                               <div className="grid grid-cols-2 gap-2">
                                 {r.explanationItems.map((item, i) => (
                                   <div key={i} className="flex items-center gap-2 text-sm">
@@ -1107,7 +1107,7 @@ function MatchInsightsTab() {
                                     ) : (
                                       <XIcon className="w-4 h-4 text-red-400 flex-shrink-0" />
                                     )}
-                                    <span className={item.matched ? 'text-slate-300' : 'text-slate-500'}>{item.labelHe}</span>
+                                    <span className={item.matched ? 'text-slate-300' : 'text-slate-500'}>{item.labelEn}</span>
                                     <span className="text-xs text-slate-600 mr-auto">[{item.category}]</span>
                                   </div>
                                 ))}
@@ -1119,7 +1119,7 @@ function MatchInsightsTab() {
                           <div className="flex gap-6">
                             {r.topReasons.length > 0 && (
                               <div className="flex-1">
-                                <h4 className="text-sm font-semibold text-green-400 mb-2">סיבות עיקריות</h4>
+                                <h4 className="text-sm font-semibold text-green-400 mb-2">סיבs עיקריs</h4>
                                 <ul className="space-y-1">
                                   {r.topReasons.map((reason, i) => (
                                     <li key={i} className="text-xs text-slate-400 flex items-start gap-1.5">
@@ -1132,7 +1132,7 @@ function MatchInsightsTab() {
                             )}
                             {r.warnings.length > 0 && (
                               <div className="flex-1">
-                                <h4 className="text-sm font-semibold text-amber-400 mb-2">אזהרות</h4>
+                                <h4 className="text-sm font-semibold text-amber-400 mb-2">אזהרs</h4>
                                 <ul className="space-y-1">
                                   {r.warnings.map((warning, i) => (
                                     <li key={i} className="text-xs text-slate-400 flex items-start gap-1.5">

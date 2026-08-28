@@ -75,10 +75,10 @@ export function SocialAuthButtons({
       divider: 'or continue with email',
     },
     he: {
-      google: mode === 'signin' ? 'המשך עם Google' : 'הרשמה עם Google',
-      apple: mode === 'signin' ? 'המשך עם Apple' : 'הרשמה עם Apple',
-      facebook: mode === 'signin' ? 'המשך עם Facebook' : 'הרשמה עם Facebook',
-      divider: 'או המשך עם אימייל',
+      google: mode === 'signin' ? 'Continue with Google' : 'Sign up with Google',
+      apple: mode === 'signin' ? 'Continue with Apple' : 'Sign up with Apple',
+      facebook: mode === 'signin' ? 'Continue with Facebook' : 'Sign up with Facebook',
+      divider: 'or Continue with Email',
     },
   };
 

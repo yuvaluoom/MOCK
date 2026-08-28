@@ -38,10 +38,10 @@ interface ProfilePhotoUploadProps {
 
 const labels = {
   he: {
-    addPhoto: 'הוספת תמונה',
-    changePhoto: 'החלפת תמונה',
-    removePhoto: 'הסרת תמונה',
-    photoGuide: 'תמונה ברורה של הפנים שלך עוזרת למטופלים להרגיש יותר בנוח',
+    addPhoto: 'הוספת Image',
+    changePhoto: 'החלפת Image',
+    removePhoto: 'הסרת Image',
+    photoGuide: 'Image ברורה של הפנs Your עוזרת לPatients להרגיש יsר בנוח',
   },
   en: {
     addPhoto: 'Add Photo',

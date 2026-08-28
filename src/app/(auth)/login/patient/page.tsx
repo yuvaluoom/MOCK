@@ -25,16 +25,16 @@ export default function PatientLoginPage() {
     try {
       // Set mock session cookie so tRPC context recognizes patient role
       document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'PATIENT' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
-      router.push('/dashboard');
+      router.push('/questionnaire');
     } catch (err) {
-      setError('אירעה שגיאה, נסו שוב');
+      setError('An error occurred, please try again');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex flex-col" dir="rtl">
+    <div className="min-h-screen bg-gradient-hero flex flex-col">
       {/* Header */}
       <header className="container mx-auto px-4 py-4">
         <Logo size="lg" href="/" />
@@ -44,9 +44,9 @@ export default function PatientLoginPage() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">ברוכים השבים</CardTitle>
+            <CardTitle className="text-2xl">Welcome Back</CardTitle>
             <CardDescription>
-              התחברו למציאת המטפל/ת המושלמ/ת עבורכם
+              Sign in to find your perfect therapist
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -54,7 +54,7 @@ export default function PatientLoginPage() {
             <SocialAuthButtons
               callbackUrl="/dashboard"
               mode="signin"
-              language="he"
+              language="en"
             />
 
             {/* Email/Password Form */}
@@ -69,7 +69,7 @@ export default function PatientLoginPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">אימייל</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -78,18 +78,17 @@ export default function PatientLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
-                  dir="ltr"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">סיסמה</Label>
+                  <Label htmlFor="password">Password</Label>
                   <Link
                     href="/forgot-password"
                     className="text-sm text-primary hover:underline"
                   >
-                    שכחתם סיסמה?
+                    Forgot password?
                   </Link>
                 </div>
                 <Input
@@ -100,7 +99,6 @@ export default function PatientLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  dir="ltr"
                 />
               </div>
 
@@ -110,25 +108,25 @@ export default function PatientLoginPage() {
                 className="w-full"
                 loading={isLoading}
               >
-                התחברות
+                Sign In
               </Button>
             </form>
 
             {/* Register Link */}
             <p className="mt-6 text-center text-sm text-muted-foreground">
-              אין לכם חשבון?{' '}
+              Don&apos;t have an account?{' '}
               <Link
                 href="/register/patient"
                 className="text-primary hover:underline font-medium"
               >
-                הרשמה עכשיו
+                Register now
               </Link>
             </p>
 
             {/* Demo mode notice */}
             <div className="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
               <p className="text-xs text-blue-700 text-center">
-                <strong>מצב הדגמה:</strong> הכניסו כל אימייל להתחברות
+                <strong>Demo mode:</strong> Enter any email to sign in
               </p>
             </div>
           </CardContent>
@@ -138,13 +136,13 @@ export default function PatientLoginPage() {
       {/* Footer */}
       <footer className="container mx-auto px-4 py-4 text-center text-sm text-muted-foreground">
         <p>
-          בהתחברות אתם מסכימים ל
+          By signing in you agree to the
           <Link href="/terms" className="underline mx-1">
-            תנאי השימוש
+            Terms of Service
           </Link>
-          ול
+          and
           <Link href="/privacy" className="underline mx-1">
-            מדיניות הפרטיות
+            Privacy Policy
           </Link>
         </p>
       </footer>

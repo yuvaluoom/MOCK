@@ -49,17 +49,17 @@ export default function SettingsPage() {
 
   const handleSave = () => {
     // In production, this would call an API to save settings
-    alert('ההגדרות נשמרו בהצלחה!');
+    alert('הSettings נשמרו בהצלחה!');
   };
 
   return (
-    <div dir="rtl" className="space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">הגדרות מערכת</h1>
+          <h1 className="text-2xl font-bold text-white">Settings מערכת</h1>
           <p className="text-slate-400 mt-1">
-            הגדרת התנהגות הפלטפורמה והעדפות
+            הגדרת התנהגs הפלטפורמה והup toOptions
           </p>
         </div>
         <button
@@ -67,14 +67,14 @@ export default function SettingsPage() {
           className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
         >
           <SaveIcon />
-          שמירת שינויים
+          שמירת שינויs
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Matching Algorithm Settings */}
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-6">אלגוריתם התאמה</h2>
+          <h2 className="text-lg font-semibold text-white mb-6">אלגוריתם Match</h2>
           <div className="space-y-6">
             <div>
               <div className="flex justify-between mb-2">
@@ -94,7 +94,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <div className="flex justify-between mb-2">
-                <label className="text-sm text-slate-400">משקל קופת חולים</label>
+                <label className="text-sm text-slate-400">משקל Health Fund</label>
                 <span className="text-white font-medium">{settings.healthFundWeight}%</span>
               </div>
               <input
@@ -110,7 +110,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <div className="flex justify-between mb-2">
-                <label className="text-sm text-slate-400">משקל זמינות</label>
+                <label className="text-sm text-slate-400">משקל Availability</label>
                 <span className="text-white font-medium">{settings.availabilityWeight}%</span>
               </div>
               <input
@@ -126,7 +126,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <div className="flex justify-between mb-2">
-                <label className="text-sm text-slate-400">משקל העדפות</label>
+                <label className="text-sm text-slate-400">משקל הup toOptions</label>
                 <span className="text-white font-medium">{settings.preferencesWeight}%</span>
               </div>
               <input
@@ -142,15 +142,15 @@ export default function SettingsPage() {
             </div>
             <div className="pt-4 border-t border-slate-700">
               <p className="text-sm text-amber-400">
-                סה״כ: {settings.xFactorWeight + settings.healthFundWeight + settings.availabilityWeight + settings.preferencesWeight}%
+                Total״כ: {settings.xFactorWeight + settings.healthFundWeight + settings.availabilityWeight + settings.preferencesWeight}%
                 {settings.xFactorWeight + settings.healthFundWeight + settings.availabilityWeight + settings.preferencesWeight !== 100 && (
-                  <span className="text-red-400 mr-2">(צריך להיות שווה ל-100%)</span>
+                  <span className="text-red-400 mr-2">(צריך להיs שווה ל-100%)</span>
                 )}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div>
-                <label className="text-sm text-slate-400 block mb-2">ציון התאמה מינימלי</label>
+                <label className="text-sm text-slate-400 block mb-2">Match Score מינימלי</label>
                 <input
                   type="number"
                   min="0"
@@ -163,7 +163,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="text-sm text-slate-400 block mb-2">מקסימום התאמות</label>
+                <label className="text-sm text-slate-400 block mb-2">מקסיedם התאמs</label>
                 <input
                   type="number"
                   min="1"
@@ -181,12 +181,12 @@ export default function SettingsPage() {
 
         {/* Notification Settings */}
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-6">התראות</h2>
+          <h2 className="text-lg font-semibold text-white mb-6">Alertorת</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white">התראות אימייל</p>
-                <p className="text-sm text-slate-400">שליחת אימיילים מערכתיים למשתמשים</p>
+                <p className="text-white">Alertorת Email</p>
+                <p className="text-sm text-slate-400">Sending Emails Systemics לUsers</p>
               </div>
               <button
                 onClick={() =>
@@ -205,8 +205,8 @@ export default function SettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white">התראות SMS</p>
-                <p className="text-sm text-slate-400">שליחת תזכורות SMS (עלות נוספת)</p>
+                <p className="text-white">Alertorת SMS</p>
+                <p className="text-sm text-slate-400">Sending תזכורs SMS (עלs נוספת)</p>
               </div>
               <button
                 onClick={() =>
@@ -225,8 +225,8 @@ export default function SettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white">תזכורות פגישות</p>
-                <p className="text-sm text-slate-400">תזכורת למשתמשים לפני פגישות</p>
+                <p className="text-white">תזכורs Sessions</p>
+                <p className="text-sm text-slate-400">תזכורת לUsers לפני Sessions</p>
               </div>
               <button
                 onClick={() =>
@@ -244,7 +244,7 @@ export default function SettingsPage() {
               </button>
             </div>
             <div className="pt-4">
-              <label className="text-sm text-slate-400 block mb-2">זמן תזכורת (שעות לפני)</label>
+              <label className="text-sm text-slate-400 block mb-2">זמן תזכורת (שעs לפני)</label>
               <input
                 type="number"
                 min="1"
@@ -265,7 +265,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-sm text-slate-400 block mb-2">זמן תפוגת חיבור (דקות)</label>
+                <label className="text-sm text-slate-400 block mb-2">זמן תפוגת חיבור (Minutes)</label>
                 <input
                   type="number"
                   min="5"
@@ -278,7 +278,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="text-sm text-slate-400 block mb-2">מקסימום ניסיונות התחברות</label>
+                <label className="text-sm text-slate-400 block mb-2">מקסיedם ניסיונs Sign In</label>
                 <input
                   type="number"
                   min="3"
@@ -294,7 +294,7 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between pt-4">
               <div>
                 <p className="text-white">דרוש MFA</p>
-                <p className="text-sm text-slate-400">אימות דו-שלבי לכל המשתמשים</p>
+                <p className="text-sm text-slate-400">אימs דו-שלבי לAll theUsers</p>
               </div>
               <button
                 onClick={() => setSettings({ ...settings, requireMFA: !settings.requireMFA })}
@@ -310,7 +310,7 @@ export default function SettingsPage() {
               </button>
             </div>
             <div className="pt-4">
-              <label className="text-sm text-slate-400 block mb-2">שמירת יומן ביקורת (ימים)</label>
+              <label className="text-sm text-slate-400 block mb-2">שמירת Log ביקורת (ימs)</label>
               <input
                 type="number"
                 min="30"
@@ -331,8 +331,8 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white">מצב תחזוקה</p>
-                <p className="text-sm text-slate-400">השבתת גישת משתמשים זמנית</p>
+                <p className="text-white">מצב תחThisקה</p>
+                <p className="text-sm text-slate-400">הSatת גישת Users זמנית</p>
               </div>
               <button
                 onClick={() =>
@@ -351,8 +351,8 @@ export default function SettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white">מצב ניפוי שגיאות</p>
-                <p className="text-sm text-slate-400">הפעלת לוגים מפורטים</p>
+                <p className="text-white">מצב ניפוי שגיorת</p>
+                <p className="text-sm text-slate-400">הפעלת לוגs מפורטs</p>
               </div>
               <button
                 onClick={() => setSettings({ ...settings, debugMode: !settings.debugMode })}
@@ -369,8 +369,8 @@ export default function SettingsPage() {
             </div>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white">אפשר רישומים חדשים</p>
-                <p className="text-sm text-slate-400">אפשר למשתמשים חדשים להירשם</p>
+                <p className="text-white">אפשר רישומs חדשs</p>
+                <p className="text-sm text-slate-400">אפשר לUsers חדשs להירName</p>
               </div>
               <button
                 onClick={() =>
@@ -390,7 +390,7 @@ export default function SettingsPage() {
             <div className="pt-4 border-t border-slate-700">
               <button className="flex items-center gap-2 px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors">
                 <RefreshIcon />
-                ניקוי מטמון
+                ניקוי מטedן
               </button>
             </div>
           </div>
@@ -399,16 +399,16 @@ export default function SettingsPage() {
 
       {/* Danger Zone */}
       <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-red-400 mb-4">אזור מסוכן</h2>
+        <h2 className="text-lg font-semibold text-red-400 mb-4">אThisר מסוYes</h2>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <p className="text-white">איפוס כל ההגדרות</p>
+            <p className="text-white">איפוס All theSettings</p>
             <p className="text-sm text-slate-400">
-              שחזור כל ההגדרות לערכי ברירת המחדל. לא ניתן לבטל פעולה זו.
+              שBack All theSettings לערכי ברירת המחדל. No ניתן לCancel פעולה This.
             </p>
           </div>
           <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors whitespace-nowrap">
-            איפוס לברירת מחדל
+            איפוס לdefault
           </button>
         </div>
       </div>

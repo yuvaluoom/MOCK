@@ -71,14 +71,14 @@ export class CsvParser implements IDataParser {
       const lines = this.splitLines(content);
 
       if (lines.length === 0) {
-        errors.push('הקובץ ריק');
+        errors.push('File is empty');
         return { valid: false, errors };
       }
 
       // Check first line for headers
       const firstLine = this.parseLine(lines[0], delimiter);
       if (firstLine.length === 0) {
-        errors.push('לא נמצאו עמודות בשורה הראשונה');
+        errors.push('No Foundor Columns in row הראשונה');
         return { valid: false, errors };
       }
 
@@ -97,7 +97,7 @@ export class CsvParser implements IDataParser {
       }
 
       if (inconsistentRows.length > 0) {
-        errors.push(`שורות עם מספר עמודות לא תואם: ${inconsistentRows.join(', ')}`);
+        errors.push(`שורs With מספר Columns No Match: ${inconsistentRows.join(', ')}`);
       }
 
       // Parse sample rows
@@ -120,7 +120,7 @@ export class CsvParser implements IDataParser {
         sampleRows,
       };
     } catch (error) {
-      errors.push(`שגיאה בקריאת הקובץ: ${error instanceof Error ? error.message : 'שגיאה לא ידועה'}`);
+      errors.push(`Error בקריאת הקובץ: ${error instanceof Error ? error.message : 'Error No Knownה'}`);
       return { valid: false, errors };
     }
   }
@@ -245,10 +245,10 @@ export class CsvParser implements IDataParser {
     const trimmed = value.trim();
 
     // Boolean
-    if (trimmed.toLowerCase() === 'true' || trimmed === 'כן') {
+    if (trimmed.toLowerCase() === 'true' || trimmed === 'Yes') {
       return true;
     }
-    if (trimmed.toLowerCase() === 'false' || trimmed === 'לא') {
+    if (trimmed.toLowerCase() === 'false' || trimmed === 'No') {
       return false;
     }
 

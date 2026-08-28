@@ -47,7 +47,7 @@ export default function SessionDocumentationPage() {
   // Mock session data - replace with tRPC
   const sessionInfo: SessionInfo = {
     id: sessionId,
-    patientName: 'ישראל ישראלי',
+    patientName: 'Israel Israeli',
     patientId: 'patient-1',
     sessionNumber: 5,
     sessionDate: '2024-02-06',
@@ -99,7 +99,7 @@ export default function SessionDocumentationPage() {
 
   const handleSubmit = async () => {
     if (completionPercentage < 100) {
-      alert('נא להשלים את כל השדות החובה לפני הגשה');
+      alert('Please complete all fields הRequired לפני הגשה');
       return;
     }
 
@@ -119,17 +119,17 @@ export default function SessionDocumentationPage() {
 
   const handleExport = async () => {
     // TODO: Implement export
-    alert('ייצוא התיעוד יופעל בקרוב');
+    alert('ייצוא הDocumentation יופעל Coming soon');
   };
 
   const sections = [
-    { id: 'notes' as FormSection, label: 'הערות קליניות', icon: '📝' },
-    { id: 'safety' as FormSection, label: 'הערכת בטיחות', icon: '🛡️' },
-    { id: 'summary' as FormSection, label: 'סיכום למטופל', icon: '📋' },
+    { id: 'notes' as FormSection, label: 'Clinical notes', icon: '📝' },
+    { id: 'safety' as FormSection, label: 'Assessment בטיחs', icon: '🛡️' },
+    { id: 'summary' as FormSection, label: 'Summary forPatient', icon: '📋' },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50" dir="rtl">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -146,11 +146,11 @@ export default function SessionDocumentationPage() {
               <div className="h-6 w-px bg-gray-200" />
               <div>
                 <h1 className="font-semibold text-gray-900">
-                  {sessionInfo.patientName} - פגישה #{sessionInfo.sessionNumber}
+                  {sessionInfo.patientName} - Session #{sessionInfo.sessionNumber}
                 </h1>
                 <p className="text-xs text-gray-500">
                   {new Date(sessionInfo.sessionDate).toLocaleDateString('he-IL')} •
-                  {sessionInfo.sessionType === 'IN_PERSON' ? ' פרונטלי' : ' מקוון'}
+                  {sessionInfo.sessionType === 'IN_PERSON' ? ' In-Person' : ' Online'}
                 </p>
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function SessionDocumentationPage() {
                 ) : hasUnsavedChanges ? (
                   <span className="text-yellow-600 flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    שינויים לא נשמרו
+                    שינויs No נשמרו
                   </span>
                 ) : null}
               </div>
@@ -201,7 +201,7 @@ export default function SessionDocumentationPage() {
                     onClick={() => handleAutoSave(clinicalNotes)}
                     disabled={isSaving || !hasUnsavedChanges}
                   >
-                    שמירה
+                    Save
                   </Button>
                   <Button
                     variant="calm"
@@ -253,17 +253,17 @@ export default function SessionDocumentationPage() {
                   <div className={`mt-4 p-3 rounded-lg ${getRiskLevelStyle(clinicalNotes.riskLevel)}`}>
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="w-5 h-5" />
-                      <span className="font-medium">רמת סיכון: {getRiskLevelLabel(clinicalNotes.riskLevel)}</span>
+                      <span className="font-medium">Risk level: {getRiskLevelLabel(clinicalNotes.riskLevel)}</span>
                     </div>
                   </div>
                 )}
 
                 {/* Version Info */}
                 <div className="mt-4 pt-4 border-t text-sm text-gray-500">
-                  <p>גרסה: {sessionInfo.currentVersion}</p>
+                  <p>גרTotal: {sessionInfo.currentVersion}</p>
                   {sessionInfo.isOverdue && (
                     <p className="text-red-600 mt-1">
-                      מועד אחרון: {new Date(sessionInfo.deadline).toLocaleDateString('he-IL')}
+                      edup to Otherון: {new Date(sessionInfo.deadline).toLocaleDateString('he-IL')}
                     </p>
                   )}
                 </div>
@@ -304,17 +304,17 @@ export default function SessionDocumentationPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <Card className="w-full max-w-md mx-4">
             <CardHeader>
-              <CardTitle>אישור הגשה</CardTitle>
+              <CardTitle>Confirm הגשה</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-gray-600">
-                לאחר ההגשה, התיעוד ייסגר לעריכה רגילה.
-                תיקונים יידרשו הסבר מפורט ויתועדו בהיסטוריית הגרסאות.
+                Noחר ההגשה, הDocumentation ייסגר לEdit רגילה.
+                תיקונs יידרשו הסבר מפורט ויתוup toו בהיסטוריית הגרסorת.
               </p>
               <div className="flex items-start gap-2 p-3 bg-yellow-50 rounded-lg">
                 <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5" />
                 <p className="text-sm text-yellow-800">
-                  נא לוודא שכל המידע הקליני מדויק ומלא לפני ההגשה.
+                  נא לוודא שAll theמידע הקליני מדויק ומNo לפני ההגשה.
                 </p>
               </div>
               <div className="flex gap-3 justify-end">
@@ -322,14 +322,14 @@ export default function SessionDocumentationPage() {
                   variant="outline"
                   onClick={() => setShowSubmitConfirm(false)}
                 >
-                  ביטול
+                  Cancel
                 </Button>
                 <Button
                   variant="calm"
                   onClick={handleSubmit}
                   disabled={isSaving}
                 >
-                  {isSaving ? 'מגיש...' : 'אישור והגשה'}
+                  {isSaving ? 'מגיש...' : 'Confirm והגשה'}
                 </Button>
               </div>
             </CardContent>
@@ -372,16 +372,16 @@ function getStatusBadge(status: DocumentationStatus, isOverdue: boolean) {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
         <AlertTriangle className="w-3 h-3" />
-        באיחור
+        Overdue
       </span>
     );
   }
 
   const config: Record<DocumentationStatus, { label: string; className: string; icon?: React.ReactNode }> = {
-    DRAFT: { label: 'טיוטה', className: 'bg-yellow-100 text-yellow-700' },
+    DRAFT: { label: 'Draft', className: 'bg-yellow-100 text-yellow-700' },
     SUBMITTED: { label: 'הוגש', className: 'bg-green-100 text-green-700', icon: <CheckCircle className="w-3 h-3" /> },
-    AMENDED: { label: 'תוקן', className: 'bg-blue-100 text-blue-700' },
-    LOCKED: { label: 'נעול', className: 'bg-gray-100 text-gray-700', icon: <Lock className="w-3 h-3" /> },
+    AMENDED: { label: 'Fixed', className: 'bg-blue-100 text-blue-700' },
+    LOCKED: { label: 'Locked', className: 'bg-gray-100 text-gray-700', icon: <Lock className="w-3 h-3" /> },
   };
 
   const { label, className, icon } = config[status];
@@ -406,11 +406,11 @@ function getRiskLevelStyle(riskLevel: RiskLevel): string {
 
 function getRiskLevelLabel(riskLevel: RiskLevel): string {
   const labels: Record<RiskLevel, string> = {
-    NONE: 'ללא',
-    LOW: 'נמוך',
+    NONE: 'לNo',
+    LOW: 'Low',
     MODERATE: 'בינוני',
     HIGH: 'גבוה',
-    CRITICAL: 'קריטי',
+    CRITICAL: 'Critical',
   };
   return labels[riskLevel];
 }

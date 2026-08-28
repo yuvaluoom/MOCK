@@ -347,37 +347,37 @@ export interface SystemStateView {
 // =============================================================================
 
 export const APPROVAL_STATUS_LABELS: Record<TherapistApprovalStatus, { en: string; he: string }> = {
-  PENDING_INFO: { en: 'Pending Info', he: 'ממתין למידע' },
-  AWAITING_APPROVAL: { en: 'Awaiting Approval', he: 'ממתין לאישור' },
-  APPROVED: { en: 'Approved', he: 'מאושר' },
-  REJECTED: { en: 'Rejected', he: 'נדחה' },
-  SUSPENDED: { en: 'Suspended', he: 'מושעה' },
-  MISSING_DOCUMENTS: { en: 'Missing Documents', he: 'חסרים מסמכים' },
+  PENDING_INFO: { en: 'Pending Info', he: 'Awaiting information' },
+  AWAITING_APPROVAL: { en: 'Awaiting Approval', he: 'Pending Approval' },
+  APPROVED: { en: 'Approved', he: 'Approved' },
+  REJECTED: { en: 'Rejected', he: 'נDecline' },
+  SUSPENDED: { en: 'Suspended', he: 'edTime' },
+  MISSING_DOCUMENTS: { en: 'Missing Documents', he: 'Missing documents' },
 };
 
 export const DOCUMENT_STATUS_LABELS: Record<DocumentStatus, { en: string; he: string }> = {
-  PENDING_REVIEW: { en: 'Pending Review', he: 'ממתין לבדיקה' },
-  APPROVED: { en: 'Approved', he: 'מאושר' },
-  REJECTED: { en: 'Rejected', he: 'נדחה' },
-  REQUIRES_UPDATE: { en: 'Requires Update', he: 'דורש עדכון' },
+  PENDING_REVIEW: { en: 'Pending Review', he: 'Pending לבדיקה' },
+  APPROVED: { en: 'Approved', he: 'Approved' },
+  REJECTED: { en: 'Rejected', he: 'נDecline' },
+  REQUIRES_UPDATE: { en: 'Requires Update', he: 'דורש up toכון' },
   EXPIRED: { en: 'Expired', he: 'פג תוקף' },
 };
 
 export const DOCUMENT_TYPE_LABELS: Record<DocumentType, { en: string; he: string }> = {
-  LICENSE: { en: 'Professional License', he: 'רישיון מקצועי' },
+  LICENSE: { en: 'Professional License', he: 'License מקצועי' },
   CERTIFICATION: { en: 'Certification', he: 'תעודת הסמכה' },
-  INSURANCE: { en: 'Insurance', he: 'ביטוח אחריות מקצועית' },
+  INSURANCE: { en: 'Insurance', he: 'ביטוח Otherיs מקצועית' },
   DIPLOMA: { en: 'Diploma', he: 'תעודה אקדמית' },
-  OTHER: { en: 'Other', he: 'אחר' },
+  OTHER: { en: 'Other', he: 'Other' },
 };
 
 export const NOTIFICATION_TYPE_LABELS: Record<AdminNotificationType, { en: string; he: string }> = {
-  NEW_THERAPIST_REGISTRATION: { en: 'New Registration', he: 'הרשמה חדשה' },
-  THERAPIST_PROFILE_COMPLETE: { en: 'Profile Complete', he: 'פרופיל הושלם' },
+  NEW_THERAPIST_REGISTRATION: { en: 'New Registration', he: 'הרשמה New' },
+  THERAPIST_PROFILE_COMPLETE: { en: 'Profile Complete', he: 'פרופיל Completed' },
   DOCUMENT_UPLOADED: { en: 'Document Uploaded', he: 'מסמך הועלה' },
   DOCUMENT_EXPIRING: { en: 'Document Expiring', he: 'מסמך עומד לפוג' },
   DOCUMENT_EXPIRED: { en: 'Document Expired', he: 'מסמך פג תוקף' },
-  PENDING_APPROVAL_REMINDER: { en: 'Pending Reminder', he: 'תזכורת ממתינים' },
-  ACTION_REQUIRED: { en: 'Action Required', he: 'נדרשת פעולה' },
-  SYSTEM_ALERT: { en: 'System Alert', he: 'התראת מערכת' },
+  PENDING_APPROVAL_REMINDER: { en: 'Pending Reminder', he: 'תזכורת Pending' },
+  ACTION_REQUIRED: { en: 'Action Required', he: 'Requiredת פעולה' },
+  SYSTEM_ALERT: { en: 'System Alert', he: 'Alertאת מערכת' },
 };

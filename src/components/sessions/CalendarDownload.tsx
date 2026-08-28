@@ -42,7 +42,7 @@ export function CalendarDownload({
   const formatDateForUrl = (date: Date) => date.toISOString().replace(/-|:|\.\d{3}/g, '').slice(0, 15) + 'Z';
 
   const title = encodeURIComponent(`Therapy Session with ${therapistName}`);
-  const titleHe = encodeURIComponent(`פגישה טיפולית עם ${therapistName}`);
+  const titleHe = encodeURIComponent(`Therapy session with ${therapistName}`);
 
   let description = `Therapy session with ${therapistName}\n`;
   description += `Duration: ${duration} minutes\n`;

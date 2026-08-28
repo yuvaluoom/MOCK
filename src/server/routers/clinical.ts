@@ -296,7 +296,7 @@ export const clinicalRouter = router({
       return {
         success: true,
         sessionRecord: newRecord,
-        messageHe: 'רשומת פגישה נוצרה בהצלחה',
+        messageHe: 'רשומת Session נוצרה בהצלחה',
       };
     }),
 
@@ -488,7 +488,7 @@ export const clinicalRouter = router({
       return {
         success: true,
         savedAt: new Date(),
-        messageHe: 'הערות קליניות נשמרו',
+        messageHe: 'Clinical notes נשמרו',
       };
     }),
 
@@ -506,7 +506,7 @@ export const clinicalRouter = router({
       if (!input.finalReview) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: 'נדרש לאשר סקירה סופית לפני הגשה',
+          message: 'Required לApprove סקירה סופית לפני הגשה',
         });
       }
 
@@ -534,10 +534,10 @@ export const clinicalRouter = router({
       const validationErrors: string[] = [];
 
       if (!notes?.clinicalSummary) {
-        validationErrors.push('סיכום קליני נדרש');
+        validationErrors.push('Clinical Summary Required');
       }
       if (!notes?.riskLevel) {
-        validationErrors.push('הערכת סיכון נדרשת');
+        validationErrors.push('Assessment סיכון Requiredת');
       }
 
       if (validationErrors.length > 0) {
@@ -555,7 +555,7 @@ export const clinicalRouter = router({
       return {
         success: true,
         submittedAt: session.submittedAt,
-        messageHe: 'התיעוד הוגש בהצלחה',
+        messageHe: 'הDocumentation הוגש בהצלחה',
       };
     }),
 
@@ -566,7 +566,7 @@ export const clinicalRouter = router({
     .input(
       z.object({
         sessionRecordId: z.string(),
-        amendmentReason: z.string().min(10, 'סיבת התיקון חייבת להכיל לפחות 10 תווים'),
+        amendmentReason: z.string().min(10, 'סיבת התיקון חייבת להכיל at least 10 characters'),
         changes: saveClinicalNotesSchema.omit({ sessionRecordId: true }),
       })
     )
@@ -645,7 +645,7 @@ export const clinicalRouter = router({
       return {
         success: true,
         version: session.currentVersion,
-        messageHe: 'התיעוד תוקן בהצלחה',
+        messageHe: 'הDocumentation Fixed בהצלחה',
       };
     }),
 
@@ -682,7 +682,7 @@ export const clinicalRouter = router({
       return {
         success: true,
         lockedAt: session.lockedAt,
-        messageHe: 'התיעוד ננעל לצמיתות',
+        messageHe: 'הDocumentation ננעל לצמיתs',
       };
     }),
 
@@ -748,7 +748,7 @@ export const clinicalRouter = router({
       return {
         success: true,
         sharedAt: summary.sharedAt,
-        messageHe: 'הסיכום שותף עם המטופל',
+        messageHe: 'הSummary שsף With הPatient',
       };
     }),
 
@@ -1046,7 +1046,7 @@ export const clinicalRouter = router({
         format: 'JSON',
         content: JSON.stringify(exportData, null, 2),
         exportedAt: new Date(),
-        messageHe: 'הפגישה יוצאה בהצלחה',
+        messageHe: 'הSession יוצאה בהצלחה',
       };
     }),
 });

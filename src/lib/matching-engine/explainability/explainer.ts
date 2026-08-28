@@ -65,7 +65,7 @@ export class Explainer implements IExplainer {
     const topReason = reasons.length > 0 ? reasons[0] : null;
     const topConcern = concerns.length > 0 ? concerns[0] : null;
 
-    let summaryHe = `${therapistName} הוא התאמה ${qualityHebrew} (${score.overall}%) עבורך`;
+    let summaryHe = `${therapistName} הוא Match ${qualityHebrew} (${score.overall}%) עבורך`;
     let summaryEn = `${therapistName} is a ${qualityEnglish} match (${score.overall}%) for you`;
 
     if (topReason) {
@@ -74,7 +74,7 @@ export class Explainer implements IExplainer {
     }
 
     if (topConcern && score.overall < 70) {
-      summaryHe += `. שים לב: ${topConcern.concernHe}`;
+      summaryHe += `. Note: ${topConcern.concernHe}`;
       summaryEn += `. Note: ${topConcern.concernEn}`;
     }
 
@@ -98,7 +98,7 @@ export class Explainer implements IExplainer {
       reasons.push({
         category: 'xFactor',
         reasonEn: 'Strong psychological compatibility based on your therapeutic needs',
-        reasonHe: 'התאמה פסיכולוגית גבוהה על בסיס הצרכים הטיפוליים שלך',
+        reasonHe: 'Match פסיכולוגית גבוהה על בסיס הצרכs הTherapyיs Your',
         importance: 'high',
         icon: '🧠',
       });
@@ -109,7 +109,7 @@ export class Explainer implements IExplainer {
       reasons.push({
         category: 'healthFund',
         reasonEn: 'Accepts your health fund for covered treatment',
-        reasonHe: 'מקבל את קופת החולים שלך לטיפול בהשתתפות עצמית',
+        reasonHe: 'accepts the health fund Your לTherapy בהשתתOptions עצמית',
         importance: 'high',
         icon: '💳',
       });
@@ -120,7 +120,7 @@ export class Explainer implements IExplainer {
       reasons.push({
         category: 'availability',
         reasonEn: 'Good schedule compatibility with your preferences',
-        reasonHe: 'התאמה טובה ללוח הזמנים שלך',
+        reasonHe: 'Good Match ללוח הזמנs Your',
         importance: 'medium',
         icon: '📅',
       });
@@ -133,7 +133,7 @@ export class Explainer implements IExplainer {
         reasons.push({
           category: 'location',
           reasonEn: `Conveniently located nearby (${Math.round(distance)}km)`,
-          reasonHe: `ממוקם בקרבת מקום (${Math.round(distance)} ק"מ)`,
+          reasonHe: `מedקם בקרבת מקום (${Math.round(distance)} ק"מ)`,
           importance: 'medium',
           icon: '📍',
         });
@@ -141,7 +141,7 @@ export class Explainer implements IExplainer {
         reasons.push({
           category: 'location',
           reasonEn: 'Offers online sessions for your convenience',
-          reasonHe: 'מציע טיפול מקוון לנוחותך',
+          reasonHe: 'Offers therapy Online לנוחsך',
           importance: 'medium',
           icon: '💻',
         });
@@ -154,7 +154,7 @@ export class Explainer implements IExplainer {
       reasons.push({
         category: 'expertise',
         reasonEn: 'Specialized in trauma therapy matching your needs',
-        reasonHe: 'מתמחה בטיפול בטראומה בהתאם לצרכיך',
+        reasonHe: 'מתמחה בTherapy בTrauma בהתאם לצרכיך',
         importance: 'high',
         icon: '🎯',
       });
@@ -166,7 +166,7 @@ export class Explainer implements IExplainer {
       reasons.push({
         category: 'expertise',
         reasonEn: 'Experience treating military and reserve service stress',
-        reasonHe: 'ניסיון בטיפול בלחצים צבאיים ומילואים',
+        reasonHe: 'Experience בTherapy בלחצs צבאיs ומילואs',
         importance: 'high',
         icon: '🎖️',
       });
@@ -178,7 +178,7 @@ export class Explainer implements IExplainer {
       reasons.push({
         category: 'experience',
         reasonEn: `${therapist.yearsOfExperience} years of experience for complex needs`,
-        reasonHe: `${therapist.yearsOfExperience} שנות ניסיון לטיפול בצרכים מורכבים`,
+        reasonHe: `${therapist.yearsOfExperience} years experience לTherapy בצרכs edרכבs`,
         importance: 'medium',
         icon: '⭐',
       });
@@ -207,10 +207,10 @@ export class Explainer implements IExplainer {
       concerns.push({
         category: 'healthFund',
         concernEn: 'Health fund not accepted - private payment required',
-        concernHe: 'קופת החולים לא מתקבלת - נדרש תשלום פרטי',
+        concernHe: 'the health fund No מתקבלת - Required תHello Private',
         severity: 'warning',
         suggestion: 'Consider checking partial reimbursement options',
-        suggestionHe: 'מומלץ לבדוק אפשרות להחזר חלקי מהקופה',
+        suggestionHe: 'Recommended לReview אפשרs להחזר חלקי מהקופה',
       });
     }
 
@@ -219,10 +219,10 @@ export class Explainer implements IExplainer {
       concerns.push({
         category: 'availability',
         concernEn: 'Limited schedule overlap with your preferences',
-        concernHe: 'חפיפה מוגבלת בלוח הזמנים להעדפותיך',
+        concernHe: 'חפיפה edגבלת בלוח הזמנs להup toyour',
         severity: 'info',
         suggestion: 'Consider flexible scheduling or online sessions',
-        suggestionHe: 'שקול גמישות בזמנים או טיפול מקוון',
+        suggestionHe: 'שקול Flexibility inזמנs or Therapy Online',
       });
     }
 
@@ -232,10 +232,10 @@ export class Explainer implements IExplainer {
       concerns.push({
         category: 'location',
         concernEn: `Located ${Math.round(distance)}km away - may be inconvenient`,
-        concernHe: `ממוקם במרחק ${Math.round(distance)} ק"מ - עלול להיות לא נוח`,
+        concernHe: `מedקם במרחק ${Math.round(distance)} ק"מ - עלול להיs No נוח`,
         severity: 'info',
         suggestion: 'Consider online sessions as an alternative',
-        suggestionHe: 'שקול טיפול מקוון כחלופה',
+        suggestionHe: 'שקול Therapy Online כחלופה',
       });
     }
 
@@ -244,7 +244,7 @@ export class Explainer implements IExplainer {
       concerns.push({
         category: 'capacity',
         concernEn: 'Therapist is not currently accepting new patients',
-        concernHe: 'המטפל לא מקבל מטופלים חדשים כרגע',
+        concernHe: 'הTherapist No מקבל Patients חדשs כרגע',
         severity: 'warning',
         suggestion: 'You can request to be added to their waitlist',
         suggestionHe: 'ניתן לבקש להיכנס לרשימת המתנה',
@@ -253,10 +253,10 @@ export class Explainer implements IExplainer {
       concerns.push({
         category: 'capacity',
         concernEn: 'Therapist has very limited availability',
-        concernHe: 'למטפל זמינות מוגבלת מאוד',
+        concernHe: 'לTherapist Availability edגבלת מorד',
         severity: 'info',
         suggestion: 'Contact soon to secure a spot',
-        suggestionHe: 'מומלץ לפנות בהקדם להבטחת מקום',
+        suggestionHe: 'Recommended לפנs בהקדם להבטחת מקום',
       });
     }
 
@@ -265,10 +265,10 @@ export class Explainer implements IExplainer {
       concerns.push({
         category: 'xFactor',
         concernEn: 'Therapeutic style may not be an ideal match',
-        concernHe: 'סגנון הטיפול עשוי להיות לא מתאים במלואו',
+        concernHe: 'סגנון הTherapy עשוי להיs No מתאs במלוor',
         severity: 'info',
         suggestion: 'Consider scheduling an introductory session first',
-        suggestionHe: 'מומלץ לקיים פגישת היכרות לבחינת ההתאמה',
+        suggestionHe: 'Recommended לקיs פגישת היכרs לבחינת הMatch',
       });
     }
 
@@ -292,7 +292,7 @@ export class Explainer implements IExplainer {
     if (therapist.yearsOfExperience >= 10) {
       insights.push({
         insightEn: `${therapist.yearsOfExperience} years of professional experience`,
-        insightHe: `${therapist.yearsOfExperience} שנות ניסיון מקצועי`,
+        insightHe: `${therapist.yearsOfExperience} years experience מקצועי`,
         type: 'context',
       });
     }
@@ -301,7 +301,7 @@ export class Explainer implements IExplainer {
     if (availability.offersBothFormats) {
       insights.push({
         insightEn: 'Offers both online and in-person sessions',
-        insightHe: 'מציע טיפול אונליין ופרונטלי',
+        insightHe: 'Offers therapy orOnline וIn-Person',
         type: 'compatibility',
       });
     }
@@ -310,7 +310,7 @@ export class Explainer implements IExplainer {
     if (availability.hasEveningSlots) {
       insights.push({
         insightEn: 'Evening appointments available',
-        insightHe: 'פגישות זמינות בשעות הערב',
+        insightHe: 'Sessions Availability בשעs הערב',
         type: 'compatibility',
       });
     }
@@ -319,7 +319,7 @@ export class Explainer implements IExplainer {
     if (features.therapistFeatures.capacityProfile.responseSpeed === 'fast') {
       insights.push({
         insightEn: 'Typically responds to inquiries quickly',
-        insightHe: 'מגיב לפניות במהירות',
+        insightHe: 'מגיב לפניs במהירs',
         type: 'recommendation',
       });
     }
@@ -350,7 +350,7 @@ export class Explainer implements IExplainer {
       component: 'xFactor',
       score: components.xFactor.score,
       explanationEn: 'Psychological compatibility based on your therapeutic preferences and needs',
-      explanationHe: 'התאמה פסיכולוגית על בסיס העדפותיך וצרכיך הטיפוליים',
+      explanationHe: 'Match פסיכולוגית על בסיס הup toyour וצרכיך הTherapyיs',
       details: components.xFactor.positiveFactors,
       detailsHe: components.xFactor.positiveFactors.map(f => this.translateFactor(f)),
     });
@@ -360,7 +360,7 @@ export class Explainer implements IExplainer {
       component: 'healthFund',
       score: components.healthFund.score,
       explanationEn: 'Health fund coverage and payment options',
-      explanationHe: 'כיסוי קופת חולים ואפשרויות תשלום',
+      explanationHe: 'Coverage Health Fund ואפשרויs תHello',
       details: components.healthFund.positiveFactors,
       detailsHe: components.healthFund.positiveFactors.map(f => this.translateFactor(f)),
     });
@@ -370,7 +370,7 @@ export class Explainer implements IExplainer {
       component: 'availability',
       score: components.availability.score,
       explanationEn: 'Schedule compatibility and therapist capacity',
-      explanationHe: 'התאמת לוח זמנים וזמינות המטפל',
+      explanationHe: 'התאמת Schedule וAvailability הTherapist',
       details: components.availability.positiveFactors,
       detailsHe: components.availability.positiveFactors.map(f => this.translateFactor(f)),
     });
@@ -380,7 +380,7 @@ export class Explainer implements IExplainer {
       component: 'location',
       score: components.location.score,
       explanationEn: 'Location convenience and session format options',
-      explanationHe: 'נוחות מיקום ואפשרויות פורמט הפגישה',
+      explanationHe: 'נוחs Location ואפשרויs Format הSession',
       details: components.location.positiveFactors,
       detailsHe: components.location.positiveFactors.map(f => this.translateFactor(f)),
     });
@@ -390,7 +390,7 @@ export class Explainer implements IExplainer {
       component: 'preferences',
       score: components.preferences.score,
       explanationEn: 'Match with your stated preferences',
-      explanationHe: 'התאמה להעדפות שציינת',
+      explanationHe: 'Match להup toOptions שציינת',
       details: components.preferences.positiveFactors,
       detailsHe: components.preferences.positiveFactors.map(f => this.translateFactor(f)),
     });
@@ -405,27 +405,27 @@ export class Explainer implements IExplainer {
   private getQualityInHebrew(quality: string): string {
     const qualityMap: Record<string, string> = {
       excellent: 'מעולה',
-      great: 'טובה מאוד',
-      good: 'טובה',
-      moderate: 'סבירה',
-      low: 'נמוכה',
+      great: 'Goodה מorד',
+      good: 'Goodה',
+      moderate: 'Moderateה',
+      low: 'נedכה',
     };
     return qualityMap[quality] || quality;
   }
 
   private translateApproach(approach: string): string {
     const approachMap: Record<string, string> = {
-      CBT: 'טיפול קוגניטיבי-התנהגותי',
-      DBT: 'טיפול דיאלקטי-התנהגותי',
-      PSYCHODYNAMIC: 'גישה פסיכודינמית',
-      HUMANISTIC: 'גישה הומניסטית',
+      CBT: 'Therapy Cognitive Behavioral',
+      DBT: 'Therapy דיאלקטי-התנהגsי',
+      PSYCHODYNAMIC: 'גישה Psychodynamicת',
+      HUMANISTIC: 'גישה Humanisticת',
       GESTALT: 'גשטלט',
       EMDR: 'EMDR',
-      MINDFULNESS: 'מיינדפולנס',
-      SOLUTION_FOCUSED: 'גישה ממוקדת פתרון',
-      NARRATIVE: 'טיפול נרטיבי',
-      ART_THERAPY: 'טיפול באמנות',
-      SOMATIC: 'טיפול סומטי',
+      MINDFULNESS: 'Mindfulness',
+      SOLUTION_FOCUSED: 'גישה מedקדת פתרון',
+      NARRATIVE: 'Therapy נרטיבי',
+      ART_THERAPY: 'Art therapy',
+      SOMATIC: 'Therapy סומטי',
     };
     return approachMap[approach] || approach;
   }
@@ -433,19 +433,19 @@ export class Explainer implements IExplainer {
   private translateFactor(factor: string): string {
     // Simple translations for common factors
     const translations: Record<string, string> = {
-      'Structured therapy approaches match need for structure': 'גישות טיפוליות מובנות מתאימות לצורך שלך במבנה',
-      'Flexible therapy approaches match preference': 'גישות טיפוליות גמישות מתאימות להעדפותיך',
-      'Trauma expertise matches therapeutic needs': 'מומחיות בטראומה מתאימה לצרכיך הטיפוליים',
-      'Specialized in military/veteran mental health': 'מתמחה בבריאות נפשית של חיילים ומשרתי מילואים',
-      'Compatible communication styles': 'סגנונות תקשורת תואמים',
-      'Experienced therapist for complex needs': 'מטפל מנוסה לצרכים מורכבים',
-      'Good schedule availability match': 'התאמה טובה בזמינות',
-      'Good availability for new patients': 'זמינות טובה למטופלים חדשים',
-      'Typically responds quickly': 'מגיב בדרך כלל במהירות',
-      'Offers both online and in-person options': 'מציע טיפול אונליין ופרונטלי',
-      'Online sessions available': 'טיפול מקוון זמין',
-      'Same city': 'אותה עיר',
-      'Private pay option available': 'אפשרות תשלום פרטי זמינה',
+      'Structured therapy approaches match need for structure': 'Therapeutic approaches edבנs מתאימs לצורך Your במבנה',
+      'Flexible therapy approaches match preference': 'Therapeutic approaches גמישs מתאימs להup toyour',
+      'Trauma expertise matches therapeutic needs': 'edמחיs בTrauma מתאימה לצרכיך הTherapyיs',
+      'Specialized in military/veteran mental health': 'מתמחה בבריorת נפשית של חיילs ומשרתי מילואs',
+      'Compatible communication styles': 'סגנונs תקשורת תואמs',
+      'Experienced therapist for complex needs': 'Therapist מנוTotal לצרכs edרכבs',
+      'Good schedule availability match': 'Good Match בAvailability',
+      'Good availability for new patients': 'Availability Goodה לPatients חדשs',
+      'Typically responds quickly': 'מגיב בדרך כלל במהירs',
+      'Offers both online and in-person options': 'Offers therapy orOnline וIn-Person',
+      'Online sessions available': 'Therapy Online זGender',
+      'Same city': 'orתה City',
+      'Private pay option available': 'אפשרs תHello Private זמינה',
     };
     return translations[factor] || factor;
   }

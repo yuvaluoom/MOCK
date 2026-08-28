@@ -126,41 +126,41 @@ const CheckCircleIcon = () => (
 const features = [
   {
     icon: BrainIcon,
-    title: 'התאמה מבוססת מדע',
-    description: 'מערכת ההתאמה שלנו מבוססת על מחקרים פסיכולוגיים ונתונים קליניים לזיהוי ההתאמה הטיפולית הטובה ביותר.',
+    title: 'Science-Based Matching',
+    description: 'Our matching system is powered by psychological research and clinical data to identify the best therapeutic fit.',
   },
   {
     icon: ShieldIcon,
-    title: 'פרטיות ואבטחה',
-    description: 'המידע שלך מוגן בהתאם לתקנות הפרטיות המחמירות ביותר. הנתונים מוצפנים ומאובטחים.',
+    title: 'Privacy & Security',
+    description: 'Your information is protected by the strictest privacy standards. All data is encrypted and secured.',
   },
   {
     icon: HeartIcon,
-    title: 'התאמה אישית מלאה',
-    description: 'השאלון שלנו מזהה את הצרכים הייחודיים שלך ומתאים מטפלים על סמך סגנון טיפול, התמחות וזמינות.',
+    title: 'Fully Personalized',
+    description: 'Our questionnaire identifies your unique needs and matches therapists based on therapy style, specialization, and availability.',
   },
   {
     icon: UsersIcon,
-    title: 'מטפלים מוסמכים',
-    description: 'כל המטפלים בפלטפורמה עוברים תהליך אימות קפדני ובעלי רישיון מקצועי בתוקף.',
+    title: 'Certified Therapists',
+    description: 'All therapists on the platform undergo rigorous verification and hold valid professional licenses.',
   },
 ];
 
 const steps = [
   {
     number: '1',
-    title: 'מלאו שאלון קצר',
-    description: 'שאלון אנונימי שמסייע לנו להבין את הצרכים והעדפות שלכם',
+    title: 'Complete a Short Questionnaire',
+    description: 'An anonymous questionnaire that helps us understand your needs and preferences',
   },
   {
     number: '2',
-    title: 'קבלו התאמות מותאמות',
-    description: 'מערכת ההתאמה שלנו מציגה מטפלים עם אחוזי התאמה גבוהים',
+    title: 'Get Personalized Matches',
+    description: 'Our matching engine presents therapists with high compatibility scores',
   },
   {
     number: '3',
-    title: 'בחרו ותאמו פגישה',
-    description: 'בחרו את המטפל המתאים וקבעו פגישה ראשונית בזמן הנוח לכם',
+    title: 'Choose & Book a Session',
+    description: 'Select the right therapist and schedule your first session at your convenience',
   },
 ];
 
@@ -178,7 +178,7 @@ export default function LandingPage() {
           {/* Therapist Login - Side button as per spec */}
           <Link href="/login/therapist">
             <Button variant="outline" size="sm">
-              כניסה למטפלים
+              Therapist Login
             </Button>
           </Link>
         </nav>
@@ -192,18 +192,18 @@ export default function LandingPage() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-calm-100 text-calm-700 text-sm font-medium mb-8">
               <span className="w-2 h-2 rounded-full bg-calm-500 animate-pulse" aria-hidden="true" />
-              התאמה מבוססת מדע
+              Science-Based Matching
             </div>
 
             {/* Main Heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              מצאו את המטפל
-              <span className="text-gradient block">המתאים לכם</span>
+              Find Your Ideal
+              <span className="text-gradient block">Therapist</span>
             </h1>
 
             {/* Subheading */}
             <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-              פלטפורמה חכמה להתאמת מטופלים ומטפלים על בסיס פרמטרים קליניים, סגנון טיפולי והעדפות אישיות
+              A smart platform that matches patients and therapists based on clinical parameters, therapy style, and personal preferences
             </p>
 
             {/* CTA Buttons */}
@@ -211,12 +211,12 @@ export default function LandingPage() {
               {/* Primary Patient Login - Large central button as per spec */}
               <Link href="/login/patient">
                 <Button variant="calm" size="xl" className="w-full sm:w-auto min-w-[200px] shadow-lg shadow-calm-500/25">
-                  התחילו עכשיו
+                  Get Started
                 </Button>
               </Link>
               <Link href="#how-it-works">
                 <Button variant="outline" size="xl" className="w-full sm:w-auto min-w-[200px]">
-                  איך זה עובד?
+                  How It Works
                 </Button>
               </Link>
             </div>
@@ -225,15 +225,15 @@ export default function LandingPage() {
             <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <CheckCircleIcon />
-                <span>חינם לחלוטין</span>
+                <span>Completely Free</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircleIcon />
-                <span>ללא התחייבות</span>
+                <span>No Commitment</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircleIcon />
-                <span>תמיכה בקופות חולים</span>
+                <span>Health Fund Support</span>
               </div>
             </div>
           </div>
@@ -244,10 +244,10 @@ export default function LandingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                למה MatchMind?
+                Why MatchMind?
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                אנחנו מאמינים שהתאמה נכונה בין מטופל למטפל היא המפתח להצלחת הטיפול
+                We believe the right match between patient and therapist is the key to successful therapy
               </p>
             </div>
 
@@ -276,10 +276,10 @@ export default function LandingPage() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                איך זה עובד?
+                How It Works
               </h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                שלושה צעדים פשוטים למציאת המטפל המתאים לכם
+                Three simple steps to finding the right therapist for you
               </p>
             </div>
 
@@ -315,7 +315,7 @@ export default function LandingPage() {
             <div className="text-center mt-12">
               <Link href="/login/patient">
                 <Button variant="calm" size="lg">
-                  התחילו את השאלון
+                  Start the Questionnaire
                 </Button>
               </Link>
             </div>
@@ -330,17 +330,17 @@ export default function LandingPage() {
                 <ShieldIcon />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                תמיכה בכל קופות החולים
+                Health Fund Coverage Support
               </h2>
               <p className="text-gray-600 mb-6 max-w-xl mx-auto">
-                אם אתם זכאים לטיפול דרך קופת החולים שלכם, מערכת ההתאמה שלנו תעדיף מטפלים שעובדים עם הקופה שלכם - מבלי להתפשר על איכות ההתאמה הטיפולית.
+                If you&apos;re eligible for therapy through your health fund, our matching system will prioritize therapists who work with your plan — without compromising on therapeutic fit quality.
               </p>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-                <span className="px-4 py-2 bg-white rounded-full shadow-sm">כללית</span>
-                <span className="px-4 py-2 bg-white rounded-full shadow-sm">מכבי</span>
-                <span className="px-4 py-2 bg-white rounded-full shadow-sm">מאוחדת</span>
-                <span className="px-4 py-2 bg-white rounded-full shadow-sm">לאומית</span>
-                <span className="px-4 py-2 bg-white rounded-full shadow-sm">פרטי</span>
+                <span className="px-4 py-2 bg-white rounded-full shadow-sm">Clalit</span>
+                <span className="px-4 py-2 bg-white rounded-full shadow-sm">Maccabi</span>
+                <span className="px-4 py-2 bg-white rounded-full shadow-sm">Meuhedet</span>
+                <span className="px-4 py-2 bg-white rounded-full shadow-sm">Leumit</span>
+                <span className="px-4 py-2 bg-white rounded-full shadow-sm">Private</span>
               </div>
             </div>
           </div>
@@ -351,14 +351,14 @@ export default function LandingPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                אתם מטפלים?
+                Are You a Therapist?
               </h2>
               <p className="text-gray-600 mb-6">
-                הצטרפו לפלטפורמה והתחילו לקבל מטופלים שמתאימים לסגנון הטיפול והתמחות שלכם
+                Join the platform and start receiving patients matched to your therapy style and specialization
               </p>
               <Link href="/register/therapist">
                 <Button variant="outline" size="lg">
-                  הצטרפו כמטפלים
+                  Join as a Therapist
                 </Button>
               </Link>
             </div>
@@ -376,33 +376,33 @@ export default function LandingPage() {
                 <Logo size="lg" href="/" />
               </div>
               <p className="text-sm max-w-sm">
-                פלטפורמה מבוססת מדע להתאמת מטופלים ומטפלים בתחום בריאות הנפש.
-                אנחנו מאמינים שהתאמה נכונה היא הבסיס לטיפול מוצלח.
+                A science-based platform for matching patients and therapists in the mental health space.
+                We believe the right match is the foundation for successful therapy.
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-white font-semibold mb-4">קישורים מהירים</h3>
+              <h3 className="text-white font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link href="/login/patient" className="hover:text-white transition-colors">
-                    כניסה למטופלים
+                    Patient Login
                   </Link>
                 </li>
                 <li>
                   <Link href="/login/therapist" className="hover:text-white transition-colors">
-                    כניסה למטפלים
+                    Therapist Login
                   </Link>
                 </li>
                 <li>
                   <Link href="/about" className="hover:text-white transition-colors">
-                    אודות
+                    About
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="hover:text-white transition-colors">
-                    צור קשר
+                    Contact
                   </Link>
                 </li>
               </ul>
@@ -410,21 +410,21 @@ export default function LandingPage() {
 
             {/* Legal */}
             <div>
-              <h3 className="text-white font-semibold mb-4">משפטי</h3>
+              <h3 className="text-white font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link href="/privacy" className="hover:text-white transition-colors">
-                    מדיניות פרטיות
+                    Privacy Policy
                   </Link>
                 </li>
                 <li>
                   <Link href="/terms" className="hover:text-white transition-colors">
-                    תנאי שימוש
+                    Terms of Service
                   </Link>
                 </li>
                 <li>
                   <Link href="/accessibility" className="hover:text-white transition-colors">
-                    נגישות
+                    Accessibility
                   </Link>
                 </li>
               </ul>
@@ -432,9 +432,9 @@ export default function LandingPage() {
           </div>
 
           <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p>© {new Date().getFullYear()} MatchMind. כל הזכויות שמורות.</p>
+            <p>&copy; {new Date().getFullYear()} MatchMind. All rights reserved.</p>
             <p>
-              פותח באהבה בישראל 🇮🇱
+              Built with love in Israel
             </p>
           </div>
         </div>

@@ -219,7 +219,7 @@ export const EXPLANATION_TEMPLATES = {
   // Positive factors
   healthFundMatch: {
     key: 'health_fund_match',
-    labelHebrew: 'מקבל/ת את קופת החולים שלך',
+    labelHebrew: 'accepts the health fund Your',
     labelEnglish: 'Accepts your health insurance',
     icon: 'shield-check',
   },
@@ -231,61 +231,61 @@ export const EXPLANATION_TEMPLATES = {
   },
   onlineAvailable: {
     key: 'online_available',
-    labelHebrew: 'מציע/ה פגישות מקוונות',
+    labelHebrew: 'Offers Online Sessions',
     labelEnglish: 'Offers online sessions',
     icon: 'video',
   },
   inPersonAvailable: {
     key: 'in_person_available',
-    labelHebrew: 'מציע/ה פגישות פרונטליות',
+    labelHebrew: 'Offers In-Person Sessions',
     labelEnglish: 'Offers in-person sessions',
     icon: 'map-pin',
   },
   scheduleMatch: {
     key: 'schedule_match',
-    labelHebrew: 'זמין/ה בזמנים שמתאימים לך',
+    labelHebrew: 'זGender/ה בזמנs שמתאימs לך',
     labelEnglish: 'Available at your preferred times',
     icon: 'calendar',
   },
   languageMatch: {
     key: 'language_match',
-    labelHebrew: 'דובר/ת את השפה המועדפת עליך',
+    labelHebrew: 'דובר/ת את הLanguage הedup toפת עליך',
     labelEnglish: 'Speaks your preferred language',
     icon: 'languages',
   },
   experienceRelevant: {
     key: 'experience_relevant',
-    labelHebrew: 'בעל/ת ניסיון רב בתחום',
+    labelHebrew: 'בעל/ת Experience רב בתחום',
     labelEnglish: 'Extensive experience in relevant area',
     icon: 'award',
   },
   priceInBudget: {
     key: 'price_in_budget',
-    labelHebrew: 'מחיר בטווח התקציב שלך',
+    labelHebrew: 'Price בטווח התקציב Your',
     labelEnglish: 'Price within your budget',
     icon: 'wallet',
   },
   genderPreferenceMatch: {
     key: 'gender_preference',
-    labelHebrew: 'מתאים/ה להעדפת המגדר שלך',
+    labelHebrew: 'מתאs/ה להup toפת המגדר Your',
     labelEnglish: 'Matches your gender preference',
     icon: 'user-check',
   },
   approachMatch: {
     key: 'approach_match',
-    labelHebrew: 'משתמש/ת בגישה הטיפולית המועדפת',
+    labelHebrew: 'User/ת בגישה הTherapyית הedup toפת',
     labelEnglish: 'Uses your preferred therapy approach',
     icon: 'brain',
   },
   personalityMatch: {
     key: 'personality_match',
-    labelHebrew: 'התאמה גבוהה לסגנון האישי שלך',
+    labelHebrew: 'Great Match לסגנון האישי Your',
     labelEnglish: 'High personality compatibility',
     icon: 'heart-handshake',
   },
   communicationStyleMatch: {
     key: 'communication_style',
-    labelHebrew: 'סגנון תקשורת תואם',
+    labelHebrew: 'Communication style Match',
     labelEnglish: 'Compatible communication style',
     icon: 'message-circle',
   },
@@ -293,19 +293,19 @@ export const EXPLANATION_TEMPLATES = {
   // Consideration factors
   priceAboveBudget: {
     key: 'price_above_budget',
-    labelHebrew: 'מחיר מעל התקציב שצוין',
+    labelHebrew: 'Price מעל התקציב שצוין',
     labelEnglish: 'Price above stated budget',
     icon: 'alert-circle',
   },
   limitedAvailability: {
     key: 'limited_availability',
-    labelHebrew: 'זמינות מוגבלת',
+    labelHebrew: 'Availability edגבלת',
     labelEnglish: 'Limited availability',
     icon: 'clock',
   },
   distanceConsideration: {
     key: 'distance_consideration',
-    labelHebrew: 'מרחק גיאוגרפי',
+    labelHebrew: 'מרחק גיorגרפי',
     labelEnglish: 'Geographic distance to consider',
     icon: 'map',
   },
@@ -317,27 +317,27 @@ export const EXPLANATION_TEMPLATES = {
 
 export const MATCH_QUALITY_LABELS = {
   EXCELLENT: {
-    labelHebrew: 'התאמה מצוינת',
+    labelHebrew: 'Excellent Match',
     labelEnglish: 'Excellent Match',
     color: 'green',
   },
   GREAT: {
-    labelHebrew: 'התאמה גבוהה',
+    labelHebrew: 'Great Match',
     labelEnglish: 'Great Match',
     color: 'blue',
   },
   GOOD: {
-    labelHebrew: 'התאמה טובה',
+    labelHebrew: 'Good Match',
     labelEnglish: 'Good Match',
     color: 'cyan',
   },
   MODERATE: {
-    labelHebrew: 'התאמה סבירה',
+    labelHebrew: 'Moderate Match',
     labelEnglish: 'Moderate Match',
     color: 'amber',
   },
   LOW: {
-    labelHebrew: 'התאמה נמוכה',
+    labelHebrew: 'Low Match',
     labelEnglish: 'Low Match',
     color: 'gray',
   },

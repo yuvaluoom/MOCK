@@ -93,7 +93,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
   };
 
   return (
-    <div className={`relative ${className}`} dir="rtl">
+    <div className={`relative ${className}`}>
       <Button
         variant="outline"
         size="sm"
@@ -101,7 +101,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
         className="gap-2"
       >
         <CalendarIcon />
-        הוספה ליומן
+        Add toLog
       </Button>
 
       {isOpen && (
@@ -149,7 +149,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
               className="w-full flex items-center gap-3 px-4 py-2.5 text-right hover:bg-gray-50 transition-colors"
             >
               <DownloadIcon />
-              <span className="text-sm text-gray-700">הורדת קובץ ICS</span>
+              <span className="text-sm text-gray-700">Download file ICS</span>
             </button>
           </div>
         </>
@@ -173,7 +173,7 @@ export function QuickCalendarExport({ event, className }: CalendarExportProps) {
       className={`inline-flex items-center gap-1.5 text-sm text-calm-600 hover:text-calm-700 ${className}`}
     >
       <CalendarIcon />
-      <span>הוספה ליומן</span>
+      <span>Add toLog</span>
     </button>
   );
 }

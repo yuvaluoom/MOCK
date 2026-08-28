@@ -15,10 +15,10 @@ const mockVersions = [
   {
     id: 'version-1',
     name: 'X-Factor Questionnaire v1',
-    nameHebrew: 'שאלון X-Factor גרסה 1',
+    nameHebrew: 'X-Factor Questionnaire v1',
     introText: 'This questionnaire helps us find the best therapist match for you.',
     description: 'Initial version of the X-Factor matching questionnaire',
-    descriptionHebrew: 'גרסה ראשונית של שאלון ההתאמה',
+    descriptionHebrew: 'Initial version of the matching questionnaire',
     version: 1,
     isActive: true,
     publishedAt: new Date('2024-01-01') as Date | null,

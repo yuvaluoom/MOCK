@@ -137,37 +137,37 @@ export default function TherapistRegisterPage() {
     const newErrors: Record<string, string> = {};
 
     if (!formData.firstName.trim()) {
-      newErrors.firstName = 'שם פרטי נדרש';
+      newErrors.firstName = 'First name is required';
     }
 
     if (!formData.lastName.trim()) {
-      newErrors.lastName = 'שם משפחה נדרש';
+      newErrors.lastName = 'Last name is required';
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'אימייל נדרש';
+      newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'נא להזין כתובת אימייל תקינה';
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = 'מספר טלפון נדרש';
+      newErrors.phone = 'Phone number is required';
     } else if (!/^0[0-9]{8,9}$/.test(formData.phone.replace(/[-\s]/g, ''))) {
-      newErrors.phone = 'נא להזין מספר טלפון ישראלי תקין';
+      newErrors.phone = 'Please enter a valid phone number';
     }
 
     if (!formData.licenseNumber.trim()) {
-      newErrors.licenseNumber = 'מספר רישיון נדרש';
+      newErrors.licenseNumber = 'License number is required';
     }
 
     if (!formData.password) {
-      newErrors.password = 'סיסמה נדרשת';
+      newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
-      newErrors.password = 'הסיסמה חייבת להכיל לפחות 8 תווים';
+      newErrors.password = 'Password must be at least 8 characters';
     }
 
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'הסיסמאות אינן תואמות';
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     setErrors(newErrors);
@@ -180,7 +180,7 @@ export default function TherapistRegisterPage() {
 
     const hasLicense = uploadedFiles.some(f => f.type === 'license');
     if (!hasLicense) {
-      newErrors.documents = 'נא להעלות העתק רישיון';
+      newErrors.documents = 'Please upload a copy of your license';
     }
 
     setErrors(newErrors);
@@ -197,12 +197,12 @@ export default function TherapistRegisterPage() {
       // Validate file type
       const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
       if (!allowedTypes.includes(file.type)) {
-        setErrors(prev => ({ ...prev, fileType: 'קבצים מסוג PDF, JPG או PNG בלבד' }));
+        setErrors(prev => ({ ...prev, fileType: 'Only PDF, JPG, or PNG files are allowed' }));
         continue;
       }
       // Validate file size (max 10MB)
       if (file.size > 10 * 1024 * 1024) {
-        setErrors(prev => ({ ...prev, fileSize: 'גודל קובץ מקסימלי: 10MB' }));
+        setErrors(prev => ({ ...prev, fileSize: 'Maximum file size: 10MB' }));
         continue;
       }
 
@@ -287,24 +287,24 @@ export default function TherapistRegisterPage() {
 
   // Document type labels
   const documentLabels: Record<DocumentType, string> = {
-    license: 'רישיון מקצועי',
-    degree: 'תעודת תואר',
-    certification: 'תעודות והסמכות',
-    insurance: 'ביטוח אחריות מקצועית',
-    photo: 'תמונת פרופיל',
+    license: 'Professional License',
+    degree: 'Degree Certificate',
+    certification: 'Certifications',
+    insurance: 'Professional Liability Insurance',
+    photo: 'Profile Photo',
   };
 
   // Step indicators
   const steps = [
-    { id: 'personal', label: 'פרטים אישיים' },
-    { id: 'documents', label: 'העלאת מסמכים' },
-    { id: 'review', label: 'סיכום ושליחה' },
+    { id: 'personal', label: 'Personal Details' },
+    { id: 'documents', label: 'Upload Documents' },
+    { id: 'review', label: 'Review & Submit' },
   ];
 
   const currentStepIndex = steps.findIndex(s => s.id === currentStep);
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex flex-col" dir="rtl">
+    <div className="min-h-screen bg-gradient-hero flex flex-col">
       {/* Header */}
       <header className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 w-fit">
@@ -314,7 +314,7 @@ export default function TherapistRegisterPage() {
           <span className="text-xl font-bold text-gray-900">MatchMind</span>
         </Link>
         <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-          הרשמת מטפל
+          הרשמת Therapist
         </span>
       </header>
 
@@ -323,9 +323,9 @@ export default function TherapistRegisterPage() {
         <div className="w-full max-w-xl">
           <Card className="shadow-xl">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl">הצטרף כמטפל</CardTitle>
+              <CardTitle className="text-2xl">Join asTherapist</CardTitle>
               <CardDescription>
-                הצטרף לקהילת המטפלים שלנו וקבל מטופלים מותאמים
+                Join the community of הTherapists שלנו וקבל Patients מsאמs
               </CardDescription>
 
               {/* Step Indicator */}
@@ -378,7 +378,7 @@ export default function TherapistRegisterPage() {
                 <form onSubmit={(e) => { e.preventDefault(); goToNextStep(); }} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">שם פרטי</Label>
+                      <Label htmlFor="firstName">First Name</Label>
                       <Input
                         id="firstName"
                         name="firstName"
@@ -396,7 +396,7 @@ export default function TherapistRegisterPage() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="lastName">שם משפחה</Label>
+                      <Label htmlFor="lastName">Last Name</Label>
                       <Input
                         id="lastName"
                         name="lastName"
@@ -415,7 +415,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">אימייל</Label>
+                    <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
                       name="email"
@@ -434,7 +434,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">מספר טלפון</Label>
+                    <Label htmlFor="phone">מספר Phone</Label>
                     <Input
                       id="phone"
                       name="phone"
@@ -453,12 +453,12 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="licenseNumber">מספר רישיון</Label>
+                    <Label htmlFor="licenseNumber">License Number</Label>
                     <Input
                       id="licenseNumber"
                       name="licenseNumber"
                       type="text"
-                      placeholder="מספר רישיון מקצועי"
+                      placeholder="License Number מקצועי"
                       value={formData.licenseNumber}
                       onChange={handleChange}
                       error={!!errors.licenseNumber}
@@ -470,7 +470,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="password">סיסמה</Label>
+                    <Label htmlFor="password">Password</Label>
                     <Input
                       id="password"
                       name="password"
@@ -488,7 +488,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">אימות סיסמה</Label>
+                    <Label htmlFor="confirmPassword">אימs Password</Label>
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -506,7 +506,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <Button type="submit" variant="calm" className="w-full">
-                    המשך להעלאת מסמכים
+                    המשך להעNoת מסמכs
                   </Button>
                 </form>
               )}
@@ -516,7 +516,7 @@ export default function TherapistRegisterPage() {
                 <div className="space-y-6">
                   {/* Profile Photo Section */}
                   <div className="border rounded-lg p-6 bg-gradient-to-br from-calm-50 to-trust-50">
-                    <h4 className="font-semibold text-gray-900 mb-4 text-center">תמונת פרופיל</h4>
+                    <h4 className="font-semibold text-gray-900 mb-4 text-center">תedנת פרופיל</h4>
                     <ProfilePhotoUpload
                       currentPhotoUrl={null}
                       onPhotoChange={handleProfilePhotoChange}
@@ -528,7 +528,7 @@ export default function TherapistRegisterPage() {
 
                   <div className="space-y-4">
                     <p className="text-sm text-gray-600">
-                      העלה את המסמכים הבאים לצורך אימות הרישיון שלך. קבצים מסוג PDF, JPG או PNG עד 10MB.
+                      העלה את המסמכs Nexts לצורך אימs הLicense Your. קבצs מType PDF, JPG or PNG up to 10MB.
                     </p>
 
                     {errors.documents && (
@@ -550,7 +550,7 @@ export default function TherapistRegisterPage() {
                                 {documentLabels[docType]}
                                 {isRequired && <span className="text-red-500 mr-1">*</span>}
                               </h4>
-                              <p className="text-xs text-gray-500">PDF, JPG או PNG</p>
+                              <p className="text-xs text-gray-500">PDF, JPG or PNG</p>
                             </div>
                             <label className="cursor-pointer">
                               <input
@@ -601,10 +601,10 @@ export default function TherapistRegisterPage() {
 
                   <div className="flex gap-3">
                     <Button type="button" variant="outline" onClick={goToPreviousStep} className="flex-1">
-                      חזור
+                      Back
                     </Button>
                     <Button type="button" variant="calm" onClick={goToNextStep} className="flex-1">
-                      המשך לסיכום
+                      המשך לSummary
                     </Button>
                   </div>
                 </div>
@@ -615,23 +615,23 @@ export default function TherapistRegisterPage() {
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-3">פרטים אישיים</h4>
+                      <h4 className="font-medium text-gray-900 mb-3">Details אישיs</h4>
                       <dl className="grid grid-cols-2 gap-2 text-sm">
-                        <dt className="text-gray-500">שם:</dt>
+                        <dt className="text-gray-500">Name:</dt>
                         <dd className="text-gray-900">{formData.firstName} {formData.lastName}</dd>
-                        <dt className="text-gray-500">אימייל:</dt>
+                        <dt className="text-gray-500">Email:</dt>
                         <dd className="text-gray-900" dir="ltr">{formData.email}</dd>
-                        <dt className="text-gray-500">טלפון:</dt>
+                        <dt className="text-gray-500">Phone:</dt>
                         <dd className="text-gray-900" dir="ltr">{formData.phone}</dd>
-                        <dt className="text-gray-500">מספר רישיון:</dt>
+                        <dt className="text-gray-500">License Number:</dt>
                         <dd className="text-gray-900">{formData.licenseNumber}</dd>
                       </dl>
                     </div>
 
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-3">מסמכים שהועלו</h4>
+                      <h4 className="font-medium text-gray-900 mb-3">מסמכs שהועלו</h4>
                       {uploadedFiles.length === 0 ? (
-                        <p className="text-sm text-gray-500">לא הועלו מסמכים</p>
+                        <p className="text-sm text-gray-500">No הועלו מסמכs</p>
                       ) : (
                         <ul className="space-y-1 text-sm">
                           {uploadedFiles.map((file) => (
@@ -652,9 +652,9 @@ export default function TherapistRegisterPage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                         <div>
-                          <p className="text-sm font-medium text-amber-800">תהליך אישור</p>
+                          <p className="text-sm font-medium text-amber-800">תהליך Confirm</p>
                           <p className="text-xs text-amber-600 mt-1">
-                            לאחר השליחה, צוות MatchMind יבדוק את המסמכים שלך. תהליך האישור עשוי לקחת 1-3 ימי עסקים.
+                            Noחר הSubmit, Team MatchMind יReview את המסמכs Your. תהליך הConfirm עשוי לקחת 1-3 ימי עסקs.
                           </p>
                         </div>
                       </div>
@@ -663,7 +663,7 @@ export default function TherapistRegisterPage() {
 
                   <div className="flex gap-3">
                     <Button type="button" variant="outline" onClick={goToPreviousStep} className="flex-1">
-                      חזור
+                      Back
                     </Button>
                     <Button
                       type="button"
@@ -672,7 +672,7 @@ export default function TherapistRegisterPage() {
                       loading={registerMutation.isPending}
                       className="flex-1"
                     >
-                      שלח לאישור
+                      Send לConfirm
                     </Button>
                   </div>
                 </div>
@@ -680,7 +680,7 @@ export default function TherapistRegisterPage() {
 
               {/* Login Link */}
               <p className="mt-6 text-center text-sm text-muted-foreground">
-                כבר יש לך חשבון?{' '}
+                Already have an account?{' '}
                 <Link
                   href="/login/therapist"
                   className="text-primary hover:underline font-medium"
@@ -696,13 +696,13 @@ export default function TherapistRegisterPage() {
       {/* Footer */}
       <footer className="container mx-auto px-4 py-4 text-center text-sm text-muted-foreground">
         <p>
-          בהרשמה, אתה מסכים ל
+          בהרשמה, אתה מסכs ל
           <Link href="/terms" className="underline mx-1">
-            תנאי השימוש
+            תנאי השיedש
           </Link>
           ול
           <Link href="/privacy" className="underline mx-1">
-            מדיניות הפרטיות
+            מדיניs הPrivates
           </Link>
         </p>
       </footer>

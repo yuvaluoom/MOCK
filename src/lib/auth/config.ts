@@ -27,26 +27,26 @@ export const MOCK_USERS: Record<string, MockUser> = {
   patient: {
     id: 'patient-1',
     email: 'patient@example.com',
-    name: 'ישראל ישראלי',
+    name: 'Israel Israeli',
     role: 'PATIENT',
   },
   therapist: {
     id: 'therapist-1',
     email: 'therapist@example.com',
-    name: 'ד"ר רחל כהן',
+    name: 'Dr. Rachel Cohen',
     role: 'THERAPIST',
     approvalStatus: 'APPROVED',
   },
   admin: {
     id: 'admin-1',
     email: 'admin@example.com',
-    name: 'מנהל מערכת',
+    name: 'System Administrator',
     role: 'ADMIN',
   },
   owner: {
     id: 'owner-1',
     email: 'owner@matchmind.co.il',
-    name: 'בעלים ראשי',
+    name: 'Primary Owner',
     role: 'OWNER',
     permissions: ['*'], // All permissions
   },

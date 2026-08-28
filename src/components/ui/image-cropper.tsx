@@ -53,17 +53,17 @@ export interface CropData {
 
 const labels = {
   he: {
-    upload: 'העלאת תמונה',
-    dragDrop: 'גררו תמונה לכאן או',
+    upload: 'העNoת Image',
+    dragDrop: 'Drag an image לכאן or',
     clickToUpload: 'לחצו לבחירה',
-    supportedFormats: 'JPG, PNG - עד 5MB',
-    cropTitle: 'חיתוך תמונה',
-    cropInstructions: 'גררו את המסגרת לבחירת האזור הרצוי',
-    save: 'שמירה',
-    cancel: 'ביטול',
-    change: 'החלפת תמונה',
+    supportedFormats: 'JPG, PNG - up to 5MB',
+    cropTitle: 'חיתוך Image',
+    cropInstructions: 'גררו את המסגרת לבחירת האThisר הרצוי',
+    save: 'Save',
+    cancel: 'Cancel',
+    change: 'החלפת Image',
     fileTooLarge: 'הקובץ גדול מדי. גודל מקסימלי: 5MB',
-    invalidFormat: 'פורמט לא נתמך. השתמשו ב-JPG או PNG',
+    invalidFormat: 'Format No נתמך. השתמשו ב-JPG or PNG',
   },
   en: {
     upload: 'Upload Image',

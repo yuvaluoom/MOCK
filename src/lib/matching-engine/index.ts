@@ -12,7 +12,7 @@
  * const result = engine.matchSingle(patient, therapist);
  *
  * console.log(result.score.overall); // 85
- * console.log(result.explanation.summary); // "התאמה מעולה..."
+ * console.log(result.explanation.summary); // "Match מעולה..."
  * ```
  */
 

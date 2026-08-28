@@ -12,12 +12,12 @@ export default function UnauthorizedPage() {
             <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
           </svg>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">אין הרשאה</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Unauthorized</h1>
         <p className="text-gray-600 mb-8">
-          אין לכם הרשאה לגשת לעמוד זה. אנא התחברו עם חשבון מתאים או חזרו לדף הבית.
+          You do not have permission to access this page. אנא התחברו With חשבון מתאs or חזרו לדף הבית.
         </p>
         <Link href="/" className="inline-block px-6 py-3 bg-trust-600 hover:bg-trust-700 text-white font-medium rounded-lg transition-colors">
-          חזרה לדף הבית
+          Back to Home
         </Link>
       </div>
     </div>

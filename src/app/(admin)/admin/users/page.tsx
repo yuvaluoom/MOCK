@@ -56,13 +56,13 @@ export default function UsersPage() {
   // For now, status display is read-only until updateUserStatus is implemented
 
   return (
-    <div dir="rtl" className="space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">ניהול משתמשים</h1>
+          <h1 className="text-2xl font-bold text-white">User Management</h1>
           <p className="text-slate-400 mt-1">
-            צפייה וניהול כל משתמשי הפלטפורמה
+            View and manage all platform users
           </p>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function UsersPage() {
             </div>
             <input
               type="text"
-              placeholder="חיפוש לפי אימייל..."
+              placeholder="Search לפי Email..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -96,10 +96,10 @@ export default function UsersPage() {
             }}
             className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
-            <option value="">כל התפקידים</option>
-            <option value="PATIENT">מטופל</option>
-            <option value="THERAPIST">מטפל</option>
-            <option value="ADMIN">מנהל</option>
+            <option value="">All theתפקידs</option>
+            <option value="PATIENT">Patient</option>
+            <option value="THERAPIST">Therapist</option>
+            <option value="ADMIN">Manager</option>
           </select>
 
           {/* Status Filter */}
@@ -111,11 +111,11 @@ export default function UsersPage() {
             }}
             className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
-            <option value="">כל הסטטוסים</option>
-            <option value="ACTIVE">פעיל</option>
-            <option value="PENDING_VERIFICATION">ממתין</option>
-            <option value="SUSPENDED">מושעה</option>
-            <option value="DEACTIVATED">מושבת</option>
+            <option value="">All theStatuss</option>
+            <option value="ACTIVE">Active</option>
+            <option value="PENDING_VERIFICATION">Pending</option>
+            <option value="SUSPENDED">edTime</option>
+            <option value="DEACTIVATED">edSat</option>
           </select>
         </div>
       </div>
@@ -126,11 +126,11 @@ export default function UsersPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">משתמש</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">User</th>
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">תפקיד</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">סטטוס</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Status</th>
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">הצטרף</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">פעולות</th>
+                <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -143,7 +143,7 @@ export default function UsersPage() {
               ) : data?.users.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
-                    לא נמצאו משתמשים
+                    No Foundor Users
                   </td>
                 </tr>
               ) : (
@@ -155,7 +155,7 @@ export default function UsersPage() {
                       ? `${user.therapist.firstName} ${user.therapist.lastName}`
                       : (user.role === 'ADMIN' || user.role === 'OWNER')
                       ? user.email.split('@')[0]
-                      : 'לא ידוע';
+                      : 'No Known';
 
                   return (
                     <tr key={user.id} className="border-b border-slate-700/50 hover:bg-slate-700/30">
@@ -174,12 +174,12 @@ export default function UsersPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${roleColors[user.role as UserRole]}`}>
-                          {user.role === 'PATIENT' ? 'מטופל' : user.role === 'THERAPIST' ? 'מטפל' : user.role === 'ADMIN' ? 'מנהל' : user.role === 'OWNER' ? 'בעלים' : user.role}
+                          {user.role === 'PATIENT' ? 'Patient' : user.role === 'THERAPIST' ? 'Therapist' : user.role === 'ADMIN' ? 'Manager' : user.role === 'OWNER' ? 'בעלs' : user.role}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${statusColors[user.status as UserStatus]}`}>
-                          {user.status === 'ACTIVE' ? 'פעיל' : user.status === 'PENDING_VERIFICATION' ? 'ממתין לאימות' : user.status === 'SUSPENDED' ? 'מושעה' : user.status === 'DEACTIVATED' ? 'מושבת' : user.status}
+                          {user.status === 'ACTIVE' ? 'Active' : user.status === 'PENDING_VERIFICATION' ? 'Pending Noימs' : user.status === 'SUSPENDED' ? 'edTime' : user.status === 'DEACTIVATED' ? 'edSat' : user.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-slate-400">
@@ -191,7 +191,7 @@ export default function UsersPage() {
                             href={`/admin/therapists/${user.id.replace('user-', 'therapist-')}`}
                             className="px-3 py-1.5 text-xs bg-amber-500 text-white rounded-lg hover:bg-amber-600"
                           >
-                            ניהול
+                            Management
                           </a>
                         ) : (
                           <span className="text-xs text-slate-500">—</span>
@@ -209,9 +209,9 @@ export default function UsersPage() {
         {data && data.pagination.totalPages > 1 && (
           <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700">
             <p className="text-sm text-slate-400">
-              מציג {(page - 1) * data.pagination.limit + 1} עד{' '}
-              {Math.min(page * data.pagination.limit, data.pagination.total)} מתוך{' '}
-              {data.pagination.total} משתמשים
+              Displays {(page - 1) * data.pagination.limit + 1} up to{' '}
+              {Math.min(page * data.pagination.limit, data.pagination.total)} of{' '}
+              {data.pagination.total} Users
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -222,7 +222,7 @@ export default function UsersPage() {
                 <ChevronLeftIcon />
               </button>
               <span className="text-sm text-white">
-                עמוד {page} מתוך {data.pagination.totalPages}
+                Page {page} of {data.pagination.totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(data.pagination.totalPages, p + 1))}

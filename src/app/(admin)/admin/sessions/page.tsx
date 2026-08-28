@@ -14,31 +14,31 @@ type SessionStatus =
 
 const statusConfig: Record<string, { label: string; color: string }> = {
   PENDING_THERAPIST_APPROVAL: {
-    label: 'ממתין לאישור',
+    label: 'Pending Approval',
     color: 'bg-amber-500/20 text-amber-400',
   },
   APPROVED: {
-    label: 'מאושר',
+    label: 'Approved',
     color: 'bg-green-500/20 text-green-400',
   },
   REJECTED: {
-    label: 'נדחה',
+    label: 'נDecline',
     color: 'bg-red-500/20 text-red-400',
   },
   COMPLETED: {
-    label: 'הושלם',
+    label: 'Completed',
     color: 'bg-blue-500/20 text-blue-400',
   },
   CANCELLED_BY_PATIENT: {
-    label: 'בוטל (מטופל)',
+    label: 'Cancelled (Patient)',
     color: 'bg-slate-500/20 text-slate-400',
   },
   CANCELLED_BY_THERAPIST: {
-    label: 'בוטל (מטפל)',
+    label: 'Cancelled (Therapist)',
     color: 'bg-slate-500/20 text-slate-400',
   },
   NO_SHOW: {
-    label: 'לא הגיע',
+    label: 'No Arrived',
     color: 'bg-orange-500/20 text-orange-400',
   },
 };
@@ -85,22 +85,22 @@ export default function SessionsOverviewPage() {
   });
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">סקירת פגישות</h1>
+          <h1 className="text-2xl font-bold text-white">Session Review</h1>
           <p className="text-slate-400 mt-1">
-            ניטור וניהול כל הפגישות הטיפוליות בפלטפורמה
+            ניטור וManagement All theSessions הTherapyיs בפלטפורמה
           </p>
         </div>
         <div className="flex items-center gap-4 text-sm">
           <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2">
-            <span className="text-slate-400">סה״כ: </span>
+            <span className="text-slate-400">Total״כ: </span>
             <span className="text-white font-medium">{data?.pagination.total ?? 0}</span>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2">
-            <span className="text-slate-400">ממתינים: </span>
+            <span className="text-slate-400">Pending: </span>
             <span className="text-amber-400 font-medium">
               {data?.sessions.filter(s => s.status === 'PENDING_THERAPIST_APPROVAL').length ?? 0}
             </span>
@@ -113,7 +113,7 @@ export default function SessionsOverviewPage() {
         <div className="flex flex-wrap gap-4">
           <input
             type="text"
-            placeholder="חיפוש לפי שם מטופל או מטפל..."
+            placeholder="Search לפי Name Patient or Therapist..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 min-w-[200px] px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -123,13 +123,13 @@ export default function SessionsOverviewPage() {
             onChange={(e) => setStatusFilter(e.target.value as SessionStatus | '')}
             className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
-            <option value="">כל הסטטוסים</option>
-            <option value="PENDING_THERAPIST_APPROVAL">ממתין לאישור</option>
-            <option value="APPROVED">מאושר</option>
-            <option value="COMPLETED">הושלם</option>
-            <option value="REJECTED">נדחה</option>
-            <option value="CANCELLED_BY_PATIENT">בוטל (מטופל)</option>
-            <option value="CANCELLED_BY_THERAPIST">בוטל (מטפל)</option>
+            <option value="">All theStatuss</option>
+            <option value="PENDING_THERAPIST_APPROVAL">Pending Approval</option>
+            <option value="APPROVED">Approved</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="REJECTED">נDecline</option>
+            <option value="CANCELLED_BY_PATIENT">Cancelled (Patient)</option>
+            <option value="CANCELLED_BY_THERAPIST">Cancelled (Therapist)</option>
           </select>
         </div>
       </div>
@@ -140,25 +140,25 @@ export default function SessionsOverviewPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">פגישה</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">מטופל</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">מטפל</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">סטטוס</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">סוג</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">מחיר</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Session</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Patient</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Therapist</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Status</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Type</th>
+                <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">Price</th>
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
-                    טוען פגישות...
+                    Loading Sessions...
                   </td>
                 </tr>
               ) : !data?.sessions.length ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
-                    לא נמצאו פגישות
+                    No Foundor Sessions
                   </td>
                 </tr>
               ) : (
@@ -220,7 +220,7 @@ export default function SessionsOverviewPage() {
                     <td className="px-6 py-4">
                       <span className="flex items-center gap-1.5 text-sm text-slate-300">
                         {session.isOnline ? <VideoIcon /> : <MapPinIcon />}
-                        {session.isOnline ? 'מקוון' : 'פרונטלי'}
+                        {session.isOnline ? 'Online' : 'In-Person'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-left text-sm text-white font-medium">
@@ -241,7 +241,7 @@ export default function SessionsOverviewPage() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">פגישות היום</h3>
+          <h3 className="text-sm font-medium text-slate-400">Today's Sessions</h3>
           <p className="text-3xl font-bold text-white mt-2">
             {data?.stats.todaySessions ?? 0}
           </p>
@@ -253,7 +253,7 @@ export default function SessionsOverviewPage() {
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">הכנסות (מאושרות)</h3>
+          <h3 className="text-sm font-medium text-slate-400">הכנסs (Approveds)</h3>
           <p className="text-3xl font-bold text-white mt-2">
             {data?.stats.totalRevenue != null && data.stats.totalRevenue > 0
               ? `₪${data.stats.totalRevenue.toLocaleString('he-IL')}`

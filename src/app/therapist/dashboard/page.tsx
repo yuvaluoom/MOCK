@@ -86,15 +86,15 @@ export default function TherapistDashboardPage() {
   };
 
   const handleDecline = (requestId: string) => {
-    declineRequestMutation.mutate({ requestId, reason: 'לא זמין כרגע' });
+    declineRequestMutation.mutate({ requestId, reason: 'Not available at the moment' });
   };
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">שלום, ד״ר רונית שפירא</h1>
-        <p className="text-gray-600 mt-1">לוח הבקרה שלך</p>
+        <h1 className="text-2xl font-bold text-gray-900">Hello, Dr. Ronit Shapira</h1>
+        <p className="text-gray-600 mt-1">Your Dashboard</p>
       </div>
 
       {/* Stats Cards */}
@@ -109,7 +109,7 @@ export default function TherapistDashboardPage() {
                 <p className="text-2xl font-bold text-gray-900">
                   {statsLoading ? '-' : stats?.todaySessions ?? 0}
                 </p>
-                <p className="text-sm text-gray-500">פגישות היום</p>
+                <p className="text-sm text-gray-500">Today's Sessions</p>
               </div>
             </div>
           </CardContent>
@@ -125,7 +125,7 @@ export default function TherapistDashboardPage() {
                 <p className="text-2xl font-bold text-gray-900">
                   {statsLoading ? '-' : stats?.pendingRequests ?? 0}
                 </p>
-                <p className="text-sm text-gray-500">בקשות ממתינות</p>
+                <p className="text-sm text-gray-500">Pending Requests</p>
               </div>
             </div>
           </CardContent>
@@ -141,7 +141,7 @@ export default function TherapistDashboardPage() {
                 <p className="text-2xl font-bold text-gray-900">
                   {statsLoading ? '-' : stats?.unreadMessages ?? 0}
                 </p>
-                <p className="text-sm text-gray-500">הודעות חדשות</p>
+                <p className="text-sm text-gray-500">New Messages</p>
               </div>
             </div>
           </CardContent>
@@ -157,7 +157,7 @@ export default function TherapistDashboardPage() {
                 <p className="text-2xl font-bold text-gray-900">
                   {statsLoading ? '-' : stats?.totalPatients ?? 0}
                 </p>
-                <p className="text-sm text-gray-500">מטופלים פעילים</p>
+                <p className="text-sm text-gray-500">Active Patients</p>
               </div>
             </div>
           </CardContent>
@@ -172,19 +172,19 @@ export default function TherapistDashboardPage() {
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg flex items-center gap-2">
                 <CalendarIcon />
-                פגישות היום
+                Today's Sessions
               </CardTitle>
               <Link
                 href="/therapist/sessions"
                 className="text-sm text-calm-600 hover:text-calm-700 font-medium"
               >
-                הכל →
+                View All →
               </Link>
             </div>
           </CardHeader>
           <CardContent className="p-0">
             {statsLoading ? (
-              <div className="p-6 text-center text-gray-500">טוען...</div>
+              <div className="p-6 text-center text-gray-500">Loading...</div>
             ) : stats?.upcomingSessions && stats.upcomingSessions.length > 0 ? (
               <ul className="divide-y">
                 {stats.upcomingSessions.map((session) => (
@@ -201,19 +201,19 @@ export default function TherapistDashboardPage() {
                       <div>
                         <p className="font-medium text-gray-900">{session.patientName}</p>
                         <p className="text-sm text-gray-500">
-                          {session.time} • {session.type === 'online' ? 'מקוון' : 'פרונטלי'}
+                          {session.time} • {session.type === 'online' ? 'Online' : 'In-Person'}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       {session.type === 'online' && (
-                        <Button size="sm" variant="calm">הצטרף</Button>
+                        <Button size="sm" variant="calm">Join</Button>
                       )}
                       <button
                         type="button"
                         onClick={() => setSelectedPatientId('patient-1')}
                         className="p-2 text-gray-500 hover:text-calm-600 hover:bg-calm-50 rounded-lg transition-colors"
-                        title="צפייה בפרופיל"
+                        title="View Profile"
                       >
                         <EyeIcon />
                       </button>
@@ -224,7 +224,7 @@ export default function TherapistDashboardPage() {
             ) : (
               <div className="p-6 text-center text-gray-500">
                 <CalendarIcon />
-                <p className="mt-2">אין פגישות מתוכננות להיום</p>
+                <p className="mt-2">No sessions scheduled for today</p>
               </div>
             )}
           </CardContent>
@@ -236,19 +236,19 @@ export default function TherapistDashboardPage() {
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg flex items-center gap-2 text-amber-800">
                 <ClockIcon />
-                בקשות ממתינות לאישור
+                Pending Approval Requests
               </CardTitle>
               <Link
                 href="/therapist/sessions?tab=pending"
                 className="text-sm text-amber-700 hover:text-amber-800 font-medium"
               >
-                הכל →
+                View All →
               </Link>
             </div>
           </CardHeader>
           <CardContent className="p-0">
             {requestsLoading ? (
-              <div className="p-6 text-center text-gray-500">טוען...</div>
+              <div className="p-6 text-center text-gray-500">Loading...</div>
             ) : requestsData?.requests && requestsData.requests.length > 0 ? (
               <ul className="divide-y">
                 {requestsData.requests.map((request) => (
@@ -272,11 +272,11 @@ export default function TherapistDashboardPage() {
                           </p>
                           {request.session && (
                             <p className="text-sm text-gray-600 mt-1">
-                              פגישה מבוקשת: {new Date(request.session.scheduledAt).toLocaleDateString('he-IL')}
+                              Requested Session: {new Date(request.session.scheduledAt).toLocaleDateString('en-US')}
                             </p>
                           )}
                           <p className="text-xs text-gray-400 mt-1">
-                            נשלח: {new Date(request.createdAt).toLocaleDateString('he-IL')}
+                            Sent: {new Date(request.createdAt).toLocaleDateString('en-US')}
                           </p>
                         </div>
                       </div>
@@ -286,7 +286,7 @@ export default function TherapistDashboardPage() {
                           onClick={() => setSelectedPatientId(request.patientId)}
                           className="text-xs text-calm-600 hover:text-calm-700 font-medium"
                         >
-                          צפייה בפרופיל
+                          View Profile
                         </button>
                         <div className="flex gap-1">
                           <Button
@@ -297,7 +297,7 @@ export default function TherapistDashboardPage() {
                             disabled={approveRequestMutation.isPending}
                           >
                             <CheckIcon />
-                            אשר
+                            Approve
                           </Button>
                           <Button
                             size="sm"
@@ -307,7 +307,7 @@ export default function TherapistDashboardPage() {
                             disabled={declineRequestMutation.isPending}
                           >
                             <XIcon />
-                            דחה
+                            Decline
                           </Button>
                         </div>
                       </div>
@@ -318,7 +318,7 @@ export default function TherapistDashboardPage() {
             ) : (
               <div className="p-6 text-center text-gray-500">
                 <CheckIcon />
-                <p className="mt-2">אין בקשות ממתינות</p>
+                <p className="mt-2">No pending requests</p>
               </div>
             )}
           </CardContent>
@@ -328,7 +328,7 @@ export default function TherapistDashboardPage() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">פעולות מהירות</CardTitle>
+          <CardTitle className="text-lg">Quick Actions</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -339,7 +339,7 @@ export default function TherapistDashboardPage() {
               <div className="w-10 h-10 rounded-full bg-calm-100 flex items-center justify-center text-calm-600">
                 <CalendarIcon />
               </div>
-              <span className="text-sm font-medium text-gray-700">ניהול פגישות</span>
+              <span className="text-sm font-medium text-gray-700">Session Management</span>
             </Link>
             <Link
               href="/therapist/patients"
@@ -348,7 +348,7 @@ export default function TherapistDashboardPage() {
               <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
                 <UsersIcon />
               </div>
-              <span className="text-sm font-medium text-gray-700">המטופלים שלי</span>
+              <span className="text-sm font-medium text-gray-700">My Patients</span>
             </Link>
             <Link
               href="/therapist/messages"
@@ -357,7 +357,7 @@ export default function TherapistDashboardPage() {
               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
                 <MessageIcon />
               </div>
-              <span className="text-sm font-medium text-gray-700">הודעות</span>
+              <span className="text-sm font-medium text-gray-700">Messages</span>
             </Link>
             <Link
               href="/therapist/schedule"
@@ -366,7 +366,7 @@ export default function TherapistDashboardPage() {
               <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
                 <ClockIcon />
               </div>
-              <span className="text-sm font-medium text-gray-700">ניהול זמינות</span>
+              <span className="text-sm font-medium text-gray-700">Availability Management</span>
             </Link>
           </div>
         </CardContent>

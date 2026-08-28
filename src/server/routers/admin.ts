@@ -536,10 +536,10 @@ export const adminRouter = router({
           ...s,
           patient: patient
             ? { firstName: patient.firstName, lastName: patient.lastName }
-            : { firstName: 'לא ידוע', lastName: '' },
+            : { firstName: 'No Known', lastName: '' },
           therapist: therapist
             ? { firstName: therapist.firstName, lastName: therapist.lastName, title: therapist.title }
-            : { firstName: 'לא ידוע', lastName: '', title: '' },
+            : { firstName: 'No Known', lastName: '', title: '' },
         };
       });
 
@@ -564,7 +564,7 @@ export const adminRouter = router({
     // Health fund distribution from actual patients
     const healthFundCounts: Record<string, number> = {};
     allPatients.forEach((p) => {
-      const fund = p.healthFund || 'אחר';
+      const fund = p.healthFund || 'Other';
       healthFundCounts[fund] = (healthFundCounts[fund] || 0) + 1;
     });
     const totalPatientsFunds = allPatients.length || 1;

@@ -26,31 +26,31 @@ export default function TherapistProfilePage() {
     email: 'ronit.shapira@example.com',
     phone: '052-1234567',
     licenseNumber: 'PSY-12345',
-    specialization: 'פסיכולוגיה קלינית',
+    specialization: 'Clinical Psychology',
     yearsOfExperience: 12,
-    bio: 'פסיכולוגית קלינית עם התמחות בטיפול קוגניטיבי-התנהגותי (CBT). בעלת ניסיון רב בטיפול בחרדות, דיכאון והפרעות חרדה.',
-    approaches: ['CBT', 'DBT', 'טיפול דינמי'],
-    specializations: ['חרדות', 'דיכאון', 'הפרעות אכילה'],
+    bio: 'Clinical Psychologist With Specialization בTherapy Cognitive Behavioral (CBT). בעלת Experience רב בTherapy בחרדs, Depression והפרעs Anxiety.',
+    approaches: ['CBT', 'DBT', 'Therapy דינמי'],
+    specializations: ['חרדs', 'Depression', 'הפרעs אכילה'],
     languages: ['עברית', 'אנגלית'],
-    acceptedHealthFunds: ['כללית', 'מכבי'],
+    acceptedHealthFunds: ['Clalit', 'Maccabi'],
     sessionPrice: 450,
     sessionDuration: 50,
     photoUrl: null as string | null,
   };
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">הפרופיל שלי</h1>
-          <p className="text-gray-600 mt-1">ניהול הפרטים והמידע המקצועי שלך</p>
+          <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
+          <p className="text-gray-600 mt-1">Management הDetails והמידע המקצועי Your</p>
         </div>
         <Button
           variant={isEditing ? 'calm' : 'outline'}
           onClick={() => setIsEditing(!isEditing)}
         >
-          {isEditing ? 'שמור שינויים' : 'עריכה'}
+          {isEditing ? 'Save שינויs' : 'Edit'}
         </Button>
       </div>
 
@@ -71,7 +71,7 @@ export default function TherapistProfilePage() {
                 {profile.title} {profile.firstName} {profile.lastName}
               </h2>
               <p className="text-gray-500">{profile.specialization}</p>
-              <p className="text-sm text-gray-400 mt-1">{profile.yearsOfExperience} שנות ניסיון</p>
+              <p className="text-sm text-gray-400 mt-1">{profile.yearsOfExperience} years experience</p>
             </div>
 
             <div className="mt-6 pt-6 border-t space-y-3">
@@ -91,7 +91,7 @@ export default function TherapistProfilePage() {
                 <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
-                <span className="text-gray-600">רישיון: {profile.licenseNumber}</span>
+                <span className="text-gray-600">License: {profile.licenseNumber}</span>
               </div>
             </div>
           </CardContent>
@@ -105,7 +105,7 @@ export default function TherapistProfilePage() {
           <CardContent className="space-y-6">
             {/* Bio */}
             <div>
-              <Label>אודות</Label>
+              <Label>orדs</Label>
               {isEditing ? (
                 <textarea
                   className="w-full mt-2 p-3 border rounded-lg text-sm"
@@ -119,7 +119,7 @@ export default function TherapistProfilePage() {
 
             {/* Approaches */}
             <div>
-              <Label>גישות טיפוליות</Label>
+              <Label>Therapeutic approaches</Label>
               <div className="flex flex-wrap gap-2 mt-2">
                 {profile.approaches.map((approach) => (
                   <span key={approach} className="px-3 py-1 bg-calm-100 text-calm-700 text-sm rounded-full">
@@ -131,7 +131,7 @@ export default function TherapistProfilePage() {
 
             {/* Specializations */}
             <div>
-              <Label>התמחויות</Label>
+              <Label>Specializations</Label>
               <div className="flex flex-wrap gap-2 mt-2">
                 {profile.specializations.map((spec) => (
                   <span key={spec} className="px-3 py-1 bg-trust-100 text-trust-700 text-sm rounded-full">
@@ -147,14 +147,14 @@ export default function TherapistProfilePage() {
                 <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
-                ביטוח ותשלום
+                ביטוח sHello
               </h3>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {/* HMO Section */}
                 <div className="bg-green-50 rounded-lg p-4">
-                  <Label className="text-green-800 font-medium">קופות חולים (HMO)</Label>
-                  <p className="text-xs text-green-600 mt-1">מטופלים עם קופות אלו משלמים 0 ישירות</p>
+                  <Label className="text-green-800 font-medium">Health Funds (HMO)</Label>
+                  <p className="text-xs text-green-600 mt-1">Patients With קוOptions אלו משלמs 0 ישירs</p>
                   <div className="flex flex-wrap gap-2 mt-3">
                     {profile.acceptedHealthFunds.map((fund) => (
                       <span key={fund} className="px-3 py-1 bg-white text-green-700 text-sm rounded-full border border-green-200">
@@ -171,11 +171,11 @@ export default function TherapistProfilePage() {
 
                 {/* Private Payment Section */}
                 <div className="bg-blue-50 rounded-lg p-4">
-                  <Label className="text-blue-800 font-medium">תשלום פרטי</Label>
-                  <p className="text-xs text-blue-600 mt-1">עבור מטופלים המשלמים מכיסם</p>
+                  <Label className="text-blue-800 font-medium">תHello Private</Label>
+                  <p className="text-xs text-blue-600 mt-1">עבור Patients המשלמs מכיסם</p>
                   <div className="mt-3 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-blue-700">מחיר פגישה:</span>
+                      <span className="text-sm text-blue-700">Price Session:</span>
                       {isEditing ? (
                         <div className="flex items-center gap-1">
                           <span className="text-sm text-gray-500">₪</span>
@@ -186,15 +186,15 @@ export default function TherapistProfilePage() {
                       )}
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-blue-700">משך פגישה:</span>
+                      <span className="text-sm text-blue-700">משך Session:</span>
                       {isEditing ? (
                         <select className="h-8 px-2 border rounded text-sm">
-                          <option value="45">45 דקות</option>
-                          <option value="50" selected>50 דקות</option>
-                          <option value="60">60 דקות</option>
+                          <option value="45">45 Minutes</option>
+                          <option value="50" selected>50 Minutes</option>
+                          <option value="60">60 Minutes</option>
                         </select>
                       ) : (
-                        <span className="font-medium text-blue-900">{profile.sessionDuration} דקות</span>
+                        <span className="font-medium text-blue-900">{profile.sessionDuration} Minutes</span>
                       )}
                     </div>
                   </div>
@@ -203,15 +203,15 @@ export default function TherapistProfilePage() {
 
               {/* Payment Summary */}
               <div className="mt-4 bg-gray-50 rounded-lg p-3 text-sm">
-                <p className="font-medium text-gray-700 mb-2">סיכום אפשרויות תשלום:</p>
+                <p className="font-medium text-gray-700 mb-2">Summary אפשרויs תHello:</p>
                 <div className="grid grid-cols-2 gap-2 text-gray-600">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                    <span>מטופלי {profile.acceptedHealthFunds.join(', ')}: ללא תשלום</span>
+                    <span>Patientי {profile.acceptedHealthFunds.join(', ')}: לNo תHello</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                    <span>מטופלים פרטיים: ₪{profile.sessionPrice} לפגישה</span>
+                    <span>Patients Privates: ₪{profile.sessionPrice} לSession</span>
                   </div>
                 </div>
               </div>

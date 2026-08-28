@@ -93,13 +93,13 @@ const FileTextIcon = () => (
 );
 
 const navigation = [
-  { name: 'לוח בקרה', href: '/therapist/dashboard', icon: HomeIcon },
-  { name: 'המטופלים שלי', href: '/therapist/patients', icon: UsersIcon },
-  { name: 'פגישות', href: '/therapist/sessions', icon: CalendarIcon },
-  { name: 'ניהול זמינות', href: '/therapist/schedule', icon: ClockIcon },
-  { name: 'תיעוד טיפולי', href: '/therapist/documentation', icon: FileTextIcon },
-  { name: 'הודעות', href: '/therapist/messages', icon: MessageIcon },
-  { name: 'הפרופיל שלי', href: '/therapist/profile', icon: UserIcon },
+  { name: 'Dashboard', href: '/therapist/dashboard', icon: HomeIcon },
+  { name: 'My Patients', href: '/therapist/patients', icon: UsersIcon },
+  { name: 'Sessions', href: '/therapist/sessions', icon: CalendarIcon },
+  { name: 'Schedule', href: '/therapist/schedule', icon: ClockIcon },
+  { name: 'Documentation', href: '/therapist/documentation', icon: FileTextIcon },
+  { name: 'Messages', href: '/therapist/messages', icon: MessageIcon },
+  { name: 'My Profile', href: '/therapist/profile', icon: UserIcon },
 ];
 
 export default function TherapistLayout({
@@ -135,7 +135,7 @@ export default function TherapistLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex" dir="rtl">
+    <div className="min-h-screen bg-gray-50 flex">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
@@ -191,11 +191,11 @@ export default function TherapistLayout({
         <div className="p-4 border-t bg-white">
           <div className="flex items-center gap-3 px-4 py-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-calm-100 to-trust-100 flex items-center justify-center">
-              <span className="text-calm-700 font-semibold">ר</span>
+              <span className="text-calm-700 font-semibold">R</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">ד״ר רונית שפירא</p>
-              <p className="text-xs text-gray-500 truncate">פסיכולוגית קלינית</p>
+              <p className="text-sm font-medium text-gray-900 truncate">Dr. Ronit Shapira</p>
+              <p className="text-xs text-gray-500 truncate">Clinical Psychologist</p>
             </div>
           </div>
           <button
@@ -204,7 +204,7 @@ export default function TherapistLayout({
             onClick={handleLogout}
           >
             <LogOutIcon />
-            התנתק
+            Log Out
           </button>
         </div>
       </aside>
@@ -243,10 +243,10 @@ export default function TherapistLayout({
         {/* Footer */}
         <footer className="border-t bg-white px-4 lg:px-8 py-4">
           <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-            <p>&copy; {new Date().getFullYear()} MatchMind. כל הזכויות שמורות.</p>
+            <p>&copy; {new Date().getFullYear()} MatchMind. All rights reserved.</p>
             <div className="flex items-center gap-4">
-              <Link href="/privacy" className="hover:text-gray-900">מדיניות פרטיות</Link>
-              <Link href="/terms" className="hover:text-gray-900">תנאי שימוש</Link>
+              <Link href="/privacy" className="hover:text-gray-900">Privacy Policy</Link>
+              <Link href="/terms" className="hover:text-gray-900">Terms of Service</Link>
             </div>
           </div>
         </footer>

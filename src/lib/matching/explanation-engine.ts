@@ -105,8 +105,8 @@ function generatePositiveFactors(
         weight: 0.15,
         details:
           fundMatch.agreementType === 'FULL'
-            ? 'כיסוי מלא / Full coverage'
-            : 'כיסוי חלקי / Partial coverage',
+            ? 'Coverage מNo / Full coverage'
+            : 'Partial coverage / Partial coverage',
       });
     }
   }
@@ -167,7 +167,7 @@ function generatePositiveFactors(
     factors.push({
       ...EXPLANATION_TEMPLATES.experienceRelevant,
       weight: 0.1,
-      details: `${therapist.therapist.yearsOfExperience} שנות ניסיון / years experience`,
+      details: `${therapist.therapist.yearsOfExperience} years experience / years experience`,
     });
   }
 
@@ -176,7 +176,7 @@ function generatePositiveFactors(
     factors.push({
       ...EXPLANATION_TEMPLATES.priceInBudget,
       weight: 0.08,
-      details: `₪${therapist.therapist.sessionPrice} / פגישה`,
+      details: `₪${therapist.therapist.sessionPrice} / Session`,
     });
   }
 
@@ -243,7 +243,7 @@ function generateNeutralFactors(
   if (scores.experience >= 40 && scores.experience < 70) {
     factors.push({
       key: 'moderate_experience',
-      labelHebrew: 'ניסיון מוכח בתחום',
+      labelHebrew: 'Experience edכח בתחום',
       labelEnglish: 'Proven experience in the field',
       icon: 'briefcase',
       weight: 0.05,
@@ -270,7 +270,7 @@ function generateConsiderationFactors(
     factors.push({
       ...EXPLANATION_TEMPLATES.priceAboveBudget,
       weight: 0.1,
-      details: `₪${therapist.therapist.sessionPrice} / פגישה`,
+      details: `₪${therapist.therapist.sessionPrice} / Session`,
     });
   }
 
@@ -326,9 +326,9 @@ function generateTopReasons(
   if (
     scores.xFactor !== null &&
     scores.xFactor >= 60 &&
-    !reasons.some((r) => r.includes('התאמה גבוהה לסגנון'))
+    !reasons.some((r) => r.includes('Great Match לסגנון'))
   ) {
-    reasons.push('התאמה מותאמת אישית על בסיס הפרופיל שלך');
+    reasons.push('Match מsאמת אישית על בסיס הפרופיל Your');
   }
 
   return reasons.slice(0, 5);
@@ -347,18 +347,18 @@ function generateSummaryHebrew(
   const quality = MATCH_QUALITY_LABELS[score.matchQuality].labelHebrew;
 
   if (score.matchQuality === 'EXCELLENT') {
-    return `${name} מציג/ה ${quality} עם ${positiveFactorCount} גורמים חיוביים משמעותיים. ההתאמה מבוססת על ניתוח מקיף של הצרכים וההעדפות שלך.`;
+    return `${name} Displays ${quality} With ${positiveFactorCount} גורמs חיוביs משמעsיs. הMatch מבוססת על ניתוח מקיף של הצרכs וההup toOptions Your.`;
   }
 
   if (score.matchQuality === 'GREAT') {
-    return `${name} מציג/ה ${quality} על בסיס ${positiveFactorCount} גורמים תואמים. מומלץ לבחון את הפרופיל המלא.`;
+    return `${name} Displays ${quality} על בסיס ${positiveFactorCount} גורמs תואמs. Recommended לבחון את הפרופיל המNo.`;
   }
 
   if (score.matchQuality === 'GOOD') {
-    return `${name} מציג/ה ${quality}. יש התאמה טובה במספר תחומים חשובים.`;
+    return `${name} Displays ${quality}. יש Good Match במספר תחומs חשובs.`;
   }
 
-  return `${name} מציג/ה ${quality}. מומלץ לבחון אפשרויות נוספות.`;
+  return `${name} Displays ${quality}. Recommended לבחון אפשרויs נוסOptions.`;
 }
 
 function generateSummaryEnglish(
@@ -447,26 +447,26 @@ function getMatchingApproaches(
 // =============================================================================
 
 const SPECIALIZATION_LABELS: Record<string, string> = {
-  ANXIETY: 'חרדה / Anxiety',
-  DEPRESSION: 'דיכאון / Depression',
-  TRAUMA_PTSD: 'טראומה ו-PTSD',
-  RELATIONSHIPS: 'יחסים / Relationships',
-  STRESS_MANAGEMENT: 'ניהול מתחים / Stress',
-  GRIEF_LOSS: 'אבל ואובדן / Grief',
-  SELF_ESTEEM: 'דימוי עצמי / Self-esteem',
-  LIFE_TRANSITIONS: 'מעברי חיים / Transitions',
-  FAMILY_ISSUES: 'סוגיות משפחתיות / Family',
+  ANXIETY: 'Anxiety / Anxiety',
+  DEPRESSION: 'Depression / Depression',
+  TRAUMA_PTSD: 'Trauma ו-PTSD',
+  RELATIONSHIPS: 'יחסs / Relationships',
+  STRESS_MANAGEMENT: 'Management מתחs / Stress',
+  GRIEF_LOSS: 'אבל וorבדן / Grief',
+  SELF_ESTEEM: 'דיedי עצמי / Self-esteem',
+  LIFE_TRANSITIONS: 'מעברי חיs / Transitions',
+  FAMILY_ISSUES: 'Typeיs משפחתיs / Family',
   WORK_CAREER: 'קריירה ועבודה / Career',
-  ANGER_MANAGEMENT: 'ניהול כעסים / Anger',
-  ADDICTION: 'התמכרויות / Addiction',
-  EATING_DISORDERS: 'הפרעות אכילה / Eating',
+  ANGER_MANAGEMENT: 'Management כעסs / Anger',
+  ADDICTION: 'התמכרויs / Addiction',
+  EATING_DISORDERS: 'הפרעs אכילה / Eating',
   OCD: 'הפרעה טורדנית / OCD',
   ADHD: 'הפרעת קשב / ADHD',
-  COUPLES_THERAPY: 'טיפול זוגי / Couples',
-  CHILD_ADOLESCENT: 'ילדים ונוער / Youth',
+  COUPLES_THERAPY: 'Therapy Thisגי / Couples',
+  CHILD_ADOLESCENT: 'ילדs ונוער / Youth',
   LGBTQ_ISSUES: 'LGBTQ+',
-  CHRONIC_ILLNESS: 'מחלות כרוניות / Chronic',
-  SLEEP_DISORDERS: 'הפרעות שינה / Sleep',
+  CHRONIC_ILLNESS: 'מחלs כרוניs / Chronic',
+  SLEEP_DISORDERS: 'הפרעs שינה / Sleep',
 };
 
 const LANGUAGE_LABELS: Record<string, string> = {
@@ -480,21 +480,21 @@ const LANGUAGE_LABELS: Record<string, string> = {
 };
 
 const APPROACH_LABELS: Record<string, string> = {
-  CBT: 'CBT - טיפול קוגניטיבי-התנהגותי',
-  PSYCHODYNAMIC: 'פסיכודינמי',
-  HUMANISTIC: 'הומניסטי',
+  CBT: 'CBT - Therapy Cognitive Behavioral',
+  PSYCHODYNAMIC: 'Psychodynamic',
+  HUMANISTIC: 'Humanistic',
   EXISTENTIAL: 'אקזיסטנציאלי',
   INTEGRATIVE: 'אינטגרטיבי',
-  MINDFULNESS: 'מיינדפולנס',
+  MINDFULNESS: 'Mindfulness',
   DBT: 'DBT',
   EMDR: 'EMDR',
   ACT: 'ACT',
   GESTALT: 'גשטלט',
-  SOLUTION_FOCUSED: 'ממוקד פתרונות',
+  SOLUTION_FOCUSED: 'מedקד פתרונs',
   NARRATIVE: 'נרטיבי',
   FAMILY_SYSTEMS: 'שיטתי-משפחתי',
-  ATTACHMENT_BASED: 'מבוסס התקשרות',
-  ART_THERAPY: 'טיפול באמנות',
+  ATTACHMENT_BASED: 'מבוסס התקשרs',
+  ART_THERAPY: 'Art therapy',
   SOMATIC: 'סומטי',
 };
 

@@ -144,11 +144,11 @@ export function PatientSummaryForm({
         <div className="flex items-start gap-3">
           <Info className="w-5 h-5 text-blue-600 mt-0.5" />
           <div className="text-sm text-blue-800">
-            <p className="font-medium">סיכום למטופל</p>
+            <p className="font-medium">Summary forPatient</p>
             <p className="mt-1">
-              סיכום זה יהיה נגיש למטופל באפליקציה שלו. השתמש בשפה ברורה ומעודדת.
+              This summary will be נגיש לPatient באפליקציה שלו. השתמש בLanguage ברורה ומעודדת.
               <strong className="block mt-1">
-                אל תכלול מידע קליני רגיש או אבחנות שלא שותפו עם המטופל.
+                אל תכלול מידע קליני רגיש or אבחנs שNo שsפו With הPatient.
               </strong>
             </p>
           </div>
@@ -164,10 +164,10 @@ export function PatientSummaryForm({
                 <>
                   <Eye className="w-5 h-5 text-green-600" />
                   <div>
-                    <p className="font-medium text-green-800">הסיכום גלוי למטופל</p>
+                    <p className="font-medium text-green-800">הSummary גלוי לPatient</p>
                     {summary.sharedAt && (
                       <p className="text-xs text-green-600">
-                        שותף ב-{new Date(summary.sharedAt).toLocaleDateString('he-IL')}
+                        שsף ב-{new Date(summary.sharedAt).toLocaleDateString('he-IL')}
                       </p>
                     )}
                   </div>
@@ -176,8 +176,8 @@ export function PatientSummaryForm({
                 <>
                   <EyeOff className="w-5 h-5 text-gray-400" />
                   <div>
-                    <p className="font-medium text-gray-700">הסיכום מוסתר מהמטופל</p>
-                    <p className="text-xs text-gray-500">לחץ שתף כדי להנגיש למטופל</p>
+                    <p className="font-medium text-gray-700">הSummary edסתר מהPatient</p>
+                    <p className="text-xs text-gray-500">Stress שתף כדי להנגיש לPatient</p>
                   </div>
                 </>
               )}
@@ -209,7 +209,7 @@ export function PatientSummaryForm({
                     disabled={isSaving || !summary.summaryHebrew}
                   >
                     <Share2 className="w-4 h-4 ml-1" />
-                    {isSaving ? 'משתף...' : 'שתף עם המטופל'}
+                    {isSaving ? 'משתף...' : 'שתף With הPatient'}
                   </Button>
                 )}
               </div>
@@ -224,20 +224,20 @@ export function PatientSummaryForm({
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Eye className="w-5 h-5 text-calm-600" />
-              תצוגה מקדימה - כך המטופל יראה את הסיכום
+              תצוגה מקדימה - כך הPatient יראה את הSummary
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="bg-white rounded-lg p-4 shadow-sm">
-              <h3 className="font-semibold text-lg mb-2">סיכום הפגישה</h3>
+              <h3 className="font-semibold text-lg mb-2">Summary הSession</h3>
               <p className="text-gray-700 whitespace-pre-wrap">
-                {summary.summaryHebrew || '(לא הוזן סיכום)'}
+                {summary.summaryHebrew || '(No הוזן Summary)'}
               </p>
             </div>
 
             {(summary.topicsDiscussed?.length ?? 0) > 0 && (
               <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h4 className="font-medium mb-2">נושאים שדיברנו עליהם</h4>
+                <h4 className="font-medium mb-2">Subjects שדיברנו עליהם</h4>
                 <ul className="list-disc list-inside text-gray-700 space-y-1">
                   {summary.topicsDiscussed?.map((topic, i) => (
                     <li key={i}>{topic}</li>
@@ -248,7 +248,7 @@ export function PatientSummaryForm({
 
             {(summary.keyTakeaways?.length ?? 0) > 0 && (
               <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h4 className="font-medium mb-2">נקודות מפתח לזכור</h4>
+                <h4 className="font-medium mb-2">נקודs מפתח לזכור</h4>
                 <ul className="list-disc list-inside text-gray-700 space-y-1">
                   {summary.keyTakeaways?.map((takeaway, i) => (
                     <li key={i}>{takeaway}</li>
@@ -259,13 +259,13 @@ export function PatientSummaryForm({
 
             {(summary.homework?.length ?? 0) > 0 && (
               <div className="bg-white rounded-lg p-4 shadow-sm">
-                <h4 className="font-medium mb-2">משימות עד הפגישה הבאה</h4>
+                <h4 className="font-medium mb-2">משימs up to הSession Nextה</h4>
                 <div className="space-y-2">
                   {summary.homework?.map((hw, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <div className="w-5 h-5 rounded border border-gray-300 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-medium text-gray-800">{hw.title || '(ללא כותרת)'}</p>
+                        <p className="font-medium text-gray-800">{hw.title || '(לNo כsרת)'}</p>
                         {hw.description && (
                           <p className="text-sm text-gray-600">{hw.description}</p>
                         )}
@@ -282,17 +282,16 @@ export function PatientSummaryForm({
       {/* Summary Text */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">סיכום הפגישה</CardTitle>
+          <CardTitle className="text-lg">Summary הSession</CardTitle>
         </CardHeader>
         <CardContent>
           <Textarea
             value={summary.summaryHebrew || ''}
             onChange={(e) => setSummary(prev => ({ ...prev, summaryHebrew: e.target.value }))}
-            placeholder={`היי ${patientName},\n\nהיום דיברנו על...\n\nהיה חשוב לי לציין ש...\n\nלקראת הפגישה הבאה...`}
+            placeholder={`היי ${patientName},\n\nהיום דיברנו על...\n\nהיה חשוב לי לציין ש...\n\nלקראת הSession Nextה...`}
             rows={8}
             disabled={isReadOnly}
             className="resize-none"
-            dir="rtl"
           />
         </CardContent>
       </Card>
@@ -300,7 +299,7 @@ export function PatientSummaryForm({
       {/* Topics Discussed */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">נושאים שעלו בפגישה</CardTitle>
+          <CardTitle className="text-lg">Subjects שעלו בSession</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex flex-wrap gap-2">
@@ -328,9 +327,8 @@ export function PatientSummaryForm({
               <Input
                 value={newTopic}
                 onChange={(e) => setNewTopic(e.target.value)}
-                placeholder="הוסף נושא..."
+                placeholder="הוסף Subject..."
                 onKeyDown={(e) => e.key === 'Enter' && addTopic()}
-                dir="rtl"
               />
               <Button
                 type="button"
@@ -348,11 +346,11 @@ export function PatientSummaryForm({
       {/* Key Takeaways */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">נקודות מפתח לזכור</CardTitle>
+          <CardTitle className="text-lg">נקודs מפתח לזכור</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-gray-600">
-            תובנות או נקודות חשובות שהמטופל יכול לזכור מהפגישה
+            תובנs or נקודs חשובs שהPatient יכול לזכור מהSession
           </p>
 
           <div className="space-y-2">
@@ -383,7 +381,6 @@ export function PatientSummaryForm({
                 onChange={(e) => setNewTakeaway(e.target.value)}
                 placeholder="הוסף נקודה לזכור..."
                 onKeyDown={(e) => e.key === 'Enter' && addTakeaway()}
-                dir="rtl"
               />
               <Button
                 type="button"
@@ -402,7 +399,7 @@ export function PatientSummaryForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center justify-between">
-            <span>משימות לבית</span>
+            <span>משימs לבית</span>
             {!isReadOnly && (
               <Button
                 type="button"
@@ -419,7 +416,7 @@ export function PatientSummaryForm({
         <CardContent>
           {(!summary.homework || summary.homework.length === 0) ? (
             <p className="text-sm text-gray-500 text-center py-4">
-              לא הוגדרו משימות לפגישה זו
+              No הוגדרו משימs לSession This
             </p>
           ) : (
             <div className="space-y-4">
@@ -444,30 +441,28 @@ export function PatientSummaryForm({
                   </div>
                   <div className="space-y-3">
                     <div>
-                      <Label className="text-xs text-gray-500">כותרת המשימה</Label>
+                      <Label className="text-xs text-gray-500">כsרת המשימה</Label>
                       <Input
                         value={hw.title}
                         onChange={(e) => updateHomework(index, { title: e.target.value })}
-                        placeholder="למשל: תרגול נשימות עמוקות"
+                        placeholder="למשל: תרגול נשימs עedקs"
                         disabled={isReadOnly}
-                        dir="rtl"
                         className="mt-1"
                       />
                     </div>
                     <div>
-                      <Label className="text-xs text-gray-500">תיאור (אופציונלי)</Label>
+                      <Label className="text-xs text-gray-500">תיorר (Optional)</Label>
                       <Textarea
                         value={hw.description || ''}
                         onChange={(e) => updateHomework(index, { description: e.target.value })}
-                        placeholder="הוראות מפורטות לביצוע המשימה..."
+                        placeholder="הורorת מפורטs לביצוע המשימה..."
                         rows={2}
                         disabled={isReadOnly}
                         className="resize-none mt-1"
-                        dir="rtl"
                       />
                     </div>
                     <div>
-                      <Label className="text-xs text-gray-500">תאריך יעד (אופציונלי)</Label>
+                      <Label className="text-xs text-gray-500">Date יup to (Optional)</Label>
                       <Input
                         type="date"
                         value={hw.dueDate ? new Date(hw.dueDate).toISOString().split('T')[0] : ''}

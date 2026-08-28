@@ -85,11 +85,11 @@ function formatRelativeTime(date: Date): string {
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffMins < 1) return 'עכשיו';
-  if (diffMins < 60) return `לפני ${diffMins} דקות`;
-  if (diffHours < 24) return `לפני ${diffHours} שעות`;
-  if (diffDays < 7) return `לפני ${diffDays} ימים`;
-  return new Date(date).toLocaleDateString('he-IL');
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return `${diffMins} minutes ago`;
+  if (diffHours < 24) return `${diffHours} hours ago`;
+  if (diffDays < 7) return `${diffDays} days ago`;
+  return new Date(date).toLocaleDateString('en-US');
 }
 
 export function NotificationBell() {
@@ -157,7 +157,7 @@ export function NotificationBell() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-gray-500 hover:text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-calm-500 transition-colors"
-        aria-label={`התראות${unreadCount > 0 ? ` - ${unreadCount} חדשות` : ''}`}
+        aria-label={`Notifications${unreadCount > 0 ? ` - ${unreadCount} new` : ''}`}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -180,11 +180,11 @@ export function NotificationBell() {
           className="absolute top-full right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border overflow-hidden z-50"
           role="dialog"
           aria-modal="true"
-          aria-label="התראות"
+          aria-label="Notifications"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50">
-            <h3 className="font-semibold text-gray-900">התראות</h3>
+            <h3 className="font-semibold text-gray-900">Notifications</h3>
             <div className="flex items-center gap-2">
               {unreadCount > 0 && (
                 <button
@@ -193,14 +193,14 @@ export function NotificationBell() {
                   className="text-xs text-calm-600 hover:text-calm-700 focus:outline-none focus:underline"
                   disabled={markAllAsReadMutation.isPending}
                 >
-                  סמן הכל כנקרא
+                  Mark all as read
                 </button>
               )}
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 className="p-1 text-gray-400 hover:text-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-calm-500"
-                aria-label="סגור התראות"
+                aria-label="Close notifications"
               >
                 <XIcon className="w-4 h-4" />
               </button>
@@ -212,7 +212,7 @@ export function NotificationBell() {
             {notifications.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
                 <BellIcon className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p className="text-sm">אין התראות חדשות</p>
+                <p className="text-sm">No new notifications</p>
               </div>
             ) : (
               <ul className="divide-y divide-gray-100" role="list">
@@ -241,7 +241,7 @@ export function NotificationBell() {
                             {notification.titleHe}
                           </p>
                           {!notification.isRead && (
-                            <span className="flex-shrink-0 w-2 h-2 bg-calm-500 rounded-full mt-1.5" aria-label="חדש" />
+                            <span className="flex-shrink-0 w-2 h-2 bg-calm-500 rounded-full mt-1.5" aria-label="New" />
                           )}
                         </div>
                         <p className="text-sm text-gray-600 mt-0.5 line-clamp-2">
@@ -266,7 +266,7 @@ export function NotificationBell() {
                 className="block text-center text-sm text-calm-600 hover:text-calm-700 font-medium focus:outline-none focus:underline"
                 onClick={() => setIsOpen(false)}
               >
-                הצג את כל ההתראות
+                View all notifications
               </Link>
             </div>
           )}

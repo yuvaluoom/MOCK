@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { trpc } from '@/lib/trpc/client';
 import { cn } from '@/lib/utils/cn';
 
-const DAY_NAMES_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+const DAY_NAMES_HE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const TIME_OPTIONS = [
   '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
@@ -52,10 +52,10 @@ export function RecurringAvailability() {
   };
 
   return (
-    <Card dir="rtl">
+    <Card>
       <CardHeader>
-        <CardTitle className="text-lg">זמינות קבועה</CardTitle>
-        <CardDescription>הגדירו את השעות הקבועות שלכם לכל יום בשבוע</CardDescription>
+        <CardTitle className="text-lg">Availability קבועה</CardTitle>
+        <CardDescription>הגדירו את השעs הקבועs שלכם לכל יום בשבוע</CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -90,7 +90,7 @@ export function RecurringAvailability() {
                           {dayData.startTime} - {dayData.endTime}
                         </p>
                       ) : (
-                        <p className="text-sm text-gray-400">לא זמין</p>
+                        <p className="text-sm text-gray-400">No זGender</p>
                       )}
                     </div>
                   </div>
@@ -124,14 +124,14 @@ export function RecurringAvailability() {
                         onClick={() => handleSave(index, true)}
                         loading={setAvailabilityMutation.isPending}
                       >
-                        שמור
+                        Save
                       </Button>
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => setEditingDay(null)}
                       >
-                        ביטול
+                        Cancel
                       </Button>
                     </div>
                   ) : (
@@ -141,7 +141,7 @@ export function RecurringAvailability() {
                         onClick={() => handleEdit(index)}
                         className="text-sm text-calm-600 hover:text-calm-700 font-medium"
                       >
-                        עריכה
+                        Edit
                       </button>
                       {dayData?.isActive && (
                         <button
@@ -149,7 +149,7 @@ export function RecurringAvailability() {
                           onClick={() => handleSave(index, false)}
                           className="text-sm text-red-600 hover:text-red-700"
                         >
-                          השבת
+                          הSat
                         </button>
                       )}
                     </div>
@@ -162,11 +162,11 @@ export function RecurringAvailability() {
 
         {/* Tips */}
         <div className="mt-6 p-4 rounded-lg bg-blue-50 border border-blue-200">
-          <h4 className="font-medium text-blue-900 text-sm mb-1">טיפים להגדרת זמינות</h4>
+          <h4 className="font-medium text-blue-900 text-sm mb-1">טיפs להגדרת Availability</h4>
           <ul className="text-xs text-blue-700 space-y-1">
-            <li>• הזמינות הקבועה חוזרת על עצמה בכל שבוע</li>
-            <li>• ניתן לחסום זמנים ספציפיים בלוח השנה</li>
-            <li>• מטופלים יראו רק את הזמנים הפנויים שלכם</li>
+            <li>• הAvailability הקבועה חוזרת על עצמה בכל שבוע</li>
+            <li>• ניתן לחסום זמנs ספציפיs בלוח השנה</li>
+            <li>• Patients ירor רק את הזמנs הפנויs שלכם</li>
           </ul>
         </div>
       </CardContent>

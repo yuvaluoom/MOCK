@@ -82,7 +82,7 @@ export default function BulkImportPage() {
     // Validate file type
     const allowedTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     if (!allowedTypes.includes(selectedFile.type) && !selectedFile.name.endsWith('.csv')) {
-      alert('יש להעלות קובץ CSV או Excel');
+      alert('Upload a file CSV or Excel');
       return;
     }
 
@@ -92,9 +92,9 @@ export default function BulkImportPage() {
 
     // Parse and preview file (mock for now)
     const mockPreview = [
-      { firstName: 'יעל', lastName: 'כהן', email: 'yael@example.com', licenseNumber: 'PSY-001', city: 'תל אביב' },
-      { firstName: 'דוד', lastName: 'לוי', email: 'david@example.com', licenseNumber: 'PSY-002', city: 'ירושלים' },
-      { firstName: 'מיכל', lastName: 'גולן', email: 'michal@example.com', licenseNumber: 'PSY-003', city: 'חיפה' },
+      { firstName: 'יעל', lastName: 'כהן', email: 'yael@example.com', licenseNumber: 'PSY-001', city: 'Tel Aviv' },
+      { firstName: 'דוד', lastName: 'לוי', email: 'david@example.com', licenseNumber: 'PSY-002', city: 'Jerusalem' },
+      { firstName: 'מיכל', lastName: 'גולן', email: 'michal@example.com', licenseNumber: 'PSY-003', city: 'Haifa' },
     ];
     setPreviewData(mockPreview);
   }, []);
@@ -125,7 +125,7 @@ export default function BulkImportPage() {
       warnings: 1,
       errors: [],
       warnings_list: [
-        { row: 2, field: 'phone', message: 'מספר טלפון חסר - משתמש בברירת מחדל' },
+        { row: 2, field: 'phone', message: 'מספר Phone חסר - User בdefault' },
       ],
     });
 
@@ -142,8 +142,8 @@ export default function BulkImportPage() {
 
   const downloadTemplate = () => {
     const csvContent = `firstName,lastName,email,phone,licenseNumber,city,specializations,approaches,healthFunds,sessionPrice,yearsOfExperience
-יעל,כהן,yael@example.com,052-1234567,PSY-001,תל אביב,"חרדות,דיכאון","CBT,DBT","כללית,מכבי",400,5
-דוד,לוי,david@example.com,054-7654321,PSY-002,ירושלים,"טראומה,PTSD","EMDR,פסיכודינמי","מכבי,לאומית",450,10`;
+יעל,כהן,yael@example.com,052-1234567,PSY-001,Tel Aviv,"חרדs,Depression","CBT,DBT","Clalit,Maccabi",400,5
+דוד,לוי,david@example.com,054-7654321,PSY-002,Jerusalem,"Trauma,PTSD","EMDR,Psychodynamic","Maccabi,Noומית",450,10`;
 
     const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -155,13 +155,13 @@ export default function BulkImportPage() {
   };
 
   return (
-    <div className="space-y-8" dir="rtl">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">ייבוא מטפלים</h1>
+          <h1 className="text-2xl font-bold text-white">ייבוא Therapists</h1>
           <p className="text-slate-400 mt-1">
-            ייבוא מטפלים מרובים בבת אחת מקובצי CSV או Excel
+            ייבוא Therapists מרובs בבת אחת מקובצי CSV or Excel
           </p>
         </div>
         <Button
@@ -179,9 +179,9 @@ export default function BulkImportPage() {
         <h2 className="text-lg font-semibold text-white mb-4">מקור ייבוא</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { id: 'csv', label: 'קובץ CSV / Excel', desc: 'העלאת קובץ גיליון אלקטרוני' },
-            { id: 'healthfund', label: 'אינטגרציה עם קופ״ח', desc: 'בקרוב' },
-            { id: 'api', label: 'API חיצוני', desc: 'בקרוב' },
+            { id: 'csv', label: 'קובץ CSV / Excel', desc: 'העNoת קובץ גיליון אלקטרוני' },
+            { id: 'healthfund', label: 'אינטגרציה With קופ״ח', desc: 'Coming soon' },
+            { id: 'api', label: 'API חיצוני', desc: 'Coming soon' },
           ].map((source) => (
             <button
               key={source.id}
@@ -202,16 +202,16 @@ export default function BulkImportPage() {
 
       {/* File Upload */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">העלאת קובץ</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">העNoת קובץ</h2>
 
         {!file ? (
           <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-slate-600 rounded-xl cursor-pointer hover:border-amber-500 transition-colors">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <UploadIcon />
               <p className="mb-2 text-sm text-slate-400 mt-4">
-                <span className="font-semibold text-amber-400">לחצו להעלאה</span> או גררו קובץ לכאן
+                <span className="font-semibold text-amber-400">לחצו להעNoה</span> or גררו קובץ לכאן
               </p>
-              <p className="text-xs text-slate-500">קובץ CSV או Excel (עד 10MB)</p>
+              <p className="text-xs text-slate-500">קובץ CSV or Excel (up to 10MB)</p>
             </div>
             <input
               type="file"
@@ -231,7 +231,7 @@ export default function BulkImportPage() {
                 <div>
                   <p className="text-sm font-medium text-white">{file.name}</p>
                   <p className="text-xs text-slate-400">
-                    {(file.size / 1024).toFixed(1)} KB • {previewData.length} שורות זוהו
+                    {(file.size / 1024).toFixed(1)} KB • {previewData.length} שורs Identified
                   </p>
                 </div>
               </div>
@@ -251,11 +251,11 @@ export default function BulkImportPage() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-slate-600">
-                      <th className="px-4 py-2 text-right text-slate-400 font-medium">שם פרטי</th>
-                      <th className="px-4 py-2 text-right text-slate-400 font-medium">שם משפחה</th>
-                      <th className="px-4 py-2 text-right text-slate-400 font-medium">אימייל</th>
-                      <th className="px-4 py-2 text-right text-slate-400 font-medium">רישיון</th>
-                      <th className="px-4 py-2 text-right text-slate-400 font-medium">עיר</th>
+                      <th className="px-4 py-2 text-right text-slate-400 font-medium">First Name</th>
+                      <th className="px-4 py-2 text-right text-slate-400 font-medium">Last Name</th>
+                      <th className="px-4 py-2 text-right text-slate-400 font-medium">Email</th>
+                      <th className="px-4 py-2 text-right text-slate-400 font-medium">License</th>
+                      <th className="px-4 py-2 text-right text-slate-400 font-medium">City</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -272,7 +272,7 @@ export default function BulkImportPage() {
                 </table>
                 {previewData.length > 5 && (
                   <p className="text-sm text-slate-400 mt-2 px-4">
-                    ... ועוד {previewData.length - 5} שורות
+                    ... ועוד {previewData.length - 5} שורs
                   </p>
                 )}
               </div>
@@ -283,7 +283,7 @@ export default function BulkImportPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-400">
-                    {status === 'validating' ? 'מאמת נתונים...' : 'מייבא מטפלים...'}
+                    {status === 'validating' ? 'מאמת נתונs...' : 'מייבא Therapists...'}
                   </span>
                   <span className="text-white">{progress}%</span>
                 </div>
@@ -303,15 +303,15 @@ export default function BulkImportPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-slate-700/50 rounded-lg p-4 text-center">
                     <p className="text-2xl font-bold text-white">{result.total}</p>
-                    <p className="text-sm text-slate-400">סה״כ שורות</p>
+                    <p className="text-sm text-slate-400">Total״כ שורs</p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
                     <p className="text-2xl font-bold text-green-400">{result.successful}</p>
-                    <p className="text-sm text-green-400/80">יובאו בהצלחה</p>
+                    <p className="text-sm text-green-400/80">יובor בהצלחה</p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 text-center">
                     <p className="text-2xl font-bold text-amber-400">{result.warnings}</p>
-                    <p className="text-sm text-amber-400/80">אזהרות</p>
+                    <p className="text-sm text-amber-400/80">אזהרs</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 text-center">
                     <p className="text-2xl font-bold text-red-400">{result.failed}</p>
@@ -324,12 +324,12 @@ export default function BulkImportPage() {
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                     <h4 className="font-medium text-amber-400 mb-2 flex items-center gap-2">
                       <AlertTriangleIcon />
-                      אזהרות
+                      אזהרs
                     </h4>
                     <ul className="space-y-1 text-sm text-amber-300">
                       {result.warnings_list.map((w, i) => (
                         <li key={i}>
-                          שורה {w.row}: {w.field} - {w.message}
+                          Row {w.row}: {w.field} - {w.message}
                         </li>
                       ))}
                     </ul>
@@ -341,12 +341,12 @@ export default function BulkImportPage() {
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                     <h4 className="font-medium text-red-400 mb-2 flex items-center gap-2">
                       <XCircleIcon />
-                      שגיאות
+                      שגיorת
                     </h4>
                     <ul className="space-y-1 text-sm text-red-300">
                       {result.errors.map((e, i) => (
                         <li key={i}>
-                          שורה {e.row}: {e.field} - {e.message}
+                          Row {e.row}: {e.field} - {e.message}
                         </li>
                       ))}
                     </ul>
@@ -382,30 +382,30 @@ export default function BulkImportPage() {
 
       {/* Field Mapping Reference */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">מיפוי שדות</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">מיפוי שדs</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-600">
                 <th className="px-4 py-2 text-right text-slate-400 font-medium">שדה</th>
-                <th className="px-4 py-2 text-right text-slate-400 font-medium">חובה</th>
-                <th className="px-4 py-2 text-right text-slate-400 font-medium">פורמט</th>
+                <th className="px-4 py-2 text-right text-slate-400 font-medium">Required</th>
+                <th className="px-4 py-2 text-right text-slate-400 font-medium">Format</th>
                 <th className="px-4 py-2 text-right text-slate-400 font-medium">דוגמה</th>
               </tr>
             </thead>
             <tbody className="text-slate-300">
               {[
-                { field: 'firstName', label: 'שם פרטי', required: true, format: 'טקסט', example: 'יעל' },
-                { field: 'lastName', label: 'שם משפחה', required: true, format: 'טקסט', example: 'כהן' },
-                { field: 'email', label: 'אימייל', required: true, format: 'אימייל', example: 'yael@example.com' },
-                { field: 'phone', label: 'טלפון', required: false, format: 'טלפון ישראלי', example: '052-1234567' },
-                { field: 'licenseNumber', label: 'מספר רישיון', required: true, format: 'טקסט', example: 'PSY-12345' },
-                { field: 'city', label: 'עיר', required: true, format: 'טקסט', example: 'תל אביב' },
-                { field: 'specializations', label: 'התמחויות', required: false, format: 'מופרד בפסיקים', example: 'חרדות,דיכאון' },
-                { field: 'approaches', label: 'גישות טיפול', required: false, format: 'מופרד בפסיקים', example: 'CBT,DBT' },
-                { field: 'healthFunds', label: 'קופות חולים', required: false, format: 'מופרד בפסיקים', example: 'כללית,מכבי' },
-                { field: 'sessionPrice', label: 'מחיר פגישה', required: false, format: 'מספר', example: '400' },
-                { field: 'yearsOfExperience', label: 'שנות ניסיון', required: false, format: 'מספר', example: '5' },
+                { field: 'firstName', label: 'First Name', required: true, format: 'Text', example: 'יעל' },
+                { field: 'lastName', label: 'Last Name', required: true, format: 'Text', example: 'כהן' },
+                { field: 'email', label: 'Email', required: true, format: 'Email', example: 'yael@example.com' },
+                { field: 'phone', label: 'Phone', required: false, format: 'Phone ישראלי', example: '052-1234567' },
+                { field: 'licenseNumber', label: 'License Number', required: true, format: 'Text', example: 'PSY-12345' },
+                { field: 'city', label: 'City', required: true, format: 'Text', example: 'Tel Aviv' },
+                { field: 'specializations', label: 'Specializations', required: false, format: 'comma separated', example: 'חרדs,Depression' },
+                { field: 'approaches', label: 'גישs Therapy', required: false, format: 'comma separated', example: 'CBT,DBT' },
+                { field: 'healthFunds', label: 'Health Funds', required: false, format: 'comma separated', example: 'Clalit,Maccabi' },
+                { field: 'sessionPrice', label: 'Price Session', required: false, format: 'מספר', example: '400' },
+                { field: 'yearsOfExperience', label: 'years experience', required: false, format: 'מספר', example: '5' },
               ].map((row) => (
                 <tr key={row.field} className="border-b border-slate-700/50">
                   <td className="px-4 py-2">
@@ -414,9 +414,9 @@ export default function BulkImportPage() {
                   </td>
                   <td className="px-4 py-2">
                     {row.required ? (
-                      <span className="text-green-400">כן</span>
+                      <span className="text-green-400">Yes</span>
                     ) : (
-                      <span className="text-slate-500">לא</span>
+                      <span className="text-slate-500">No</span>
                     )}
                   </td>
                   <td className="px-4 py-2">{row.format}</td>
@@ -430,39 +430,39 @@ export default function BulkImportPage() {
 
       {/* Integration Info */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">אינטגרציות עתידיות</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">אינטגרציs עתידיs</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
-            <h3 className="font-medium text-slate-300">אינטגרציה עם קופות חולים</h3>
+            <h3 className="font-medium text-slate-300">אינטגרציה With Health Funds</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />
-                כללית - בקרוב
+                Clalit - Coming soon
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />
-                מכבי - בקרוב
+                Maccabi - Coming soon
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />
-                מאוחדת - בקרוב
+                Meuhedet - Coming soon
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />
-                לאומית - בקרוב
+                Noומית - Coming soon
               </li>
             </ul>
           </div>
           <div className="space-y-3">
-            <h3 className="font-medium text-slate-300">אינטגרציות API</h3>
+            <h3 className="font-medium text-slate-300">אינטגרציs API</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />
-                REST API לשותפים
+                REST API לשsפs
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />
-                התראות Webhook
+                Alertorת Webhook
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-slate-500" />

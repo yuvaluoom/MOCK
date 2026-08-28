@@ -122,9 +122,9 @@ export function SafetyAssessmentForm({
           <div className="flex items-start gap-3">
             <ShieldAlert className="w-6 h-6 text-red-600 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-red-800">זוהו מדדי סיכון</h3>
+              <h3 className="font-semibold text-red-800">Identified Risk indicators</h3>
               <p className="text-sm text-red-700 mt-1">
-                נא להשלים את כל פרטי הערכת הבטיחות, כולל תוכנית בטיחות ואנשי קשר לחירום.
+                Please complete את כל Private Assessment הבטיחs, כולל תוכנית בטיחs ואנשי קשר לחירום.
               </p>
             </div>
           </div>
@@ -136,7 +136,7 @@ export function SafetyAssessmentForm({
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-gray-600" />
-            מדדי סיכון
+            Risk indicators
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -152,8 +152,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">אידיאציה אובדנית</span>
-                  <p className="text-xs text-gray-500">מחשבות על סיום החיים</p>
+                  <span className="font-medium text-gray-900">אידיאציה orבדנית</span>
+                  <p className="text-xs text-gray-500">מחשבs על סיום החיs</p>
                 </div>
               </label>
             </div>
@@ -169,7 +169,7 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">תוכנית אובדנית</span>
+                  <span className="font-medium text-gray-900">תוכנית orבדנית</span>
                   <p className="text-xs text-gray-500">תוכנית ספציפית לביצוע</p>
                 </div>
               </label>
@@ -186,7 +186,7 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">כוונה אובדנית</span>
+                  <span className="font-medium text-gray-900">כוונה orבדנית</span>
                   <p className="text-xs text-gray-500">כוונה ממשית לביצוע</p>
                 </div>
               </label>
@@ -204,7 +204,7 @@ export function SafetyAssessmentForm({
                 />
                 <div>
                   <span className="font-medium text-gray-900">אידיאציה רצחנית</span>
-                  <p className="text-xs text-gray-500">מחשבות על פגיעה באחרים</p>
+                  <p className="text-xs text-gray-500">מחשבs על פגיעה בOthers</p>
                 </div>
               </label>
             </div>
@@ -220,8 +220,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">התנהגות פגיעה עצמית</span>
-                  <p className="text-xs text-gray-500">התנהגויות מזיקות לעצמו</p>
+                  <span className="font-medium text-gray-900">התנהגs פגיעה עצמית</span>
+                  <p className="text-xs text-gray-500">התנהגויs מזיקs לעצed</p>
                 </div>
               </label>
             </div>
@@ -239,7 +239,7 @@ export function SafetyAssessmentForm({
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-gray-600">
-            גורמים שמגנים על המטופל ומפחיתים סיכון (למשל: תמיכה משפחתית, תחביבים, אמונות...)
+            גורמs שמגנs על הPatient ומפחיתs סיכון (למשל: תמיכה משפחתית, תחביבs, אedנs...)
           </p>
 
           <div className="flex flex-wrap gap-2">
@@ -269,7 +269,6 @@ export function SafetyAssessmentForm({
                 onChange={(e) => setNewProtectiveFactor(e.target.value)}
                 placeholder="הוסף גורם הגנה..."
                 onKeyDown={(e) => e.key === 'Enter' && addProtectiveFactor()}
-                dir="rtl"
               />
               <Button
                 type="button"
@@ -294,7 +293,7 @@ export function SafetyAssessmentForm({
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-gray-600">
-            גורמים שמגבירים סיכון (למשל: היסטוריה של ניסיונות, שימוש בחומרים, בידוד חברתי...)
+            גורמs שמגבירs סיכון (למשל: History של ניסיונs, שיedש בחומרs, בידוד חברתי...)
           </p>
 
           <div className="flex flex-wrap gap-2">
@@ -324,7 +323,6 @@ export function SafetyAssessmentForm({
                 onChange={(e) => setNewRiskFactor(e.target.value)}
                 placeholder="הוסף גורם סיכון..."
                 onKeyDown={(e) => e.key === 'Enter' && addRiskFactor()}
-                dir="rtl"
               />
               <Button
                 type="button"
@@ -343,9 +341,9 @@ export function SafetyAssessmentForm({
       <Card className={hasRiskIndicators && !safety.safetyPlan ? 'border-red-300' : ''}>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            תוכנית בטיחות
+            תוכנית בטיחs
             {hasRiskIndicators && (
-              <span className="text-xs font-normal text-red-500">*נדרש</span>
+              <span className="text-xs font-normal text-red-500">*Required</span>
             )}
           </CardTitle>
         </CardHeader>
@@ -353,15 +351,14 @@ export function SafetyAssessmentForm({
           <Textarea
             value={safety.safetyPlan || ''}
             onChange={(e) => updateSafety({ safetyPlan: e.target.value })}
-            placeholder="תאר את תוכנית הבטיחות שנקבעה עם המטופל: צעדים להתמודדות במצוקה, מספרי חירום, אנשי קשר תומכים..."
+            placeholder="תאר את תוכנית הבטיחs שנקבעה With הPatient: צup tos להתedדדs במצוקה, מספרי חירום, אנשי קשר תומכs..."
             rows={5}
             disabled={isReadOnly}
             className="resize-none"
-            dir="rtl"
           />
           {hasRiskIndicators && !safety.safetyPlan && (
             <p className="text-sm text-red-600 mt-2">
-              תוכנית בטיחות נדרשת כאשר זוהו מדדי סיכון
+              תוכנית בטיחs Requiredת כApprove Identified Risk indicators
             </p>
           )}
         </CardContent>
@@ -374,7 +371,7 @@ export function SafetyAssessmentForm({
             <span className="flex items-center gap-2">
               אנשי קשר לחירום
               {hasRiskIndicators && (
-                <span className="text-xs font-normal text-red-500">*נדרש לפחות אחד</span>
+                <span className="text-xs font-normal text-red-500">*Required at least אחד</span>
               )}
             </span>
             {!isReadOnly && (
@@ -393,7 +390,7 @@ export function SafetyAssessmentForm({
         <CardContent>
           {(!safety.emergencyContacts || safety.emergencyContacts.length === 0) ? (
             <p className="text-sm text-gray-500 text-center py-4">
-              לא הוגדרו אנשי קשר לחירום
+              No הוגדרו אנשי קשר לחירום
             </p>
           ) : (
             <div className="space-y-4">
@@ -418,13 +415,12 @@ export function SafetyAssessmentForm({
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                      <Label className="text-xs text-gray-500">שם</Label>
+                      <Label className="text-xs text-gray-500">Name</Label>
                       <Input
                         value={contact.name}
                         onChange={(e) => updateEmergencyContact(index, { name: e.target.value })}
-                        placeholder="שם מלא"
+                        placeholder="Full Name"
                         disabled={isReadOnly}
-                        dir="rtl"
                         className="mt-1"
                       />
                     </div>
@@ -433,14 +429,13 @@ export function SafetyAssessmentForm({
                       <Input
                         value={contact.relationship}
                         onChange={(e) => updateEmergencyContact(index, { relationship: e.target.value })}
-                        placeholder="למשל: הורה, בן/בת זוג"
+                        placeholder="למשל: הורה, בן/בת Thisג"
                         disabled={isReadOnly}
-                        dir="rtl"
                         className="mt-1"
                       />
                     </div>
                     <div>
-                      <Label className="text-xs text-gray-500">טלפון</Label>
+                      <Label className="text-xs text-gray-500">Phone</Label>
                       <Input
                         value={contact.phone}
                         onChange={(e) => updateEmergencyContact(index, { phone: e.target.value })}
@@ -459,7 +454,7 @@ export function SafetyAssessmentForm({
                           disabled={isReadOnly}
                           className="w-4 h-4 rounded border-gray-300 text-calm-600 focus:ring-calm-500"
                         />
-                        <span className="text-sm text-gray-700">מודע/ת לטיפול</span>
+                        <span className="text-sm text-gray-700">edדע/ת לTherapy</span>
                       </label>
                     </div>
                   </div>
@@ -473,14 +468,14 @@ export function SafetyAssessmentForm({
       {/* Hotline Information */}
       <Card className="bg-blue-50 border-blue-200">
         <CardContent className="py-4">
-          <h4 className="font-medium text-blue-900 mb-2">קווים חמים לשעת חירום</h4>
+          <h4 className="font-medium text-blue-900 mb-2">קווs חמs לשעת חירום</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
             <div className="flex items-center gap-2">
               <span className="font-medium text-blue-800">ער&quot;ן:</span>
               <span className="text-blue-700" dir="ltr">1201</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-medium text-blue-800">סה&quot;ר:</span>
+              <span className="font-medium text-blue-800">Total&quot;ר:</span>
               <span className="text-blue-700" dir="ltr">*2784</span>
             </div>
             <div className="flex items-center gap-2">

@@ -341,7 +341,7 @@ export const schedulingRouter = router({
         isBlocked: false,
         sessionId,
         patientId,
-        patientName: 'ישראל ישראלי', // From session
+        patientName: 'Israel Israeli', // From session
       };
 
       if (existingSlot) {

@@ -9,10 +9,10 @@ export default function TherapistPatientsPage() {
 
   // Mock patient data
   const patients = [
-    { id: '1', name: 'ישראל ישראלי', status: 'active', lastSession: '2024-02-01', nextSession: '2024-02-08' },
-    { id: '2', name: 'שרה כהן', status: 'active', lastSession: '2024-01-28', nextSession: '2024-02-05' },
-    { id: '3', name: 'דוד לוי', status: 'active', lastSession: '2024-01-25', nextSession: '2024-02-10' },
-    { id: '4', name: 'מרים אברהם', status: 'inactive', lastSession: '2024-01-10', nextSession: null },
+    { id: '1', name: 'Israel Israeli', status: 'active', lastSession: '2024-02-01', nextSession: '2024-02-08' },
+    { id: '2', name: 'Sarah Cohen', status: 'active', lastSession: '2024-01-28', nextSession: '2024-02-05' },
+    { id: '3', name: 'David Levi', status: 'active', lastSession: '2024-01-25', nextSession: '2024-02-10' },
+    { id: '4', name: 'Miriam Abraham', status: 'inactive', lastSession: '2024-01-10', nextSession: null },
   ];
 
   const filteredPatients = patients.filter(p =>
@@ -20,15 +20,15 @@ export default function TherapistPatientsPage() {
   );
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">המטופלים שלי</h1>
-          <p className="text-gray-600 mt-1">{patients.length} מטופלים רשומים</p>
+          <h1 className="text-2xl font-bold text-gray-900">My Patients</h1>
+          <p className="text-gray-600 mt-1">{patients.length} registered patients</p>
         </div>
         <Input
-          placeholder="חיפוש מטופל..."
+          placeholder="Search patient..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="max-w-xs"
@@ -38,7 +38,7 @@ export default function TherapistPatientsPage() {
       {/* Patients List */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">רשימת מטופלים</CardTitle>
+          <CardTitle className="text-lg">Patient List</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -56,7 +56,7 @@ export default function TherapistPatientsPage() {
                   <div>
                     <p className="font-medium text-gray-900">{patient.name}</p>
                     <p className="text-sm text-gray-500">
-                      פגישה אחרונה: {new Date(patient.lastSession).toLocaleDateString('he-IL')}
+                      Last Session: {new Date(patient.lastSession).toLocaleDateString('en-US')}
                     </p>
                   </div>
                 </div>
@@ -66,10 +66,10 @@ export default function TherapistPatientsPage() {
                       ? 'bg-green-100 text-green-700'
                       : 'bg-gray-100 text-gray-600'
                   }`}>
-                    {patient.status === 'active' ? 'פעיל' : 'לא פעיל'}
+                    {patient.status === 'active' ? 'Active' : 'Inactive'}
                   </span>
                   <button className="text-sm text-calm-600 hover:text-calm-700 font-medium">
-                    פרטים
+                    Details
                   </button>
                 </div>
               </div>
@@ -77,7 +77,7 @@ export default function TherapistPatientsPage() {
 
             {filteredPatients.length === 0 && (
               <div className="text-center py-8 text-gray-500">
-                לא נמצאו מטופלים
+                No patients found
               </div>
             )}
           </div>

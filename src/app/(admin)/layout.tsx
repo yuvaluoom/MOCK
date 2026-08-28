@@ -128,17 +128,17 @@ const MailIcon = () => (
 );
 
 const navigation = [
-  { name: 'לוח בקרה', href: '/admin', icon: DashboardIcon },
-  { name: 'ניהול משתמשים', href: '/admin/users', icon: UsersIcon },
-  { name: 'אישור מטפלים', href: '/admin/therapists', icon: TherapistIcon },
-  { name: 'מרכז אימייל', href: '/admin/emails', icon: MailIcon },
-  { name: 'ייבוא נתונים', href: '/admin/import', icon: ImportIcon },
-  { name: 'סקירת פגישות', href: '/admin/sessions', icon: SessionsIcon },
-  { name: 'ניהול הודעות', href: '/admin/messages', icon: MessagesIcon },
-  { name: 'דוחות ואנליטיקה', href: '/admin/reports', icon: ReportsIcon },
-  { name: 'ציות ואימות', href: '/admin/compliance', icon: TherapistIcon },
-  { name: 'יומן ביקורת', href: '/admin/audit', icon: AuditIcon },
-  { name: 'הגדרות מערכת', href: '/admin/settings', icon: SettingsIcon },
+  { name: 'Dashboard', href: '/admin', icon: DashboardIcon },
+  { name: 'User Management', href: '/admin/users', icon: UsersIcon },
+  { name: 'Therapist Approval', href: '/admin/therapists', icon: TherapistIcon },
+  { name: 'Email Center', href: '/admin/emails', icon: MailIcon },
+  { name: 'Data Import', href: '/admin/import', icon: ImportIcon },
+  { name: 'Session Review', href: '/admin/sessions', icon: SessionsIcon },
+  { name: 'Message Management', href: '/admin/messages', icon: MessagesIcon },
+  { name: 'Reports & Analytics', href: '/admin/reports', icon: ReportsIcon },
+  { name: 'Compliance & Verification', href: '/admin/compliance', icon: TherapistIcon },
+  { name: 'Audit Log', href: '/admin/audit', icon: AuditIcon },
+  { name: 'System Settings', href: '/admin/settings', icon: SettingsIcon },
 ];
 
 export default function AdminLayout({

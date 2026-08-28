@@ -19,10 +19,10 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-const DAY_NAMES_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+const DAY_NAMES_HE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTH_NAMES_HE = [
   'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
-  'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'
+  'יולי', 'orגוסט', 'ספטמבר', 'orקGoodר', 'נובמבר', 'דצמבר'
 ];
 
 interface TherapistCalendarProps {
@@ -128,10 +128,10 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
   const handleSlotClick = (slot: any) => {
     if (slot.isBooked) {
       // Show session details
-      alert(`פגישה עם ${slot.patientName || 'מטופל'} - ${slot.startTime}-${slot.endTime}`);
+      alert(`Session With ${slot.patientName || 'Patient'} - ${slot.startTime}-${slot.endTime}`);
     } else if (slot.isBlocked) {
       // Unblock
-      if (confirm('לבטל חסימה?')) {
+      if (confirm('לCancel חסימה?')) {
         unblockSlotMutation.mutate({ slotId: slot.id });
       }
     } else {
@@ -151,10 +151,10 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
   };
 
   return (
-    <Card dir="rtl">
+    <Card>
       <CardHeader className="border-b bg-gray-50">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg">לוח זמנים</CardTitle>
+          <CardTitle className="text-lg">Schedule</CardTitle>
           <div className="flex items-center gap-2">
             <div className="flex rounded-lg border overflow-hidden">
               <button
@@ -263,7 +263,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
                       )}
                     >
                       {daySlots.length === 0 && !isPast && (
-                        <p className="text-xs text-gray-400 text-center py-4">אין זמינות</p>
+                        <p className="text-xs text-gray-400 text-center py-4">אין Availability</p>
                       )}
                       {daySlots.map((slot) => (
                         <button

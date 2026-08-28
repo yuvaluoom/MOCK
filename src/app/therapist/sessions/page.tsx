@@ -34,32 +34,32 @@ export default function TherapistSessionsPage() {
   // Dynamic session data for investor demo
   const sessions: Record<TabType, SessionData[]> = {
     upcoming: [
-      { id: 'session-1', patientName: 'ישראל ישראלי', patientEmail: 'patient@example.com', date: getUpcomingDate(2, 10), type: 'online', status: 'confirmed', meetingUrl: 'https://meet.google.com/abc-defg-hij', paymentType: 'HMO', healthFund: 'MACCABI' },
-      { id: 'session-2', patientName: 'שרה כהן', patientEmail: 'sarah@example.com', date: getUpcomingDate(2, 14), type: 'in-person', status: 'confirmed', paymentType: 'PRIVATE', price: 450 },
-      { id: 'session-3', patientName: 'דוד לוי', patientEmail: 'david@example.com', date: getUpcomingDate(5, 11), type: 'online', status: 'confirmed', meetingUrl: 'https://zoom.us/j/123456789', paymentType: 'HMO', healthFund: 'CLALIT' },
+      { id: 'session-1', patientName: 'Israel Israeli', patientEmail: 'patient@example.com', date: getUpcomingDate(2, 10), type: 'online', status: 'confirmed', meetingUrl: 'https://meet.google.com/abc-defg-hij', paymentType: 'HMO', healthFund: 'MACCABI' },
+      { id: 'session-2', patientName: 'Sarah Cohen', patientEmail: 'sarah@example.com', date: getUpcomingDate(2, 14), type: 'in-person', status: 'confirmed', paymentType: 'PRIVATE', price: 450 },
+      { id: 'session-3', patientName: 'David Levi', patientEmail: 'david@example.com', date: getUpcomingDate(5, 11), type: 'online', status: 'confirmed', meetingUrl: 'https://zoom.us/j/123456789', paymentType: 'HMO', healthFund: 'CLALIT' },
     ],
     pending: [
-      { id: 'session-4', patientName: 'מרים אברהם', patientEmail: 'miriam@example.com', date: getUpcomingDate(7, 9), type: 'online', status: 'pending', paymentType: 'PRIVATE', price: 450 },
-      { id: 'session-5', patientName: 'יוסף דוד', patientEmail: 'yosef@example.com', date: getUpcomingDate(10, 16), type: 'in-person', status: 'pending', paymentType: 'HMO', healthFund: 'MEUHEDET' },
+      { id: 'session-4', patientName: 'Miriam Abraham', patientEmail: 'miriam@example.com', date: getUpcomingDate(7, 9), type: 'online', status: 'pending', paymentType: 'PRIVATE', price: 450 },
+      { id: 'session-5', patientName: 'Yosef David', patientEmail: 'yosef@example.com', date: getUpcomingDate(10, 16), type: 'in-person', status: 'pending', paymentType: 'HMO', healthFund: 'MEUHEDET' },
     ],
     past: [
-      { id: 'session-6', patientName: 'ישראל ישראלי', patientEmail: 'patient@example.com', date: getUpcomingDate(-7, 10), type: 'online', status: 'completed', paymentType: 'HMO', healthFund: 'MACCABI' },
-      { id: 'session-7', patientName: 'שרה כהן', patientEmail: 'sarah@example.com', date: getUpcomingDate(-14, 11), type: 'in-person', status: 'completed', paymentType: 'PRIVATE', price: 450 },
+      { id: 'session-6', patientName: 'Israel Israeli', patientEmail: 'patient@example.com', date: getUpcomingDate(-7, 10), type: 'online', status: 'completed', paymentType: 'HMO', healthFund: 'MACCABI' },
+      { id: 'session-7', patientName: 'Sarah Cohen', patientEmail: 'sarah@example.com', date: getUpcomingDate(-14, 11), type: 'in-person', status: 'completed', paymentType: 'PRIVATE', price: 450 },
     ],
   };
 
   const tabs = [
-    { id: 'upcoming' as TabType, label: 'קרובות', count: sessions.upcoming.length },
-    { id: 'pending' as TabType, label: 'ממתינות לאישור', count: sessions.pending.length },
-    { id: 'past' as TabType, label: 'היסטוריה', count: sessions.past.length },
+    { id: 'upcoming' as TabType, label: 'Upcoming', count: sessions.upcoming.length },
+    { id: 'pending' as TabType, label: 'Pending Approval', count: sessions.pending.length },
+    { id: 'past' as TabType, label: 'History', count: sessions.past.length },
   ];
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">ניהול פגישות</h1>
-        <p className="text-gray-600 mt-1">צפייה וניהול הפגישות שלך</p>
+        <h1 className="text-2xl font-bold text-gray-900">Session Management</h1>
+        <p className="text-gray-600 mt-1">View and manage your sessions</p>
       </div>
 
       {/* Tabs */}
@@ -110,22 +110,22 @@ export default function TherapistSessionsPage() {
                         </span>
                       ) : (
                         <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full">
-                          פרטי ₪{session.price}
+                          Private ₪{session.price}
                         </span>
                       )}
                     </div>
                     <p className="text-sm text-gray-500">
-                      {session.date.toLocaleDateString('he-IL', { weekday: 'short', day: 'numeric', month: 'short' })} • {session.date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}
+                      {session.date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' })} • {session.date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                       <span className="mx-2">•</span>
-                      {session.type === 'online' ? 'מקוון' : 'פרונטלי'}
+                      {session.type === 'online' ? 'Online' : 'In-Person'}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   {session.status === 'pending' && (
                     <>
-                      <Button size="sm" variant="calm">אשר</Button>
-                      <Button size="sm" variant="outline">דחה</Button>
+                      <Button size="sm" variant="calm">Approve</Button>
+                      <Button size="sm" variant="outline">Decline</Button>
                     </>
                   )}
                   {session.status === 'confirmed' && (
@@ -134,7 +134,7 @@ export default function TherapistSessionsPage() {
                         sessionId={session.id}
                         scheduledAt={session.date}
                         duration={50}
-                        therapistName="רחל כהן"
+                        therapistName="Rachel Cohen"
                         isOnline={session.type === 'online'}
                         meetingUrl={session.meetingUrl}
                         patientName={session.patientName}
@@ -143,7 +143,7 @@ export default function TherapistSessionsPage() {
                       />
                       {session.type === 'online' && session.meetingUrl && (
                         <Button size="sm" variant="calm" onClick={() => window.open(session.meetingUrl, '_blank')}>
-                          הצטרף לפגישה
+                          Join Session
                         </Button>
                       )}
                     </>
@@ -153,7 +153,7 @@ export default function TherapistSessionsPage() {
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      הושלם
+                      Completed
                     </span>
                   )}
                 </div>
@@ -162,7 +162,7 @@ export default function TherapistSessionsPage() {
 
             {sessions[activeTab].length === 0 && (
               <div className="text-center py-8 text-gray-500">
-                אין פגישות להצגה
+                No sessions to display
               </div>
             )}
           </div>

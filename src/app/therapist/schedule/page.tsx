@@ -10,11 +10,11 @@ export default function TherapistSchedulePage() {
   const [activeTab, setActiveTab] = useState<TabType>('calendar');
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">ניהול לוח זמנים</h1>
-        <p className="text-gray-600 mt-1">נהלו את הזמינות שלכם וצפו בפגישות מתוכננות</p>
+        <h1 className="text-2xl font-bold text-gray-900">Schedule Management</h1>
+        <p className="text-gray-600 mt-1">Manage your availability וצפו בSessions מתוכננs</p>
       </div>
 
       {/* Tabs */}
@@ -39,7 +39,7 @@ export default function TherapistSchedulePage() {
               : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
           }`}
         >
-          זמינות קבועה
+          Availability קבועה
         </button>
       </div>
 
@@ -49,15 +49,15 @@ export default function TherapistSchedulePage() {
 
       {/* Help section */}
       <div className="bg-gray-50 rounded-xl p-6 border">
-        <h3 className="font-semibold text-gray-900 mb-3">כיצד לנהל את הזמינות שלכם</h3>
+        <h3 className="font-semibold text-gray-900 mb-3">כיצד לנהל את הAvailability שלכם</h3>
         <div className="grid md:grid-cols-3 gap-4 text-sm">
           <div className="flex gap-3">
             <div className="w-8 h-8 rounded-full bg-calm-100 text-calm-700 flex items-center justify-center font-bold flex-shrink-0">
               1
             </div>
             <div>
-              <p className="font-medium text-gray-900">הגדירו זמינות קבועה</p>
-              <p className="text-gray-600">קבעו את השעות הקבועות שלכם בכל יום</p>
+              <p className="font-medium text-gray-900">הגדירו Availability קבועה</p>
+              <p className="text-gray-600">קבעו את השעs הקבועs שלכם בכל יום</p>
             </div>
           </div>
           <div className="flex gap-3">
@@ -65,8 +65,8 @@ export default function TherapistSchedulePage() {
               2
             </div>
             <div>
-              <p className="font-medium text-gray-900">חסמו זמנים לפי צורך</p>
-              <p className="text-gray-600">סמנו ימים או שעות שבהם אינכם זמינים</p>
+              <p className="font-medium text-gray-900">חסed זמנs לפי צורך</p>
+              <p className="text-gray-600">סמנו ימs or שעs שבהם אינכם זמינs</p>
             </div>
           </div>
           <div className="flex gap-3">
@@ -74,8 +74,8 @@ export default function TherapistSchedulePage() {
               3
             </div>
             <div>
-              <p className="font-medium text-gray-900">מטופלים יזמינו</p>
-              <p className="text-gray-600">המטופלים יראו את הזמינות ויקבעו פגישות</p>
+              <p className="font-medium text-gray-900">Patients יזמינו</p>
+              <p className="text-gray-600">הPatients ירor את הAvailability ויקבעו Sessions</p>
             </div>
           </div>
         </div>

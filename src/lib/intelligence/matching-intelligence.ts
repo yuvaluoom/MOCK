@@ -361,7 +361,7 @@ export class MatchingIntelligenceService {
       positiveFactors.push({
         category: 'experience',
         description: 'Over 10 years of professional experience',
-        descriptionHebrew: 'ניסיון מקצועי של למעלה מ-10 שנים',
+        descriptionHebrew: 'Experience מקצועי of over-10 Monם',
         importance: 'HIGH',
       });
     }
@@ -389,23 +389,23 @@ export class MatchingIntelligenceService {
 
   private generateSummaryHebrew(match: DetailedMatchResult, positiveCount: number): string {
     if (match.overallScore >= 85) {
-      return 'התאמה מצוינת על בסיס ניתוח מקיף של הפרופיל';
+      return 'Excellent Match על בסיס ניתוח מקיף של הפרופיל';
     } else if (match.overallScore >= 70) {
-      return `תאימות גבוהה עם ${positiveCount} גורמי התאמה מרכזיים`;
+      return `תאימs גבוהה With ${positiveCount} גורמי Match מרכזיs`;
     } else if (match.overallScore >= 55) {
-      return 'התאמה טובה על בסיס ההעדפות שלך';
+      return 'Good Match על בסיס ההup toOptions Your';
     }
-    return 'התאמה סבירה - מומלץ לעיין בפרטי הפרופיל';
+    return 'Moderate Match - Recommended לעיין בPrivate הפרופיל';
   }
 
   private translateReason(reason: string): string {
     // Simple translation mapping - in production would use i18n
     const translations: Record<string, string> = {
-      'Strong compatibility': 'תאימות גבוהה',
-      'Similar treatment approach': 'גישה טיפולית דומה',
-      'Matching specialization': 'התמחות מתאימה',
-      'Health fund coverage': 'כיסוי קופת חולים',
-      'Available session times': 'זמני פגישות זמינים',
+      'Strong compatibility': 'תאימs גבוהה',
+      'Similar treatment approach': 'גישה Therapyית דומה',
+      'Matching specialization': 'Specialization מתאימה',
+      'Health fund coverage': 'Coverage Health Fund',
+      'Available session times': 'זמני Sessions זמינs',
     };
     return translations[reason] || reason;
   }

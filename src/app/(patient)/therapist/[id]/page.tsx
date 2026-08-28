@@ -155,7 +155,7 @@ function MatchScoreRing({ score, size = 'lg' }: { score: number; size?: 'md' | '
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className={`${sizeConfig.text} font-bold ${colors.text}`}>{score}%</span>
-        <span className={`${sizeConfig.label} ${colors.text} font-medium`}>התאמה</span>
+        <span className={`${sizeConfig.label} ${colors.text} font-medium`}>Match</span>
       </div>
     </div>
   );
@@ -229,46 +229,46 @@ function generateMatchReasons(therapist: any, matchBreakdown: any): string[] {
 
   // Session type compatibility
   if (therapist.offersOnline && therapist.offersInPerson) {
-    reasons.push('גמישות בסוג הפגישות - מקוון ופרונטלי');
+    reasons.push('Flexibility inType הSessions - Online וIn-Person');
   } else if (therapist.offersOnline) {
-    reasons.push('מציע/ה פגישות מקוונות לנוחיותך');
+    reasons.push('Offers Online Sessions לנוחיsך');
   }
 
   // Health fund match
   if (matchBreakdown?.healthFund >= 80) {
-    reasons.push('התאמה לקופת החולים שלך');
+    reasons.push('Match לthe health fund Your');
   }
 
   // Experience
   if (therapist.yearsOfExperience >= 10) {
-    reasons.push('ניסיון מקצועי עשיר של למעלה מעשור');
+    reasons.push('Experience מקצועי עשיר of overעשור');
   } else if (therapist.yearsOfExperience >= 5) {
-    reasons.push('ניסיון מוכח בליווי מטופלים');
+    reasons.push('Experience edכח בליווי Patients');
   }
 
   // Specializations match
   if (therapist.specializations?.length > 0) {
-    reasons.push('התמחות בתחומים הרלוונטיים לצרכים שלך');
+    reasons.push('Specialization בתחומs הרלוונטיs לצרכs Your');
   }
 
   // X-Factor / Personal compatibility
   if (matchBreakdown?.xFactor >= 75) {
-    reasons.push('התאמה אישית גבוהה על בסיס סגנון תקשורת');
+    reasons.push('Match אישית גבוהה על בסיס Communication style');
   }
 
   // Approaches match
   if (therapist.approaches?.length > 0) {
-    reasons.push('גישות טיפוליות המתאימות להעדפותיך');
+    reasons.push('Therapeutic approaches המתאימs להup toyour');
   }
 
   // Location
   if (therapist.city) {
-    reasons.push(`נגישות גיאוגרפית - ${therapist.city}`);
+    reasons.push(`נגישs גיorגרפית - ${therapist.city}`);
   }
 
   // Availability
   if (matchBreakdown?.availability >= 70) {
-    reasons.push('זמינות המתאימה ללוח הזמנים שלך');
+    reasons.push('Availability המתאימה ללוח הזמנs Your');
   }
 
   return reasons.slice(0, 5); // Return top 5 reasons
@@ -276,10 +276,10 @@ function generateMatchReasons(therapist: any, matchBreakdown: any): string[] {
 
 // Get match quality label
 function getMatchQualityLabel(score: number): { text: string; color: string } {
-  if (score >= 85) return { text: 'התאמה מצוינת', color: 'bg-green-100 text-green-700 border-green-200' };
-  if (score >= 70) return { text: 'התאמה גבוהה', color: 'bg-blue-100 text-blue-700 border-blue-200' };
-  if (score >= 55) return { text: 'התאמה טובה', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' };
-  return { text: 'התאמה סבירה', color: 'bg-amber-100 text-amber-700 border-amber-200' };
+  if (score >= 85) return { text: 'Excellent Match', color: 'bg-green-100 text-green-700 border-green-200' };
+  if (score >= 70) return { text: 'Great Match', color: 'bg-blue-100 text-blue-700 border-blue-200' };
+  if (score >= 55) return { text: 'Good Match', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' };
+  return { text: 'Moderate Match', color: 'bg-amber-100 text-amber-700 border-amber-200' };
 }
 
 // ============ MAIN PAGE ============
@@ -307,10 +307,10 @@ export default function TherapistDetailsPage() {
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center" dir="rtl">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-calm-600 mx-auto" />
-          <p className="text-gray-600">טוען פרופיל מטפל/ת...</p>
+          <p className="text-gray-600">Loading פרופיל Therapist...</p>
         </div>
       </div>
     );
@@ -322,7 +322,7 @@ export default function TherapistDetailsPage() {
     const isNotFound = errorMessage.includes('NOT_FOUND') || errorMessage.includes('not found');
 
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4" dir="rtl">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardContent className="py-12 text-center">
             <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
@@ -333,12 +333,12 @@ export default function TherapistDetailsPage() {
               </svg>
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">
-              {isNotFound ? 'לא נמצא מטפל/ת' : 'שגיאה בטעינת הפרופיל'}
+              {isNotFound ? 'No Foundא Therapist' : 'Error בטעינת הפרופיל'}
             </h2>
             <p className="text-gray-600 mb-6">
               {isNotFound
-                ? 'המטפל/ת המבוקש/ת לא נמצא/ה במערכת או אינו/ה זמין/ה כרגע.'
-                : 'אירעה שגיאה בטעינת פרטי המטפל/ת. אנא נסו שוב.'}
+                ? 'הTherapist המבוקש/ת No Foundא/ה במערכת or אינו/ה זGender/ה כרגע.'
+                : 'אירעה Error בטעינת Private הTherapist. אנא נסו שוב.'}
             </p>
             {process.env.NODE_ENV === 'development' && error && (
               <p className="text-xs text-red-500 mb-4 font-mono bg-red-50 p-2 rounded">
@@ -347,10 +347,10 @@ export default function TherapistDetailsPage() {
             )}
             <div className="space-y-3">
               <Button variant="calm" className="w-full" onClick={() => router.push('/matches')}>
-                חזרה להתאמות
+                חזרה להתאמs
               </Button>
               <Button variant="outline" className="w-full" onClick={() => router.back()}>
-                חזרה לדף הקודם
+                חזרה לדף Previous
               </Button>
               {!isNotFound && (
                 <Button
@@ -374,7 +374,7 @@ export default function TherapistDetailsPage() {
   const matchReasons = topReasons?.length > 0 ? topReasons : generateMatchReasons(therapist, matchBreakdown);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-20">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
@@ -386,7 +386,7 @@ export default function TherapistDetailsPage() {
           >
             <ArrowRightIcon />
           </button>
-          <h1 className="font-bold text-gray-900">פרופיל מטפל/ת</h1>
+          <h1 className="font-bold text-gray-900">פרופיל Therapist</h1>
         </div>
       </div>
 
@@ -423,7 +423,7 @@ export default function TherapistDetailsPage() {
                       {therapist.city}
                     </span>
                   )}
-                  <span>{therapist.yearsOfExperience || 5}+ שנות ניסיון</span>
+                  <span>{therapist.yearsOfExperience || 5}+ years experience</span>
                 </div>
               </div>
 
@@ -442,10 +442,10 @@ export default function TherapistDetailsPage() {
               <div className="p-2 rounded-xl bg-gradient-to-br from-calm-500 to-trust-500 text-white">
                 <SparklesIcon className="w-5 h-5" />
               </div>
-              למה {therapist.firstName} מתאים/ה לך?
+              למה {therapist.firstName} מתאs/ה לך?
             </CardTitle>
             <p className="text-gray-600 text-sm mt-1">
-              ההתאמה מבוססת על ניתוח מקיף של הפרופיל, ההעדפות והצרכים שלך
+              הMatch מבוססת על ניתוח מקיף של הפרופיל, ההup toOptions והצרכs Your
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -461,36 +461,36 @@ export default function TherapistDetailsPage() {
               <div className="pt-4 border-t border-gray-100">
                 <h4 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <BrainIcon className="w-4 h-4 text-calm-600" />
-                  פירוט ציון ההתאמה
+                  פירוט ציון הMatch
                 </h4>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <MatchFactorIndicator
                     icon={<BrainIcon className="w-4 h-4 text-calm-600" />}
-                    label="התאמה אישית"
+                    label="Match אישית"
                     score={matchBreakdown.xFactor}
                     color="calm"
-                    description="על בסיס סגנון תקשורת והעדפות אישיות"
+                    description="על בסיס Communication style והup toOptions אישיs"
                   />
                   <MatchFactorIndicator
                     icon={<ShieldIcon className="w-4 h-4 text-trust-600" />}
-                    label="קופת חולים"
+                    label="Health Fund"
                     score={matchBreakdown.healthFund}
                     color="trust"
-                    description="התאמה לביטוח הבריאות שלך"
+                    description="Match לביטוח הבריorת Your"
                   />
                   <MatchFactorIndicator
                     icon={<ClockIcon className="w-4 h-4 text-green-600" />}
-                    label="זמינות"
+                    label="Availability"
                     score={matchBreakdown.availability}
                     color="green"
-                    description="התאמה ללוח הזמנים וסוג הפגישות"
+                    description="Match ללוח הזמנs וType הSessions"
                   />
                   <MatchFactorIndicator
                     icon={<UserIcon className="w-4 h-4 text-purple-600" />}
-                    label="העדפות"
+                    label="הup toOptions"
                     score={matchBreakdown.preferences}
                     color="purple"
-                    description="מגדר, שפה וגישה טיפולית"
+                    description="מגדר, Language וגישה Therapyית"
                   />
                 </div>
               </div>
@@ -517,7 +517,7 @@ export default function TherapistDetailsPage() {
           <Card className="border-0 shadow-md">
             <CardContent className="py-5 text-center">
               <div className="text-2xl font-bold text-gray-900">{therapist.yearsOfExperience || 5}+</div>
-              <div className="text-sm text-gray-600">שנות ניסיון</div>
+              <div className="text-sm text-gray-600">years experience</div>
             </CardContent>
           </Card>
           <Card className="border-0 shadow-md">
@@ -525,7 +525,7 @@ export default function TherapistDetailsPage() {
               <div className="flex justify-center mb-1">
                 <StarIcon />
               </div>
-              <div className="text-sm text-gray-600">מטפל/ת מומלץ/ת</div>
+              <div className="text-sm text-gray-600">Therapist Recommended/ת</div>
             </CardContent>
           </Card>
           <Card className="border-0 shadow-md">
@@ -536,17 +536,17 @@ export default function TherapistDetailsPage() {
               </div>
               <div className="text-sm text-gray-600">
                 {therapist.offersOnline && therapist.offersInPerson
-                  ? 'מקוון + פרונטלי'
+                  ? 'Online + In-Person'
                   : therapist.offersOnline
-                  ? 'מקוון'
-                  : 'פרונטלי'}
+                  ? 'Online'
+                  : 'In-Person'}
               </div>
             </CardContent>
           </Card>
           <Card className="border-0 shadow-md">
             <CardContent className="py-5 text-center">
               <div className="text-2xl font-bold text-gray-900">₪{therapist.sessionPrice || 400}</div>
-              <div className="text-sm text-gray-600">לפגישה</div>
+              <div className="text-sm text-gray-600">לSession</div>
             </CardContent>
           </Card>
         </div>
@@ -572,14 +572,14 @@ export default function TherapistDetailsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <GraduationCapIcon />
-                השכלה והסמכות
+                Education והסמכs
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {(therapist.education || [
-                'תואר ראשון בפסיכולוגיה',
-                'תואר שני בפסיכולוגיה קלינית',
-                'רישיון פסיכולוג/ית קליני/ת - משרד הבריאות',
+                'תואר Sun בפסיכולוגיה',
+                'תואר Mon בClinical Psychology',
+                'License פסיכולוג/ית קליני/ת - משרד הבריorת',
               ]).map((edu: string, i: number) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircleIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
@@ -595,7 +595,7 @@ export default function TherapistDetailsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <LanguagesIcon />
-                  שפות
+                  Languages
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -616,12 +616,12 @@ export default function TherapistDetailsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <BrainIcon />
-              גישות טיפוליות
+              Therapeutic approaches
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {(therapist.approaches || ['CBT', 'פסיכודינמי', 'DBT', 'EMDR']).map((approach: string, i: number) => (
+              {(therapist.approaches || ['CBT', 'Psychodynamic', 'DBT', 'EMDR']).map((approach: string, i: number) => (
                 <span
                   key={i}
                   className="px-4 py-2 bg-calm-50 text-calm-700 rounded-xl text-sm font-medium border border-calm-200"
@@ -638,12 +638,12 @@ export default function TherapistDetailsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <HeartHandshakeIcon />
-              תחומי התמחות
+              תחומי Specialization
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {(therapist.specializations || ['חרדה', 'דיכאון', 'הפרעות אכילה', 'טראומה', 'קשרים זוגיים']).map(
+              {(therapist.specializations || ['Anxiety', 'Depression', 'הפרעs אכילה', 'Trauma', 'קשרs Thisגיs']).map(
                 (spec: string, i: number) => (
                   <span
                     key={i}
@@ -663,7 +663,7 @@ export default function TherapistDetailsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <ShieldIcon />
-                קופות חולים
+                Health Funds
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -687,7 +687,7 @@ export default function TherapistDetailsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <MapPinIcon className="w-5 h-5" />
-                מיקום
+                Location
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -702,13 +702,13 @@ export default function TherapistDetailsPage() {
           <Button variant="calm" className="flex-1 h-14 text-base font-medium gap-2 shadow-lg" asChild>
             <Link href={`/messages?therapist=${therapistId}`}>
               <MessageIcon />
-              שליחת הודעה
+              Sending Message
             </Link>
           </Button>
           <Button variant="outline" className="flex-1 h-14 text-base font-medium gap-2 bg-white shadow-md" asChild>
             <Link href={`/sessions`}>
               <CalendarIcon />
-              קביעת פגישה
+              Booking Session
             </Link>
           </Button>
         </div>

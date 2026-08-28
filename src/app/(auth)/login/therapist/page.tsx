@@ -27,19 +27,19 @@ export default function TherapistLoginPage() {
       document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'THERAPIST' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
       router.push('/therapist/dashboard');
     } catch (err) {
-      setError('אירעה שגיאה, נסו שוב');
+      setError('An error occurred, please try again');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero flex flex-col" dir="rtl">
+    <div className="min-h-screen bg-gradient-hero flex flex-col">
       {/* Header */}
       <header className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Logo size="lg" href="/" />
         <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-          אזור מטפלים
+          Therapist Area
         </span>
       </header>
 
@@ -47,9 +47,9 @@ export default function TherapistLoginPage() {
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">כניסת מטפלים</CardTitle>
+            <CardTitle className="text-2xl">Therapist Login</CardTitle>
             <CardDescription>
-              התחברו לחשבון המטפל שלכם
+              Sign in to your therapist account
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -57,7 +57,7 @@ export default function TherapistLoginPage() {
             <SocialAuthButtons
               callbackUrl="/therapist/dashboard"
               mode="signin"
-              language="he"
+              language="en"
             />
 
             {/* Email/Password Form */}
@@ -72,7 +72,7 @@ export default function TherapistLoginPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email">אימייל</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -81,18 +81,17 @@ export default function TherapistLoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
-                  dir="ltr"
                 />
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password">סיסמה</Label>
+                  <Label htmlFor="password">Password</Label>
                   <Link
                     href="/forgot-password"
                     className="text-sm text-primary hover:underline"
                   >
-                    שכחתם סיסמה?
+                    Forgot password?
                   </Link>
                 </div>
                 <Input
@@ -103,7 +102,6 @@ export default function TherapistLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
-                  dir="ltr"
                 />
               </div>
 
@@ -113,36 +111,36 @@ export default function TherapistLoginPage() {
                 className="w-full"
                 loading={isLoading}
               >
-                התחברות
+                Sign In
               </Button>
             </form>
 
             {/* Register Link */}
             <p className="mt-6 text-center text-sm text-muted-foreground">
-              רוצים להצטרף כמטפלים?{' '}
+              Want to join as a therapist?{' '}
               <Link
                 href="/register/therapist"
                 className="text-primary hover:underline font-medium"
               >
-                הרשמה עכשיו
+                Register now
               </Link>
             </p>
 
             {/* Patient Login Link */}
             <p className="mt-4 text-center text-sm text-muted-foreground">
-              מחפשים מטפל/ת?{' '}
+              Looking for a therapist?{' '}
               <Link
                 href="/login/patient"
                 className="text-primary hover:underline"
               >
-                כניסת מטופלים
+                Patient login
               </Link>
             </p>
 
             {/* Demo mode notice */}
             <div className="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
               <p className="text-xs text-blue-700 text-center">
-                <strong>מצב הדגמה:</strong> הכניסו כל אימייל להתחברות
+                <strong>Demo mode:</strong> Enter any email to sign in
               </p>
             </div>
           </CardContent>
@@ -152,13 +150,13 @@ export default function TherapistLoginPage() {
       {/* Footer */}
       <footer className="container mx-auto px-4 py-4 text-center text-sm text-muted-foreground">
         <p>
-          בהתחברות אתם מסכימים ל
+          By signing in you agree to the
           <Link href="/terms" className="underline mx-1">
-            תנאי השימוש
+            Terms of Service
           </Link>
-          ול
+          and
           <Link href="/privacy" className="underline mx-1">
-            מדיניות הפרטיות
+            Privacy Policy
           </Link>
         </p>
       </footer>

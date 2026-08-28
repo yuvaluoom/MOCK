@@ -75,9 +75,9 @@ function formatTime(date: Date): string {
 function getStatusLabel(status: string): { text: string; className: string } {
   switch (status) {
     case 'APPROVED':
-      return { text: 'מאושר', className: 'bg-green-100 text-green-700' };
+      return { text: 'Approved', className: 'bg-green-100 text-green-700' };
     case 'PENDING_THERAPIST_APPROVAL':
-      return { text: 'ממתין לאישור', className: 'bg-amber-100 text-amber-700' };
+      return { text: 'Pending Approval', className: 'bg-amber-100 text-amber-700' };
     default:
       return { text: status, className: 'bg-gray-100 text-gray-700' };
   }
@@ -103,23 +103,23 @@ export default function PatientDashboard() {
   const questionnaireCompleted = profile?.questionnaireCompleted ?? false;
   const matches = matchesData?.matches ?? [];
   const sessions = sessionsData?.sessions ?? [];
-  const firstName = profile?.firstName ?? 'אורח';
+  const firstName = profile?.firstName ?? 'orרח';
 
   if (profileLoading) {
     return (
-      <div className="flex items-center justify-center py-12" dir="rtl">
+      <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-calm-600"></div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-5" dir="rtl">
+    <div className="space-y-5">
       {/* Welcome section */}
       <div>
-        <h1 className="text-xl font-bold text-gray-900">שלום, {firstName}!</h1>
+        <h1 className="text-xl font-bold text-gray-900">Hello, {firstName}!</h1>
         <p className="text-sm text-gray-600">
-          נהלו את הפגישות שלכם ומצאו מטפלים מומלצים.
+          Manage your sessions ומצor Therapists edמלצs.
         </p>
       </div>
 
@@ -129,8 +129,8 @@ export default function PatientDashboard() {
           <CardContent className="flex items-center gap-3 py-3">
             <ClipboardIcon />
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-gray-900 text-sm">השלימו את שאלון ההתאמה</h3>
-              <p className="text-xs text-gray-600">קבלו המלצות מותאמות אישית למטפלים</p>
+              <h3 className="font-medium text-gray-900 text-sm">השליed את שאלון הMatch</h3>
+              <p className="text-xs text-gray-600">קבלו המלצs מsאמs אישית לTherapists</p>
             </div>
             <Link href="/questionnaire">
               <Button variant="calm" size="sm">התחילו</Button>
@@ -144,11 +144,11 @@ export default function PatientDashboard() {
           <CardContent className="flex items-center gap-3 py-3">
             <CheckCircleIcon />
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-gray-900 text-sm">מצאנו {matches.length} התאמות!</h3>
-              <p className="text-xs text-gray-600">מטפלים מומלצים מחכים לכם</p>
+              <h3 className="font-medium text-gray-900 text-sm">We found {matches.length} התאמs!</h3>
+              <p className="text-xs text-gray-600">Therapists edמלצs מחכs לכם</p>
             </div>
             <Link href="/matches">
-              <Button variant="calm" size="sm">צפייה</Button>
+              <Button variant="calm" size="sm">View</Button>
             </Link>
           </CardContent>
         </Card>
@@ -159,12 +159,12 @@ export default function PatientDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
-              <CardTitle className="text-base">פגישות קרובות</CardTitle>
-              <CardDescription className="text-xs">הפגישות הבאות שלכם</CardDescription>
+              <CardTitle className="text-base">Sessions קרובs</CardTitle>
+              <CardDescription className="text-xs">הSessions Nexts שלכם</CardDescription>
             </div>
             <Link href="/sessions">
               <Button variant="ghost" size="sm" className="gap-1 text-xs h-7">
-                הכל
+                All
                 <ArrowLeftIcon />
               </Button>
             </Link>
@@ -177,10 +177,10 @@ export default function PatientDashboard() {
             ) : sessions.length === 0 ? (
               <div className="text-center py-8">
                 <CalendarIcon />
-                <p className="text-gray-500 mt-2">אין פגישות קרובות</p>
+                <p className="text-gray-500 mt-2">אין Sessions קרובs</p>
                 <Link href="/matches">
                   <Button variant="outline" size="sm" className="mt-4">
-                    מצאו מטפל/ת
+                    מצor Therapist
                   </Button>
                 </Link>
               </div>
@@ -221,7 +221,7 @@ export default function PatientDashboard() {
                           </span>
                           <span className="flex items-center gap-1">
                             {session.isOnline ? <VideoIcon /> : <MapPinIcon />}
-                            {session.isOnline ? 'מקוון' : 'פרונטלי'}
+                            {session.isOnline ? 'Online' : 'In-Person'}
                           </span>
                         </div>
                       </div>
@@ -237,12 +237,12 @@ export default function PatientDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
-              <CardTitle className="text-base">מטפלים מומלצים</CardTitle>
-              <CardDescription className="text-xs">ההתאמות הטובות ביותר שלכם</CardDescription>
+              <CardTitle className="text-base">Therapists edמלצs</CardTitle>
+              <CardDescription className="text-xs">ההתאמs הGoods ביsר שלכם</CardDescription>
             </div>
             <Link href="/matches">
               <Button variant="ghost" size="sm" className="gap-1 text-xs h-7">
-                הכל
+                All
                 <ArrowLeftIcon />
               </Button>
             </Link>
@@ -254,10 +254,10 @@ export default function PatientDashboard() {
               </div>
             ) : matches.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-500">השלימו את השאלון לקבלת התאמות</p>
+                <p className="text-gray-500">השליed את השאלון לקבלת התאמs</p>
                 <Link href="/questionnaire">
                   <Button variant="outline" size="sm" className="mt-4">
-                    מלאו שאלון
+                    מNoו שאלון
                   </Button>
                 </Link>
               </div>
@@ -311,9 +311,9 @@ export default function PatientDashboard() {
       {/* Quick tips */}
       <Card className="bg-trust-50 border-trust-200">
         <CardContent className="py-3">
-          <h3 className="font-medium text-gray-900 text-sm mb-1">טיפ: בחירת מטפל/ת</h3>
+          <h3 className="font-medium text-gray-900 text-sm mb-1">טיפ: בחירת Therapist</h3>
           <p className="text-xs text-gray-600">
-            ההתאמה שלנו מבוססת על מדע פסיכולוגי, אבל התחושה האישית שלכם חשובה. קראו פרופילים ובחרו מישהו שאתם מרגישים חיבור אליו.
+            הMatch שלנו מבוססת על מדע פסיכולוגי, אבל התחושה האישית שלכם חשובה. קרor פרופילs ובחרו מישהו שאתם מרגישs חיבור אליו.
           </p>
         </CardContent>
       </Card>

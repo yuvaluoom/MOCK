@@ -55,7 +55,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     custom: (value) => {
       const strValue = String(value);
       if (!/^\d+$/.test(strValue)) {
-        return 'מספר רישיון חייב להכיל ספרות בלבד';
+        return 'License Number Must contain digits only';
       }
       return null;
     },
@@ -66,7 +66,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     field: 'phone',
     type: 'phone',
     warningIf: (value) => {
-      if (!value) return 'מומלץ להוסיף מספר טלפון';
+      if (!value) return 'Recommended להוסיף מספר Phone';
       return null;
     },
   },
@@ -83,7 +83,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     max: 2000,
     warningIf: (value) => {
       if (typeof value === 'number' && value > 800) {
-        return 'מחיר פגישה גבוה מהממוצע בשוק';
+        return 'Price Session גבוה מהמedצע בשוק';
       }
       return null;
     },
@@ -106,7 +106,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
         !validFunds.includes(String(f).toLowerCase())
       );
       if (invalidFunds.length > 0) {
-        return `קופות חולים לא מזוהות: ${invalidFunds.join(', ')}`;
+        return `Health Funds No מIdentifiedת: ${invalidFunds.join(', ')}`;
       }
       return null;
     },
@@ -116,7 +116,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     type: 'array',
     warningIf: (value) => {
       if (!value || (Array.isArray(value) && value.length === 0)) {
-        return 'מומלץ לציין שפות';
+        return 'Recommended לציין Languages';
       }
       return null;
     },
@@ -125,7 +125,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     field: 'city',
     type: 'string',
     warningIf: (value) => {
-      if (!value) return 'מומלץ לציין עיר';
+      if (!value) return 'Recommended לציין City';
       return null;
     },
   },
@@ -217,8 +217,8 @@ export class RecordValidator implements IRecordValidator {
         errors.push({
           field: rule.field,
           code: 'REQUIRED',
-          message: `שדה חובה: ${this.getFieldLabel(rule.field)}`,
-          value: rowNumber ? `שורה ${rowNumber}` : undefined,
+          message: `שדה Required: ${this.getFieldLabel(rule.field)}`,
+          value: rowNumber ? `Row ${rowNumber}` : undefined,
         });
         continue;
       }
@@ -255,7 +255,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MIN_LENGTH',
-            message: `${this.getFieldLabel(rule.field)} חייב להיות לפחות ${rule.minLength} תווים`,
+            message: `${this.getFieldLabel(rule.field)} חייב להיs at least ${rule.minLength} characters`,
             value,
           });
         }
@@ -263,7 +263,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MAX_LENGTH',
-            message: `${this.getFieldLabel(rule.field)} לא יכול לעלות על ${rule.maxLength} תווים`,
+            message: `${this.getFieldLabel(rule.field)} No יכול לעלs על ${rule.maxLength} characters`,
             value,
           });
         }
@@ -275,7 +275,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MIN_VALUE',
-            message: `${this.getFieldLabel(rule.field)} חייב להיות לפחות ${rule.min}`,
+            message: `${this.getFieldLabel(rule.field)} חייב להיs at least ${rule.min}`,
             value,
           });
         }
@@ -283,7 +283,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MAX_VALUE',
-            message: `${this.getFieldLabel(rule.field)} לא יכול לעלות על ${rule.max}`,
+            message: `${this.getFieldLabel(rule.field)} No יכול לעלs על ${rule.max}`,
             value,
           });
         }
@@ -295,7 +295,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'PATTERN',
-            message: `${this.getFieldLabel(rule.field)} בפורמט לא תקין`,
+            message: `${this.getFieldLabel(rule.field)} בFormat No Valid`,
             value,
           });
         }
@@ -308,7 +308,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'ENUM',
-            message: `${this.getFieldLabel(rule.field)} חייב להיות אחד מהערכים: ${rule.enum.join(', ')}`,
+            message: `${this.getFieldLabel(rule.field)} חייב להיs אחד מהערכs: ${rule.enum.join(', ')}`,
             value,
           });
         }
@@ -376,7 +376,7 @@ export class RecordValidator implements IRecordValidator {
         allErrors.push({
           field: 'email',
           code: 'DUPLICATE',
-          message: `אימייל כפול בשורות: ${rows.join(', ')}`,
+          message: `Email כפול בשורs: ${rows.join(', ')}`,
           value: email,
         });
       }
@@ -424,7 +424,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיות טקסט`,
+            message: `${fieldLabel} חייב להיs Text`,
             value,
           };
         }
@@ -435,7 +435,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיות מספר`,
+            message: `${fieldLabel} חייב להיs מספר`,
             value,
           };
         }
@@ -446,7 +446,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיות כן/לא`,
+            message: `${fieldLabel} חייב להיs Yes/No`,
             value,
           };
         }
@@ -457,7 +457,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיות רשימה`,
+            message: `${fieldLabel} חייב להיs רשימה`,
             value,
           };
         }
@@ -468,7 +468,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'EMAIL',
-            message: `${fieldLabel} אינו כתובת אימייל תקינה`,
+            message: `${fieldLabel} אינו Address Email תקינה`,
             value,
           };
         }
@@ -479,7 +479,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'PHONE',
-            message: `${fieldLabel} אינו מספר טלפון תקין`,
+            message: `${fieldLabel} אינו מספר Phone Valid`,
             value,
           };
         }
@@ -490,7 +490,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'DATE',
-            message: `${fieldLabel} אינו תאריך תקין`,
+            message: `${fieldLabel} אינו Date Valid`,
             value,
           };
         }
@@ -525,28 +525,28 @@ export class RecordValidator implements IRecordValidator {
 
   private getFieldLabel(field: string): string {
     const labels: Record<string, string> = {
-      email: 'אימייל',
-      fullName: 'שם מלא',
-      firstName: 'שם פרטי',
-      lastName: 'שם משפחה',
-      phone: 'טלפון',
-      gender: 'מין',
-      licenseNumber: 'מספר רישיון',
-      licenseType: 'סוג רישיון',
-      yearsExperience: 'שנות ניסיון',
-      sessionPrice: 'מחיר פגישה',
-      healthFund: 'קופת חולים',
-      healthFunds: 'קופות חולים',
-      languages: 'שפות',
-      city: 'עיר',
-      address: 'כתובת',
-      specializations: 'התמחויות',
-      therapeuticApproaches: 'גישות טיפוליות',
-      birthDate: 'תאריך לידה',
-      name: 'שם',
-      type: 'סוג',
-      contactEmail: 'אימייל ליצירת קשר',
-      contactPhone: 'טלפון ליצירת קשר',
+      email: 'Email',
+      fullName: 'Full Name',
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      phone: 'Phone',
+      gender: 'Gender',
+      licenseNumber: 'License Number',
+      licenseType: 'Type License',
+      yearsExperience: 'years experience',
+      sessionPrice: 'Price Session',
+      healthFund: 'Health Fund',
+      healthFunds: 'Health Funds',
+      languages: 'Languages',
+      city: 'City',
+      address: 'Address',
+      specializations: 'Specializations',
+      therapeuticApproaches: 'Therapeutic approaches',
+      birthDate: 'Date Birth',
+      name: 'Name',
+      type: 'Type',
+      contactEmail: 'Email ליצירת קשר',
+      contactPhone: 'Phone ליצירת קשר',
     };
 
     return labels[field] || field;

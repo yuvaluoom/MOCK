@@ -94,25 +94,25 @@ export const SUPPORTED_INTEGRATIONS = {
   // Israeli Health Funds
   healthFunds: {
     CLALIT: {
-      name: 'כללית',
+      name: 'Clalit',
       nameEn: 'Clalit Health Services',
       apiAvailable: true,
       supportedOperations: ['verify_member', 'check_coverage', 'submit_claim'],
     },
     MACCABI: {
-      name: 'מכבי',
+      name: 'Maccabi',
       nameEn: 'Maccabi Healthcare Services',
       apiAvailable: true,
       supportedOperations: ['verify_member', 'check_coverage'],
     },
     MEUHEDET: {
-      name: 'מאוחדת',
+      name: 'Meuhedet',
       nameEn: 'Meuhedet Health Fund',
       apiAvailable: true,
       supportedOperations: ['verify_member', 'check_coverage'],
     },
     LEUMIT: {
-      name: 'לאומית',
+      name: 'Noומית',
       nameEn: 'Leumit Health Fund',
       apiAvailable: false,
       supportedOperations: [],
@@ -122,13 +122,13 @@ export const SUPPORTED_INTEGRATIONS = {
   // Licensing & Credentials
   licensing: {
     MINISTRY_OF_HEALTH: {
-      name: 'משרד הבריאות',
+      name: 'משרד הבריorת',
       nameEn: 'Ministry of Health',
       apiAvailable: false,
       supportedOperations: ['verify_license'],
     },
     PSYCHOLOGY_COUNCIL: {
-      name: 'מועצת הפסיכולוגים',
+      name: 'Psychology Council',
       nameEn: 'Israel Psychology Council',
       apiAvailable: false,
       supportedOperations: ['verify_license', 'check_specialization'],

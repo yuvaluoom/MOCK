@@ -4,26 +4,26 @@ import { useState } from 'react';
 import { trpc } from '@/lib/trpc/client';
 
 const actionConfig: Record<string, { color: string; label: string }> = {
-  CREATE: { color: 'bg-green-500/20 text-green-400', label: 'יצירה' },
-  UPDATE: { color: 'bg-blue-500/20 text-blue-400', label: 'עדכון' },
-  DELETE: { color: 'bg-red-500/20 text-red-400', label: 'מחיקה' },
-  APPROVE: { color: 'bg-green-500/20 text-green-400', label: 'אישור' },
-  REJECT: { color: 'bg-red-500/20 text-red-400', label: 'דחייה' },
-  LOGIN: { color: 'bg-purple-500/20 text-purple-400', label: 'כניסה' },
-  LOGOUT: { color: 'bg-slate-500/20 text-slate-400', label: 'יציאה' },
-  THERAPIST_APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'מטפל אושר' },
-  THERAPIST_REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'מטפל נדחה' },
-  THERAPIST_SUSPENDED: { color: 'bg-orange-500/20 text-orange-400', label: 'מטפל הושעה' },
-  THERAPIST_UNSUSPENDED: { color: 'bg-green-500/20 text-green-400', label: 'השעיה בוטלה' },
-  DOCUMENTS_REQUESTED: { color: 'bg-amber-500/20 text-amber-400', label: 'בקשת מסמכים' },
-  OWNER_STATUS_OVERRIDE: { color: 'bg-purple-500/20 text-purple-400', label: 'דריסת סטטוס (בעלים)' },
+  CREATE: { color: 'bg-green-500/20 text-green-400', label: 'Create' },
+  UPDATE: { color: 'bg-blue-500/20 text-blue-400', label: 'up toכון' },
+  DELETE: { color: 'bg-red-500/20 text-red-400', label: 'Delete' },
+  APPROVE: { color: 'bg-green-500/20 text-green-400', label: 'Confirm' },
+  REJECT: { color: 'bg-red-500/20 text-red-400', label: 'Rejection' },
+  LOGIN: { color: 'bg-purple-500/20 text-purple-400', label: 'Login' },
+  LOGOUT: { color: 'bg-slate-500/20 text-slate-400', label: 'Logout' },
+  THERAPIST_APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'Therapist orשר' },
+  THERAPIST_REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'Therapist נDecline' },
+  THERAPIST_SUSPENDED: { color: 'bg-orange-500/20 text-orange-400', label: 'Therapist הוTime' },
+  THERAPIST_UNSUSPENDED: { color: 'bg-green-500/20 text-green-400', label: 'השעיה Cancelledה' },
+  DOCUMENTS_REQUESTED: { color: 'bg-amber-500/20 text-amber-400', label: 'בקשת מסמכs' },
+  OWNER_STATUS_OVERRIDE: { color: 'bg-purple-500/20 text-purple-400', label: 'דריסת Status (בעלs)' },
 };
 
 const entityTypeLabels: Record<string, string> = {
-  THERAPIST: 'מטפל',
-  PATIENT: 'מטופל',
-  USER: 'משתמש',
-  SESSION: 'פגישה',
+  THERAPIST: 'Therapist',
+  PATIENT: 'Patient',
+  USER: 'User',
+  SESSION: 'Session',
   DOCUMENT: 'מסמך',
 };
 
@@ -58,12 +58,12 @@ export default function AuditLogsPage() {
   });
 
   return (
-    <div dir="rtl" className="space-y-6">
+    <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">יומן ביקורת</h1>
+        <h1 className="text-2xl font-bold text-white">Log ביקורת</h1>
         <p className="text-slate-400 mt-1">
-          מעקב אחר כל הפעילויות והשינויים במערכת
+          מעקב Other All theActiveויs והשינויs במערכת
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export default function AuditLogsPage() {
             </div>
             <input
               type="text"
-              placeholder="חיפוש ביומן..."
+              placeholder="Search בLog..."
               className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
@@ -91,11 +91,11 @@ export default function AuditLogsPage() {
             }}
             className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
-            <option value="">כל הישויות</option>
-            <option value="USER">משתמש</option>
-            <option value="THERAPIST">מטפל</option>
-            <option value="PATIENT">מטופל</option>
-            <option value="SESSION">פגישה</option>
+            <option value="">All theישויs</option>
+            <option value="USER">User</option>
+            <option value="THERAPIST">Therapist</option>
+            <option value="PATIENT">Patient</option>
+            <option value="SESSION">Session</option>
             <option value="DOCUMENT">מסמך</option>
           </select>
 
@@ -105,7 +105,7 @@ export default function AuditLogsPage() {
               type="date"
               className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
-            <span className="text-slate-400">עד</span>
+            <span className="text-slate-400">up to</span>
             <input
               type="date"
               className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -120,11 +120,11 @@ export default function AuditLogsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">חותמת זמן</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">משתמש</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">חsמת זמן</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">User</th>
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">פעולה</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">ישות</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">פרטים</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">ישs</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Details</th>
               </tr>
             </thead>
             <tbody>
@@ -137,7 +137,7 @@ export default function AuditLogsPage() {
               ) : data?.logs.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
-                    לא נמצאו רשומות ביקורת
+                    No Foundor רשומs ביקורת
                   </td>
                 </tr>
               ) : (
@@ -175,7 +175,7 @@ export default function AuditLogsPage() {
                             alert(JSON.stringify({ previous: log.previousValue, new: log.newValue }, null, 2));
                           }}
                         >
-                          הצג שינויים
+                          הצג שינויs
                         </button>
                       )}
                     </td>
@@ -190,9 +190,9 @@ export default function AuditLogsPage() {
         {data && data.pagination.totalPages > 1 && (
           <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700">
             <p className="text-sm text-slate-400">
-              מציג {(page - 1) * data.pagination.limit + 1} עד{' '}
-              {Math.min(page * data.pagination.limit, data.pagination.total)} מתוך{' '}
-              {data.pagination.total} רשומות
+              Displays {(page - 1) * data.pagination.limit + 1} up to{' '}
+              {Math.min(page * data.pagination.limit, data.pagination.total)} of{' '}
+              {data.pagination.total} רשומs
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -203,7 +203,7 @@ export default function AuditLogsPage() {
                 <ChevronLeftIcon />
               </button>
               <span className="text-sm text-white">
-                עמוד {page} מתוך {data.pagination.totalPages}
+                Page {page} of {data.pagination.totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(data.pagination.totalPages, p + 1))}
@@ -219,11 +219,11 @@ export default function AuditLogsPage() {
 
       {/* Info Card */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-        <h3 className="text-sm font-medium text-slate-400 mb-2">אודות יומן ביקורת</h3>
+        <h3 className="text-sm font-medium text-slate-400 mb-2">orדs Log ביקורת</h3>
         <p className="text-sm text-slate-500">
-          יומן הביקורת עוקב אחר כל הפעולות המשמעותיות שבוצעו במערכת, כולל ניהול משתמשים,
-          אישורי מטפלים, שינויי פגישות ושינויים ניהוליים. הרשומות נשמרות
-          למשך 90 יום וניתן לייצא אותן לצרכי תאימות.
+          Log הביקורת עוקב Other All theActions המשמעsיs שCompletedו במערכת, כולל User Management,
+          Confirmי Therapists, שינויי Sessions ושינויs Managementיs. הרשומs נשמרs
+          למשך 90 יום וניתן לייצא orתן לצרכי תאימs.
         </p>
       </div>
     </div>

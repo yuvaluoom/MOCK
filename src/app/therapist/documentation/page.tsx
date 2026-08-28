@@ -31,7 +31,7 @@ export default function TherapistDocumentationPage() {
   const mockSessions: SessionDoc[] = [
     {
       id: '1',
-      patientName: 'ישראל ישראלי',
+      patientName: 'Israel Israeli',
       sessionDate: '2024-02-06',
       sessionNumber: 5,
       documentationStatus: 'DRAFT',
@@ -41,7 +41,7 @@ export default function TherapistDocumentationPage() {
     },
     {
       id: '2',
-      patientName: 'שרה כהן',
+      patientName: 'Sarah Cohen',
       sessionDate: '2024-02-07',
       sessionNumber: 3,
       documentationStatus: 'DRAFT',
@@ -51,7 +51,7 @@ export default function TherapistDocumentationPage() {
     },
     {
       id: '3',
-      patientName: 'דוד לוי',
+      patientName: 'David Levi',
       sessionDate: '2024-02-05',
       sessionNumber: 8,
       documentationStatus: 'SUBMITTED',
@@ -61,7 +61,7 @@ export default function TherapistDocumentationPage() {
     },
     {
       id: '4',
-      patientName: 'מרים אברהם',
+      patientName: 'Miriam Abraham',
       sessionDate: '2024-02-04',
       sessionNumber: 12,
       documentationStatus: 'LOCKED',
@@ -87,9 +87,9 @@ export default function TherapistDocumentationPage() {
   };
 
   const tabs = [
-    { id: 'pending' as TabType, label: 'ממתין לתיעוד', count: pendingSessions.length },
-    { id: 'completed' as TabType, label: 'הושלם', count: completedSessions.length },
-    { id: 'all' as TabType, label: 'הכל', count: mockSessions.length },
+    { id: 'pending' as TabType, label: 'Pending documentation', count: pendingSessions.length },
+    { id: 'completed' as TabType, label: 'Completed', count: completedSessions.length },
+    { id: 'all' as TabType, label: 'All', count: mockSessions.length },
   ];
 
   const getStatusBadge = (status: SessionDoc['documentationStatus'], isOverdue: boolean) => {
@@ -97,16 +97,16 @@ export default function TherapistDocumentationPage() {
       return (
         <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
           <AlertTriangle className="w-3 h-3" />
-          באיחור
+          Overdue
         </span>
       );
     }
 
     const statusConfig = {
-      DRAFT: { label: 'טיוטה', className: 'bg-yellow-100 text-yellow-700' },
+      DRAFT: { label: 'Draft', className: 'bg-yellow-100 text-yellow-700' },
       SUBMITTED: { label: 'הוגש', className: 'bg-green-100 text-green-700' },
-      AMENDED: { label: 'תוקן', className: 'bg-blue-100 text-blue-700' },
-      LOCKED: { label: 'נעול', className: 'bg-gray-100 text-gray-700' },
+      AMENDED: { label: 'Fixed', className: 'bg-blue-100 text-blue-700' },
+      LOCKED: { label: 'Locked', className: 'bg-gray-100 text-gray-700' },
     };
 
     const config = statusConfig[status];
@@ -121,12 +121,12 @@ export default function TherapistDocumentationPage() {
   };
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">תיעוד קליני</h1>
-          <p className="text-gray-600 mt-1">ניהול ותיעוד פגישות טיפוליות</p>
+          <h1 className="text-2xl font-bold text-gray-900">Documentation קליני</h1>
+          <p className="text-gray-600 mt-1">Management וDocumentation פTherapeutic approaches</p>
         </div>
       </div>
 
@@ -140,7 +140,7 @@ export default function TherapistDocumentationPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{pendingSessions.length}</p>
-                <p className="text-sm text-gray-600">ממתינים לתיעוד</p>
+                <p className="text-sm text-gray-600">Pending לDocumentation</p>
               </div>
             </div>
           </CardContent>
@@ -154,7 +154,7 @@ export default function TherapistDocumentationPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{overdueSessions.length}</p>
-                <p className="text-sm text-gray-600">באיחור</p>
+                <p className="text-sm text-gray-600">Overdue</p>
               </div>
             </div>
           </CardContent>
@@ -168,7 +168,7 @@ export default function TherapistDocumentationPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{completedSessions.length}</p>
-                <p className="text-sm text-gray-600">הושלמו השבוע</p>
+                <p className="text-sm text-gray-600">הושלed השבוע</p>
               </div>
             </div>
           </CardContent>
@@ -181,10 +181,10 @@ export default function TherapistDocumentationPage() {
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5" />
             <div>
-              <h3 className="font-medium text-red-800">תיעוד באיחור</h3>
+              <h3 className="font-medium text-red-800">Documentation Overdue</h3>
               <p className="text-sm text-red-700 mt-1">
-                יש לך {overdueSessions.length} פגישות שחלף מועד התיעוד שלהן.
-                נא להשלים את התיעוד בהקדם האפשרי.
+                You have {overdueSessions.length} Sessions שחלף edup to הDocumentation שלהן.
+                Please complete את הDocumentation בהקדם האפשרי.
               </p>
             </div>
           </div>
@@ -246,7 +246,7 @@ export default function TherapistDocumentationPage() {
                       {getStatusBadge(session.documentationStatus, session.isOverdue)}
                     </div>
                     <p className="text-sm text-gray-500">
-                      פגישה #{session.sessionNumber} • {new Date(session.sessionDate).toLocaleDateString('he-IL')}
+                      Session #{session.sessionNumber} • {new Date(session.sessionDate).toLocaleDateString('he-IL')}
                     </p>
                     {session.documentationStatus === 'DRAFT' && (
                       <div className="flex items-center gap-2 mt-1">
@@ -271,7 +271,7 @@ export default function TherapistDocumentationPage() {
                         variant={session.isOverdue ? 'destructive' : 'calm'}
                         onClick={() => window.location.href = `/therapist/documentation/${session.id}`}
                       >
-                        המשך תיעוד
+                        המשך Documentation
                       </Button>
                     </>
                   )}
@@ -281,7 +281,7 @@ export default function TherapistDocumentationPage() {
                       variant="outline"
                       onClick={() => window.location.href = `/therapist/documentation/${session.id}`}
                     >
-                      צפייה
+                      View
                     </Button>
                   )}
                   {session.documentationStatus === 'LOCKED' && (
@@ -290,7 +290,7 @@ export default function TherapistDocumentationPage() {
                       variant="outline"
                       onClick={() => window.location.href = `/therapist/documentation/${session.id}`}
                     >
-                      צפייה
+                      View
                     </Button>
                   )}
                 </div>
@@ -300,7 +300,7 @@ export default function TherapistDocumentationPage() {
             {getFilteredSessions().length === 0 && (
               <div className="text-center py-12 text-gray-500">
                 <FileText className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p>אין פגישות להצגה</p>
+                <p>אין Sessions להצגה</p>
               </div>
             )}
           </div>

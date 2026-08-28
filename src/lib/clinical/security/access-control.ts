@@ -93,7 +93,7 @@ export function canAccessSession(
       return {
         allowed: false,
         reason: 'You can only access sessions with your own patients',
-        reasonHe: 'ניתן לגשת רק לפגישות עם המטופלים שלך',
+        reasonHe: 'Can only access sessions with הPatients Your',
       };
     }
 
@@ -108,7 +108,7 @@ export function canAccessSession(
       return {
         allowed: false,
         reason: 'You can only access your own sessions',
-        reasonHe: 'ניתן לגשת רק לפגישות שלך',
+        reasonHe: 'Can only access לSessions Your',
       };
     }
 
@@ -161,13 +161,13 @@ function checkTherapistPermission(
       return {
         allowed: true,
         reason: 'Therapist can edit draft sessions',
-        reasonHe: 'ניתן לערוך טיוטות',
+        reasonHe: 'ניתן לערוך טיוטs',
       };
     }
     return {
       allowed: false,
       reason: 'Cannot edit submitted or locked sessions',
-      reasonHe: 'לא ניתן לערוך פגישות שהוגשו או ננעלו',
+      reasonHe: 'No ניתן לערוך Sessions שהוגשו or ננעלו',
     };
   }
 
@@ -176,13 +176,13 @@ function checkTherapistPermission(
       return {
         allowed: false,
         reason: 'Session is already submitted',
-        reasonHe: 'הפגישה כבר הוגשה',
+        reasonHe: 'הSession כבר הוגשה',
       };
     }
     return {
       allowed: true,
       reason: 'Therapist can submit draft sessions',
-      reasonHe: 'ניתן להגיש טיוטות',
+      reasonHe: 'ניתן להגיש טיוטs',
     };
   }
 
@@ -191,20 +191,20 @@ function checkTherapistPermission(
       return {
         allowed: false,
         reason: 'Cannot amend draft sessions - just update them',
-        reasonHe: 'לא ניתן לתקן טיוטות - פשוט ערוך אותן',
+        reasonHe: 'No ניתן לתקן טיוטs - פשוט ערוך orתן',
       };
     }
     if (session.documentationStatus === 'LOCKED') {
       return {
         allowed: false,
         reason: 'Cannot amend locked sessions',
-        reasonHe: 'לא ניתן לתקן פגישות נעולות',
+        reasonHe: 'No ניתן לתקן Sessions Lockeds',
       };
     }
     return {
       allowed: true,
       reason: 'Therapist can amend submitted sessions with documented reason',
-      reasonHe: 'ניתן לתקן פגישות שהוגשו עם סיבה מתועדת',
+      reasonHe: 'ניתן לתקן Sessions שהוגשו With Reason מתוup toת',
     };
   }
 
@@ -213,13 +213,13 @@ function checkTherapistPermission(
       return {
         allowed: false,
         reason: 'Session is already locked',
-        reasonHe: 'הפגישה כבר נעולה',
+        reasonHe: 'הSession כבר Lockedה',
       };
     }
     return {
       allowed: true,
       reason: 'Therapist can lock sessions',
-      reasonHe: 'ניתן לנעול פגישות',
+      reasonHe: 'ניתן לLocked Sessions',
     };
   }
 
@@ -227,7 +227,7 @@ function checkTherapistPermission(
     return {
       allowed: true,
       reason: 'Therapist can create and share patient summaries',
-      reasonHe: 'ניתן ליצור ולשתף סיכומים למטופל',
+      reasonHe: 'ניתן ליצור ולשתף סיכומs לPatient',
     };
   }
 
@@ -235,14 +235,14 @@ function checkTherapistPermission(
     return {
       allowed: true,
       reason: 'Therapist has access to their patient sessions',
-      reasonHe: 'למטפל יש גישה לפגישות עם המטופלים שלו',
+      reasonHe: 'לTherapist יש גישה לSessions With הPatients שלו',
     };
   }
 
   return {
     allowed: false,
     reason: 'Permission not granted',
-    reasonHe: 'ההרשאה לא ניתנה',
+    reasonHe: 'הPermission No ניתנה',
     requiredPermissions: [permission],
   };
 }
@@ -261,14 +261,14 @@ function checkPatientPermission(permission: ClinicalPermission): AccessDecision 
     return {
       allowed: true,
       reason: 'Patient can view their session summaries',
-      reasonHe: 'ניתן לצפות בסיכומי הפגישות שלך',
+      reasonHe: 'ניתן לצOptions בסיכומי הSessions Your',
     };
   }
 
   return {
     allowed: false,
     reason: 'Patients cannot access clinical documentation',
-    reasonHe: 'מטופלים לא יכולים לגשת לתיעוד קליני',
+    reasonHe: 'Patients No יכולs לגשת לDocumentation קליני',
     requiredPermissions: [permission],
   };
 }
@@ -287,7 +287,7 @@ function checkAdminPermission(permission: ClinicalPermission): AccessDecision {
     return {
       allowed: true,
       reason: 'Admin can view session metadata and compliance',
-      reasonHe: 'מנהל יכול לצפות במטא-דאטא ותאימות',
+      reasonHe: 'Manager יכול לצOptions במטא-דאטא sאימs',
     };
   }
 
@@ -295,14 +295,14 @@ function checkAdminPermission(permission: ClinicalPermission): AccessDecision {
     return {
       allowed: false,
       reason: 'Administrators cannot access clinical content',
-      reasonHe: 'מנהלים לא יכולים לגשת לתוכן קליני',
+      reasonHe: 'Managers No יכולs לגשת לתוYes קליני',
     };
   }
 
   return {
     allowed: false,
     reason: 'Permission not granted to administrators',
-    reasonHe: 'ההרשאה לא ניתנה למנהלים',
+    reasonHe: 'הPermission No ניתנה לManagers',
     requiredPermissions: [permission],
   };
 }
@@ -320,14 +320,14 @@ function checkSupportPermission(permission: ClinicalPermission): AccessDecision 
     return {
       allowed: true,
       reason: 'Support can view basic session metadata',
-      reasonHe: 'תמיכה יכולה לצפות במטא-דאטא בסיסי',
+      reasonHe: 'תמיכה יכולה לצOptions במטא-דאטא בסיסי',
     };
   }
 
   return {
     allowed: false,
     reason: 'Support personnel cannot access clinical data',
-    reasonHe: 'אנשי תמיכה לא יכולים לגשת לנתונים קליניים',
+    reasonHe: 'אנשי תמיכה No יכולs לגשת לנתונs קליניs',
     requiredPermissions: [permission],
   };
 }
@@ -348,7 +348,7 @@ export function canPatientViewSummary(
     return {
       allowed: false,
       reason: 'This check is for patients only',
-      reasonHe: 'בדיקה זו למטופלים בלבד',
+      reasonHe: 'בדיקה This לPatients בלבד',
     };
   }
 
@@ -356,7 +356,7 @@ export function canPatientViewSummary(
     return {
       allowed: false,
       reason: 'This is not your session',
-      reasonHe: 'זו לא הפגישה שלך',
+      reasonHe: 'This No הSession Your',
     };
   }
 
@@ -364,7 +364,7 @@ export function canPatientViewSummary(
     return {
       allowed: false,
       reason: 'No summary has been shared for this session',
-      reasonHe: 'לא שותף סיכום לפגישה זו',
+      reasonHe: 'No שsף Summary forSession This',
     };
   }
 
@@ -372,14 +372,14 @@ export function canPatientViewSummary(
     return {
       allowed: false,
       reason: 'The therapist has not shared a summary yet',
-      reasonHe: 'המטפל טרם שיתף סיכום',
+      reasonHe: 'הTherapist טרם שיתף Summary',
     };
   }
 
   return {
     allowed: true,
     reason: 'Summary is visible to patient',
-    reasonHe: 'הסיכום זמין לצפייה',
+    reasonHe: 'הSummary זGender לView',
   };
 }
 
@@ -502,7 +502,7 @@ export function canExportSession(
     return {
       allowed: false,
       reason: 'Only therapists can export session data',
-      reasonHe: 'רק מטפלים יכולים לייצא נתוני פגישה',
+      reasonHe: 'רק Therapists יכולs לייצא נתוני Session',
     };
   }
 
@@ -511,7 +511,7 @@ export function canExportSession(
     return {
       allowed: false,
       reason: 'You can only export sessions with your own patients',
-      reasonHe: 'ניתן לייצא רק פגישות עם המטופלים שלך',
+      reasonHe: 'ניתן לייצא רק Sessions With הPatients Your',
     };
   }
 
@@ -520,14 +520,14 @@ export function canExportSession(
     return {
       allowed: false,
       reason: 'Cannot export draft sessions',
-      reasonHe: 'לא ניתן לייצא טיוטות',
+      reasonHe: 'No ניתן לייצא טיוטs',
     };
   }
 
   return {
     allowed: true,
     reason: 'Therapist can export their submitted sessions',
-    reasonHe: 'ניתן לייצא פגישות שהוגשו',
+    reasonHe: 'ניתן לייצא Sessions שהוגשו',
   };
 }
 
@@ -551,7 +551,7 @@ export function verifyConsent(
       return {
         allowed: false,
         reason: `Missing required consent: ${required}`,
-        reasonHe: `חסרה הסכמה נדרשת: ${required}`,
+        reasonHe: `חסרה הסכמה Requiredת: ${required}`,
       };
     }
 
@@ -559,7 +559,7 @@ export function verifyConsent(
       return {
         allowed: false,
         reason: `Consent not granted: ${required}`,
-        reasonHe: `הסכמה לא ניתנה: ${required}`,
+        reasonHe: `הסכמה No ניתנה: ${required}`,
       };
     }
 
@@ -575,6 +575,6 @@ export function verifyConsent(
   return {
     allowed: true,
     reason: 'All required consents are in place',
-    reasonHe: 'כל ההסכמות הנדרשות קיימות',
+    reasonHe: 'All theהסכמs הRequireds קיימs',
   };
 }

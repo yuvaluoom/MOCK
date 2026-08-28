@@ -9,13 +9,13 @@ export default getRequestConfig(async () => {
     messages: {
       // Inline messages for now - can be moved to separate JSON files later
       common: {
-        loading: 'טוען...',
-        error: 'שגיאה',
-        save: 'שמור',
-        cancel: 'ביטול',
-        submit: 'שלח',
-        back: 'חזור',
-        next: 'הבא',
+        loading: 'Loading...',
+        error: 'Error',
+        save: 'Save',
+        cancel: 'Cancel',
+        submit: 'Send',
+        back: 'Back',
+        next: 'Next',
       },
     },
   };

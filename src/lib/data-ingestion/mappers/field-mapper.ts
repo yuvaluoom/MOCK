@@ -22,59 +22,58 @@ export class FieldMapper implements IFieldMapper {
   // Hebrew to English field name mappings
   private hebrewFieldMappings: Record<string, string> = {
     // Personal info
-    'שם_מלא': 'fullName',
-    'שם_פרטי': 'firstName',
-    'שם_משפחה': 'lastName',
-    'אימייל': 'email',
-    'דואל': 'email',
-    'טלפון': 'phone',
-    'מין': 'gender',
-    'תאריך_לידה': 'birthDate',
+    'full_name': 'fullName',
+    'first_name': 'firstName',
+    'last_name': 'lastName',
+    'email': 'email',
+    'phone': 'phone',
+    'gender': 'gender',
+    'birth_date': 'birthDate',
 
     // Professional info
-    'מספר_רישיון': 'licenseNumber',
-    'סוג_רישיון': 'licenseType',
-    'שנות_ניסיון': 'yearsExperience',
-    'ניסיון': 'yearsExperience',
-    'השכלה': 'education',
-    'תואר': 'title',
+    'license_number': 'licenseNumber',
+    'license_type': 'licenseType',
+    'years_experience': 'yearsExperience',
+    'experience': 'yearsExperience',
+    'education': 'education',
+    'title': 'title',
 
     // Practice info
-    'התמחויות': 'specializations',
-    'גישות_טיפוליות': 'therapeuticApproaches',
-    'שפות': 'languages',
-    'קופות_חולים': 'healthFunds',
-    'קופת_חולים': 'healthFund',
+    'specializations': 'specializations',
+    'therapeutic_approaches': 'therapeuticApproaches',
+    'languages': 'languages',
+    'health_funds': 'healthFunds',
+    'health_fund': 'healthFund',
 
     // Location
-    'עיר': 'city',
-    'כתובת': 'address',
+    'city': 'city',
+    'address': 'address',
 
     // Availability
-    'טיפול_אונליין': 'supportsOnline',
-    'טיפול_פרונטלי': 'supportsInPerson',
-    'מחיר_פגישה': 'sessionPrice',
+    'supports_online': 'supportsOnline',
+    'supports_in_person': 'supportsInPerson',
+    'session_price': 'sessionPrice',
 
     // Organization
-    'שם_מרפאה': 'clinicName',
+    'Name_מרפאה': 'clinicName',
     'ארגון': 'organizationId',
   };
 
   // Value mappings for common fields
   private valueMappings: Record<string, Record<string, string>> = {
     gender: {
-      'זכר': 'male',
-      'נקבה': 'female',
-      'אחר': 'other',
+      'Male': 'male',
+      'Female': 'female',
+      'Other': 'other',
       'male': 'male',
       'female': 'female',
       'other': 'other',
     },
     healthFund: {
-      'כללית': 'clalit',
-      'מכבי': 'maccabi',
-      'מאוחדת': 'meuhedet',
-      'לאומית': 'leumit',
+      'Clalit': 'clalit',
+      'Maccabi': 'maccabi',
+      'Meuhedet': 'meuhedet',
+      'Noומית': 'leumit',
       'clalit': 'clalit',
       'maccabi': 'maccabi',
       'meuhedet': 'meuhedet',
@@ -83,7 +82,7 @@ export class FieldMapper implements IFieldMapper {
     licenseType: {
       'פסיכולוג': 'psychologist',
       'פסיכולוג_קליני': 'clinical_psychologist',
-      'פסיכותרפיסט': 'psychotherapist',
+      'פסיכsרפיסט': 'psychotherapist',
       'עובד_סוציאלי': 'social_worker',
       'פסיכיאטר': 'psychiatrist',
     },
@@ -267,7 +266,7 @@ export class FieldMapper implements IFieldMapper {
       stringValue === 'true' ||
       stringValue === '1' ||
       stringValue === 'yes' ||
-      stringValue === 'כן' ||
+      stringValue === 'Yes' ||
       stringValue === 'v' ||
       stringValue === '✓'
     );
@@ -369,8 +368,8 @@ export const DEFAULT_THERAPIST_MAPPING: FieldMapping = {
     transform: 'map_value',
     params: {
       map: {
-        'זכר': 'male',
-        'נקבה': 'female',
+        'Male': 'male',
+        'Female': 'female',
         'male': 'male',
         'female': 'female',
       },
@@ -428,8 +427,8 @@ export const DEFAULT_PATIENT_MAPPING: FieldMapping = {
     transform: 'map_value',
     params: {
       map: {
-        'זכר': 'male',
-        'נקבה': 'female',
+        'Male': 'male',
+        'Female': 'female',
         'male': 'male',
         'female': 'female',
       },

@@ -180,10 +180,10 @@ export function canAccessRoute(role: UserRole, route: string): boolean {
  * Therapist approval status labels
  */
 export const TherapistApprovalStatusLabels: Record<string, { en: string; he: string; color: string }> = {
-  PENDING_INFO: { en: 'Pending Info', he: 'ממתין למידע', color: 'yellow' },
-  AWAITING_APPROVAL: { en: 'Awaiting Approval', he: 'ממתין לאישור', color: 'blue' },
-  APPROVED: { en: 'Approved', he: 'מאושר', color: 'green' },
-  REJECTED: { en: 'Rejected', he: 'נדחה', color: 'red' },
-  SUSPENDED: { en: 'Suspended', he: 'מושעה', color: 'orange' },
-  MISSING_DOCUMENTS: { en: 'Missing Documents', he: 'חסרים מסמכים', color: 'purple' },
+  PENDING_INFO: { en: 'Pending Info', he: 'Awaiting information', color: 'yellow' },
+  AWAITING_APPROVAL: { en: 'Awaiting Approval', he: 'Pending Approval', color: 'blue' },
+  APPROVED: { en: 'Approved', he: 'Approved', color: 'green' },
+  REJECTED: { en: 'Rejected', he: 'נDecline', color: 'red' },
+  SUSPENDED: { en: 'Suspended', he: 'edTime', color: 'orange' },
+  MISSING_DOCUMENTS: { en: 'Missing Documents', he: 'Missing documents', color: 'purple' },
 };

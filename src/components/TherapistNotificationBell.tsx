@@ -104,7 +104,7 @@ const XIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// Format relative time in Hebrew
+// Format relative time
 function formatRelativeTime(date: Date): string {
   const now = new Date();
   const diffMs = now.getTime() - new Date(date).getTime();
@@ -112,11 +112,11 @@ function formatRelativeTime(date: Date): string {
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-  if (diffMins < 1) return 'עכשיו';
-  if (diffMins < 60) return `לפני ${diffMins} דקות`;
-  if (diffHours < 24) return `לפני ${diffHours} שעות`;
-  if (diffDays < 7) return `לפני ${diffDays} ימים`;
-  return new Date(date).toLocaleDateString('he-IL');
+  if (diffMins < 1) return 'just now';
+  if (diffMins < 60) return `${diffMins} minutes ago`;
+  if (diffHours < 24) return `${diffHours} hours ago`;
+  if (diffDays < 7) return `${diffDays} days ago`;
+  return new Date(date).toLocaleDateString('en-US');
 }
 
 interface TherapistNotification {
@@ -214,7 +214,7 @@ export function TherapistNotificationBell() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-gray-500 hover:text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-calm-500 transition-colors"
-        aria-label={`התראות${unreadCount > 0 ? ` - ${unreadCount} חדשות` : ''}`}
+        aria-label={`Notifications${unreadCount > 0 ? ` - ${unreadCount} new` : ''}`}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -237,16 +237,15 @@ export function TherapistNotificationBell() {
           className="absolute top-full left-0 mt-2 w-96 bg-white rounded-xl shadow-2xl border overflow-hidden z-50"
           role="dialog"
           aria-modal="true"
-          aria-label="התראות"
-          dir="rtl"
+          aria-label="Notifications"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b bg-gradient-to-r from-calm-50 to-trust-50">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-gray-900">התראות</h3>
+              <h3 className="font-semibold text-gray-900">Notifications</h3>
               {unreadCount > 0 && (
                 <span className="px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700 rounded-full">
-                  {unreadCount} חדשות
+                  {unreadCount} new
                 </span>
               )}
             </div>
@@ -258,14 +257,14 @@ export function TherapistNotificationBell() {
                   className="text-xs text-calm-600 hover:text-calm-700 focus:outline-none focus:underline font-medium"
                   disabled={markAllAsReadMutation.isPending}
                 >
-                  סמן הכל כנקרא
+                  Mark all as read
                 </button>
               )}
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 className="p-1 text-gray-400 hover:text-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-calm-500"
-                aria-label="סגור התראות"
+                aria-label="Close notifications"
               >
                 <XIcon className="w-4 h-4" />
               </button>
@@ -277,8 +276,8 @@ export function TherapistNotificationBell() {
             {notifications.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
                 <BellIcon className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p className="text-sm font-medium">אין התראות חדשות</p>
-                <p className="text-xs text-gray-400 mt-1">נעדכן אותך כשיהיו עדכונים</p>
+                <p className="text-sm font-medium">No new notifications</p>
+                <p className="text-xs text-gray-400 mt-1">We'll notify you when there are updates</p>
               </div>
             ) : (
               <ul className="divide-y divide-gray-100" role="list">
@@ -317,12 +316,12 @@ export function TherapistNotificationBell() {
                               </p>
                               {isUrgent && (
                                 <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium bg-red-100 text-red-700 rounded mt-1">
-                                  דחוף
+                                  Urgent
                                 </span>
                               )}
                             </div>
                             {!notification.isRead && (
-                              <span className="flex-shrink-0 w-2 h-2 bg-calm-500 rounded-full mt-1.5" aria-label="חדש" />
+                              <span className="flex-shrink-0 w-2 h-2 bg-calm-500 rounded-full mt-1.5" aria-label="New" />
                             )}
                           </div>
                           <p className="text-sm text-gray-600 mt-1 line-clamp-2">
@@ -331,7 +330,7 @@ export function TherapistNotificationBell() {
                           {/* Metadata */}
                           {notification.metadata?.patientName && (
                             <p className="text-xs text-calm-600 mt-1 font-medium">
-                              מטופל/ת: {notification.metadata.patientName}
+                              Patient: {notification.metadata.patientName}
                             </p>
                           )}
                           <p className="text-xs text-gray-400 mt-1.5">
@@ -354,7 +353,7 @@ export function TherapistNotificationBell() {
                 className="block text-center text-sm text-calm-600 hover:text-calm-700 font-medium focus:outline-none focus:underline"
                 onClick={() => setIsOpen(false)}
               >
-                צפייה בכל ההתראות
+                View all notifications
               </Link>
             </div>
           )}

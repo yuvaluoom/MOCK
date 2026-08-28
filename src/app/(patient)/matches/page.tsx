@@ -558,11 +558,11 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
   };
 
   const qualityLabelsHe: Record<string, string> = {
-    excellent: 'התאמה מצוינת',
-    great: 'התאמה גבוהה',
-    good: 'התאמה טובה',
-    moderate: 'התאמה סבירה',
-    low: 'התאמה נמוכה',
+    excellent: 'Excellent Match',
+    great: 'Great Match',
+    good: 'Good Match',
+    moderate: 'Moderate Match',
+    low: 'Low Match',
   };
 
   // Safely get therapist ID with validation
@@ -572,7 +572,7 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
   const therapistLink = hasValidTherapist ? `/therapist/${therapistId}` : '/matches';
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-300 overflow-hidden" dir="rtl">
+    <Card className="hover:shadow-lg transition-all duration-300 overflow-hidden">
       <CardContent className="p-0">
         {/* Main Content */}
         <div className="p-6">
@@ -588,12 +588,12 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
                   <img src={match.therapist.photoUrl} alt={match.therapist?.firstName} className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-calm-700 font-bold text-2xl">
-                    {match.therapist?.firstName?.charAt(0) ?? 'ת'}
+                    {match.therapist?.firstName?.charAt(0) ?? 'T'}
                   </span>
                 )}
               </div>
               {match.therapist?.offersOnline && (
-                <span className="absolute -bottom-1 -left-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center" title="מציע פגישות מקוונות">
+                <span className="absolute -bottom-1 -left-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center" title="Offers Online Sessions">
                   <VideoIcon className="w-3 h-3 text-white" />
                 </span>
               )}
@@ -622,22 +622,22 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
                       <MapPinIcon className="w-4 h-4" />
                       {match.therapist?.city}
                     </span>
-                    <span>{match.therapist?.yearsOfExperience} שנות ניסיון</span>
-                    <span>₪{match.therapist?.sessionPrice}/פגישה</span>
+                    <span>{match.therapist?.yearsOfExperience} years experience</span>
+                    <span>₪{match.therapist?.sessionPrice}/Session</span>
                   </div>
                 </div>
 
                 {/* Score Circle */}
                 <div className="flex flex-col items-center flex-shrink-0">
                   <MatchScoreCircle score={match.overallScore} quality={match.matchQuality} />
-                  <span className="text-xs text-gray-400 mt-1">ציון התאמה</span>
+                  <span className="text-xs text-gray-400 mt-1">Match Score</span>
                 </div>
               </div>
 
               {/* Top Reasons */}
               <div className="mb-4">
                 <p className="text-sm text-gray-700">
-                  <span className="font-medium text-gray-900">למה ההתאמה הזו: </span>
+                  <span className="font-medium text-gray-900">Why this match: </span>
                   {match.topReasons.slice(0, 2).join(' • ')}
                 </p>
               </div>
@@ -667,18 +667,18 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
                 {match.therapist?.offersOnline && (
                   <span className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-green-400" />
-                    פגישות מקוונות
+                    Online Sessions
                   </span>
                 )}
                 {match.therapist?.offersInPerson && (
                   <span className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-blue-400" />
-                    פגישות פרונטליות
+                    In-Person Sessions
                   </span>
                 )}
                 <span className="flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-purple-400" />
-                  {match.therapist?.sessionDuration} דקות לפגישה
+                  {match.therapist?.sessionDuration} min/session
                 </span>
               </div>
             </div>
@@ -694,12 +694,12 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
           {expanded ? (
             <>
               <ChevronUpIcon className="w-4 h-4" />
-              הסתר פרטים
+              Hide Details
             </>
           ) : (
             <>
               <ChevronDownIcon className="w-4 h-4" />
-              למה יש התאמה?
+              Why this match?
             </>
           )}
         </button>
@@ -709,7 +709,7 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
           <div className="px-6 py-5 bg-gray-50 border-t space-y-6">
             {/* Factor Breakdown */}
             <div>
-              <h4 className="text-sm font-semibold text-gray-900 mb-4">פירוט ההתאמה</h4>
+              <h4 className="text-sm font-semibold text-gray-900 mb-4">Match Breakdown</h4>
               <div className="space-y-4">
                 {match.factors.map((factor: any) => (
                   <MatchFactorBar key={factor.key} factor={factor} />
@@ -720,7 +720,7 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
             {/* Match Explanation Items */}
             {match.explanationItems && match.explanationItems.length > 0 && (
               <div>
-                <h4 className="text-sm font-semibold text-gray-900 mb-3">ציון התאמה: {match.overallScore}%</h4>
+                <h4 className="text-sm font-semibold text-gray-900 mb-3">Match Score: {match.overallScore}%</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {match.explanationItems.map((item: any, i: number) => (
                     <div key={i} className={`flex items-center gap-2 text-sm p-2 rounded-lg ${
@@ -737,17 +737,17 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
                           <path d="m6 6 12 12" />
                         </svg>
                       )}
-                      <span className={item.matched ? 'text-green-800' : 'text-red-700'}>{item.labelHe}</span>
+                      <span className={item.matched ? 'text-green-800' : 'text-red-700'}>{item.labelEn}</span>
                     </div>
                   ))}
                 </div>
                 {/* Score sub-breakdown */}
                 <div className="flex gap-4 mt-3 text-xs text-gray-500">
                   {match.objectiveFitScore !== undefined && (
-                    <span>התאמה אובייקטיבית: <strong className="text-gray-700">{match.objectiveFitScore}%</strong></span>
+                    <span>Objective Fit: <strong className="text-gray-700">{match.objectiveFitScore}%</strong></span>
                   )}
                   {match.subjectiveFitScore !== undefined && (
-                    <span>התאמה סובייקטיבית: <strong className="text-gray-700">{match.subjectiveFitScore}%</strong></span>
+                    <span>Subjective Fit: <strong className="text-gray-700">{match.subjectiveFitScore}%</strong></span>
                   )}
                 </div>
               </div>
@@ -757,7 +757,7 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
             {match.warnings.length > 0 && (
               <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
                 <p className="text-sm text-amber-800">
-                  <span className="font-medium">הערה: </span>
+                  <span className="font-medium">Note: </span>
                   {match.warnings.join(' • ')}
                 </p>
               </div>
@@ -780,7 +780,7 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
             {/* Bio */}
             {match.therapist?.bioHebrew || match.therapist?.bio ? (
               <div>
-                <h4 className="text-sm font-semibold text-gray-900 mb-2">על המטפל/ת</h4>
+                <h4 className="text-sm font-semibold text-gray-900 mb-2">About the Therapist</h4>
                 <p className="text-sm text-gray-600">{match.therapist.bioHebrew || match.therapist.bio}</p>
               </div>
             ) : null}
@@ -797,7 +797,7 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
                   ? 'text-red-500 bg-red-50 hover:bg-red-100'
                   : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
               }`}
-              aria-label={match.isFavorited ? 'הסרה מהמועדפים' : 'הוספה למועדפים'}
+              aria-label={match.isFavorited ? 'Remove from favorites' : 'Add to favorites'}
               aria-pressed={match.isFavorited}
             >
               <HeartIcon className="w-5 h-5" filled={match.isFavorited} />
@@ -809,14 +809,14 @@ function MatchCard({ match, expanded, onToggleExpand, onToggleFavorite, onViewDe
               <Link href={`/messages?therapist=${therapistId}`}>
                 <Button variant="outline" size="sm" className="gap-2">
                   <MessageIcon className="w-4 h-4" />
-                  הודעה
+                  Message
                 </Button>
               </Link>
             )}
             {hasValidTherapist && (
               <Button variant="calm" size="sm" asChild>
                 <Link href={therapistLink}>
-                  פרופיל מלא
+                  Full Profile
                 </Link>
               </Button>
             )}

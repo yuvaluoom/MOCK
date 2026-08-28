@@ -39,37 +39,37 @@ const MapPinIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// X-Factor dimension labels in Hebrew
+// X-Factor dimension labels
 const xFactorLabels: Record<string, string> = {
-  openness: 'פתיחות לגישות חדשות',
-  emotionalIntensity: 'עוצמה רגשית',
-  structurePreference: 'העדפת מבנה',
-  relationshipStyle: 'סגנון יחסים',
-  communicationStyle: 'סגנון תקשורת',
-  changeReadiness: 'מוכנות לשינוי',
-  sleepQuality: 'איכות שינה',
-  stressLevel: 'רמת לחץ',
-  emotionalLoad: 'עומס רגשי',
+  openness: 'Openness to new approaches',
+  emotionalIntensity: 'Emotional intensity',
+  structurePreference: 'Structure preference',
+  relationshipStyle: 'Relationship style',
+  communicationStyle: 'Communication style',
+  changeReadiness: 'Readiness for change',
+  sleepQuality: 'Sleep quality',
+  stressLevel: 'Stress level',
+  emotionalLoad: 'Emotional load',
 };
 
-// Health fund labels in Hebrew
+// Health fund labels
 const healthFundLabels: Record<string, string> = {
-  MACCABI: 'מכבי',
-  CLALIT: 'כללית',
-  MEUHEDET: 'מאוחדת',
-  LEUMIT: 'לאומית',
-  PRIVATE: 'פרטי',
+  MACCABI: 'Maccabi',
+  CLALIT: 'Clalit',
+  MEUHEDET: 'Meuhedet',
+  LEUMIT: 'Leumit',
+  PRIVATE: 'Private',
 };
 
-// Day labels in Hebrew
+// Day labels
 const dayLabels: Record<string, string> = {
-  SUNDAY: 'ראשון',
-  MONDAY: 'שני',
-  TUESDAY: 'שלישי',
-  WEDNESDAY: 'רביעי',
-  THURSDAY: 'חמישי',
-  FRIDAY: 'שישי',
-  SATURDAY: 'שבת',
+  SUNDAY: 'Sunday',
+  MONDAY: 'Monday',
+  TUESDAY: 'Tuesday',
+  WEDNESDAY: 'Wednesday',
+  THURSDAY: 'Thursday',
+  FRIDAY: 'Friday',
+  SATURDAY: 'Saturday',
 };
 
 interface PatientProfileModalProps {
@@ -116,7 +116,6 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
       role="dialog"
       aria-modal="true"
       aria-labelledby="patient-profile-title"
-      dir="rtl"
     >
       {/* Backdrop */}
       <div
@@ -131,13 +130,13 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
         <div className="sticky top-0 bg-gradient-to-r from-calm-600 to-trust-600 text-white px-6 py-4 z-10">
           <div className="flex items-center justify-between">
             <h2 id="patient-profile-title" className="text-xl font-bold">
-              פרופיל מטופל/ת
+              Patient Profile
             </h2>
             <button
               type="button"
               onClick={onClose}
               className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-              aria-label="סגור"
+              aria-label="Close"
             >
               <XIcon className="w-5 h-5" />
             </button>
@@ -152,7 +151,7 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
             </div>
           ) : error ? (
             <div className="text-center py-12 text-red-600">
-              <p>שגיאה בטעינת פרטי המטופל</p>
+              <p>Error loading patient details</p>
             </div>
           ) : patient ? (
             <div className="space-y-6">
@@ -187,7 +186,7 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
                   <div className="text-left">
                     <div className="bg-white rounded-lg p-3 shadow-sm">
                       <div className="text-2xl font-bold text-calm-600">{patient.sessionHistory.total}</div>
-                      <div className="text-xs text-gray-500">סה״כ פגישות</div>
+                      <div className="text-xs text-gray-500">Total sessions</div>
                     </div>
                   </div>
                 </div>
@@ -197,30 +196,30 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
               <section>
                 <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
                   <span className="w-1.5 h-5 bg-calm-500 rounded-full" />
-                  העדפות טיפול
+                  Treatment Preferences
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <div className="bg-white border rounded-lg p-3">
-                    <div className="text-xs text-gray-500 mb-1">קופת חולים</div>
+                    <div className="text-xs text-gray-500 mb-1">Health fund</div>
                     <div className="font-medium text-gray-900">
                       {healthFundLabels[patient.preferences.healthFund] || patient.preferences.healthFund}
                     </div>
                   </div>
                   <div className="bg-white border rounded-lg p-3">
-                    <div className="text-xs text-gray-500 mb-1">העדפת פורמט</div>
+                    <div className="text-xs text-gray-500 mb-1">הup toפת Format</div>
                     <div className="font-medium text-gray-900">
-                      {patient.preferences.preferredOnline ? 'מקוון' : 'פרונטלי'}
+                      {patient.preferences.preferredOnline ? 'Online' : 'In-Person'}
                     </div>
                   </div>
                   <div className="bg-white border rounded-lg p-3">
-                    <div className="text-xs text-gray-500 mb-1">העדפת מגדר</div>
+                    <div className="text-xs text-gray-500 mb-1">הup toפת מגדר</div>
                     <div className="font-medium text-gray-900">
-                      {patient.preferences.preferredGender === 'female' ? 'נקבה' :
-                       patient.preferences.preferredGender === 'male' ? 'זכר' : 'אין העדפה'}
+                      {patient.preferences.preferredGender === 'female' ? 'Female' :
+                       patient.preferences.preferredGender === 'male' ? 'Male' : 'אין הup toפה'}
                     </div>
                   </div>
                   <div className="bg-white border rounded-lg p-3 col-span-2 md:col-span-3">
-                    <div className="text-xs text-gray-500 mb-1">ימים מועדפים</div>
+                    <div className="text-xs text-gray-500 mb-1">ימs edup toפs</div>
                     <div className="flex flex-wrap gap-2">
                       {patient.preferences.preferredDays.map((day) => (
                         <span key={day} className="px-2 py-1 bg-calm-100 text-calm-700 text-sm rounded">
@@ -240,7 +239,7 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
                 </h4>
                 <div className="bg-gradient-to-br from-trust-50 to-calm-50 rounded-xl p-4">
                   <p className="text-sm text-gray-600 mb-4">
-                    נתונים אלה מבוססים על שאלון ההתאמה ומשמשים לחישוב איכות ההתאמה הטיפולית.
+                    נתונs אלה מבוססs על שאלון הMatch ומשמשs לחישוב Quality הMatch הTherapyית.
                   </p>
                   <div className="space-y-3">
                     {Object.entries(patient.xFactorProfile)
@@ -272,7 +271,7 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
                       })}
                   </div>
                   <p className="text-xs text-gray-500 mt-3 text-left">
-                    עודכן: {new Date(patient.xFactorProfile.calculatedAt).toLocaleDateString('he-IL')}
+                    עודYes: {new Date(patient.xFactorProfile.calculatedAt).toLocaleDateString('he-IL')}
                   </p>
                 </div>
               </section>
@@ -282,11 +281,11 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
                 <section>
                   <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
                     <span className="w-1.5 h-5 bg-green-500 rounded-full" />
-                    נתוני התאמה
+                    נתוני Match
                   </h4>
                   <div className="bg-green-50 border border-green-200 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-gray-700 font-medium">ציון התאמה כולל</span>
+                      <span className="text-gray-700 font-medium">Match Score כולל</span>
                       <span className="text-3xl font-bold text-green-600">{patient.matchData.overallScore}%</span>
                     </div>
                     <p className="text-sm text-gray-600 bg-white rounded-lg p-3">
@@ -311,24 +310,24 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
               <section>
                 <h4 className="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
                   <span className="w-1.5 h-5 bg-amber-500 rounded-full" />
-                  היסטוריית פגישות
+                  היסטוריית Sessions
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   <div className="bg-white border rounded-lg p-4 text-center">
                     <div className="text-2xl font-bold text-gray-900">{patient.sessionHistory.total}</div>
-                    <div className="text-xs text-gray-500">סה״כ</div>
+                    <div className="text-xs text-gray-500">Total״כ</div>
                   </div>
                   <div className="bg-white border rounded-lg p-4 text-center">
                     <div className="text-2xl font-bold text-green-600">{patient.sessionHistory.completed}</div>
-                    <div className="text-xs text-gray-500">הושלמו</div>
+                    <div className="text-xs text-gray-500">הושלed</div>
                   </div>
                   <div className="bg-white border rounded-lg p-4 text-center">
                     <div className="text-2xl font-bold text-blue-600">{patient.sessionHistory.upcoming}</div>
-                    <div className="text-xs text-gray-500">עתידיות</div>
+                    <div className="text-xs text-gray-500">עתידיs</div>
                   </div>
                   <div className="bg-white border rounded-lg p-4 text-center">
                     <div className="text-2xl font-bold text-amber-600">{patient.sessionHistory.pending}</div>
-                    <div className="text-xs text-gray-500">ממתינות</div>
+                    <div className="text-xs text-gray-500">ממתינs</div>
                   </div>
                 </div>
               </section>
@@ -341,7 +340,7 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
                     ? 'bg-green-100 text-green-700'
                     : 'bg-amber-100 text-amber-700'
                 )}>
-                  {patient.questionnaireCompleted ? '✓ שאלון הושלם' : '⏳ שאלון לא הושלם'}
+                  {patient.questionnaireCompleted ? '✓ שאלון Completed' : '⏳ שאלון No Completed'}
                 </div>
                 <div className={cn(
                   'px-3 py-1.5 rounded-full text-sm font-medium',
@@ -349,13 +348,13 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
                     ? 'bg-green-100 text-green-700'
                     : 'bg-amber-100 text-amber-700'
                 )}>
-                  {patient.onboardingCompleted ? '✓ הרשמה הושלמה' : '⏳ הרשמה לא הושלמה'}
+                  {patient.onboardingCompleted ? '✓ הרשמה הושלמה' : '⏳ הרשמה No הושלמה'}
                 </div>
               </section>
             </div>
           ) : (
             <div className="text-center py-12 text-gray-500">
-              לא נמצאו פרטים
+              No Foundor Details
             </div>
           )}
         </div>
@@ -377,7 +376,7 @@ export function PatientProfileModal({ patientId, isOpen, onClose }: PatientProfi
               onClose();
             }}
           >
-            שלח הודעה
+            Send Message
           </button>
         </div>
       </div>

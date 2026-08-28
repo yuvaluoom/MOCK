@@ -32,24 +32,24 @@ export default function MessageModerationPage() {
   // there are no flagged messages since messaging is simulated.
 
   const filterLabels: Record<string, string> = {
-    pending: 'ממתינים',
-    reviewed: 'נבדקו',
-    all: 'הכל',
+    pending: 'Pending',
+    reviewed: 'Reviewed',
+    all: 'All',
   };
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">ניהול הודעות</h1>
+          <h1 className="text-2xl font-bold text-white">Management Messages</h1>
           <p className="text-slate-400 mt-1">
-            בדיקת הודעות מדווחות ומסומנות
+            Review Messages Reported ומסומנs
           </p>
         </div>
         <div className="flex items-center gap-2">
           <span className="px-3 py-1.5 text-sm bg-green-500/20 text-green-400 rounded-lg">
-            0 ממתינים לבדיקה
+            0 Pending review
           </span>
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function MessageModerationPage() {
             </div>
             <input
               type="text"
-              placeholder="חיפוש בהודעות..."
+              placeholder="Search בMessages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -92,40 +92,40 @@ export default function MessageModerationPage() {
         <div className="flex justify-center mb-4 text-green-400">
           <ShieldIcon />
         </div>
-        <p className="text-white font-medium text-lg">אין הודעות מסומנות לבדיקה</p>
+        <p className="text-white font-medium text-lg">אין Messages מסומנs לבדיקה</p>
         <p className="text-slate-400 text-sm mt-2">
-          כל ההודעות בפלטפורמה תקינות. הודעות שיסומנו על ידי מערכת הסינון האוטומטית או דיווחי משתמשים יופיעו כאן.
+          All theMessages בפלטפורמה תקינs. Messages שיסומנו על ידי מערכת הFilter הorטומטית or דיווחי Users יופיעו כאן.
         </p>
       </div>
 
       {/* Moderation Guidelines */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-        <h3 className="text-sm font-medium text-white mb-4">הנחיות ניהול</h3>
+        <h3 className="text-sm font-medium text-white mb-4">הנחיs Management</h3>
         <div className="grid md:grid-cols-3 gap-6 text-sm">
           <div>
-            <h4 className="text-amber-400 font-medium mb-2">טריגרים לסימון אוטומטי</h4>
+            <h4 className="text-amber-400 font-medium mb-2">טריגרs לסיedן orטומטי</h4>
             <ul className="text-slate-400 space-y-1">
-              <li>• מילות מפתח של מצב חירום / משבר</li>
-              <li>• תוכן לא הולם</li>
-              <li>• שיתוף פרטי קשר חיצוניים</li>
-              <li>• דיווחי משתמשים</li>
+              <li>• מילs מפתח של מצב חירום / משבר</li>
+              <li>• תוYes No הולם</li>
+              <li>• שיתוף Private קשר חיצוניs</li>
+              <li>• דיווחי Users</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-green-400 font-medium mb-2">אישור הודעה אם</h4>
+            <h4 className="text-green-400 font-medium mb-2">Confirm Message אם</h4>
             <ul className="text-slate-400 space-y-1">
-              <li>• התראת שווא ממילת מפתח</li>
-              <li>• הקשר קליני מתאים</li>
-              <li>• אין הפרת מדיניות</li>
+              <li>• Alertאת שווא ממילת מפתח</li>
+              <li>• הקשר קליני מתאs</li>
+              <li>• אין הפרת מדיניs</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-red-400 font-medium mb-2">הסרת הודעה אם</h4>
+            <h4 className="text-red-400 font-medium mb-2">הסרת Message אם</h4>
             <ul className="text-slate-400 space-y-1">
-              <li>• הפרה ברורה של מדיניות</li>
-              <li>• הטרדה או התעללות</li>
-              <li>• ספאם או שידול</li>
-              <li>• מידע מסוכן שגוי</li>
+              <li>• הפרה ברורה של מדיניs</li>
+              <li>• הטרדה or התעללs</li>
+              <li>• ספאם or שידול</li>
+              <li>• מידע מסוYes שגוי</li>
             </ul>
           </div>
         </div>

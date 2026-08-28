@@ -169,26 +169,26 @@ function generatePdfHtml(
     });
 
   const sessionTypeLabels: Record<string, string> = {
-    IN_PERSON: 'פגישה פרונטלית',
-    REMOTE_VIDEO: 'שיחת וידאו',
-    REMOTE_PHONE: 'שיחת טלפון',
-    HOME_VISIT: 'ביקור בית',
+    IN_PERSON: 'In-Person Session',
+    REMOTE_VIDEO: 'Call וידor',
+    REMOTE_PHONE: 'Call Phone',
+    HOME_VISIT: 'Home visit',
   };
 
   const riskLevelLabels: Record<string, string> = {
-    NONE: 'ללא סיכון',
-    LOW: 'נמוך',
+    NONE: 'לNo סיכון',
+    LOW: 'Low',
     MODERATE: 'בינוני',
     HIGH: 'גבוה',
-    CRITICAL: 'קריטי',
+    CRITICAL: 'Critical',
   };
 
   return `
 <!DOCTYPE html>
-<html dir="rtl" lang="he">
+<html lang="he">
 <head>
   <meta charset="UTF-8">
-  <title>תיעוד פגישה #${session.sessionNumber}</title>
+  <title>Documentation Session #${session.sessionNumber}</title>
   <style>
     body {
       font-family: 'David Libre', 'Arial Hebrew', Arial, sans-serif;
@@ -254,9 +254,9 @@ function generatePdfHtml(
 </head>
 <body>
   <div class="header">
-    <h1>תיעוד פגישה קלינית</h1>
+    <h1>Documentation Session קלינית</h1>
     <p class="meta">
-      פגישה מספר ${session.sessionNumber} |
+      Session מספר ${session.sessionNumber} |
       ${formatDate(session.sessionDate)} |
       ${sessionTypeLabels[session.sessionType] || session.sessionType}
     </p>
@@ -266,27 +266,27 @@ function generatePdfHtml(
     notes
       ? `
   <div class="section">
-    <h2>נושא מוצג</h2>
-    <p>${meta.options.redactSensitiveInfo ? '[מידע מוסתר]' : notes.presentingIssue || 'לא צוין'}</p>
+    <h2>Subject edצג</h2>
+    <p>${meta.options.redactSensitiveInfo ? '[Hidden information]' : notes.presentingIssue || 'Not specified'}</p>
   </div>
 
   <div class="section">
-    <h2>סיכום קליני</h2>
-    <p>${meta.options.redactSensitiveInfo ? '[מידע מוסתר]' : notes.clinicalSummary || 'לא צוין'}</p>
+    <h2>Clinical Summary</h2>
+    <p>${meta.options.redactSensitiveInfo ? '[Hidden information]' : notes.clinicalSummary || 'Not specified'}</p>
   </div>
 
   <div class="section">
-    <h2>התערבויות</h2>
-    <p>${meta.options.redactSensitiveInfo ? '[מידע מוסתר]' : notes.interventions || 'לא צוין'}</p>
+    <h2>התערבויs</h2>
+    <p>${meta.options.redactSensitiveInfo ? '[Hidden information]' : notes.interventions || 'Not specified'}</p>
   </div>
 
   <div class="section">
-    <h2>תגובת המטופל</h2>
-    <p>${meta.options.redactSensitiveInfo ? '[מידע מוסתר]' : notes.patientResponse || 'לא צוין'}</p>
+    <h2>Response ofPatient</h2>
+    <p>${meta.options.redactSensitiveInfo ? '[Hidden information]' : notes.patientResponse || 'Not specified'}</p>
   </div>
 
   <div class="section">
-    <h2>הערכת סיכון</h2>
+    <h2>Assessment סיכון</h2>
     <p class="${notes.riskLevel === 'HIGH' || notes.riskLevel === 'CRITICAL' ? 'risk-high' : notes.riskLevel === 'MODERATE' ? 'risk-moderate' : ''}">
       ${riskLevelLabels[notes.riskLevel] || notes.riskLevel}
     </p>
@@ -294,25 +294,25 @@ function generatePdfHtml(
 
   ${notes.icdCodes && notes.icdCodes.length > 0 ? `
   <div class="section">
-    <h2>קודי אבחנה</h2>
+    <h2>Code אבחנה</h2>
     <p><span class="field-label">ICD-10:</span> ${notes.icdCodes.join(', ')}</p>
     ${notes.dsmCodes && notes.dsmCodes.length > 0 ? `<p><span class="field-label">DSM-5:</span> ${notes.dsmCodes.join(', ')}</p>` : ''}
   </div>
   ` : ''}
   `
-      : '<p>אין הערות קליניות לפגישה זו.</p>'
+      : '<p>אין Clinical notes לSession This.</p>'
   }
 
   ${
     meta.options.includePatientSummary && patientSummary
       ? `
   <div class="section">
-    <h2>סיכום למטופל</h2>
-    <p>${patientSummary.summaryHebrew || 'לא צוין'}</p>
+    <h2>Summary forPatient</h2>
+    <p>${patientSummary.summaryHebrew || 'Not specified'}</p>
     ${
       patientSummary.keyTakeaways && patientSummary.keyTakeaways.length > 0
         ? `
-    <h3>נקודות מפתח</h3>
+    <h3>נקודs מפתח</h3>
     <ul>
       ${patientSummary.keyTakeaways.map((t) => `<li>${t}</li>`).join('')}
     </ul>
@@ -328,16 +328,16 @@ function generatePdfHtml(
     <p>
       <strong>מטרת הייצוא:</strong> ${meta.purpose}<br>
       <strong>יוצא על ידי:</strong> ${meta.exportedBy}<br>
-      <strong>תאריך ייצוא:</strong> ${formatDate(new Date())}
+      <strong>Date ייצוא:</strong> ${formatDate(new Date())}
     </p>
     <p>
-      מסמך זה הינו חסוי ומיועד אך ורק לגורמים המורשים.
-      אין להעביר, להעתיק או לשתף ללא אישור מתאים.
+      מסמך זה הינו חסוי ומיוup to אך ורק לגורמs הedרשs.
+      אין להעביר, להעתיק or לשתף לNo Confirm מתאs.
     </p>
   </div>
 
   <div class="watermark">
-    MatchMind - מערכת תיעוד קליני
+    MatchMind - מערכת Documentation קליני
   </div>
 </body>
 </html>
@@ -413,7 +413,7 @@ function mapSessionTypeToFhir(type: string): string {
 // =============================================================================
 
 function redactText(text: string | undefined): string {
-  if (!text) return '[לא צוין]';
+  if (!text) return '[Not specified]';
   // Replace content with asterisks, keeping structure visible
   return text.replace(/\S/g, '*');
 }
@@ -428,15 +428,15 @@ export function validateExportRequest(request: ExportRequest): {
   const errors: string[] = [];
 
   if (!request.sessionRecordId) {
-    errors.push('מזהה פגישה נדרש');
+    errors.push('מזהה Session Required');
   }
 
   if (!request.format) {
-    errors.push('פורמט ייצוא נדרש');
+    errors.push('Format ייצוא Required');
   }
 
   if (!request.purpose || request.purpose.length < 5) {
-    errors.push('מטרת הייצוא נדרשת (לפחות 5 תווים)');
+    errors.push('מטרת הייצוא Requiredת (at least 5 characters)');
   }
 
   return {

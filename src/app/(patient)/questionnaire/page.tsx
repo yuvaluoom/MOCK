@@ -20,8 +20,8 @@ const SCALE_LEGEND = {
 
 // Hebrew labels for Yes/No
 const YES_NO_LABELS = {
-  yes: 'כן',
-  no: 'לא',
+  yes: 'Yes',
+  no: 'No',
 };
 
 export default function QuestionnairePage() {
@@ -76,7 +76,7 @@ export default function QuestionnairePage() {
     const errors: Record<string, string> = {};
     for (const q of currentQuestions) {
       if (q.isRequired && answers[q.id] === undefined) {
-        errors[q.id] = 'שדה חובה';
+        errors[q.id] = 'Required field';
       }
     }
     setValidationErrors(errors);
@@ -96,7 +96,7 @@ export default function QuestionnairePage() {
     const errors: Record<string, string> = {};
     for (const q of allQuestions) {
       if (q.isRequired && answers[q.id] === undefined) {
-        errors[q.id] = 'שדה חובה';
+        errors[q.id] = 'Required field';
       }
     }
 
@@ -132,13 +132,13 @@ export default function QuestionnairePage() {
 
   if (submitted) {
     return (
-      <div className="h-[calc(100vh-8rem)] flex items-center justify-center" dir="rtl">
+      <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-green-600"><path d="M20 6 9 17l-5-5" /></svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">השאלון הושלם!</h2>
-          <p className="text-gray-600 text-sm">מחשב את ההתאמות שלך...</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">Questionnaire Complete!</h2>
+          <p className="text-gray-600 text-sm">Calculating your matches...</p>
         </div>
       </div>
     );
@@ -146,28 +146,28 @@ export default function QuestionnairePage() {
 
   if (sections.length === 0) {
     return (
-      <div className="h-[calc(100vh-8rem)] flex items-center justify-center" dir="rtl">
+      <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">אין שאלון זמין</h2>
-          <p className="text-gray-600">נסה שוב מאוחר יותר.</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">No Questionnaire Available</h2>
+          <p className="text-gray-600">Please try again later.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex flex-col" dir="rtl">
+    <div className="h-[calc(100vh-8rem)] flex flex-col">
       {/* Fixed Header */}
       <div className="flex-shrink-0 pb-3">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h1 className="text-lg font-bold text-gray-900">שאלון X-Factor</h1>
-            <p className="text-xs text-gray-500">התאמה מבוססת מדע למטפלים</p>
+            <h1 className="text-lg font-bold text-gray-900">X-Factor Questionnaire</h1>
+            <p className="text-xs text-gray-500">Science-based therapist matching</p>
           </div>
           <div className="flex items-center gap-3">
             <div className="text-left">
-              <p className="text-xs font-medium text-gray-900">{progress}% הושלם</p>
-              <p className="text-xs text-gray-500">{answeredCount}/{totalQuestions} נענו</p>
+              <p className="text-xs font-medium text-gray-900">{progress}% complete</p>
+              <p className="text-xs text-gray-500">{answeredCount}/{totalQuestions} answered</p>
             </div>
             <div className="w-12 h-12 relative">
               <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
@@ -253,8 +253,8 @@ export default function QuestionnairePage() {
 
                   {/* Question Text with Hebrew support */}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-800 leading-snug" dir="auto">
-                      {q.questionTextHe || q.questionText}
+                    <p className="text-sm text-gray-800 leading-snug">
+                      {q.questionText}
                       {q.isRequired && <span className="text-red-500 mr-1">*</span>}
                     </p>
                     {hasError && (
@@ -294,8 +294,8 @@ export default function QuestionnairePage() {
                       </>
                     )}
 
-                    {/* MULTIPLE_CHOICE Type - Radio-style buttons */}
-                    {questionType === 'MULTIPLE_CHOICE' && q.options && (
+                    {/* MULTIPLE_CHOICE / MULTI_SELECT Type - Radio/checkbox-style buttons */}
+                    {(questionType === 'MULTIPLE_CHOICE' || questionType === 'MULTI_SELECT') && q.options && (
                       <div className="flex flex-wrap gap-1">
                         {/* Handle both array format (choices) and object format */}
                         {(q.options.choices || Object.entries(q.options).filter(([k]) => k !== 'choices')).map((item: any) => {
@@ -355,21 +355,21 @@ export default function QuestionnairePage() {
 
         {/* Scale Legend - Fixed at Bottom (only show for SCALE questions) */}
         {currentQuestions.some((q: { questionType?: string }) => q.questionType === 'SCALE' || !q.questionType) && (
-          <div className="flex-shrink-0 px-4 py-2 bg-gray-50 border-t" dir="rtl">
+          <div className="flex-shrink-0 px-4 py-2 bg-gray-50 border-t">
             <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
               <span className="flex items-center gap-1">
                 <span className="w-4 h-4 rounded-full bg-white border border-gray-300 text-[10px] flex items-center justify-center">1</span>
-                כלל לא
+                Not at all
               </span>
               <span className="text-gray-300">—</span>
               <span className="flex items-center gap-1">
                 <span className="w-4 h-4 rounded-full bg-white border border-gray-300 text-[10px] flex items-center justify-center">3</span>
-                במידה בינונית
+                Moderately
               </span>
               <span className="text-gray-300">—</span>
               <span className="flex items-center gap-1">
                 <span className="w-4 h-4 rounded-full bg-white border border-gray-300 text-[10px] flex items-center justify-center">5</span>
-                מאוד
+                Very much
               </span>
             </div>
           </div>
@@ -388,13 +388,13 @@ export default function QuestionnairePage() {
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          הקודם
+          Previous
         </Button>
 
         <div className="text-xs text-gray-500">
-          חלק {currentSection + 1} מתוך {sections.length}
+          Section {currentSection + 1} of {sections.length}
           <span className="mx-2">•</span>
-          <span className="text-red-500">* שדות חובה</span>
+          <span className="text-red-500">* Required fields</span>
         </div>
 
         {isLast ? (
@@ -405,7 +405,7 @@ export default function QuestionnairePage() {
             loading={submitMutation.isPending}
             className="gap-1"
           >
-            שלח והמשך
+            Submit & Continue
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -417,7 +417,7 @@ export default function QuestionnairePage() {
             onClick={handleNextSection}
             className="gap-1"
           >
-            הבא
+            Next
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

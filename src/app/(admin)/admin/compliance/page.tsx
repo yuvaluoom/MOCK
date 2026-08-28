@@ -85,44 +85,44 @@ const verificationStatusConfig: Record<string, {
   action: string;
 }> = {
   VERIFIED: {
-    label: 'מאומת',
+    label: 'מorמת',
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
     Icon: ShieldCheckIcon,
-    tooltip: 'כל המסמכים אושרו ובתוקף. המטפל עומד בכל דרישות הציות.',
-    action: 'לא נדרשת פעולה',
+    tooltip: 'All documents orשרו ובתוקף. הTherapist עומד בכל דרישs הציs.',
+    action: 'No Requiredת פעולה',
   },
   PENDING_VERIFICATION: {
-    label: 'ממתין לאימות',
+    label: 'Pending Noימs',
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/20',
     Icon: ClockIcon,
-    tooltip: 'מסמכים הועלו אך טרם נבדקו על ידי צוות המנהלים.',
-    action: 'יש לבדוק את המסמכים הממתינים',
+    tooltip: 'מסמכs הועלו אך טרם Reviewed על ידי Team הManagers.',
+    action: 'יש לReview את המסמכs הPending',
   },
   PARTIALLY_VERIFIED: {
-    label: 'מאומת חלקית',
+    label: 'מorמת חלקית',
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
     Icon: ShieldAlertIcon,
-    tooltip: 'חלק מהמסמכים אושרו, אך ישנם מסמכים שטרם אושרו או חסרים.',
-    action: 'יש להשלים את תהליך האימות',
+    tooltip: 'חלק מהמסמכs orשרו, אך ישנם מסמכs שטרם orשרו or Missing.',
+    action: 'יש להשלs את תהליך האימs',
   },
   MISSING_DOCUMENTATION: {
-    label: 'חסרים מסמכים',
+    label: 'Missing documents',
     color: 'text-red-400',
     bgColor: 'bg-red-500/20',
     Icon: ShieldXIcon,
-    tooltip: 'לא הועלו מסמכים כלל. על המטפל להעלות את כל המסמכים הנדרשים.',
-    action: 'יש לבקש העלאת מסמכים',
+    tooltip: 'No הועלו מסמכs כלל. על הTherapist להעלs את All documents הRequireds.',
+    action: 'יש לבקש העNoת מסמכs',
   },
   EXPIRED_CREDENTIALS: {
     label: 'תוקף פג',
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/20',
     Icon: FileWarningIcon,
-    tooltip: 'למטפל מסמכים שפג תוקפם. יש לחדש את האישורים הרלוונטיים.',
-    action: 'יש לבקש חידוש מסמכים',
+    tooltip: 'לTherapist מסמכs שפג תוקפם. יש לחדש את הConfirms הרלוונטיs.',
+    action: 'יש לבקש חידוש מסמכs',
   },
 };
 
@@ -147,12 +147,12 @@ export default function AdminCompliancePage() {
   const overallStats = data?.overallStats;
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-bold text-white">ציות ואימות מסמכים</h1>
-          <p className="text-slate-400 mt-1">מעקב אחר סטטוס אימות וציות של מטפלים בפלטפורמה</p>
+          <h1 className="text-2xl font-bold text-white">Compliance & Verification מסמכs</h1>
+          <p className="text-slate-400 mt-1">מעקב Other Status אימs וציs של Therapists בפלטפורמה</p>
         </div>
       </div>
 
@@ -162,9 +162,9 @@ export default function AdminCompliancePage() {
           <div className="flex items-start gap-3">
             <AlertTriangleIcon className="w-6 h-6 text-red-400 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-red-400">התראות קריטיות</h3>
+              <h3 className="font-semibold text-red-400">Alertorת Criticals</h3>
               <p className="text-sm text-red-300 mt-1">
-                ל-{overallStats?.expiredCreds} מטפלים יש מסמכים שפג תוקפם. יש לטפל בכך בהקדם.
+                ל-{overallStats?.expiredCreds} Therapists יש מסמכs שפג תוקפם. יש לטפל בכך בהקדם.
               </p>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function AdminCompliancePage() {
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">מאומתים</p>
+              <p className="text-sm text-slate-400">מorמתs</p>
               <p className="text-2xl font-bold text-green-400">
                 {isLoading ? '...' : overallStats?.verified ?? 0}
               </p>
@@ -190,7 +190,7 @@ export default function AdminCompliancePage() {
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">ממתינים לאימות</p>
+              <p className="text-sm text-slate-400">Pending Noימs</p>
               <p className="text-2xl font-bold text-amber-400">
                 {isLoading ? '...' : overallStats?.pendingVerification ?? 0}
               </p>
@@ -204,7 +204,7 @@ export default function AdminCompliancePage() {
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">מאומתים חלקית</p>
+              <p className="text-sm text-slate-400">מorמתs חלקית</p>
               <p className="text-2xl font-bold text-blue-400">
                 {isLoading ? '...' : overallStats?.partiallyVerified ?? 0}
               </p>
@@ -218,7 +218,7 @@ export default function AdminCompliancePage() {
         <div className={`bg-slate-800 border rounded-xl p-4 ${(overallStats?.missingDocs ?? 0) > 0 ? 'border-red-500/50' : 'border-slate-700'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">חסרים מסמכים</p>
+              <p className="text-sm text-slate-400">Missing documents</p>
               <p className="text-2xl font-bold text-red-400">
                 {isLoading ? '...' : overallStats?.missingDocs ?? 0}
               </p>
@@ -250,14 +250,14 @@ export default function AdminCompliancePage() {
           <div className="flex items-center gap-3">
             <ShieldCheckIcon className={`w-8 h-8 ${(overallStats?.overallComplianceRate ?? 0) >= 75 ? 'text-green-400' : 'text-red-400'}`} />
             <div>
-              <p className="text-sm text-slate-400">שיעור ציות כללי</p>
+              <p className="text-sm text-slate-400">שיעור ציs כללי</p>
               <p className="text-3xl font-bold text-white">
                 {isLoading ? '...' : `${overallStats?.overallComplianceRate ?? 0}%`}
               </p>
             </div>
           </div>
           <div className="text-sm text-slate-400">
-            {overallStats?.totalTherapists ?? 0} מטפלים פעילים
+            {overallStats?.totalTherapists ?? 0} Active Therapists
           </div>
         </div>
         <div className="w-full bg-slate-700 rounded-full h-3 mt-3">
@@ -274,7 +274,7 @@ export default function AdminCompliancePage() {
       {/* Therapist Compliance Table */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
         <div className="p-4 border-b border-slate-700 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <h3 className="text-lg font-semibold text-white">סטטוס אימות לפי מטפל</h3>
+          <h3 className="text-lg font-semibold text-white">Status אימs לפי Therapist</h3>
           <div className="flex gap-3">
             <div className="relative">
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
@@ -282,11 +282,10 @@ export default function AdminCompliancePage() {
               </div>
               <input
                 type="text"
-                placeholder="חיפוש מטפל..."
+                placeholder="Search Therapist..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pr-9 pl-4 py-2 w-48 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
-                dir="rtl"
               />
             </div>
             <select
@@ -294,32 +293,32 @@ export default function AdminCompliancePage() {
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
               className="px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
             >
-              <option value="status">מיון: סטטוס</option>
-              <option value="docs">מיון: אחוז ציות</option>
-              <option value="name">מיון: שם</option>
+              <option value="status">מיון: Status</option>
+              <option value="docs">מיון: אחוז ציs</option>
+              <option value="name">מיון: Name</option>
             </select>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="p-12 text-center text-slate-400">טוען נתוני ציות...</div>
+          <div className="p-12 text-center text-slate-400">Loading נתוני ציs...</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-700">
-                  <th className="text-right py-3 px-6 text-sm font-medium text-slate-400">מטפל</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">סטטוס אימות</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">מסמכים</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">ציות</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">פגישות</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">פעולה נדרשת</th>
+                  <th className="text-right py-3 px-6 text-sm font-medium text-slate-400">Therapist</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Status אימs</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">מסמכs</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">ציs</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Sessions</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">פעולה Requiredת</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTherapists.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-slate-400">אין מטפלים תואמים</td>
+                    <td colSpan={6} className="text-center py-12 text-slate-400">אין Therapists תואמs</td>
                   </tr>
                 ) : (
                   filteredTherapists.map((therapist) => {
@@ -368,7 +367,7 @@ export default function AdminCompliancePage() {
                               {therapist.approvedDocuments}/{therapist.documentCount}
                             </span>
                             <span className="text-xs text-slate-400">
-                              {therapist.pendingDocuments > 0 && `${therapist.pendingDocuments} ממתינים`}
+                              {therapist.pendingDocuments > 0 && `${therapist.pendingDocuments} Pending`}
                               {therapist.expiredDocuments > 0 && ` · ${therapist.expiredDocuments} פגי תוקף`}
                             </span>
                           </div>
@@ -405,11 +404,11 @@ export default function AdminCompliancePage() {
         <div className="flex items-start gap-3">
           <FileTextIcon className="w-5 h-5 text-blue-400 mt-0.5" />
           <div className="text-sm text-blue-300">
-            <p className="font-medium">הערה חשובה לציות</p>
+            <p className="font-medium">Important note לציs</p>
             <p className="mt-1">
-              דף זה מציג מידע סטטיסטי על ציות למסמכים בלבד.
-              <strong> תוכן קליני אינו נגיש למנהלים</strong> בהתאם לדרישות פרטיות רפואית.
-              כל הנתונים נשאבים ישירות ממסד הנתונים של הפלטפורמה בזמן אמת.
+              דף זה Displays מידע סטטיסטי על ציs למסמכs בלבד.
+              <strong> תוYes קליני אינו נגיש לManagers</strong> בהתאם לדרישs Privates רפואית.
+              All theנתונs נשאבs ישירs ממסד הנתונs של הפלטפורמה בReal-Time.
             </p>
           </div>
         </div>

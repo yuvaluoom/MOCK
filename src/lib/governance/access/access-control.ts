@@ -130,7 +130,7 @@ export class AccessControl implements IAccessControl {
 
       return {
         allowed: false,
-        reason: 'אין לך הרשאה לבצע פעולה זו',
+        reason: 'You do not have permission to perform this action',
         requiredPermission: permission,
         missingPermissions: [permission],
       };
@@ -138,7 +138,7 @@ export class AccessControl implements IAccessControl {
 
     return {
       allowed: true,
-      reason: 'הרשאה אושרה',
+      reason: 'Permission orSarah',
     };
   }
 
@@ -195,7 +195,7 @@ export class AccessControl implements IAccessControl {
     // Audit log
     const auditLogger = getAuditLogger();
     await auditLogger.log(
-      createAuditEntry('admin.permission_change', `הרשאה ${permission} ניתנה למשתמש`, {
+      createAuditEntry('admin.permission_change', `Permission ${permission} ניתנה לUser`, {
         actorId: grantedBy,
         targetId: userId,
         targetType: 'user',
@@ -224,7 +224,7 @@ export class AccessControl implements IAccessControl {
     // Audit log
     const auditLogger = getAuditLogger();
     await auditLogger.log(
-      createAuditEntry('admin.permission_change', `הרשאה ${permission} הוסרה ממשתמש`, {
+      createAuditEntry('admin.permission_change', `Permission ${permission} הוסרה מUser`, {
         actorId: revokedBy,
         targetId: userId,
         targetType: 'user',
@@ -276,30 +276,30 @@ export class AccessControl implements IAccessControl {
  */
 export function getPermissionLabel(permission: Permission): string {
   const labels: Record<Permission, string> = {
-    'user.view': 'צפייה במשתמשים',
-    'user.edit': 'עריכת משתמשים',
-    'user.delete': 'מחיקת משתמשים',
-    'user.suspend': 'השעיית משתמשים',
-    'therapist.view': 'צפייה במטפלים',
-    'therapist.edit': 'עריכת מטפלים',
-    'therapist.approve': 'אישור מטפלים',
-    'therapist.documents': 'ניהול מסמכי מטפלים',
-    'patient.view': 'צפייה במטופלים',
-    'patient.edit': 'עריכת מטופלים',
-    'patient.questionnaire': 'ניהול שאלונים',
-    'patient.matches': 'צפייה בהתאמות',
-    'session.view': 'צפייה בפגישות',
-    'session.manage': 'ניהול פגישות',
-    'session.approve': 'אישור פגישות',
-    'data.import': 'ייבוא נתונים',
-    'data.export': 'ייצוא נתונים',
-    'data.delete': 'מחיקת נתונים',
-    'config.view': 'צפייה בהגדרות',
-    'config.edit': 'עריכת הגדרות',
-    'config.matching': 'הגדרות התאמה',
-    'audit.view': 'צפייה ביומני בקרה',
+    'user.view': 'View בUsers',
+    'user.edit': 'Edit Users',
+    'user.delete': 'מחיקת Users',
+    'user.suspend': 'השעיית Users',
+    'therapist.view': 'View בTherapists',
+    'therapist.edit': 'Edit Therapists',
+    'therapist.approve': 'Therapist Approval',
+    'therapist.documents': 'Management מסמכי Therapists',
+    'patient.view': 'View בPatients',
+    'patient.edit': 'Edit Patients',
+    'patient.questionnaire': 'Management שאלונs',
+    'patient.matches': 'View בהתאמs',
+    'session.view': 'View בSessions',
+    'session.manage': 'Session Management',
+    'session.approve': 'Confirm Sessions',
+    'data.import': 'Data Import',
+    'data.export': 'ייצוא נתונs',
+    'data.delete': 'מחיקת נתונs',
+    'config.view': 'View בSettings',
+    'config.edit': 'Edit Settings',
+    'config.matching': 'Settings Match',
+    'audit.view': 'View ביומני בקרה',
     'audit.export': 'ייצוא יומני בקרה',
-    'analytics.view': 'צפייה באנליטיקס',
+    'analytics.view': 'View באנליטיקס',
     'analytics.export': 'ייצוא אנליטיקס',
   };
 
@@ -311,9 +311,9 @@ export function getPermissionLabel(permission: Permission): string {
  */
 export function getRoleLabel(role: Role): string {
   const labels: Record<Role, string> = {
-    admin: 'מנהל מערכת',
-    therapist: 'מטפל',
-    patient: 'מטופל',
+    admin: 'System Administrator',
+    therapist: 'Therapist',
+    patient: 'Patient',
     support: 'תמיכה',
     analyst: 'אנליסט',
   };
@@ -334,12 +334,12 @@ export function getRolePermissions(role: Role): Permission[] {
  */
 export function groupPermissionsByCategory(): Record<string, Permission[]> {
   return {
-    'משתמשים': ['user.view', 'user.edit', 'user.delete', 'user.suspend'],
-    'מטפלים': ['therapist.view', 'therapist.edit', 'therapist.approve', 'therapist.documents'],
-    'מטופלים': ['patient.view', 'patient.edit', 'patient.questionnaire', 'patient.matches'],
-    'פגישות': ['session.view', 'session.manage', 'session.approve'],
-    'נתונים': ['data.import', 'data.export', 'data.delete'],
-    'הגדרות': ['config.view', 'config.edit', 'config.matching'],
+    'Users': ['user.view', 'user.edit', 'user.delete', 'user.suspend'],
+    'Therapists': ['therapist.view', 'therapist.edit', 'therapist.approve', 'therapist.documents'],
+    'Patients': ['patient.view', 'patient.edit', 'patient.questionnaire', 'patient.matches'],
+    'Sessions': ['session.view', 'session.manage', 'session.approve'],
+    'נתונs': ['data.import', 'data.export', 'data.delete'],
+    'Settings': ['config.view', 'config.edit', 'config.matching'],
     'בקרה': ['audit.view', 'audit.export'],
     'אנליטיקס': ['analytics.view', 'analytics.export'],
   };

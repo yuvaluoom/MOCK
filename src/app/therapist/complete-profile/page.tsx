@@ -265,7 +265,7 @@ export default function CompleteProfilePage() {
               <CardContent className="space-y-4">
                 {/* HMO/Kupot Holim Section */}
                 <div className="space-y-2">
-                  <Label className="text-sm font-medium">קופות חולים - Health Funds (HMO)</Label>
+                  <Label className="text-sm font-medium">Health Funds - Health Funds (HMO)</Label>
                   <p className="text-xs text-gray-500">Select which health funds you accept. Patients with these funds pay 0 directly.</p>
                   <div className="grid grid-cols-2 gap-1.5">
                     {healthFunds.filter(f => f.value !== 'PRIVATE').map((fund) => (
