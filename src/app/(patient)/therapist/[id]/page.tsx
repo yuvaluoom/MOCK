@@ -396,10 +396,10 @@ export default function TherapistDetailsPage() {
           <div className="bg-gradient-to-bl from-calm-500 via-calm-600 to-trust-600 h-36 relative">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
           </div>
-          <CardContent className="relative pt-0 -mt-20 pb-6">
-            <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-end">
+          <CardContent className="relative pt-0 -mt-16 pb-6">
+            <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-end">
               {/* Avatar */}
-              <div className="bg-white p-1.5 rounded-2xl shadow-xl ring-4 ring-white">
+              <div className="bg-white p-1.5 rounded-2xl shadow-xl ring-4 ring-white flex-shrink-0">
                 <AvatarDisplay
                   src={therapist.photoUrl}
                   name={fullName}
@@ -408,14 +408,14 @@ export default function TherapistDetailsPage() {
               </div>
 
               {/* Name & Info */}
-              <div className="flex-1 text-center sm:text-right pb-2">
+              <div className="flex-1 text-center sm:text-left pb-1 min-w-0">
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1 flex-wrap">
                   <h2 className="text-2xl font-bold text-gray-900">{fullName}</h2>
                   <span className={`text-xs px-2.5 py-1 rounded-full border font-medium ${matchQuality.color}`}>
                     {matchQuality.text}
                   </span>
                 </div>
-                <p className="text-gray-600">{therapist.title || 'Clinical Psychologist'}</p>
+                <p className="text-gray-500 text-sm">{therapist.title || 'Clinical Psychologist'}</p>
                 <div className="flex items-center justify-center sm:justify-start gap-4 mt-2 text-sm text-gray-500">
                   {therapist.city && (
                     <span className="flex items-center gap-1">
@@ -428,9 +428,13 @@ export default function TherapistDetailsPage() {
               </div>
 
               {/* Match Score Circle */}
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 hidden sm:block">
                 <MatchScoreRing score={matchScore} size="lg" />
               </div>
+            </div>
+            {/* Mobile Match Score */}
+            <div className="sm:hidden flex justify-center mt-4">
+              <MatchScoreRing score={matchScore} size="md" />
             </div>
           </CardContent>
         </Card>
