@@ -38,6 +38,7 @@ export default function PatientRegisterPage() {
 
   const registerMutation = trpc.auth.registerPatient.useMutation({
     onSuccess: () => {
+      document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'PATIENT' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
       router.push('/questionnaire');
     },
     onError: (error) => {

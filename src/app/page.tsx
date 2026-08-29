@@ -208,8 +208,8 @@ export default function LandingPage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              {/* Primary Patient Login - Large central button as per spec */}
-              <Link href="/login/patient">
+              {/* Primary Patient Registration - Large central button */}
+              <Link href="/register/patient">
                 <Button variant="calm" size="xl" className="w-full sm:w-auto min-w-[200px] shadow-lg shadow-calm-500/25">
                   Get Started
                 </Button>

@@ -25,7 +25,7 @@ export default function PatientLoginPage() {
     try {
       // Set mock session cookie so tRPC context recognizes patient role
       document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'PATIENT' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
-      router.push('/questionnaire');
+      router.push('/dashboard');
     } catch (err) {
       setError('An error occurred, please try again');
     } finally {

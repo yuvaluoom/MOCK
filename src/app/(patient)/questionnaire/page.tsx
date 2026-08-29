@@ -32,7 +32,7 @@ export default function QuestionnairePage() {
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   // Fetch active questionnaire from backend
-  const { data: questionnaireData, isLoading } = trpc.questionnaire.getActiveQuestionnaire.useQuery();
+  const { data: questionnaireData, isLoading, error: queryError, refetch } = trpc.questionnaire.getActiveQuestionnaire.useQuery();
 
   // Mutations
   const saveAnswerMutation = trpc.questionnaire.saveAnswer.useMutation();
@@ -144,12 +144,19 @@ export default function QuestionnairePage() {
     );
   }
 
-  if (sections.length === 0) {
+  if (queryError || sections.length === 0) {
     return (
       <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">No Questionnaire Available</h2>
-          <p className="text-gray-600">Please try again later.</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
+            {queryError ? 'Failed to Load Questionnaire' : 'No Questionnaire Available'}
+          </h2>
+          <p className="text-gray-600 mb-4">
+            {queryError ? 'There was an error loading the questionnaire.' : 'Please try again later.'}
+          </p>
+          <Button variant="calm" onClick={() => refetch()}>
+            Try Again
+          </Button>
         </div>
       </div>
     );

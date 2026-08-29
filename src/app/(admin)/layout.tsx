@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
@@ -196,12 +196,26 @@ export default function AdminLayout({
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const cookie = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith('next-auth.session-token='));
+    if (!cookie) {
+      router.replace('/login/admin');
+    }
+  }, [router]);
 
   const { data: stats } = trpc.admin.getDashboardStats.useQuery();
 
   const handleLogout = () => {
+    document.cookie = 'next-auth.session-token=; path=/; max-age=0';
     router.push('/login/admin');
   };
+
+  if (!mounted) return null;
 
   const pageTitle = getPageTitle(pathname);
 

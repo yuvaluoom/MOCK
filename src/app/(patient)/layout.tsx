@@ -107,10 +107,16 @@ export default function PatientLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch + auth check
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const cookie = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith('next-auth.session-token='));
+    if (!cookie) {
+      router.replace('/login/patient');
+    }
+  }, [router]);
 
   // Get user profile from tRPC
   const { data: profile } = trpc.patient.getProfile.useQuery();
@@ -120,6 +126,7 @@ export default function PatientLayout({
   const questionnaireCompleted = profile?.questionnaireCompleted ?? false;
 
   const handleLogout = () => {
+    document.cookie = 'next-auth.session-token=; path=/; max-age=0';
     router.push('/login/patient');
   };
 
