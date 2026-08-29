@@ -236,34 +236,39 @@ export default function QuestionnairePage() {
               const hasError = validationErrors[q.id];
               const questionType = q.questionType || 'SCALE';
 
+              const isChoiceType = questionType === 'MULTIPLE_CHOICE' || questionType === 'MULTI_SELECT';
+
               return (
                 <div
                   key={q.id}
-                  className={`flex items-center gap-4 p-3 rounded-lg transition-colors ${
+                  className={`p-3 rounded-lg transition-colors ${
                     hasError ? 'bg-red-50 border border-red-200' :
                     selectedValue !== undefined ? 'bg-calm-50/50' : 'bg-gray-50 hover:bg-gray-100'
-                  }`}
+                  } ${isChoiceType ? 'space-y-3' : 'flex items-center gap-4'}`}
                 >
-                  {/* Question Number */}
-                  <div className={`flex-shrink-0 w-6 h-6 rounded-full text-xs font-medium flex items-center justify-center ${
-                    hasError ? 'bg-red-200 text-red-700' : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {idx + 1}
-                  </div>
+                  {/* Question row: number + text (+ scale options if not choice type) */}
+                  <div className={isChoiceType ? 'flex items-start gap-3' : 'contents'}>
+                    {/* Question Number */}
+                    <div className={`flex-shrink-0 w-6 h-6 rounded-full text-xs font-medium flex items-center justify-center ${
+                      hasError ? 'bg-red-200 text-red-700' : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {idx + 1}
+                    </div>
 
-                  {/* Question Text with Hebrew support */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-gray-800 leading-snug">
-                      {q.questionText}
-                      {q.isRequired && <span className="text-red-500 mr-1">*</span>}
-                    </p>
-                    {hasError && (
-                      <p className="text-xs text-red-600 mt-1">{hasError}</p>
-                    )}
+                    {/* Question Text */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-800 leading-snug">
+                        {q.questionText}
+                        {q.isRequired && <span className="text-red-500 ml-1">*</span>}
+                      </p>
+                      {hasError && (
+                        <p className="text-xs text-red-600 mt-1">{hasError}</p>
+                      )}
+                    </div>
                   </div>
 
                   {/* Answer Options based on question type */}
-                  <div className="flex-shrink-0 flex items-center gap-1">
+                  <div className={isChoiceType ? 'flex flex-wrap gap-2 pl-9' : 'flex-shrink-0 flex items-center gap-1'}>
                     {/* YES_NO Type - Binary Yes/No buttons */}
                     {questionType === 'YES_NO' && (
                       <>
