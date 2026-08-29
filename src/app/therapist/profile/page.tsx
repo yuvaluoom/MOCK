@@ -105,10 +105,11 @@ export default function TherapistProfilePage() {
           <CardContent className="space-y-6">
             {/* Bio */}
             <div>
-              <Label>About</Label>
+              <Label htmlFor="bio">About</Label>
               {isEditing ? (
                 <textarea
-                  className="w-full mt-2 p-3 border rounded-lg text-sm"
+                  id="bio"
+                  className="w-full mt-2 p-3 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-calm-500"
                   rows={3}
                   defaultValue={profile.bio}
                 />
@@ -188,7 +189,7 @@ export default function TherapistProfilePage() {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-blue-700">Session duration:</span>
                       {isEditing ? (
-                        <select className="h-8 px-2 border rounded text-sm">
+                        <select aria-label="Session duration" className="h-8 px-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-calm-500">
                           <option value="45">45 Minutes</option>
                           <option value="50" selected>50 Minutes</option>
                           <option value="60">60 Minutes</option>

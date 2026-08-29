@@ -364,7 +364,7 @@ export default function TherapistApplicationsPage() {
                             {therapist.photoThumbnailUrl ? (
                               <img
                                 src={therapist.photoThumbnailUrl}
-                                alt=""
+                                alt={`${therapist.firstName} ${therapist.lastName}`}
                                 className="w-full h-full object-cover rounded-lg"
                               />
                             ) : (
