@@ -22,11 +22,16 @@ export default function PatientLoginPage() {
     setIsLoading(true);
     setError('');
 
+    if (!email.trim() || !password.trim()) {
+      setError('Please fill in all fields');
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      // Set mock session cookie so tRPC context recognizes patient role
       document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'PATIENT' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
       router.push('/dashboard');
-    } catch (err) {
+    } catch {
       setError('An error occurred, please try again');
     } finally {
       setIsLoading(false);
@@ -35,12 +40,10 @@ export default function PatientLoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-hero flex flex-col">
-      {/* Header */}
       <header className="container mx-auto px-4 py-4">
         <Logo size="lg" href="/" />
       </header>
 
-      {/* Main Content */}
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <Card className="w-full max-w-md shadow-xl">
           <CardHeader className="text-center">
@@ -50,20 +53,11 @@ export default function PatientLoginPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* Social Auth Buttons */}
-            <SocialAuthButtons
-              callbackUrl="/dashboard"
-              mode="signin"
-              language="en"
-            />
+            <SocialAuthButtons role="PATIENT" redirectTo="/dashboard" />
 
-            {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div
-                  className="p-3 rounded-md bg-destructive/10 text-destructive text-sm"
-                  role="alert"
-                >
+                <div className="p-3 rounded-md bg-destructive/10 text-destructive text-sm" role="alert">
                   {error}
                 </div>
               )}
@@ -84,10 +78,7 @@ export default function PatientLoginPage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link
-                    href="/forgot-password"
-                    className="text-sm text-primary hover:underline"
-                  >
+                  <Link href="/forgot-password" className="text-sm text-primary hover:underline">
                     Forgot password?
                   </Link>
                 </div>
@@ -102,58 +93,39 @@ export default function PatientLoginPage() {
                 />
               </div>
 
-              <Button
-                type="submit"
-                variant="calm"
-                className="w-full"
-                loading={isLoading}
-              >
+              <Button type="submit" variant="calm" className="w-full" loading={isLoading}>
                 Sign In
               </Button>
             </form>
 
-            {/* Register Link */}
             <p className="mt-6 text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{' '}
-              <Link
-                href="/register/patient"
-                className="text-primary hover:underline font-medium"
-              >
-                Register now
+              <Link href="/register/patient" className="text-primary hover:underline font-medium">
+                Create account
               </Link>
             </p>
 
-            {/* Demo mode notice */}
             <div className="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200">
               <p className="text-xs text-blue-700 text-center">
-                <strong>Demo mode:</strong> Enter any email to sign in
+                <strong>Demo:</strong> Enter any email and password to sign in
               </p>
             </div>
 
-            {/* Admin access for demo */}
             <div className="mt-3 text-center">
-              <Link
-                href="/login/admin"
-                className="text-[11px] text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                Admin Panel →
+              <Link href="/login/admin" className="text-[11px] text-gray-400 hover:text-gray-600 transition-colors">
+                Admin Panel
               </Link>
             </div>
           </CardContent>
         </Card>
       </main>
 
-      {/* Footer */}
       <footer className="container mx-auto px-4 py-4 text-center text-sm text-muted-foreground">
         <p>
           By signing in you agree to the
-          <Link href="/terms" className="underline mx-1">
-            Terms of Service
-          </Link>
+          <Link href="/terms" className="underline mx-1">Terms of Service</Link>
           and
-          <Link href="/privacy" className="underline mx-1">
-            Privacy Policy
-          </Link>
+          <Link href="/privacy" className="underline mx-1">Privacy Policy</Link>
         </p>
       </footer>
     </div>

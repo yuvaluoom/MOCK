@@ -208,15 +208,14 @@ export default function LandingPage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              {/* Primary Patient Registration - Large central button */}
               <Link href="/register/patient">
                 <Button variant="calm" size="xl" className="w-full sm:w-auto min-w-[200px] shadow-lg shadow-calm-500/25">
                   Get Started
                 </Button>
               </Link>
-              <Link href="#how-it-works">
+              <Link href="/login/patient">
                 <Button variant="outline" size="xl" className="w-full sm:w-auto min-w-[200px]">
-                  How It Works
+                  Sign In
                 </Button>
               </Link>
             </div>
@@ -313,7 +312,7 @@ export default function LandingPage() {
 
             {/* Secondary CTA */}
             <div className="text-center mt-12">
-              <Link href="/login/patient">
+              <Link href="/register/patient">
                 <Button variant="calm" size="lg">
                   Start the Questionnaire
                 </Button>

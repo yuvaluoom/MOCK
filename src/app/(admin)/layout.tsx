@@ -198,12 +198,23 @@ export default function AdminLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // Auth guard: require ADMIN role cookie
   useEffect(() => {
     setMounted(true);
-    const cookie = document.cookie
-      .split('; ')
-      .find((c) => c.startsWith('next-auth.session-token='));
-    if (!cookie) {
+    try {
+      const raw = document.cookie
+        .split('; ')
+        .find((c) => c.startsWith('next-auth.session-token='));
+      if (!raw) {
+        router.replace('/login/admin');
+        return;
+      }
+      const decoded = JSON.parse(decodeURIComponent(raw.split('=').slice(1).join('=')));
+      if (decoded.role !== 'ADMIN') {
+        router.replace('/login/admin');
+        return;
+      }
+    } catch {
       router.replace('/login/admin');
     }
   }, [router]);

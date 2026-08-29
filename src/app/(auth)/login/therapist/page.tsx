@@ -54,11 +54,7 @@ export default function TherapistLoginPage() {
           </CardHeader>
           <CardContent>
             {/* Social Auth Buttons */}
-            <SocialAuthButtons
-              callbackUrl="/therapist/dashboard"
-              mode="signin"
-              language="en"
-            />
+            <SocialAuthButtons role="PATIENT" redirectTo="/therapist/dashboard" />
 
             {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-4">

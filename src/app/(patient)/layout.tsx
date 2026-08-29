@@ -107,13 +107,23 @@ export default function PatientLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch + auth check
+  // Auth guard: require PATIENT role cookie
   useEffect(() => {
     setMounted(true);
-    const cookie = document.cookie
-      .split('; ')
-      .find((c) => c.startsWith('next-auth.session-token='));
-    if (!cookie) {
+    try {
+      const raw = document.cookie
+        .split('; ')
+        .find((c) => c.startsWith('next-auth.session-token='));
+      if (!raw) {
+        router.replace('/login/patient');
+        return;
+      }
+      const decoded = JSON.parse(decodeURIComponent(raw.split('=').slice(1).join('=')));
+      if (decoded.role === 'ADMIN') {
+        router.replace('/admin');
+        return;
+      }
+    } catch {
       router.replace('/login/patient');
     }
   }, [router]);
@@ -135,13 +145,13 @@ export default function PatientLayout({
     setSidebarOpen(false);
   }, [pathname]);
 
-  // Redirect to questionnaire if trying to access matches without completing questionnaire
+  // Questionnaire guard: most pages require a completed questionnaire
   useEffect(() => {
-    const protectedPaths = ['/matches', '/sessions'];
-    const isOnProtectedPath = protectedPaths.some(path => pathname.startsWith(path));
+    const openPaths = ['/questionnaire', '/profile'];
+    const isOpen = openPaths.some(p => pathname === p || pathname.startsWith(p + '/'));
 
-    if (isOnProtectedPath && profile && !questionnaireCompleted) {
-      router.push('/questionnaire');
+    if (!isOpen && profile && !questionnaireCompleted) {
+      router.replace('/questionnaire');
     }
   }, [pathname, profile, questionnaireCompleted, router]);
 
