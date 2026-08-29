@@ -433,9 +433,12 @@ export default function LandingPage() {
 
           <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
             <p>&copy; {new Date().getFullYear()} MatchMind. All rights reserved.</p>
-            <p>
-              Built with love in Israel
-            </p>
+            <div className="flex items-center gap-4">
+              <p>Built with love in Israel</p>
+              <Link href="/login/admin" className="text-gray-600 hover:text-gray-400 transition-colors text-xs">
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
       </footer>

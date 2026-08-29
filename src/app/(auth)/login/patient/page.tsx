@@ -129,6 +129,16 @@ export default function PatientLoginPage() {
                 <strong>Demo mode:</strong> Enter any email to sign in
               </p>
             </div>
+
+            {/* Admin access for demo */}
+            <div className="mt-3 text-center">
+              <Link
+                href="/login/admin"
+                className="text-[11px] text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                Admin Panel →
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </main>
