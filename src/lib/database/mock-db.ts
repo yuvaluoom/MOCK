@@ -1637,7 +1637,9 @@ class MockDatabase {
 // SINGLETON EXPORT
 // =============================================================================
 
-export const mockDb = new MockDatabase();
+// Use globalThis to survive Next.js HMR re-evaluations in dev mode
+const globalForMockDb = globalThis as unknown as { __mockDb?: MockDatabase };
+export const mockDb = globalForMockDb.__mockDb ?? (globalForMockDb.__mockDb = new MockDatabase());
 
 // Export for testing
 export { MockDatabase };
