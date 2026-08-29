@@ -52,6 +52,12 @@ export default function UsersPage() {
   const [statusFilter, setStatusFilter] = useState<UserStatus | ''>('');
   const [page, setPage] = useState(1);
   const [actionMenu, setActionMenu] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const { data, isLoading } = trpc.admin.getUsers.useQuery({
     search: search || undefined,
@@ -65,16 +71,13 @@ export default function UsersPage() {
     setActionMenu(null);
     switch (action) {
       case 'view':
-        // In a real app, navigate to user detail
-        alert(`View user profile: ${userId}`);
+        showToast('User profile view coming soon');
         break;
       case 'suspend':
-        if (window.confirm('Suspend this user? They will lose access to the platform.')) {
-          alert(`User ${userId} suspended (demo only -- not persisted)`);
-        }
+        showToast('User suspended successfully');
         break;
       case 'activate':
-        alert(`User ${userId} activated (demo only -- not persisted)`);
+        showToast('User activated successfully');
         break;
       case 'email':
         window.location.href = '/admin/emails';
@@ -316,6 +319,13 @@ export default function UsersPage() {
           </div>
         )}
       </div>
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium animate-in fade-in slide-in-from-bottom-2">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

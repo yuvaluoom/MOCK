@@ -69,6 +69,12 @@ export default function AdminEmailsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAudience, setSelectedAudience] = useState<string>('');
   const [broadcastSubject, setBroadcastSubject] = useState('');
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
   const [broadcastContent, setBroadcastContent] = useState('');
   const [personalUserId, setPersonalUserId] = useState('');
   const [personalUserEmail, setPersonalUserEmail] = useState('');
@@ -96,7 +102,7 @@ export default function AdminEmailsPage() {
       setBroadcastSubject('');
       setBroadcastContent('');
       setSelectedAudience('');
-      alert('Broadcast sent successfully!');
+      showToast('Broadcast sent successfully!');
     },
   });
 
@@ -109,13 +115,13 @@ export default function AdminEmailsPage() {
       setPersonalUserId('');
       setPersonalUserEmail('');
       setPersonalUserName('');
-      alert('Email sent successfully!');
+      showToast('Email sent successfully!');
     },
   });
 
   const handleSendBroadcast = () => {
     if (!selectedAudience || !broadcastSubject || !broadcastContent) {
-      alert('Please fill in all fields');
+      showToast('Please fill in all fields', 'error');
       return;
     }
     sendBroadcastMutation.mutate({
@@ -127,7 +133,7 @@ export default function AdminEmailsPage() {
 
   const handleSendPersonal = () => {
     if (!personalUserId || !personalSubject || !personalContent) {
-      alert('Please fill in all fields');
+      showToast('Please fill in all fields', 'error');
       return;
     }
     sendPersonalMutation.mutate({
@@ -680,6 +686,15 @@ export default function AdminEmailsPage() {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Toast */}
+      {toast && (
+        <div className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-lg shadow-lg text-sm font-medium ${
+          toast.type === 'error' ? 'bg-red-600 text-white' : 'bg-gray-900 text-white'
+        }`}>
+          {toast.message}
         </div>
       )}
     </div>

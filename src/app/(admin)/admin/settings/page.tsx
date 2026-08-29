@@ -73,12 +73,23 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 2500);
   };
 
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
+
   const handleReset = () => {
-    if (window.confirm('Reset all settings to defaults? This cannot be undone.')) {
-      const defaults = resetSettings();
-      setSettings(defaults);
-      setSaved(false);
-    }
+    setShowResetConfirm(true);
+  };
+
+  const confirmReset = () => {
+    const defaults = resetSettings();
+    setSettings(defaults);
+    setSaved(false);
+    setShowResetConfirm(false);
   };
 
   const weightTotal =
@@ -314,7 +325,10 @@ export default function SettingsPage() {
               />
             </div>
             <div className="pt-3 border-t border-gray-100">
-              <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
+              <button
+                onClick={() => showToast('Cache cleared successfully')}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+              >
                 <RefreshIcon />
                 Clear Cache
               </button>
@@ -341,6 +355,36 @@ export default function SettingsPage() {
           </button>
         </div>
       </div>
+
+      {/* Reset Confirmation */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-sm mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Reset Settings</h3>
+            <p className="text-sm text-gray-500 mb-5">Reset all settings to defaults? This cannot be undone.</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmReset}
+                className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

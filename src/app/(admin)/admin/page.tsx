@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { trpc } from '@/lib/trpc/client';
 
@@ -167,6 +167,9 @@ function StatusBadge({ status }: { status: string }) {
 
 // ============ MAIN DASHBOARD ============
 export default function AdminDashboard() {
+  const [rejectModal, setRejectModal] = useState<string | null>(null);
+  const [rejectReason, setRejectReason] = useState('');
+
   const { data: stats, isLoading } = trpc.admin.getDashboardStats.useQuery();
   const { data: pendingTherapists, refetch: refetchTherapists } = trpc.admin.getTherapistApplications.useQuery({
     status: 'AWAITING_APPROVAL',
@@ -178,7 +181,11 @@ export default function AdminDashboard() {
     onSuccess: () => refetchTherapists(),
   });
   const rejectMutation = trpc.admin.rejectTherapist.useMutation({
-    onSuccess: () => refetchTherapists(),
+    onSuccess: () => {
+      refetchTherapists();
+      setRejectModal(null);
+      setRejectReason('');
+    },
   });
 
   if (isLoading) {
@@ -279,12 +286,7 @@ export default function AdminDashboard() {
                         <CheckIcon className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => {
-                          const reason = window.prompt('Rejection reason:');
-                          if (reason) {
-                            rejectMutation.mutate({ therapistId: therapist.id, reason });
-                          }
-                        }}
+                        onClick={() => { setRejectModal(therapist.id); setRejectReason(''); }}
                         disabled={rejectMutation.isPending}
                         className="p-1.5 text-red-500 hover:bg-red-50 rounded-md transition-colors disabled:opacity-50"
                         title="Reject"
@@ -415,6 +417,38 @@ export default function AdminDashboard() {
           ))}
         </div>
       </div>
+
+      {/* Reject Modal */}
+      {rejectModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-md mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Reject Application</h3>
+            <p className="text-sm text-gray-500 mb-4">The therapist will be notified of this decision.</p>
+            <textarea
+              value={rejectReason}
+              onChange={(e) => setRejectReason(e.target.value)}
+              placeholder="Reason for rejection (at least 10 characters)..."
+              rows={4}
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
+            />
+            <div className="flex justify-end gap-3 mt-4">
+              <button
+                onClick={() => { setRejectModal(null); setRejectReason(''); }}
+                className="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => rejectMutation.mutate({ therapistId: rejectModal, reason: rejectReason })}
+                disabled={rejectReason.length < 10 || rejectMutation.isPending}
+                className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
+              >
+                {rejectMutation.isPending ? 'Processing...' : 'Reject'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

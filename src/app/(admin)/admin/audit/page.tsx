@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { trpc } from '@/lib/trpc/client';
 
 const actionConfig: Record<string, { color: string; label: string }> = {
@@ -49,6 +49,7 @@ const ChevronRightIcon = () => (
 export default function AuditLogsPage() {
   const [entityTypeFilter, setEntityTypeFilter] = useState('');
   const [page, setPage] = useState(1);
+  const [changesModal, setChangesModal] = useState<{ previous: unknown; current: unknown } | null>(null);
 
   const limit = 20;
   const { data, isLoading } = trpc.admin.getAuditLogs.useQuery({
@@ -168,9 +169,7 @@ export default function AuditLogsPage() {
                       {log.previousValue && (
                         <button
                           className="text-xs font-medium text-amber-600 hover:text-amber-700"
-                          onClick={() => {
-                            alert(JSON.stringify({ previous: log.previousValue, new: log.newValue }, null, 2));
-                          }}
+                          onClick={() => setChangesModal({ previous: log.previousValue, current: log.newValue })}
                         >
                           View Changes
                         </button>
@@ -223,6 +222,34 @@ export default function AuditLogsPage() {
           for 90 days and can be exported for compliance purposes.
         </p>
       </div>
+
+      {/* Changes Modal */}
+      {changesModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-lg mx-4 shadow-xl max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Change Details</h3>
+              <button onClick={() => setChangesModal(null)} className="p-1 text-gray-400 hover:text-gray-600 rounded">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-sm font-medium text-gray-500 mb-2">Previous Value</h4>
+                <pre className="text-xs bg-red-50 border border-red-200 rounded-lg p-3 overflow-x-auto text-gray-800">
+                  {JSON.stringify(changesModal.previous, null, 2)}
+                </pre>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium text-gray-500 mb-2">New Value</h4>
+                <pre className="text-xs bg-green-50 border border-green-200 rounded-lg p-3 overflow-x-auto text-gray-800">
+                  {JSON.stringify(changesModal.current, null, 2)}
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

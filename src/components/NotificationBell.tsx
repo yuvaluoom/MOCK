@@ -262,7 +262,7 @@ export function NotificationBell() {
           {notifications.length > 0 && (
             <div className="px-4 py-3 border-t bg-gray-50">
               <Link
-                href="/notifications"
+                href="/dashboard"
                 className="block text-center text-sm text-calm-600 hover:text-calm-700 font-medium focus:outline-none focus:underline"
                 onClick={() => setIsOpen(false)}
               >

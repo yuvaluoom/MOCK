@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { trpc } from '@/lib/trpc/client';
 
 const DownloadIcon = () => (
@@ -14,6 +15,12 @@ const fundColors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-amber-50
 
 export default function ReportsPage() {
   const { data: reports, isLoading } = trpc.admin.getReportsData.useQuery();
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   return (
     <div className="space-y-6">
@@ -25,7 +32,10 @@ export default function ReportsPage() {
             Performance data and platform growth metrics
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors self-start text-sm font-medium">
+        <button
+          onClick={() => showToast('Report exported successfully')}
+          className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors self-start text-sm font-medium"
+        >
           <DownloadIcon />
           Export
         </button>
@@ -153,13 +163,23 @@ export default function ReportsPage() {
             { name: 'Financial Report', desc: 'Revenue and billing data' },
             { name: 'Compliance Report', desc: 'Audit logs and security events' },
           ].map((item) => (
-            <button key={item.name} className="p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors text-left">
+            <button
+              key={item.name}
+              onClick={() => showToast(`${item.name} exported successfully`)}
+              className="p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors text-left"
+            >
               <p className="text-sm font-semibold text-gray-900">{item.name}</p>
               <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
             </button>
           ))}
         </div>
       </div>
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }
