@@ -10,12 +10,12 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-calm-50/30 to-white flex items-center justify-center py-20">
       <div className="container mx-auto px-4 max-w-md">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">שBack Password</h1>
-        <p className="text-gray-600 text-center mb-8">הזינו את Address הEmail שלכם ונSend לכם קישור Noיפוס הPassword.</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2 text-center">Reset Password</h1>
+        <p className="text-gray-600 text-center mb-8">Enter your email address and we&#39;ll send you a password reset link.</p>
         {submitted ? (
           <div className="bg-calm-50 rounded-2xl p-8 text-center text-calm-700">
-            <p className="font-medium">הקישור נSend בהצלחה!</p>
-            <p className="text-sm mt-2">בדקו את תיבת הדואר הנכנס שלכם.</p>
+            <p className="font-medium">Reset link sent successfully!</p>
+            <p className="text-sm mt-2">Check your inbox for the reset link.</p>
           </div>
         ) : (
           <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="bg-white rounded-2xl shadow-sm p-8 space-y-4">
@@ -30,7 +30,7 @@ export default function ForgotPasswordPage() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-calm-500 focus:border-transparent"
             />
             <button type="submit" className="w-full py-3 bg-calm-600 hover:bg-calm-700 text-white font-medium rounded-lg transition-colors">
-              Sending קישור איפוס
+              Send Reset Link
             </button>
           </form>
         )}

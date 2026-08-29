@@ -82,7 +82,7 @@ export class Scorer implements IScorer {
         unsatisfied.push({
           constraintType: 'health_fund',
           description: 'Therapist does not accept patient\'s health fund',
-          descriptionHe: 'הTherapist No accepts the health fund של הPatient',
+          descriptionHe: 'Therapist does not accept the patient\'s health fund',
           severity: 'hard',
           impact: 50,
         });
@@ -99,7 +99,7 @@ export class Scorer implements IScorer {
         unsatisfied.push({
           constraintType: 'online_availability',
           description: 'Therapist does not offer online sessions',
-          descriptionHe: 'הTherapist No Offers Online Sessions',
+          descriptionHe: 'Therapist does not offer online sessions',
           severity: 'hard',
           impact: 40,
         });
@@ -116,14 +116,14 @@ export class Scorer implements IScorer {
             constraintType: 'in_person_location',
             satisfactionLevel: Math.max(0, 1 - (distance - maxDistance) / maxDistance),
             description: `Therapist is ${Math.round(distance)}km away (max: ${maxDistance}km)`,
-            descriptionHe: `הTherapist Foundא במרחק ${Math.round(distance)} ק"מ (מקסיedם: ${maxDistance} ק"מ)`,
+            descriptionHe: `Therapist is ${Math.round(distance)} km away (max: ${maxDistance} km)`,
           });
         }
       } else {
         unsatisfied.push({
           constraintType: 'in_person_availability',
           description: 'Therapist does not offer in-person sessions',
-          descriptionHe: 'הTherapist No Offers In-Person Sessions',
+          descriptionHe: 'Therapist does not offer in-person sessions',
           severity: 'hard',
           impact: 40,
         });
@@ -143,7 +143,7 @@ export class Scorer implements IScorer {
           constraintType: 'gender_preference',
           satisfactionLevel: 0.5,
           description: 'Therapist gender does not match preference',
-          descriptionHe: 'מגדר הTherapist No Match להup toפה',
+          descriptionHe: 'Therapist gender does not match preference',
         });
       }
     }
@@ -162,7 +162,7 @@ export class Scorer implements IScorer {
           constraintType: 'language_match',
           satisfactionLevel: 0.3,
           description: 'Preferred language not available',
-          descriptionHe: 'הLanguage הedup toפת No זמינה',
+          descriptionHe: 'Preferred language not available',
         });
       }
     }
@@ -178,7 +178,7 @@ export class Scorer implements IScorer {
           constraintType: 'budget',
           satisfactionLevel: Math.max(0, 1 - overage),
           description: `Session price (₪${therapistPrice}) exceeds budget (₪${constraints.maxPrice})`,
-          descriptionHe: `Price הSession (₪${therapistPrice}) חורג מהתקציב (₪${constraints.maxPrice})`,
+          descriptionHe: `Session price (₪${therapistPrice}) exceeds budget (₪${constraints.maxPrice})`,
         });
       }
     }
@@ -188,7 +188,7 @@ export class Scorer implements IScorer {
       unsatisfied.push({
         constraintType: 'capacity',
         description: 'Therapist is not accepting new patients',
-        descriptionHe: 'הTherapist No מקבל Patients חדשs',
+        descriptionHe: 'Therapist is not accepting new patients',
         severity: 'soft',
         impact: 30,
       });
@@ -250,7 +250,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'structure',
       label: 'Structure Alignment',
-      labelHe: 'התאמת מבנה',
+      labelHe: 'Structure match',
       score: structureScore,
       maxScore: 100,
       contribution: structureScore * 0.2,
@@ -275,7 +275,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'trauma_expertise',
       label: 'Specialized Expertise',
-      labelHe: 'Specialization מיוחדת',
+      labelHe: 'Special expertise',
       score: Math.min(100, traumaScore),
       maxScore: 100,
       contribution: traumaScore * 0.25,
@@ -300,7 +300,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'expertise_match',
       label: 'Expertise Match',
-      labelHe: 'התאמת edמחיs',
+      labelHe: 'Expertise match',
       score: expertiseScore,
       maxScore: 100,
       contribution: expertiseScore * 0.2,
@@ -317,7 +317,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'experience',
       label: 'Experience Level',
-      labelHe: 'רמת Experience',
+      labelHe: 'Experience level',
       score: experienceScore,
       maxScore: 100,
       contribution: experienceScore * 0.15,
@@ -392,7 +392,7 @@ export class Scorer implements IScorer {
       breakdown.push({
         key: 'organization_match',
         label: 'Organization Match',
-        labelHe: 'התאמת ארגון',
+        labelHe: 'Organization match',
         score: 100,
         maxScore: 100,
         contribution: orgBonus,
@@ -430,7 +430,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'schedule_overlap',
       label: 'Schedule Compatibility',
-      labelHe: 'התאמת Schedule',
+      labelHe: 'Schedule match',
       score: scheduleScore,
       maxScore: 100,
       contribution: scheduleScore * 0.4,
@@ -474,7 +474,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'response_speed',
       label: 'Response Time',
-      labelHe: 'זמן תגובה',
+      labelHe: 'Response time',
       score: responseScore,
       maxScore: 100,
       contribution: responseScore * 0.15,
@@ -495,7 +495,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'flexibility',
       label: 'Format Flexibility',
-      labelHe: 'גמישs Format',
+      labelHe: 'Format flexibility',
       score: Math.min(100, flexibilityScore),
       maxScore: 100,
       contribution: flexibilityScore * 0.15,
@@ -569,7 +569,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'location_match',
       label: 'Location Match',
-      labelHe: 'התאמת Location',
+      labelHe: 'Location match',
       score: locationScore,
       maxScore: 100,
       contribution: locationScore,
@@ -614,7 +614,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'approach',
       label: 'Therapy Approach',
-      labelHe: 'גישה Therapyית',
+      labelHe: 'Therapeutic approach',
       score: Math.round(approachScore),
       maxScore: 100,
       contribution: approachScore * (prefs.approachImportance),
@@ -637,7 +637,7 @@ export class Scorer implements IScorer {
     breakdown.push({
       key: 'experience',
       label: 'Experience Level',
-      labelHe: 'רמת Experience',
+      labelHe: 'Experience level',
       score: experienceScore,
       maxScore: 100,
       contribution: experienceScore * prefs.experienceImportance,

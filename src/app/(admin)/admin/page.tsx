@@ -633,8 +633,8 @@ export default function AdminDashboard() {
                 <div>
                   <h4 className="text-sm font-medium text-amber-400">Important note</h4>
                   <p className="text-sm text-slate-300 mt-1">
-                    כל פעולת Confirm or Rejection מup toכנת את מסד הנתונs בorפן מיידי, שולחת Email לTherapist,
-                    ומתup toת בLog הביקורת. Therapists Approveds edפיעs מיידית במערכת ההתאמs.
+                    Every approval or rejection action updates the database immediately, sends an email to the therapist,
+                    and is recorded in the audit log. Approved therapists appear instantly in the matching system.
                   </p>
                 </div>
               </div>
@@ -649,7 +649,7 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-white">{stats?.sessions.total ?? 0}</p>
-                <p className="text-xs text-slate-400">Total״כ Sessions</p>
+                <p className="text-xs text-slate-400">Total Sessions</p>
               </div>
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-amber-400">{stats?.sessions.pending ?? 0}</p>
@@ -657,26 +657,26 @@ export default function AdminDashboard() {
               </div>
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-green-400">{stats?.sessions.approved ?? 0}</p>
-                <p className="text-xs text-slate-400">Approveds</p>
+                <p className="text-xs text-slate-400">Approved</p>
               </div>
               <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 text-center">
                 <p className="text-2xl font-bold text-blue-400">{stats?.sessions.completed ?? 0}</p>
-                <p className="text-xs text-slate-400">הושלed</p>
+                <p className="text-xs text-slate-400">Completed</p>
               </div>
             </div>
 
             {/* Link to full sessions page */}
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-8 text-center">
               <CalendarIcon className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-white mb-2">Session Monitoring מNo</h3>
+              <h3 className="text-lg font-medium text-white mb-2">Full Session Monitoring</h3>
               <p className="text-sm text-slate-400 mb-4">
-                צפה בAll theSessions, סנן לפי Therapist or Patient, ועקוב Other Statuss
+                View all sessions, filter by therapist or patient, and track statuses
               </p>
               <Link
                 href="/admin/sessions"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
               >
-                לדף הSessions המNo
+                Go to Full Sessions Page
                 <ChevronRightIcon className="w-4 h-4 rotate-180" />
               </Link>
             </div>
@@ -722,10 +722,10 @@ export default function AdminDashboard() {
                           <span className="text-xs text-slate-400">{log.entityType}</span>
                         </div>
                         <p className="text-sm text-slate-400 mt-1">
-                          Completed ע״י {log.userName}
+                          Performed by {log.userName}
                         </p>
                         <p className="text-xs text-slate-500 mt-1">
-                          {new Date(log.createdAt).toLocaleString('he-IL', {
+                          {new Date(log.createdAt).toLocaleString('en-US', {
                             dateStyle: 'medium',
                             timeStyle: 'short'
                           })}
@@ -735,7 +735,7 @@ export default function AdminDashboard() {
                         {log.emailTriggered && (
                           <span className="flex items-center gap-1 px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded">
                             <MailIcon className="w-3 h-3" />
-                            Email נSend
+                            Email Sent
                           </span>
                         )}
                       </div>
@@ -764,15 +764,15 @@ export default function AdminDashboard() {
                     </h3>
                     <p className="text-sm text-slate-400 mt-0.5">
                       {isConnected
-                        ? 'כל פעולה בפלטפורמה edפיעה כאן מיידית לNo ריענון'
-                        : 'מנTotal להתחבר מחדש...'}
+                        ? 'Every platform action appears here instantly without refreshing'
+                        : 'Attempting to reconnect...'}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-white">{eventCount}</p>
-                    <p className="text-xs text-slate-400">אירועs</p>
+                    <p className="text-xs text-slate-400">Events</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-white">{eventLog.filter(e => e.entityType !== 'SYSTEM').length}</p>
@@ -796,7 +796,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="px-4 py-3 bg-amber-500/20 text-amber-400 rounded-lg border border-amber-500/30 text-center">
                   <p className="font-bold">Admin Dashboard</p>
-                  <p className="text-xs text-slate-400 mt-1">שיקוף מיידי</p>
+                  <p className="text-xs text-slate-400 mt-1">Instant Mirroring</p>
                 </div>
               </div>
             </div>
@@ -806,19 +806,19 @@ export default function AdminDashboard() {
               <div className="p-4 border-b border-slate-700 flex items-center justify-between">
                 <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                   <LiveIcon className="w-5 h-5 text-amber-400" />
-                  זרם אירועs חי / Live Event Stream
+                  Live Event Stream
                 </h3>
                 <span className="text-xs text-slate-500">
-                  {eventLog.length} אירועs בזיכרון
+                  {eventLog.length} events in memory
                 </span>
               </div>
 
               {eventLog.length === 0 ? (
                 <div className="p-12 text-center">
                   <LiveIcon className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                  <h4 className="text-lg font-medium text-slate-400 mb-2">Pending Noירועs...</h4>
+                  <h4 className="text-lg font-medium text-slate-400 mb-2">Waiting for events...</h4>
                   <p className="text-sm text-slate-500 max-w-md mx-auto">
-                    בצע פעולה בפלטפורמה (רישום Therapist, Confirm, Sending Message) והיא תופיע כאן מיידית
+                    Perform an action on the platform (register a therapist, approve, send a message) and it will appear here instantly
                   </p>
                 </div>
               ) : (
@@ -871,7 +871,7 @@ export default function AdminDashboard() {
                             {/* Timestamp */}
                             <div className="text-left flex-shrink-0">
                               <p className="text-xs text-slate-500 font-mono">
-                                {new Date(event.timestamp).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                                {new Date(event.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                               </p>
                               <p className="text-[10px] text-slate-600 font-mono mt-0.5">
                                 {event.id}
@@ -915,7 +915,7 @@ function MatchInsightsTab() {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-400">מחשב Match Insights...</p>
+          <p className="text-slate-400">Computing match insights...</p>
         </div>
       </div>
     );
@@ -939,7 +939,7 @@ function MatchInsightsTab() {
   const qualityLabel = (quality: string) => {
     switch (quality) {
       case 'excellent': return 'Excellent';
-      case 'great': return 'Good מorד';
+      case 'great': return 'Very Good';
       case 'good': return 'Good';
       case 'moderate': return 'Moderate';
       case 'low': return 'Low';
@@ -965,7 +965,7 @@ function MatchInsightsTab() {
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Total&quot;כ Thisגs</p>
+          <p className="text-sm text-slate-400">Total Pairs</p>
           <p className="text-3xl font-bold text-white mt-2">{summary.totalPairs}</p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
@@ -990,7 +990,7 @@ function MatchInsightsTab() {
             <div className="bg-green-500 transition-all" style={{ flex: summary.qualityDistribution.excellent }} title={`Excellent: ${summary.qualityDistribution.excellent}`} />
           )}
           {summary.qualityDistribution.great > 0 && (
-            <div className="bg-blue-500 transition-all" style={{ flex: summary.qualityDistribution.great }} title={`Good מorד: ${summary.qualityDistribution.great}`} />
+            <div className="bg-blue-500 transition-all" style={{ flex: summary.qualityDistribution.great }} title={`Very Good: ${summary.qualityDistribution.great}`} />
           )}
           {summary.qualityDistribution.good > 0 && (
             <div className="bg-cyan-500 transition-all" style={{ flex: summary.qualityDistribution.good }} title={`Good: ${summary.qualityDistribution.good}`} />
@@ -1004,7 +1004,7 @@ function MatchInsightsTab() {
         </div>
         <div className="flex justify-between mt-2 text-xs text-slate-500">
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 inline-block" /> Excellent ({summary.qualityDistribution.excellent})</span>
-          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500 inline-block" /> Good מorד ({summary.qualityDistribution.great})</span>
+          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500 inline-block" /> Very Good ({summary.qualityDistribution.great})</span>
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-cyan-500 inline-block" /> Good ({summary.qualityDistribution.good})</span>
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500 inline-block" /> Moderate ({summary.qualityDistribution.moderate})</span>
           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500 inline-block" /> Low ({summary.qualityDistribution.low})</span>
@@ -1072,7 +1072,7 @@ function MatchInsightsTab() {
                         <div className="bg-slate-900/50 rounded-lg p-4 space-y-4">
                           {/* Factor Breakdown Bars */}
                           <div>
-                            <h4 className="text-sm font-semibold text-slate-300 mb-3">פירוט גורמs</h4>
+                            <h4 className="text-sm font-semibold text-slate-300 mb-3">Factor Breakdown</h4>
                             <div className="grid grid-cols-2 gap-3">
                               {r.factors.map((f) => (
                                 <div key={f.key} className="space-y-1">
@@ -1098,7 +1098,7 @@ function MatchInsightsTab() {
                           {/* Explanation Items */}
                           {r.explanationItems.length > 0 && (
                             <div>
-                              <h4 className="text-sm font-semibold text-slate-300 mb-3">Private Match</h4>
+                              <h4 className="text-sm font-semibold text-slate-300 mb-3">Match Details</h4>
                               <div className="grid grid-cols-2 gap-2">
                                 {r.explanationItems.map((item, i) => (
                                   <div key={i} className="flex items-center gap-2 text-sm">
@@ -1119,7 +1119,7 @@ function MatchInsightsTab() {
                           <div className="flex gap-6">
                             {r.topReasons.length > 0 && (
                               <div className="flex-1">
-                                <h4 className="text-sm font-semibold text-green-400 mb-2">סיבs עיקריs</h4>
+                                <h4 className="text-sm font-semibold text-green-400 mb-2">Top Reasons</h4>
                                 <ul className="space-y-1">
                                   {r.topReasons.map((reason, i) => (
                                     <li key={i} className="text-xs text-slate-400 flex items-start gap-1.5">
@@ -1132,7 +1132,7 @@ function MatchInsightsTab() {
                             )}
                             {r.warnings.length > 0 && (
                               <div className="flex-1">
-                                <h4 className="text-sm font-semibold text-amber-400 mb-2">אזהרs</h4>
+                                <h4 className="text-sm font-semibold text-amber-400 mb-2">Warnings</h4>
                                 <ul className="space-y-1">
                                   {r.warnings.map((warning, i) => (
                                     <li key={i} className="text-xs text-slate-400 flex items-start gap-1.5">

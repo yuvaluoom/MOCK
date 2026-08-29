@@ -455,15 +455,15 @@ export function getSupportedFields(entityType: ImportEntityType): {
         { field: 'gender', label: 'Gender', required: false, type: 'enum' },
         { field: 'birthDate', label: 'Date Birth', required: false, type: 'date' },
         { field: 'healthFund', label: 'Health Fund', required: false, type: 'enum' },
-        { field: 'preferredCity', label: 'City edup toפת', required: false, type: 'string' },
+        { field: 'preferredCity', label: 'Preferred City', required: false, type: 'string' },
         { field: 'preferredLanguages', label: 'Languages edup toOptions', required: false, type: 'array' },
-        { field: 'preferredGender', label: 'הup toפת Gender Therapist', required: false, type: 'enum' },
+        { field: 'preferredGender', label: 'Preferred Therapist Gender', required: false, type: 'enum' },
       ];
     case 'organization':
       return [
         { field: 'name', label: 'Name', required: true, type: 'string' },
         { field: 'type', label: 'Type', required: true, type: 'enum' },
-        { field: 'code', label: 'קוד', required: false, type: 'string' },
+        { field: 'code', label: 'Code', required: false, type: 'string' },
         { field: 'contactEmail', label: 'Email', required: false, type: 'email' },
         { field: 'contactPhone', label: 'Phone', required: false, type: 'phone' },
         { field: 'address', label: 'Address', required: false, type: 'string' },

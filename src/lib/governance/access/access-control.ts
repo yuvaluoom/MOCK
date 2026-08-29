@@ -195,7 +195,7 @@ export class AccessControl implements IAccessControl {
     // Audit log
     const auditLogger = getAuditLogger();
     await auditLogger.log(
-      createAuditEntry('admin.permission_change', `Permission ${permission} ניתנה לUser`, {
+      createAuditEntry('admin.permission_change', `Permission ${permission} granted to user`, {
         actorId: grantedBy,
         targetId: userId,
         targetType: 'user',
@@ -224,7 +224,7 @@ export class AccessControl implements IAccessControl {
     // Audit log
     const auditLogger = getAuditLogger();
     await auditLogger.log(
-      createAuditEntry('admin.permission_change', `Permission ${permission} הוסרה מUser`, {
+      createAuditEntry('admin.permission_change', `Permission ${permission} removed from user`, {
         actorId: revokedBy,
         targetId: userId,
         targetType: 'user',
@@ -276,31 +276,31 @@ export class AccessControl implements IAccessControl {
  */
 export function getPermissionLabel(permission: Permission): string {
   const labels: Record<Permission, string> = {
-    'user.view': 'View בUsers',
+    'user.view': 'View Users',
     'user.edit': 'Edit Users',
-    'user.delete': 'מחיקת Users',
-    'user.suspend': 'השעיית Users',
-    'therapist.view': 'View בTherapists',
+    'user.delete': 'Delete Users',
+    'user.suspend': 'Suspend Users',
+    'therapist.view': 'View Therapists',
     'therapist.edit': 'Edit Therapists',
     'therapist.approve': 'Therapist Approval',
-    'therapist.documents': 'Management מסמכי Therapists',
-    'patient.view': 'View בPatients',
+    'therapist.documents': 'Manage Therapist Documents',
+    'patient.view': 'View Patients',
     'patient.edit': 'Edit Patients',
-    'patient.questionnaire': 'Management שאלונs',
-    'patient.matches': 'View בהתאמs',
-    'session.view': 'View בSessions',
+    'patient.questionnaire': 'Manage Questionnaires',
+    'patient.matches': 'View Matches',
+    'session.view': 'View Sessions',
     'session.manage': 'Session Management',
     'session.approve': 'Confirm Sessions',
     'data.import': 'Data Import',
-    'data.export': 'ייצוא נתונs',
-    'data.delete': 'מחיקת נתונs',
-    'config.view': 'View בSettings',
+    'data.export': 'Export Data',
+    'data.delete': 'Delete Data',
+    'config.view': 'View Settings',
     'config.edit': 'Edit Settings',
     'config.matching': 'Settings Match',
-    'audit.view': 'View ביומני בקרה',
-    'audit.export': 'ייצוא יומני בקרה',
-    'analytics.view': 'View באנליטיקס',
-    'analytics.export': 'ייצוא אנליטיקס',
+    'audit.view': 'View Audit Logs',
+    'audit.export': 'Export Audit Logs',
+    'analytics.view': 'View Analytics',
+    'analytics.export': 'Export Analytics',
   };
 
   return labels[permission] || permission;
@@ -314,8 +314,8 @@ export function getRoleLabel(role: Role): string {
     admin: 'System Administrator',
     therapist: 'Therapist',
     patient: 'Patient',
-    support: 'תמיכה',
-    analyst: 'אנליסט',
+    support: 'Support',
+    analyst: 'Analyst',
   };
 
   return labels[role] || role;
@@ -338,10 +338,10 @@ export function groupPermissionsByCategory(): Record<string, Permission[]> {
     'Therapists': ['therapist.view', 'therapist.edit', 'therapist.approve', 'therapist.documents'],
     'Patients': ['patient.view', 'patient.edit', 'patient.questionnaire', 'patient.matches'],
     'Sessions': ['session.view', 'session.manage', 'session.approve'],
-    'נתונs': ['data.import', 'data.export', 'data.delete'],
+    'data': ['data.import', 'data.export', 'data.delete'],
     'Settings': ['config.view', 'config.edit', 'config.matching'],
-    'בקרה': ['audit.view', 'audit.export'],
-    'אנליטיקס': ['analytics.view', 'analytics.export'],
+    'audit': ['audit.view', 'audit.export'],
+    'analytics': ['analytics.view', 'analytics.export'],
   };
 }
 

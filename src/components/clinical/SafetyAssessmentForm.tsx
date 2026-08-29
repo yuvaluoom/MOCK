@@ -124,7 +124,7 @@ export function SafetyAssessmentForm({
             <div>
               <h3 className="font-semibold text-red-800">Identified Risk indicators</h3>
               <p className="text-sm text-red-700 mt-1">
-                Please complete את כל Private Assessment הבטיחs, כולל תוכנית בטיחs ואנשי קשר לחירום.
+                Please complete the full safety assessment, including a safety plan and emergency contacts.
               </p>
             </div>
           </div>
@@ -152,8 +152,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">אידיאציה orבדנית</span>
-                  <p className="text-xs text-gray-500">מחשבs על סיום החיs</p>
+                  <span className="font-medium text-gray-900">Suicidal Ideation</span>
+                  <p className="text-xs text-gray-500">Thoughts of ending one's life</p>
                 </div>
               </label>
             </div>
@@ -169,8 +169,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">תוכנית orבדנית</span>
-                  <p className="text-xs text-gray-500">תוכנית ספציפית לביצוע</p>
+                  <span className="font-medium text-gray-900">Suicidal Plan</span>
+                  <p className="text-xs text-gray-500">A specific plan for carrying it out</p>
                 </div>
               </label>
             </div>
@@ -186,8 +186,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">כוונה orבדנית</span>
-                  <p className="text-xs text-gray-500">כוונה ממשית לביצוע</p>
+                  <span className="font-medium text-gray-900">Suicidal Intent</span>
+                  <p className="text-xs text-gray-500">Actual intent to carry it out</p>
                 </div>
               </label>
             </div>
@@ -203,8 +203,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-red-600 focus:ring-red-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">אידיאציה רצחנית</span>
-                  <p className="text-xs text-gray-500">מחשבs על פגיעה בOthers</p>
+                  <span className="font-medium text-gray-900">Homicidal Ideation</span>
+                  <p className="text-xs text-gray-500">Thoughts of harming others</p>
                 </div>
               </label>
             </div>
@@ -220,8 +220,8 @@ export function SafetyAssessmentForm({
                   className="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
                 />
                 <div>
-                  <span className="font-medium text-gray-900">התנהגs פגיעה עצמית</span>
-                  <p className="text-xs text-gray-500">התנהגויs מזיקs לעצed</p>
+                  <span className="font-medium text-gray-900">Self-Harm Behavior</span>
+                  <p className="text-xs text-gray-500">Self-injurious behaviors</p>
                 </div>
               </label>
             </div>
@@ -234,12 +234,12 @@ export function SafetyAssessmentForm({
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-green-600" />
-            גורמי הגנה
+            Protective Factors
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-gray-600">
-            גורמs שמגנs על הPatient ומפחיתs סיכון (למשל: תמיכה משפחתית, תחביבs, אedנs...)
+            Factors that protect the patient and reduce risk (e.g., family support, hobbies, beliefs...)
           </p>
 
           <div className="flex flex-wrap gap-2">
@@ -267,7 +267,7 @@ export function SafetyAssessmentForm({
               <Input
                 value={newProtectiveFactor}
                 onChange={(e) => setNewProtectiveFactor(e.target.value)}
-                placeholder="הוסף גורם הגנה..."
+                placeholder="Add a protective factor..."
                 onKeyDown={(e) => e.key === 'Enter' && addProtectiveFactor()}
               />
               <Button
@@ -288,12 +288,12 @@ export function SafetyAssessmentForm({
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-orange-600" />
-            גורמי סיכון
+            Risk Factors
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-gray-600">
-            גורמs שמגבירs סיכון (למשל: History של ניסיונs, שיedש בחומרs, בידוד חברתי...)
+            Factors that increase risk (e.g.: History of attempts, substance use, social isolation...)
           </p>
 
           <div className="flex flex-wrap gap-2">
@@ -321,7 +321,7 @@ export function SafetyAssessmentForm({
               <Input
                 value={newRiskFactor}
                 onChange={(e) => setNewRiskFactor(e.target.value)}
-                placeholder="הוסף גורם סיכון..."
+                placeholder="Add a risk factor..."
                 onKeyDown={(e) => e.key === 'Enter' && addRiskFactor()}
               />
               <Button
@@ -341,7 +341,7 @@ export function SafetyAssessmentForm({
       <Card className={hasRiskIndicators && !safety.safetyPlan ? 'border-red-300' : ''}>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            תוכנית בטיחs
+            Safety Plan
             {hasRiskIndicators && (
               <span className="text-xs font-normal text-red-500">*Required</span>
             )}
@@ -351,14 +351,14 @@ export function SafetyAssessmentForm({
           <Textarea
             value={safety.safetyPlan || ''}
             onChange={(e) => updateSafety({ safetyPlan: e.target.value })}
-            placeholder="תאר את תוכנית הבטיחs שנקבעה With הPatient: צup tos להתedדדs במצוקה, מספרי חירום, אנשי קשר תומכs..."
+            placeholder="Describe the safety plan established with the patient: coping strategies, emergency numbers, supportive contacts..."
             rows={5}
             disabled={isReadOnly}
             className="resize-none"
           />
           {hasRiskIndicators && !safety.safetyPlan && (
             <p className="text-sm text-red-600 mt-2">
-              תוכנית בטיחs Requiredת כApprove Identified Risk indicators
+              Safety plan required when risk indicators are identified
             </p>
           )}
         </CardContent>
@@ -369,9 +369,9 @@ export function SafetyAssessmentForm({
         <CardHeader>
           <CardTitle className="text-lg flex items-center justify-between">
             <span className="flex items-center gap-2">
-              אנשי קשר לחירום
+              Emergency Contacts
               {hasRiskIndicators && (
-                <span className="text-xs font-normal text-red-500">*Required at least אחד</span>
+                <span className="text-xs font-normal text-red-500">*At least one required</span>
               )}
             </span>
             {!isReadOnly && (
@@ -382,7 +382,7 @@ export function SafetyAssessmentForm({
                 onClick={addEmergencyContact}
               >
                 <Plus className="w-4 h-4 ml-1" />
-                הוסף איש קשר
+                Add Contact
               </Button>
             )}
           </CardTitle>
@@ -390,7 +390,7 @@ export function SafetyAssessmentForm({
         <CardContent>
           {(!safety.emergencyContacts || safety.emergencyContacts.length === 0) ? (
             <p className="text-sm text-gray-500 text-center py-4">
-              No הוגדרו אנשי קשר לחירום
+              No emergency contacts defined
             </p>
           ) : (
             <div className="space-y-4">
@@ -400,7 +400,7 @@ export function SafetyAssessmentForm({
                   className="p-4 bg-gray-50 rounded-lg border"
                 >
                   <div className="flex justify-between items-start mb-3">
-                    <span className="text-sm font-medium text-gray-700">איש קשר #{index + 1}</span>
+                    <span className="text-sm font-medium text-gray-700">Contact #{index + 1}</span>
                     {!isReadOnly && (
                       <Button
                         type="button"
@@ -425,11 +425,11 @@ export function SafetyAssessmentForm({
                       />
                     </div>
                     <div>
-                      <Label className="text-xs text-gray-500">קרבה</Label>
+                      <Label className="text-xs text-gray-500">Relationship</Label>
                       <Input
                         value={contact.relationship}
                         onChange={(e) => updateEmergencyContact(index, { relationship: e.target.value })}
-                        placeholder="למשל: הורה, בן/בת Thisג"
+                        placeholder="e.g.: Parent, Spouse"
                         disabled={isReadOnly}
                         className="mt-1"
                       />
@@ -454,7 +454,7 @@ export function SafetyAssessmentForm({
                           disabled={isReadOnly}
                           className="w-4 h-4 rounded border-gray-300 text-calm-600 focus:ring-calm-500"
                         />
-                        <span className="text-sm text-gray-700">edדע/ת לTherapy</span>
+                        <span className="text-sm text-gray-700">Aware of therapy</span>
                       </label>
                     </div>
                   </div>
@@ -468,18 +468,18 @@ export function SafetyAssessmentForm({
       {/* Hotline Information */}
       <Card className="bg-blue-50 border-blue-200">
         <CardContent className="py-4">
-          <h4 className="font-medium text-blue-900 mb-2">קווs חמs לשעת חירום</h4>
+          <h4 className="font-medium text-blue-900 mb-2">Emergency Hotlines</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-blue-800">ער&quot;ן:</span>
+              <span className="font-medium text-blue-800">ERAN:</span>
               <span className="text-blue-700" dir="ltr">1201</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-medium text-blue-800">Total&quot;ר:</span>
+              <span className="font-medium text-blue-800">SAHAR:</span>
               <span className="text-blue-700" dir="ltr">*2784</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-medium text-blue-800">נט&quot;ל:</span>
+              <span className="font-medium text-blue-800">NATAL:</span>
               <span className="text-blue-700" dir="ltr">1-800-363-363</span>
             </div>
           </div>

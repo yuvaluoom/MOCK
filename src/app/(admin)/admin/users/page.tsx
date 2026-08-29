@@ -77,7 +77,7 @@ export default function UsersPage() {
             </div>
             <input
               type="text"
-              placeholder="Search לפי Email..."
+              placeholder="Search by email..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -96,7 +96,7 @@ export default function UsersPage() {
             }}
             className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
-            <option value="">All theתפקידs</option>
+            <option value="">All Roles</option>
             <option value="PATIENT">Patient</option>
             <option value="THERAPIST">Therapist</option>
             <option value="ADMIN">Manager</option>
@@ -114,8 +114,8 @@ export default function UsersPage() {
             <option value="">All theStatuss</option>
             <option value="ACTIVE">Active</option>
             <option value="PENDING_VERIFICATION">Pending</option>
-            <option value="SUSPENDED">edTime</option>
-            <option value="DEACTIVATED">edSat</option>
+            <option value="SUSPENDED">Suspended</option>
+            <option value="DEACTIVATED">Deactivated</option>
           </select>
         </div>
       </div>
@@ -127,9 +127,9 @@ export default function UsersPage() {
             <thead>
               <tr className="border-b border-slate-700">
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">User</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">תפקיד</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Role</th>
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Status</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">הצטרף</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Joined</th>
                 <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">Actions</th>
               </tr>
             </thead>
@@ -174,12 +174,12 @@ export default function UsersPage() {
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${roleColors[user.role as UserRole]}`}>
-                          {user.role === 'PATIENT' ? 'Patient' : user.role === 'THERAPIST' ? 'Therapist' : user.role === 'ADMIN' ? 'Manager' : user.role === 'OWNER' ? 'בעלs' : user.role}
+                          {user.role === 'PATIENT' ? 'Patient' : user.role === 'THERAPIST' ? 'Therapist' : user.role === 'ADMIN' ? 'Manager' : user.role === 'OWNER' ? 'Owner' : user.role}
                         </span>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${statusColors[user.status as UserStatus]}`}>
-                          {user.status === 'ACTIVE' ? 'Active' : user.status === 'PENDING_VERIFICATION' ? 'Pending Noימs' : user.status === 'SUSPENDED' ? 'edTime' : user.status === 'DEACTIVATED' ? 'edSat' : user.status}
+                          {user.status === 'ACTIVE' ? 'Active' : user.status === 'PENDING_VERIFICATION' ? 'Pending Verification' : user.status === 'SUSPENDED' ? 'Suspended' : user.status === 'DEACTIVATED' ? 'Deactivated' : user.status}
                         </span>
                       </td>
                       <td className="px-6 py-4 text-sm text-slate-400">

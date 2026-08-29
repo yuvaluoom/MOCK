@@ -5,18 +5,18 @@ import { trpc } from '@/lib/trpc/client';
 
 const actionConfig: Record<string, { color: string; label: string }> = {
   CREATE: { color: 'bg-green-500/20 text-green-400', label: 'Create' },
-  UPDATE: { color: 'bg-blue-500/20 text-blue-400', label: 'up toכון' },
+  UPDATE: { color: 'bg-blue-500/20 text-blue-400', label: 'Update' },
   DELETE: { color: 'bg-red-500/20 text-red-400', label: 'Delete' },
-  APPROVE: { color: 'bg-green-500/20 text-green-400', label: 'Confirm' },
-  REJECT: { color: 'bg-red-500/20 text-red-400', label: 'Rejection' },
+  APPROVE: { color: 'bg-green-500/20 text-green-400', label: 'Approve' },
+  REJECT: { color: 'bg-red-500/20 text-red-400', label: 'Reject' },
   LOGIN: { color: 'bg-purple-500/20 text-purple-400', label: 'Login' },
   LOGOUT: { color: 'bg-slate-500/20 text-slate-400', label: 'Logout' },
-  THERAPIST_APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'Therapist orשר' },
-  THERAPIST_REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'Therapist נDecline' },
-  THERAPIST_SUSPENDED: { color: 'bg-orange-500/20 text-orange-400', label: 'Therapist הוTime' },
-  THERAPIST_UNSUSPENDED: { color: 'bg-green-500/20 text-green-400', label: 'השעיה Cancelledה' },
-  DOCUMENTS_REQUESTED: { color: 'bg-amber-500/20 text-amber-400', label: 'בקשת מסמכs' },
-  OWNER_STATUS_OVERRIDE: { color: 'bg-purple-500/20 text-purple-400', label: 'דריסת Status (בעלs)' },
+  THERAPIST_APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'Therapist Approved' },
+  THERAPIST_REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'Therapist Rejected' },
+  THERAPIST_SUSPENDED: { color: 'bg-orange-500/20 text-orange-400', label: 'Therapist Suspended' },
+  THERAPIST_UNSUSPENDED: { color: 'bg-green-500/20 text-green-400', label: 'Suspension Lifted' },
+  DOCUMENTS_REQUESTED: { color: 'bg-amber-500/20 text-amber-400', label: 'Documents Requested' },
+  OWNER_STATUS_OVERRIDE: { color: 'bg-purple-500/20 text-purple-400', label: 'Status Override (Owner)' },
 };
 
 const entityTypeLabels: Record<string, string> = {
@@ -24,7 +24,7 @@ const entityTypeLabels: Record<string, string> = {
   PATIENT: 'Patient',
   USER: 'User',
   SESSION: 'Session',
-  DOCUMENT: 'מסמך',
+  DOCUMENT: 'Document',
 };
 
 const SearchIcon = () => (
@@ -61,9 +61,9 @@ export default function AuditLogsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Log ביקורת</h1>
+        <h1 className="text-2xl font-bold text-white">Audit Log</h1>
         <p className="text-slate-400 mt-1">
-          מעקב Other All theActiveויs והשינויs במערכת
+          Track all significant activities and changes in the system
         </p>
       </div>
 
@@ -77,7 +77,7 @@ export default function AuditLogsPage() {
             </div>
             <input
               type="text"
-              placeholder="Search בLog..."
+              placeholder="Search logs..."
               className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
           </div>
@@ -91,12 +91,12 @@ export default function AuditLogsPage() {
             }}
             className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
           >
-            <option value="">All theישויs</option>
+            <option value="">All Entities</option>
             <option value="USER">User</option>
             <option value="THERAPIST">Therapist</option>
             <option value="PATIENT">Patient</option>
             <option value="SESSION">Session</option>
-            <option value="DOCUMENT">מסמך</option>
+            <option value="DOCUMENT">Document</option>
           </select>
 
           {/* Date Range */}
@@ -120,10 +120,10 @@ export default function AuditLogsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">חsמת זמן</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Timestamp</th>
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">User</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">פעולה</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">ישs</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Action</th>
+                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Entity</th>
                 <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Details</th>
               </tr>
             </thead>
@@ -137,7 +137,7 @@ export default function AuditLogsPage() {
               ) : data?.logs.length === 0 ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
-                    No Foundor רשומs ביקורת
+                    No audit records found
                   </td>
                 </tr>
               ) : (
@@ -147,7 +147,7 @@ export default function AuditLogsPage() {
                     className="border-b border-slate-700/50 hover:bg-slate-700/30"
                   >
                     <td className="px-6 py-4 text-sm text-slate-300">
-                      {new Date(log.createdAt).toLocaleString('he-IL')}
+                      {new Date(log.createdAt).toLocaleString('en-US')}
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-white">{log.userName}</span>
@@ -175,7 +175,7 @@ export default function AuditLogsPage() {
                             alert(JSON.stringify({ previous: log.previousValue, new: log.newValue }, null, 2));
                           }}
                         >
-                          הצג שינויs
+                          View Changes
                         </button>
                       )}
                     </td>
@@ -190,9 +190,9 @@ export default function AuditLogsPage() {
         {data && data.pagination.totalPages > 1 && (
           <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700">
             <p className="text-sm text-slate-400">
-              Displays {(page - 1) * data.pagination.limit + 1} up to{' '}
+              Showing {(page - 1) * data.pagination.limit + 1} to{' '}
               {Math.min(page * data.pagination.limit, data.pagination.total)} of{' '}
-              {data.pagination.total} רשומs
+              {data.pagination.total} records
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -219,11 +219,11 @@ export default function AuditLogsPage() {
 
       {/* Info Card */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-        <h3 className="text-sm font-medium text-slate-400 mb-2">orדs Log ביקורת</h3>
+        <h3 className="text-sm font-medium text-slate-400 mb-2">About Audit Logs</h3>
         <p className="text-sm text-slate-500">
-          Log הביקורת עוקב Other All theActions המשמעsיs שCompletedו במערכת, כולל User Management,
-          Confirmי Therapists, שינויי Sessions ושינויs Managementיs. הרשומs נשמרs
-          למשך 90 יום וניתן לייצא orתן לצרכי תאימs.
+          The audit log tracks all significant actions performed in the system, including user management,
+          therapist approvals, session changes, and administrative updates. Records are retained
+          for 90 days and can be exported for compliance purposes.
         </p>
       </div>
     </div>

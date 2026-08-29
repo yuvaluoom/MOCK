@@ -20,18 +20,18 @@ export default function TherapistProfilePage() {
 
   // Mock profile data
   const profile = {
-    firstName: 'רונית',
-    lastName: 'שפירא',
-    title: 'ד״ר',
+    firstName: 'Ronit',
+    lastName: 'Shapira',
+    title: 'Dr.',
     email: 'ronit.shapira@example.com',
     phone: '052-1234567',
     licenseNumber: 'PSY-12345',
     specialization: 'Clinical Psychology',
     yearsOfExperience: 12,
-    bio: 'Clinical Psychologist With Specialization בTherapy Cognitive Behavioral (CBT). בעלת Experience רב בTherapy בחרדs, Depression והפרעs Anxiety.',
-    approaches: ['CBT', 'DBT', 'Therapy דינמי'],
-    specializations: ['חרדs', 'Depression', 'הפרעs אכילה'],
-    languages: ['עברית', 'אנגלית'],
+    bio: 'Clinical Psychologist specializing in Cognitive Behavioral Therapy (CBT). Extensive experience treating anxiety, depression, and anxiety disorders.',
+    approaches: ['CBT', 'DBT', 'Dynamic Therapy'],
+    specializations: ['Anxiety', 'Depression', 'Eating Disorders'],
+    languages: ['Hebrew', 'English'],
     acceptedHealthFunds: ['Clalit', 'Maccabi'],
     sessionPrice: 450,
     sessionDuration: 50,
@@ -44,13 +44,13 @@ export default function TherapistProfilePage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">My Profile</h1>
-          <p className="text-gray-600 mt-1">Management הDetails והמידע המקצועי Your</p>
+          <p className="text-gray-600 mt-1">Manage your details and professional information</p>
         </div>
         <Button
           variant={isEditing ? 'calm' : 'outline'}
           onClick={() => setIsEditing(!isEditing)}
         >
-          {isEditing ? 'Save שינויs' : 'Edit'}
+          {isEditing ? 'Save Changes' : 'Edit'}
         </Button>
       </div>
 
@@ -100,12 +100,12 @@ export default function TherapistProfilePage() {
         {/* Professional Info */}
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>מידע מקצועי</CardTitle>
+            <CardTitle>Professional Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Bio */}
             <div>
-              <Label>orדs</Label>
+              <Label>About</Label>
               {isEditing ? (
                 <textarea
                   className="w-full mt-2 p-3 border rounded-lg text-sm"
@@ -147,14 +147,14 @@ export default function TherapistProfilePage() {
                 <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>
-                ביטוח sHello
+                Insurance Coverage
               </h3>
 
               <div className="grid md:grid-cols-2 gap-6">
                 {/* HMO Section */}
                 <div className="bg-green-50 rounded-lg p-4">
                   <Label className="text-green-800 font-medium">Health Funds (HMO)</Label>
-                  <p className="text-xs text-green-600 mt-1">Patients With קוOptions אלו משלמs 0 ישירs</p>
+                  <p className="text-xs text-green-600 mt-1">Patients with these health funds pay nothing directly</p>
                   <div className="flex flex-wrap gap-2 mt-3">
                     {profile.acceptedHealthFunds.map((fund) => (
                       <span key={fund} className="px-3 py-1 bg-white text-green-700 text-sm rounded-full border border-green-200">
@@ -163,7 +163,7 @@ export default function TherapistProfilePage() {
                     ))}
                     {isEditing && (
                       <button className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full border border-dashed border-green-400 hover:bg-green-200">
-                        + הוסף קופה
+                        + Add Health Fund
                       </button>
                     )}
                   </div>
@@ -171,8 +171,8 @@ export default function TherapistProfilePage() {
 
                 {/* Private Payment Section */}
                 <div className="bg-blue-50 rounded-lg p-4">
-                  <Label className="text-blue-800 font-medium">תHello Private</Label>
-                  <p className="text-xs text-blue-600 mt-1">עבור Patients המשלמs מכיסם</p>
+                  <Label className="text-blue-800 font-medium">Private Rate</Label>
+                  <p className="text-xs text-blue-600 mt-1">For self-paying patients</p>
                   <div className="mt-3 space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-blue-700">Price Session:</span>
@@ -186,7 +186,7 @@ export default function TherapistProfilePage() {
                       )}
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-blue-700">משך Session:</span>
+                      <span className="text-sm text-blue-700">Session duration:</span>
                       {isEditing ? (
                         <select className="h-8 px-2 border rounded text-sm">
                           <option value="45">45 Minutes</option>
@@ -203,15 +203,15 @@ export default function TherapistProfilePage() {
 
               {/* Payment Summary */}
               <div className="mt-4 bg-gray-50 rounded-lg p-3 text-sm">
-                <p className="font-medium text-gray-700 mb-2">Summary אפשרויs תHello:</p>
+                <p className="font-medium text-gray-700 mb-2">Payment options summary:</p>
                 <div className="grid grid-cols-2 gap-2 text-gray-600">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-green-500"></span>
-                    <span>Patientי {profile.acceptedHealthFunds.join(', ')}: לNo תHello</span>
+                    <span>Patients of {profile.acceptedHealthFunds.join(', ')}: No charge</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-                    <span>Patients Privates: ₪{profile.sessionPrice} לSession</span>
+                    <span>Private patients: ₪{profile.sessionPrice} per session</span>
                   </div>
                 </div>
               </div>

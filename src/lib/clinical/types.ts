@@ -13,72 +13,72 @@
 
 export type SessionType =
   | 'IN_PERSON'      // In-Person Session
-  | 'REMOTE_VIDEO'   // Remote therapy - וידor
+  | 'REMOTE_VIDEO'   // Remote therapy - video
   | 'REMOTE_PHONE'   // Remote therapy - Phone
   | 'HOME_VISIT';    // Home visit
 
 export type SessionStatus =
-  | 'SCHEDULED'      // מתוכננת
-  | 'IN_PROGRESS'    // בתהליך
-  | 'COMPLETED'      // הושלמה
-  | 'CANCELLED'      // Cancelledה
+  | 'SCHEDULED'      // Scheduled
+  | 'IN_PROGRESS'    // In progress
+  | 'COMPLETED'      // Completed
+  | 'CANCELLED'      // Cancelled
   | 'NO_SHOW';       // No Arrived
 
 export type DocumentationStatus =
-  | 'DRAFT'          // Draft - ניתן לEdit
-  | 'SUBMITTED'      // הוגש - Locked לEdit רגילה
-  | 'AMENDED'        // Fixed - Locked With תיקון מתוup to
-  | 'LOCKED';        // Locked סופית
+  | 'DRAFT'          // Draft - can be edited
+  | 'SUBMITTED'      // Submitted - locked for regular editing
+  | 'AMENDED'        // Amended - locked with logged correction
+  | 'LOCKED';        // Permanently locked
 
 export type TherapeuticMethod =
   | 'CBT'                    // Therapy Cognitive Behavioral
-  | 'DBT'                    // Therapy דיאלקטי-התנהגsי
+  | 'DBT'                    // Dialectical Behavior Therapy
   | 'PSYCHODYNAMIC'          // Psychodynamic
   | 'HUMANISTIC'             // Humanistic
   | 'EMDR'                   // EMDR
   | 'MINDFULNESS'            // Mindfulness
-  | 'FAMILY_THERAPY'         // Therapy משפחתי
-  | 'COUPLES_THERAPY'        // Therapy Thisגי
-  | 'PLAY_THERAPY'           // Therapy במשחק
+  | 'FAMILY_THERAPY'         // Family Therapy
+  | 'COUPLES_THERAPY'        // Couples Therapy
+  | 'PLAY_THERAPY'           // Play Therapy
   | 'ART_THERAPY'            // Art therapy
-  | 'NARRATIVE'              // Therapy נרטיבי
-  | 'SOLUTION_FOCUSED'       // מedקד פתרון
-  | 'INTEGRATIVE'            // אינטגרטיבי
+  | 'NARRATIVE'              // Narrative Therapy
+  | 'SOLUTION_FOCUSED'       // Solution-Focused
+  | 'INTEGRATIVE'            // Integrative
   | 'OTHER';                 // Other
 
 export type ProgressIndicator =
-  | 'SIGNIFICANT_IMPROVEMENT'   // שיפור משמעsי
-  | 'MODERATE_IMPROVEMENT'      // שיפור מתון
-  | 'SLIGHT_IMPROVEMENT'        // שיפור קל
-  | 'NO_CHANGE'                 // לNo שינוי
-  | 'SLIGHT_DECLINE'            // הידרדרs קלה
-  | 'MODERATE_DECLINE'          // הידרדרs מתונה
-  | 'SIGNIFICANT_DECLINE'       // הידרדרs משמעsית
-  | 'UNABLE_TO_ASSESS';         // No ניתן להעריך
+  | 'SIGNIFICANT_IMPROVEMENT'   // Significant improvement
+  | 'MODERATE_IMPROVEMENT'      // Moderate improvement
+  | 'SLIGHT_IMPROVEMENT'        // Slight improvement
+  | 'NO_CHANGE'                 // No change
+  | 'SLIGHT_DECLINE'            // Slight decline
+  | 'MODERATE_DECLINE'          // Moderate decline
+  | 'SIGNIFICANT_DECLINE'       // Significant decline
+  | 'UNABLE_TO_ASSESS';         // Unable to assess
 
 export type RiskLevel =
-  | 'NONE'           // לNo סיכון
-  | 'LOW'            // סיכון Low
-  | 'MODERATE'       // סיכון בינוני
-  | 'HIGH'           // סיכון גבוה
-  | 'CRITICAL';      // סיכון Critical - דורש התערבs מיידית
+  | 'NONE'           // No risk
+  | 'LOW'            // Low risk
+  | 'MODERATE'       // Moderate risk
+  | 'HIGH'           // High risk
+  | 'CRITICAL';      // Critical risk - requires immediate intervention
 
 export type ConsentType =
-  | 'TREATMENT'           // הסכמה לTherapy
-  | 'DOCUMENTATION'       // הסכמה לDocumentation
-  | 'DATA_SHARING'        // הסכמה לשיתוף נתונs
-  | 'RESEARCH'            // הסכמה למחקר
-  | 'RECORDING';          // הסכמה להקלטה
+  | 'TREATMENT'           // Consent to treatment
+  | 'DOCUMENTATION'       // Consent to documentation
+  | 'DATA_SHARING'        // Consent to data sharing
+  | 'RESEARCH'            // Consent to research
+  | 'RECORDING';          // Consent to recording
 
 export type ExportFormat = 'JSON' | 'PDF' | 'HL7_FHIR';
 
 export type ComplianceFlagType =
   | 'OVERDUE'                   // Documentation Overdue
-  | 'INCOMPLETE'                // Documentation No שלם
-  | 'RISK_NOT_ASSESSED'         // Assessment סיכון חסרה
-  | 'CONSENT_MISSING'           // הסכמה חסרה
-  | 'CONSENT_EXPIRED'           // הסכמה פגה
-  | 'REVIEW_OVERDUE';           // סקירה Overdue
+  | 'INCOMPLETE'                // Incomplete documentation
+  | 'RISK_NOT_ASSESSED'         // Missing risk assessment
+  | 'CONSENT_MISSING'           // Missing consent
+  | 'CONSENT_EXPIRED'           // Expired consent
+  | 'REVIEW_OVERDUE';           // Overdue review
 
 export type ComplianceFlagSeverity = 'INFO' | 'WARNING' | 'CRITICAL';
 
@@ -560,58 +560,58 @@ export interface ValidationWarning {
 
 export const SESSION_TYPE_LABELS: Record<SessionType, { en: string; he: string }> = {
   IN_PERSON: { en: 'In-Person', he: 'In-Person Session' },
-  REMOTE_VIDEO: { en: 'Video Call', he: 'Call וידor' },
+  REMOTE_VIDEO: { en: 'Video Call', he: 'Video Call' },
   REMOTE_PHONE: { en: 'Phone Call', he: 'Call Phone' },
   HOME_VISIT: { en: 'Home Visit', he: 'Home visit' },
 };
 
 export const SESSION_STATUS_LABELS: Record<SessionStatus, { en: string; he: string }> = {
-  SCHEDULED: { en: 'Scheduled', he: 'מתוכננת' },
-  IN_PROGRESS: { en: 'In Progress', he: 'בתהליך' },
-  COMPLETED: { en: 'Completed', he: 'הושלמה' },
-  CANCELLED: { en: 'Cancelled', he: 'Cancelledה' },
+  SCHEDULED: { en: 'Scheduled', he: 'Scheduled' },
+  IN_PROGRESS: { en: 'In Progress', he: 'In Progress' },
+  COMPLETED: { en: 'Completed', he: 'Completed' },
+  CANCELLED: { en: 'Cancelled', he: 'Cancelled' },
   NO_SHOW: { en: 'No Show', he: 'No Arrived' },
 };
 
 export const DOCUMENTATION_STATUS_LABELS: Record<DocumentationStatus, { en: string; he: string }> = {
   DRAFT: { en: 'Draft', he: 'Draft' },
-  SUBMITTED: { en: 'Submitted', he: 'הוגש' },
+  SUBMITTED: { en: 'Submitted', he: 'Submitted' },
   AMENDED: { en: 'Amended', he: 'Fixed' },
   LOCKED: { en: 'Locked', he: 'Locked' },
 };
 
 export const THERAPEUTIC_METHOD_LABELS: Record<TherapeuticMethod, { en: string; he: string }> = {
   CBT: { en: 'Cognitive Behavioral Therapy', he: 'Therapy Cognitive Behavioral' },
-  DBT: { en: 'Dialectical Behavior Therapy', he: 'Therapy דיאלקטי-התנהגsי' },
+  DBT: { en: 'Dialectical Behavior Therapy', he: 'Dialectical Behavior Therapy' },
   PSYCHODYNAMIC: { en: 'Psychodynamic', he: 'Psychodynamic' },
   HUMANISTIC: { en: 'Humanistic', he: 'Humanistic' },
   EMDR: { en: 'EMDR', he: 'EMDR' },
   MINDFULNESS: { en: 'Mindfulness', he: 'Mindfulness' },
-  FAMILY_THERAPY: { en: 'Family Therapy', he: 'Therapy משפחתי' },
-  COUPLES_THERAPY: { en: 'Couples Therapy', he: 'Therapy Thisגי' },
-  PLAY_THERAPY: { en: 'Play Therapy', he: 'Therapy במשחק' },
+  FAMILY_THERAPY: { en: 'Family Therapy', he: 'Family Therapy' },
+  COUPLES_THERAPY: { en: 'Couples Therapy', he: 'Couples Therapy' },
+  PLAY_THERAPY: { en: 'Play Therapy', he: 'Play Therapy' },
   ART_THERAPY: { en: 'Art Therapy', he: 'Art therapy' },
-  NARRATIVE: { en: 'Narrative Therapy', he: 'Therapy נרטיבי' },
-  SOLUTION_FOCUSED: { en: 'Solution-Focused', he: 'מedקד פתרון' },
-  INTEGRATIVE: { en: 'Integrative', he: 'אינטגרטיבי' },
+  NARRATIVE: { en: 'Narrative Therapy', he: 'Narrative Therapy' },
+  SOLUTION_FOCUSED: { en: 'Solution-Focused', he: 'Solution-Focused' },
+  INTEGRATIVE: { en: 'Integrative', he: 'Integrative' },
   OTHER: { en: 'Other', he: 'Other' },
 };
 
 export const PROGRESS_INDICATOR_LABELS: Record<ProgressIndicator, { en: string; he: string }> = {
-  SIGNIFICANT_IMPROVEMENT: { en: 'Significant Improvement', he: 'שיפור משמעsי' },
-  MODERATE_IMPROVEMENT: { en: 'Moderate Improvement', he: 'שיפור מתון' },
-  SLIGHT_IMPROVEMENT: { en: 'Slight Improvement', he: 'שיפור קל' },
-  NO_CHANGE: { en: 'No Change', he: 'לNo שינוי' },
-  SLIGHT_DECLINE: { en: 'Slight Decline', he: 'הידרדרs קלה' },
-  MODERATE_DECLINE: { en: 'Moderate Decline', he: 'הידרדרs מתונה' },
-  SIGNIFICANT_DECLINE: { en: 'Significant Decline', he: 'הידרדרs משמעsית' },
-  UNABLE_TO_ASSESS: { en: 'Unable to Assess', he: 'No ניתן להעריך' },
+  SIGNIFICANT_IMPROVEMENT: { en: 'Significant Improvement', he: 'Significant Improvement' },
+  MODERATE_IMPROVEMENT: { en: 'Moderate Improvement', he: 'Moderate Improvement' },
+  SLIGHT_IMPROVEMENT: { en: 'Slight Improvement', he: 'Slight Improvement' },
+  NO_CHANGE: { en: 'No Change', he: 'No Change' },
+  SLIGHT_DECLINE: { en: 'Slight Decline', he: 'Slight Decline' },
+  MODERATE_DECLINE: { en: 'Moderate Decline', he: 'Moderate Decline' },
+  SIGNIFICANT_DECLINE: { en: 'Significant Decline', he: 'Significant Decline' },
+  UNABLE_TO_ASSESS: { en: 'Unable to Assess', he: 'Unable to Assess' },
 };
 
 export const RISK_LEVEL_LABELS: Record<RiskLevel, { en: string; he: string; color: string }> = {
-  NONE: { en: 'None', he: 'לNo סיכון', color: 'green' },
+  NONE: { en: 'None', he: 'No Risk', color: 'green' },
   LOW: { en: 'Low', he: 'Low', color: 'blue' },
-  MODERATE: { en: 'Moderate', he: 'בינוני', color: 'yellow' },
-  HIGH: { en: 'High', he: 'גבוה', color: 'orange' },
+  MODERATE: { en: 'Moderate', he: 'Moderate', color: 'yellow' },
+  HIGH: { en: 'High', he: 'High', color: 'orange' },
   CRITICAL: { en: 'Critical', he: 'Critical', color: 'red' },
 };

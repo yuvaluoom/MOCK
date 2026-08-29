@@ -66,7 +66,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     field: 'phone',
     type: 'phone',
     warningIf: (value) => {
-      if (!value) return 'Recommended להוסיף מספר Phone';
+      if (!value) return 'Recommended to add a phone number';
       return null;
     },
   },
@@ -83,7 +83,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     max: 2000,
     warningIf: (value) => {
       if (typeof value === 'number' && value > 800) {
-        return 'Price Session גבוה מהמedצע בשוק';
+        return 'Session price is above market average';
       }
       return null;
     },
@@ -106,7 +106,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
         !validFunds.includes(String(f).toLowerCase())
       );
       if (invalidFunds.length > 0) {
-        return `Health Funds No מIdentifiedת: ${invalidFunds.join(', ')}`;
+        return `Unrecognized health funds: ${invalidFunds.join(', ')}`;
       }
       return null;
     },
@@ -116,7 +116,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     type: 'array',
     warningIf: (value) => {
       if (!value || (Array.isArray(value) && value.length === 0)) {
-        return 'Recommended לציין Languages';
+        return 'Recommended to specify languages';
       }
       return null;
     },
@@ -125,7 +125,7 @@ const THERAPIST_VALIDATION_RULES: ValidationRule[] = [
     field: 'city',
     type: 'string',
     warningIf: (value) => {
-      if (!value) return 'Recommended לציין City';
+      if (!value) return 'Recommended to specify city';
       return null;
     },
   },
@@ -217,7 +217,7 @@ export class RecordValidator implements IRecordValidator {
         errors.push({
           field: rule.field,
           code: 'REQUIRED',
-          message: `שדה Required: ${this.getFieldLabel(rule.field)}`,
+          message: `Required field: ${this.getFieldLabel(rule.field)}`,
           value: rowNumber ? `Row ${rowNumber}` : undefined,
         });
         continue;
@@ -233,7 +233,7 @@ export class RecordValidator implements IRecordValidator {
               field: rule.field,
               code: 'SUGGESTED',
               message: warning,
-              suggestion: `שקול להוסיף ${this.getFieldLabel(rule.field)}`,
+              suggestion: `Consider adding ${this.getFieldLabel(rule.field)}`,
             });
           }
         }
@@ -255,7 +255,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MIN_LENGTH',
-            message: `${this.getFieldLabel(rule.field)} חייב להיs at least ${rule.minLength} characters`,
+            message: `${this.getFieldLabel(rule.field)} must be at least ${rule.minLength} characters`,
             value,
           });
         }
@@ -263,7 +263,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MAX_LENGTH',
-            message: `${this.getFieldLabel(rule.field)} No יכול לעלs על ${rule.maxLength} characters`,
+            message: `${this.getFieldLabel(rule.field)} cannot exceed ${rule.maxLength} characters`,
             value,
           });
         }
@@ -275,7 +275,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MIN_VALUE',
-            message: `${this.getFieldLabel(rule.field)} חייב להיs at least ${rule.min}`,
+            message: `${this.getFieldLabel(rule.field)} must be at least ${rule.min}`,
             value,
           });
         }
@@ -283,7 +283,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'MAX_VALUE',
-            message: `${this.getFieldLabel(rule.field)} No יכול לעלs על ${rule.max}`,
+            message: `${this.getFieldLabel(rule.field)} cannot exceed ${rule.max}`,
             value,
           });
         }
@@ -295,7 +295,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'PATTERN',
-            message: `${this.getFieldLabel(rule.field)} בFormat No Valid`,
+            message: `${this.getFieldLabel(rule.field)} has an invalid format`,
             value,
           });
         }
@@ -308,7 +308,7 @@ export class RecordValidator implements IRecordValidator {
           errors.push({
             field: rule.field,
             code: 'ENUM',
-            message: `${this.getFieldLabel(rule.field)} חייב להיs אחד מהערכs: ${rule.enum.join(', ')}`,
+            message: `${this.getFieldLabel(rule.field)} must be one of: ${rule.enum.join(', ')}`,
             value,
           });
         }
@@ -376,7 +376,7 @@ export class RecordValidator implements IRecordValidator {
         allErrors.push({
           field: 'email',
           code: 'DUPLICATE',
-          message: `Email כפול בשורs: ${rows.join(', ')}`,
+          message: `Duplicate email in rows: ${rows.join(', ')}`,
           value: email,
         });
       }
@@ -424,7 +424,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיs Text`,
+            message: `${fieldLabel} must be text`,
             value,
           };
         }
@@ -435,7 +435,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיs מספר`,
+            message: `${fieldLabel} must be a number`,
             value,
           };
         }
@@ -446,7 +446,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיs Yes/No`,
+            message: `${fieldLabel} must be yes/no`,
             value,
           };
         }
@@ -457,7 +457,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'TYPE',
-            message: `${fieldLabel} חייב להיs רשימה`,
+            message: `${fieldLabel} must be a list`,
             value,
           };
         }
@@ -468,7 +468,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'EMAIL',
-            message: `${fieldLabel} אינו Address Email תקינה`,
+            message: `${fieldLabel} is not a valid email address`,
             value,
           };
         }
@@ -479,7 +479,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'PHONE',
-            message: `${fieldLabel} אינו מספר Phone Valid`,
+            message: `${fieldLabel} is not a valid phone number`,
             value,
           };
         }
@@ -490,7 +490,7 @@ export class RecordValidator implements IRecordValidator {
           return {
             field,
             code: 'DATE',
-            message: `${fieldLabel} אינו Date Valid`,
+            message: `${fieldLabel} is not a valid date`,
             value,
           };
         }
@@ -545,8 +545,8 @@ export class RecordValidator implements IRecordValidator {
       birthDate: 'Date Birth',
       name: 'Name',
       type: 'Type',
-      contactEmail: 'Email ליצירת קשר',
-      contactPhone: 'Phone ליצירת קשר',
+      contactEmail: 'Contact Email',
+      contactPhone: 'Contact Phone',
     };
 
     return labels[field] || field;

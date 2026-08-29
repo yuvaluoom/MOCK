@@ -105,7 +105,7 @@ function generatePositiveFactors(
         weight: 0.15,
         details:
           fundMatch.agreementType === 'FULL'
-            ? 'Coverage מNo / Full coverage'
+            ? 'Full coverage'
             : 'Partial coverage / Partial coverage',
       });
     }
@@ -243,7 +243,7 @@ function generateNeutralFactors(
   if (scores.experience >= 40 && scores.experience < 70) {
     factors.push({
       key: 'moderate_experience',
-      labelHebrew: 'Experience edכח בתחום',
+      labelHebrew: 'Proven experience in the field',
       labelEnglish: 'Proven experience in the field',
       icon: 'briefcase',
       weight: 0.05,
@@ -326,9 +326,9 @@ function generateTopReasons(
   if (
     scores.xFactor !== null &&
     scores.xFactor >= 60 &&
-    !reasons.some((r) => r.includes('Great Match לסגנון'))
+    !reasons.some((r) => r.includes('Great personal style match'))
   ) {
-    reasons.push('Match מsאמת אישית על בסיס הפרופיל Your');
+    reasons.push('Personalized match based on your profile');
   }
 
   return reasons.slice(0, 5);
@@ -347,18 +347,18 @@ function generateSummaryHebrew(
   const quality = MATCH_QUALITY_LABELS[score.matchQuality].labelHebrew;
 
   if (score.matchQuality === 'EXCELLENT') {
-    return `${name} Displays ${quality} With ${positiveFactorCount} גורמs חיוביs משמעsיs. הMatch מבוססת על ניתוח מקיף של הצרכs וההup toOptions Your.`;
+    return `${name} shows ${quality} compatibility with ${positiveFactorCount} significant positive factors. The match is based on a comprehensive analysis of your needs and preferences.`;
   }
 
   if (score.matchQuality === 'GREAT') {
-    return `${name} Displays ${quality} על בסיס ${positiveFactorCount} גורמs תואמs. Recommended לבחון את הפרופיל המNo.`;
+    return `${name} shows ${quality} compatibility based on ${positiveFactorCount} matching factors. We recommend reviewing the full profile.`;
   }
 
   if (score.matchQuality === 'GOOD') {
-    return `${name} Displays ${quality}. יש Good Match במספר תחומs חשובs.`;
+    return `${name} shows ${quality} compatibility. Good match in several important areas.`;
   }
 
-  return `${name} Displays ${quality}. Recommended לבחון אפשרויs נוסOptions.`;
+  return `${name} shows ${quality} compatibility. We recommend exploring additional options.`;
 }
 
 function generateSummaryEnglish(
@@ -449,28 +449,28 @@ function getMatchingApproaches(
 const SPECIALIZATION_LABELS: Record<string, string> = {
   ANXIETY: 'Anxiety / Anxiety',
   DEPRESSION: 'Depression / Depression',
-  TRAUMA_PTSD: 'Trauma ו-PTSD',
-  RELATIONSHIPS: 'יחסs / Relationships',
-  STRESS_MANAGEMENT: 'Management מתחs / Stress',
-  GRIEF_LOSS: 'אבל וorבדן / Grief',
-  SELF_ESTEEM: 'דיedי עצמי / Self-esteem',
-  LIFE_TRANSITIONS: 'מעברי חיs / Transitions',
-  FAMILY_ISSUES: 'Typeיs משפחתיs / Family',
-  WORK_CAREER: 'קריירה ועבודה / Career',
-  ANGER_MANAGEMENT: 'Management כעסs / Anger',
-  ADDICTION: 'התמכרויs / Addiction',
-  EATING_DISORDERS: 'הפרעs אכילה / Eating',
-  OCD: 'הפרעה טורדנית / OCD',
-  ADHD: 'הפרעת קשב / ADHD',
-  COUPLES_THERAPY: 'Therapy Thisגי / Couples',
-  CHILD_ADOLESCENT: 'ילדs ונוער / Youth',
+  TRAUMA_PTSD: 'Trauma & PTSD',
+  RELATIONSHIPS: 'Relationships',
+  STRESS_MANAGEMENT: 'Stress Management',
+  GRIEF_LOSS: 'Grief & Loss',
+  SELF_ESTEEM: 'Self-esteem',
+  LIFE_TRANSITIONS: 'Life Transitions',
+  FAMILY_ISSUES: 'Family Issues',
+  WORK_CAREER: 'Work & Career',
+  ANGER_MANAGEMENT: 'Anger Management',
+  ADDICTION: 'Addiction',
+  EATING_DISORDERS: 'Eating Disorders',
+  OCD: 'OCD',
+  ADHD: 'ADHD',
+  COUPLES_THERAPY: 'Couples Therapy',
+  CHILD_ADOLESCENT: 'Children & Adolescents',
   LGBTQ_ISSUES: 'LGBTQ+',
-  CHRONIC_ILLNESS: 'מחלs כרוניs / Chronic',
-  SLEEP_DISORDERS: 'הפרעs שינה / Sleep',
+  CHRONIC_ILLNESS: 'Chronic Illness',
+  SLEEP_DISORDERS: 'Sleep Disorders',
 };
 
 const LANGUAGE_LABELS: Record<string, string> = {
-  HEBREW: 'עברית',
+  HEBREW: 'Hebrew',
   ENGLISH: 'English',
   RUSSIAN: 'Русский',
   ARABIC: 'العربية',
@@ -483,19 +483,19 @@ const APPROACH_LABELS: Record<string, string> = {
   CBT: 'CBT - Therapy Cognitive Behavioral',
   PSYCHODYNAMIC: 'Psychodynamic',
   HUMANISTIC: 'Humanistic',
-  EXISTENTIAL: 'אקזיסטנציאלי',
-  INTEGRATIVE: 'אינטגרטיבי',
+  EXISTENTIAL: 'Existential',
+  INTEGRATIVE: 'Integrative',
   MINDFULNESS: 'Mindfulness',
   DBT: 'DBT',
   EMDR: 'EMDR',
   ACT: 'ACT',
-  GESTALT: 'גשטלט',
-  SOLUTION_FOCUSED: 'מedקד פתרונs',
-  NARRATIVE: 'נרטיבי',
-  FAMILY_SYSTEMS: 'שיטתי-משפחתי',
-  ATTACHMENT_BASED: 'מבוסס התקשרs',
+  GESTALT: 'Gestalt',
+  SOLUTION_FOCUSED: 'Solution-Focused',
+  NARRATIVE: 'Narrative',
+  FAMILY_SYSTEMS: 'Family Systems',
+  ATTACHMENT_BASED: 'Attachment-Based',
   ART_THERAPY: 'Art therapy',
-  SOMATIC: 'סומטי',
+  SOMATIC: 'Somatic',
 };
 
 function formatSpecialization(spec: string): string {

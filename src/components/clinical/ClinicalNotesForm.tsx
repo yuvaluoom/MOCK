@@ -93,7 +93,7 @@ export function ClinicalNotesForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            Subject edצג
+            Presenting Issue
             <span className="text-xs font-normal text-gray-500">(Optional)</span>
           </CardTitle>
         </CardHeader>
@@ -101,7 +101,7 @@ export function ClinicalNotesForm({
           <Textarea
             value={notes.presentingIssue || ''}
             onChange={(e) => handleChange('presentingIssue', e.target.value)}
-            placeholder="תאר את הSubject or הבעיה העיקרית שהPatient הביא לSession..."
+            placeholder="Describe the main issue or concern the patient brought to this session..."
             rows={3}
             disabled={isReadOnly}
             className="resize-none"
@@ -122,7 +122,7 @@ export function ClinicalNotesForm({
             <Textarea
               value={notes.clinicalSummary || ''}
               onChange={(e) => handleChange('clinicalSummary', e.target.value)}
-              placeholder="סכם את הSession, כולל תכנs עיקריs, תהליכs שAlertחשו sובנs קליניs..."
+              placeholder="Summarize the session, including key topics, processes observed, and clinical insights..."
               rows={6}
               disabled={isReadOnly}
               className="resize-none"
@@ -131,13 +131,13 @@ export function ClinicalNotesForm({
               <span>
                 {(notes.clinicalSummary?.length || 0) < 50 && (
                   <span className="text-red-500">
-                    עוד {50 - (notes.clinicalSummary?.length || 0)} characters Requireds
+                    {50 - (notes.clinicalSummary?.length || 0)} more characters required
                   </span>
                 )}
                 {(notes.clinicalSummary?.length || 0) >= 50 && (
                   <span className="text-green-600 flex items-center gap-1">
                     <Check className="w-3 h-3" />
-                    מיניedם הושג
+                    Minimum reached
                   </span>
                 )}
               </span>
@@ -151,8 +151,8 @@ export function ClinicalNotesForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            שיטs Therapy
-            <span className="text-xs font-normal text-red-500">*Required at least אחד</span>
+            Therapeutic Methods
+            <span className="text-xs font-normal text-red-500">*At least one required</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -180,7 +180,7 @@ export function ClinicalNotesForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            התערבויs
+            Interventions
             <span className="text-xs font-normal text-gray-500">(Optional)</span>
           </CardTitle>
         </CardHeader>
@@ -188,7 +188,7 @@ export function ClinicalNotesForm({
           <Textarea
             value={notes.interventions || ''}
             onChange={(e) => handleChange('interventions', e.target.value)}
-            placeholder="תאר את ההתערבויs והטכניקs שהופעלו במהלך הSession..."
+            placeholder="Describe the interventions and techniques used during the session..."
             rows={4}
             disabled={isReadOnly}
             className="resize-none"
@@ -200,7 +200,7 @@ export function ClinicalNotesForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            Response ofPatient
+            Patient Response
             <span className="text-xs font-normal text-gray-500">(Optional)</span>
           </CardTitle>
         </CardHeader>
@@ -208,7 +208,7 @@ export function ClinicalNotesForm({
           <Textarea
             value={notes.patientResponse || ''}
             onChange={(e) => handleChange('patientResponse', e.target.value)}
-            placeholder="תאר כיצד הPatient הגיב להתערבויs ולתכנs שעלו בSession..."
+            placeholder="Describe how the patient responded to the interventions and topics discussed..."
             rows={3}
             disabled={isReadOnly}
             className="resize-none"
@@ -220,7 +220,7 @@ export function ClinicalNotesForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            מדד התקדמs
+            Progress Indicator
             <span className="text-xs font-normal text-gray-500">(Optional)</span>
           </CardTitle>
         </CardHeader>
@@ -286,9 +286,9 @@ export function ClinicalNotesForm({
               <div className="flex items-start gap-2">
                 <Info className="w-5 h-5 text-red-600 mt-0.5" />
                 <div className="text-sm text-red-800">
-                  <p className="font-medium">Risk level גבוהה Thisהתה</p>
+                  <p className="font-medium">High risk level detected</p>
                   <p className="mt-1">
-                    נא למNo את טופס Assessment הבטיחs המNo בלשונית Assessment בטיחs.
+                    Please complete the safety assessment form in the Safety Assessment tab.
                   </p>
                 </div>
               </div>
@@ -301,7 +301,7 @@ export function ClinicalNotesForm({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            Code אבחנה
+            Diagnostic Codes
             <span className="text-xs font-normal text-gray-500">(Optional)</span>
           </CardTitle>
         </CardHeader>
@@ -312,7 +312,7 @@ export function ClinicalNotesForm({
               <Input
                 value={notes.icdCodes?.join(', ') || ''}
                 onChange={(e) => handleChange('icdCodes', e.target.value.split(',').map(c => c.trim()).filter(Boolean))}
-                placeholder="לדוגמה: F32.1, F41.1"
+                placeholder="e.g., F32.1, F41.1"
                 disabled={isReadOnly}
                 dir="ltr"
                 className="mt-1"
@@ -323,7 +323,7 @@ export function ClinicalNotesForm({
               <Input
                 value={notes.dsmCodes?.join(', ') || ''}
                 onChange={(e) => handleChange('dsmCodes', e.target.value.split(',').map(c => c.trim()).filter(Boolean))}
-                placeholder="לדוגמה: 300.4, 296.32"
+                placeholder="e.g., 300.4, 296.32"
                 disabled={isReadOnly}
                 dir="ltr"
                 className="mt-1"
@@ -336,15 +336,15 @@ export function ClinicalNotesForm({
       {/* Next Session Planning */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">תכנון המשך</CardTitle>
+          <CardTitle className="text-lg">Follow-Up Planning</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label className="text-sm text-gray-600">edקד הSession Nextה</Label>
+            <Label className="text-sm text-gray-600">Next Session Focus</Label>
             <Textarea
               value={notes.nextSessionFocus || ''}
               onChange={(e) => handleChange('nextSessionFocus', e.target.value)}
-              placeholder="Subjects ומטרs לSession Nextה..."
+              placeholder="Topics and goals for the next session..."
               rows={2}
               disabled={isReadOnly}
               className="resize-none mt-1"
@@ -360,11 +360,11 @@ export function ClinicalNotesForm({
                 disabled={isReadOnly}
                 className="w-4 h-4 rounded border-gray-300 text-calm-600 focus:ring-calm-500"
               />
-              <span className="text-sm text-gray-700">ניתנה משימה לבית</span>
+              <span className="text-sm text-gray-700">Homework assigned</span>
             </label>
 
             <div className="flex items-center gap-2">
-              <Label className="text-sm text-gray-600">מרווח Recommended (ימs):</Label>
+              <Label className="text-sm text-gray-600">Recommended interval (days):</Label>
               <Input
                 type="number"
                 min={1}

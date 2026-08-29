@@ -9,10 +9,10 @@ export default function PrivacyPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-6">Privacy Policy</h1>
         <div className="bg-white rounded-2xl shadow-sm p-8 text-gray-600 leading-relaxed space-y-4">
           <p>
-            Page זה יכיל את מדיניs הPrivates המNoה של MatchMind.
+            This page contains the full privacy policy of MatchMind.
           </p>
           <p>
-            אנו מחויבs להגנה על Privates הUsers שלנו ולSave על המידע האישי בהתאם לחוק הגנת הPrivates.
+            We are committed to protecting the privacy of our users and safeguarding personal information in accordance with applicable privacy laws.
           </p>
           <p className="text-sm text-muted-foreground">Page under construction.</p>
         </div>

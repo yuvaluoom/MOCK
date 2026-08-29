@@ -183,7 +183,7 @@ export const TherapistApprovalStatusLabels: Record<string, { en: string; he: str
   PENDING_INFO: { en: 'Pending Info', he: 'Awaiting information', color: 'yellow' },
   AWAITING_APPROVAL: { en: 'Awaiting Approval', he: 'Pending Approval', color: 'blue' },
   APPROVED: { en: 'Approved', he: 'Approved', color: 'green' },
-  REJECTED: { en: 'Rejected', he: 'נDecline', color: 'red' },
+  REJECTED: { en: 'Rejected', he: 'Rejected', color: 'red' },
   SUSPENDED: { en: 'Suspended', he: 'edTime', color: 'orange' },
   MISSING_DOCUMENTS: { en: 'Missing Documents', he: 'Missing documents', color: 'purple' },
 };

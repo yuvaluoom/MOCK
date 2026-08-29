@@ -49,7 +49,7 @@ const SUBMISSION_RULES: ValidationRule[] = [
     check: (notes) => !!notes.therapeuticMethods && notes.therapeuticMethods.length > 0,
     errorCode: 'THERAPEUTIC_METHODS_REQUIRED',
     message: 'At least one therapeutic method must be specified',
-    messageHe: 'יש לציין at least שיטה Therapyית אחת',
+    messageHe: 'At least one therapeutic method must be specified',
     isRequired: true,
   },
 ];
@@ -66,7 +66,7 @@ const SAFETY_RULES: ValidationRule[] = [
     },
     errorCode: 'SAFETY_ASSESSMENT_REQUIRED_FOR_HIGH_RISK',
     message: 'Safety assessment is required for high/critical risk levels',
-    messageHe: 'Assessment בטיחs Requiredת לרמs סיכון גבוה/Critical',
+    messageHe: 'Safety assessment required for high/critical risk levels',
     isRequired: true,
   },
   {
@@ -80,7 +80,7 @@ const SAFETY_RULES: ValidationRule[] = [
     },
     errorCode: 'SAFETY_PLAN_REQUIRED',
     message: 'Safety plan is required when suicidal/homicidal ideation is present',
-    messageHe: 'תוכנית בטיחs Requiredת כApprove קיימת אידיאציה orבדנית/רצחנית',
+    messageHe: 'Safety plan required when suicidal/homicidal ideation is present',
     isRequired: true,
   },
   {
@@ -94,7 +94,7 @@ const SAFETY_RULES: ValidationRule[] = [
     },
     errorCode: 'EMERGENCY_CONTACTS_REQUIRED',
     message: 'Emergency contacts are required for at-risk patients',
-    messageHe: 'אנשי קשר לשעת חירום Requireds לPatients בסיכון',
+    messageHe: 'Emergency contacts required for at-risk patients',
     isRequired: true,
   },
 ];
@@ -112,7 +112,7 @@ const WARNING_RULES: Array<{
     check: (notes) => !notes.presentingIssue,
     warningCode: 'PRESENTING_ISSUE_MISSING',
     message: 'Consider documenting the presenting issue',
-    messageHe: 'Consider toup to את הSubject הedצג',
+    messageHe: 'Consider updating the presenting issue',
     suggestion: 'Add a brief description of why the patient sought this session',
   },
   {
@@ -120,7 +120,7 @@ const WARNING_RULES: Array<{
     check: (notes) => !notes.interventions,
     warningCode: 'INTERVENTIONS_MISSING',
     message: 'Consider documenting interventions used',
-    messageHe: 'Consider toup to את ההתערבויs שנעשו',
+    messageHe: 'Consider updating the interventions performed',
     suggestion: 'Describe the therapeutic techniques and interventions applied',
   },
   {
@@ -128,7 +128,7 @@ const WARNING_RULES: Array<{
     check: (notes) => !notes.patientResponse,
     warningCode: 'PATIENT_RESPONSE_MISSING',
     message: 'Consider documenting patient response',
-    messageHe: 'Consider toup to את Response ofPatient',
+    messageHe: 'Consider updating the patient response',
     suggestion: 'Note how the patient responded to the session and interventions',
   },
   {
@@ -136,7 +136,7 @@ const WARNING_RULES: Array<{
     check: (notes) => !notes.progressIndicator,
     warningCode: 'PROGRESS_INDICATOR_MISSING',
     message: 'Consider adding a progress indicator',
-    messageHe: 'שקול להוסיף מדד התקדמs',
+    messageHe: 'Consider adding a progress indicator',
     suggestion: 'Track progress over time with a consistent indicator',
   },
   {
@@ -144,7 +144,7 @@ const WARNING_RULES: Array<{
     check: (notes) => !notes.followUp?.nextSessionDate,
     warningCode: 'NEXT_SESSION_NOT_SCHEDULED',
     message: 'Next session is not scheduled',
-    messageHe: 'הSession Nextה No נקבעה',
+    messageHe: 'Next session has not been scheduled',
   },
   {
     field: 'riskAssessmentDate',
@@ -157,7 +157,7 @@ const WARNING_RULES: Array<{
     },
     warningCode: 'RISK_ASSESSMENT_OUTDATED',
     message: 'Risk assessment is more than 30 days old',
-    messageHe: 'Assessment הסיכון ישנה מ-30 יום',
+    messageHe: 'Risk assessment is older than 30 days',
     suggestion: 'Consider updating the risk assessment',
   },
 ];
@@ -230,7 +230,7 @@ export function validateForAutoSave(input: SaveClinicalNotesInput): ValidationRe
       field: 'clinicalSummary',
       code: 'CONTENT_TOO_LONG',
       message: 'Clinical summary exceeds maximum length',
-      messageHe: 'הSummary הקליני חורג מהorרך המקסימלי',
+      messageHe: 'Clinical summary exceeds maximum length',
     });
   }
 
@@ -239,7 +239,7 @@ export function validateForAutoSave(input: SaveClinicalNotesInput): ValidationRe
       field: 'icdCodes',
       code: 'TOO_MANY_ICD_CODES',
       message: 'Unusually many ICD codes specified',
-      messageHe: 'מספר Code ICD גבוה בorפן חריג',
+      messageHe: 'Unusually high number of ICD codes',
     });
   }
 
@@ -248,7 +248,7 @@ export function validateForAutoSave(input: SaveClinicalNotesInput): ValidationRe
       field: 'dsmCodes',
       code: 'TOO_MANY_DSM_CODES',
       message: 'Unusually many DSM codes specified',
-      messageHe: 'מספר Code DSM גבוה בorפן חריג',
+      messageHe: 'Unusually high number of DSM codes',
     });
   }
 
@@ -276,7 +276,7 @@ export function validateSafetyAssessment(
       field: 'assessment.safetyAssessment',
       code: 'SAFETY_ASSESSMENT_REQUIRED',
       message: 'Safety assessment is required for elevated risk levels',
-      messageHe: 'Assessment בטיחs Requiredת לרמs סיכון edגברs',
+      messageHe: 'Safety assessment required for elevated risk levels',
     });
   }
 
@@ -287,7 +287,7 @@ export function validateSafetyAssessment(
         field: 'assessment.safetyAssessment',
         code: 'INCONSISTENT_SUICIDAL_ASSESSMENT',
         message: 'Suicidal plan marked without ideation',
-        messageHe: 'תוכנית orבדנית סומנה לNo אידיאציה',
+        messageHe: 'Suicidal plan marked without ideation',
         suggestion: 'Review suicidal ideation assessment',
       });
     }
@@ -297,7 +297,7 @@ export function validateSafetyAssessment(
         field: 'assessment.safetyAssessment',
         code: 'INCONSISTENT_SUICIDAL_INTENT',
         message: 'Suicidal intent marked without plan',
-        messageHe: 'כוונה orבדנית סומנה לNo תוכנית',
+        messageHe: 'Suicidal intent marked without a plan',
         suggestion: 'Review suicidal plan assessment',
       });
     }
@@ -314,7 +314,7 @@ export function validateSafetyAssessment(
         field: 'assessment.safetyAssessment.safetyPlan',
         code: 'SAFETY_PLAN_REQUIRED',
         message: 'Safety plan is required for high-risk indicators',
-        messageHe: 'תוכנית בטיחs Requiredת לRisk indicators גבוה',
+        messageHe: 'Safety plan required for high risk indicators',
       });
     }
 
@@ -323,7 +323,7 @@ export function validateSafetyAssessment(
         field: 'assessment.safetyAssessment.emergencyContacts',
         code: 'EMERGENCY_CONTACTS_REQUIRED',
         message: 'Emergency contacts are required for high-risk patients',
-        messageHe: 'אנשי קשר לחירום Requireds לPatients בסיכון גבוה',
+        messageHe: 'Emergency contacts required for high-risk patients',
       });
     }
 
@@ -336,7 +336,7 @@ export function validateSafetyAssessment(
         field: 'assessment.safetyAssessment.protectiveFactors',
         code: 'PROTECTIVE_FACTORS_MISSING',
         message: 'Consider documenting protective factors',
-        messageHe: 'Consider toup to גורמי הגנה',
+        messageHe: 'Consider updating protective factors',
         suggestion: 'Document what keeps the patient safe',
       });
     }
@@ -402,20 +402,20 @@ export function getFieldLabelHe(field: string): string {
   const labels: Record<string, string> = {
     clinicalSummary: 'Clinical Summary',
     riskLevel: 'Risk level',
-    therapeuticMethods: 'שיטs Therapy',
-    presentingIssue: 'Subject edצג',
-    interventions: 'התערבויs',
+    therapeuticMethods: 'Therapeutic Methods',
+    presentingIssue: 'Presenting Issue',
+    interventions: 'Interventions',
     patientResponse: 'Response ofPatient',
-    progressIndicator: 'מדד התקדמs',
-    followUp: 'המשך Therapy',
-    assessment: 'הערכה',
-    'assessment.safetyAssessment': 'Assessment בטיחs',
-    'assessment.safetyAssessment.safetyPlan': 'תוכנית בטיחs',
-    'assessment.safetyAssessment.emergencyContacts': 'אנשי קשר לחירום',
-    'assessment.safetyAssessment.protectiveFactors': 'גורמי הגנה',
+    progressIndicator: 'Progress Indicator',
+    followUp: 'Follow-up',
+    assessment: 'Assessment',
+    'assessment.safetyAssessment': 'Safety Assessment',
+    'assessment.safetyAssessment.safetyPlan': 'Safety Plan',
+    'assessment.safetyAssessment.emergencyContacts': 'Emergency Contacts',
+    'assessment.safetyAssessment.protectiveFactors': 'Protective Factors',
     icdCodes: 'Code ICD',
     dsmCodes: 'Code DSM',
-    riskAssessmentDate: 'Date Assessment סיכון',
+    riskAssessmentDate: 'Risk Assessment Date',
   };
 
   return labels[field] || field;

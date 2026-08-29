@@ -279,9 +279,9 @@ export const patientRouter = router({
           languages: therapist.languages,
           gender: therapist.gender,
           education: therapist.education || [
-            'תואר Sun בפסיכולוגיה',
-            'תואר Mon בClinical Psychology',
-            'License פסיכולוג/ית קליני/ת - משרד הבריorת',
+            'B.A. in Psychology',
+            'M.A. in Clinical Psychology',
+            'Licensed Clinical Psychologist - Ministry of Health',
           ],
         },
         matchScore: detailedMatch.overallScore,

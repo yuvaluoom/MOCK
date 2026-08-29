@@ -314,7 +314,7 @@ export default function TherapistRegisterPage() {
           <span className="text-xl font-bold text-gray-900">MatchMind</span>
         </Link>
         <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
-          הרשמת Therapist
+          Therapist Registration
         </span>
       </header>
 
@@ -323,9 +323,9 @@ export default function TherapistRegisterPage() {
         <div className="w-full max-w-xl">
           <Card className="shadow-xl">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Join asTherapist</CardTitle>
+              <CardTitle className="text-2xl">Join as a Therapist</CardTitle>
               <CardDescription>
-                Join the community of הTherapists שלנו וקבל Patients מsאמs
+                Join our community of therapists and get matched with patients
               </CardDescription>
 
               {/* Step Indicator */}
@@ -383,7 +383,7 @@ export default function TherapistRegisterPage() {
                         id="firstName"
                         name="firstName"
                         type="text"
-                        placeholder="ישראל"
+                        placeholder="John"
                         value={formData.firstName}
                         onChange={handleChange}
                         error={!!errors.firstName}
@@ -401,7 +401,7 @@ export default function TherapistRegisterPage() {
                         id="lastName"
                         name="lastName"
                         type="text"
-                        placeholder="ישראלי"
+                        placeholder="Doe"
                         value={formData.lastName}
                         onChange={handleChange}
                         error={!!errors.lastName}
@@ -434,7 +434,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone">מספר Phone</Label>
+                    <Label htmlFor="phone">Phone Number</Label>
                     <Input
                       id="phone"
                       name="phone"
@@ -458,7 +458,7 @@ export default function TherapistRegisterPage() {
                       id="licenseNumber"
                       name="licenseNumber"
                       type="text"
-                      placeholder="License Number מקצועי"
+                      placeholder="Professional license number"
                       value={formData.licenseNumber}
                       onChange={handleChange}
                       error={!!errors.licenseNumber}
@@ -488,7 +488,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">אימs Password</Label>
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
                     <Input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -506,7 +506,7 @@ export default function TherapistRegisterPage() {
                   </div>
 
                   <Button type="submit" variant="calm" className="w-full">
-                    המשך להעNoת מסמכs
+                    Continue to Document Upload
                   </Button>
                 </form>
               )}
@@ -516,7 +516,7 @@ export default function TherapistRegisterPage() {
                 <div className="space-y-6">
                   {/* Profile Photo Section */}
                   <div className="border rounded-lg p-6 bg-gradient-to-br from-calm-50 to-trust-50">
-                    <h4 className="font-semibold text-gray-900 mb-4 text-center">תedנת פרופיל</h4>
+                    <h4 className="font-semibold text-gray-900 mb-4 text-center">Profile Photo</h4>
                     <ProfilePhotoUpload
                       currentPhotoUrl={null}
                       onPhotoChange={handleProfilePhotoChange}
@@ -528,7 +528,7 @@ export default function TherapistRegisterPage() {
 
                   <div className="space-y-4">
                     <p className="text-sm text-gray-600">
-                      העלה את המסמכs Nexts לצורך אימs הLicense Your. קבצs מType PDF, JPG or PNG up to 10MB.
+                      Upload the following documents to verify your license. Accepted formats: PDF, JPG, or PNG, up to 10MB.
                     </p>
 
                     {errors.documents && (
@@ -564,7 +564,7 @@ export default function TherapistRegisterPage() {
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
-                                העלה
+                                Upload
                               </span>
                             </label>
                           </div>
@@ -586,7 +586,7 @@ export default function TherapistRegisterPage() {
                                     type="button"
                                     onClick={() => handleRemoveFile(file.id)}
                                     className="p-1 text-gray-400 hover:text-red-500 transition-colors"
-                                    aria-label="הסר קובץ"
+                                    aria-label="Remove file"
                                   >
                                     <XIcon />
                                   </button>
@@ -604,7 +604,7 @@ export default function TherapistRegisterPage() {
                       Back
                     </Button>
                     <Button type="button" variant="calm" onClick={goToNextStep} className="flex-1">
-                      המשך לSummary
+                      Continue to Review
                     </Button>
                   </div>
                 </div>
@@ -615,7 +615,7 @@ export default function TherapistRegisterPage() {
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-3">Details אישיs</h4>
+                      <h4 className="font-medium text-gray-900 mb-3">Personal Details</h4>
                       <dl className="grid grid-cols-2 gap-2 text-sm">
                         <dt className="text-gray-500">Name:</dt>
                         <dd className="text-gray-900">{formData.firstName} {formData.lastName}</dd>
@@ -629,9 +629,9 @@ export default function TherapistRegisterPage() {
                     </div>
 
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-900 mb-3">מסמכs שהועלו</h4>
+                      <h4 className="font-medium text-gray-900 mb-3">Uploaded Documents</h4>
                       {uploadedFiles.length === 0 ? (
-                        <p className="text-sm text-gray-500">No הועלו מסמכs</p>
+                        <p className="text-sm text-gray-500">No documents uploaded</p>
                       ) : (
                         <ul className="space-y-1 text-sm">
                           {uploadedFiles.map((file) => (
@@ -652,9 +652,9 @@ export default function TherapistRegisterPage() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                         <div>
-                          <p className="text-sm font-medium text-amber-800">תהליך Confirm</p>
+                          <p className="text-sm font-medium text-amber-800">Verification Process</p>
                           <p className="text-xs text-amber-600 mt-1">
-                            Noחר הSubmit, Team MatchMind יReview את המסמכs Your. תהליך הConfirm עשוי לקחת 1-3 ימי עסקs.
+                            After submission, the MatchMind team will review your documents. The verification process may take 1-3 business days.
                           </p>
                         </div>
                       </div>
@@ -672,7 +672,7 @@ export default function TherapistRegisterPage() {
                       loading={registerMutation.isPending}
                       className="flex-1"
                     >
-                      Send לConfirm
+                      Submit for Verification
                     </Button>
                   </div>
                 </div>
@@ -685,7 +685,7 @@ export default function TherapistRegisterPage() {
                   href="/login/therapist"
                   className="text-primary hover:underline font-medium"
                 >
-                  התחבר
+                  Log in
                 </Link>
               </p>
             </CardContent>
@@ -696,13 +696,13 @@ export default function TherapistRegisterPage() {
       {/* Footer */}
       <footer className="container mx-auto px-4 py-4 text-center text-sm text-muted-foreground">
         <p>
-          בהרשמה, אתה מסכs ל
+          By registering, you agree to our
           <Link href="/terms" className="underline mx-1">
-            תנאי השיedש
+            Terms of Service
           </Link>
-          ול
+          and
           <Link href="/privacy" className="underline mx-1">
-            מדיניs הPrivates
+            Privacy Policy
           </Link>
         </p>
       </footer>

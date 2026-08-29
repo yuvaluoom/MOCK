@@ -85,44 +85,44 @@ const verificationStatusConfig: Record<string, {
   action: string;
 }> = {
   VERIFIED: {
-    label: 'מorמת',
+    label: 'Verified',
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
     Icon: ShieldCheckIcon,
-    tooltip: 'All documents orשרו ובתוקף. הTherapist עומד בכל דרישs הציs.',
-    action: 'No Requiredת פעולה',
+    tooltip: 'All documents are approved and valid. The therapist meets all compliance requirements.',
+    action: 'No action required',
   },
   PENDING_VERIFICATION: {
-    label: 'Pending Noימs',
+    label: 'Pending Verification',
     color: 'text-amber-400',
     bgColor: 'bg-amber-500/20',
     Icon: ClockIcon,
-    tooltip: 'מסמכs הועלו אך טרם Reviewed על ידי Team הManagers.',
-    action: 'יש לReview את המסמכs הPending',
+    tooltip: 'Documents have been uploaded but not yet reviewed by the admin team.',
+    action: 'Review pending documents',
   },
   PARTIALLY_VERIFIED: {
-    label: 'מorמת חלקית',
+    label: 'Partially Verified',
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
     Icon: ShieldAlertIcon,
-    tooltip: 'חלק מהמסמכs orשרו, אך ישנם מסמכs שטרם orשרו or Missing.',
-    action: 'יש להשלs את תהליך האימs',
+    tooltip: 'Some documents have been approved, but others are still pending or missing.',
+    action: 'Complete the verification process',
   },
   MISSING_DOCUMENTATION: {
-    label: 'Missing documents',
+    label: 'Missing Documents',
     color: 'text-red-400',
     bgColor: 'bg-red-500/20',
     Icon: ShieldXIcon,
-    tooltip: 'No הועלו מסמכs כלל. על הTherapist להעלs את All documents הRequireds.',
-    action: 'יש לבקש העNoת מסמכs',
+    tooltip: 'No documents have been uploaded. The therapist must upload all required documents.',
+    action: 'Request document upload',
   },
   EXPIRED_CREDENTIALS: {
-    label: 'תוקף פג',
+    label: 'Expired Credentials',
     color: 'text-orange-400',
     bgColor: 'bg-orange-500/20',
     Icon: FileWarningIcon,
-    tooltip: 'לTherapist מסמכs שפג תוקפם. יש לחדש את הConfirms הרלוונטיs.',
-    action: 'יש לבקש חידוש מסמכs',
+    tooltip: 'The therapist has documents that have expired. Relevant credentials must be renewed.',
+    action: 'Request document renewal',
   },
 };
 
@@ -136,7 +136,7 @@ export default function AdminCompliancePage() {
   const filteredTherapists = (data?.therapists ?? [])
     .filter(t => t.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
-      if (sortBy === 'name') return a.name.localeCompare(b.name, 'he');
+      if (sortBy === 'name') return a.name.localeCompare(b.name, 'en');
       if (sortBy === 'status') {
         const order = ['EXPIRED_CREDENTIALS', 'MISSING_DOCUMENTATION', 'PENDING_VERIFICATION', 'PARTIALLY_VERIFIED', 'VERIFIED'];
         return order.indexOf(a.verificationStatus) - order.indexOf(b.verificationStatus);
@@ -151,8 +151,8 @@ export default function AdminCompliancePage() {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-bold text-white">Compliance & Verification מסמכs</h1>
-          <p className="text-slate-400 mt-1">מעקב Other Status אימs וציs של Therapists בפלטפורמה</p>
+          <h1 className="text-2xl font-bold text-white">Compliance & Document Verification</h1>
+          <p className="text-slate-400 mt-1">Track verification status and compliance of therapists on the platform</p>
         </div>
       </div>
 
@@ -162,9 +162,9 @@ export default function AdminCompliancePage() {
           <div className="flex items-start gap-3">
             <AlertTriangleIcon className="w-6 h-6 text-red-400 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-red-400">Alertorת Criticals</h3>
+              <h3 className="font-semibold text-red-400">Critical Alerts</h3>
               <p className="text-sm text-red-300 mt-1">
-                ל-{overallStats?.expiredCreds} Therapists יש מסמכs שפג תוקפם. יש לטפל בכך בהקדם.
+                {overallStats?.expiredCreds} therapists have expired documents. Please address this urgently.
               </p>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function AdminCompliancePage() {
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">מorמתs</p>
+              <p className="text-sm text-slate-400">Verified</p>
               <p className="text-2xl font-bold text-green-400">
                 {isLoading ? '...' : overallStats?.verified ?? 0}
               </p>
@@ -190,7 +190,7 @@ export default function AdminCompliancePage() {
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Pending Noימs</p>
+              <p className="text-sm text-slate-400">Pending Verification</p>
               <p className="text-2xl font-bold text-amber-400">
                 {isLoading ? '...' : overallStats?.pendingVerification ?? 0}
               </p>
@@ -204,7 +204,7 @@ export default function AdminCompliancePage() {
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">מorמתs חלקית</p>
+              <p className="text-sm text-slate-400">Partially Verified</p>
               <p className="text-2xl font-bold text-blue-400">
                 {isLoading ? '...' : overallStats?.partiallyVerified ?? 0}
               </p>
@@ -218,7 +218,7 @@ export default function AdminCompliancePage() {
         <div className={`bg-slate-800 border rounded-xl p-4 ${(overallStats?.missingDocs ?? 0) > 0 ? 'border-red-500/50' : 'border-slate-700'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Missing documents</p>
+              <p className="text-sm text-slate-400">Missing Documents</p>
               <p className="text-2xl font-bold text-red-400">
                 {isLoading ? '...' : overallStats?.missingDocs ?? 0}
               </p>
@@ -232,7 +232,7 @@ export default function AdminCompliancePage() {
         <div className={`bg-slate-800 border rounded-xl p-4 ${(overallStats?.expiredCreds ?? 0) > 0 ? 'border-orange-500/50' : 'border-slate-700'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">תוקף פג</p>
+              <p className="text-sm text-slate-400">Expired</p>
               <p className="text-2xl font-bold text-orange-400">
                 {isLoading ? '...' : overallStats?.expiredCreds ?? 0}
               </p>
@@ -250,7 +250,7 @@ export default function AdminCompliancePage() {
           <div className="flex items-center gap-3">
             <ShieldCheckIcon className={`w-8 h-8 ${(overallStats?.overallComplianceRate ?? 0) >= 75 ? 'text-green-400' : 'text-red-400'}`} />
             <div>
-              <p className="text-sm text-slate-400">שיעור ציs כללי</p>
+              <p className="text-sm text-slate-400">Overall Compliance Rate</p>
               <p className="text-3xl font-bold text-white">
                 {isLoading ? '...' : `${overallStats?.overallComplianceRate ?? 0}%`}
               </p>
@@ -274,7 +274,7 @@ export default function AdminCompliancePage() {
       {/* Therapist Compliance Table */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
         <div className="p-4 border-b border-slate-700 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <h3 className="text-lg font-semibold text-white">Status אימs לפי Therapist</h3>
+          <h3 className="text-lg font-semibold text-white">Verification Status by Therapist</h3>
           <div className="flex gap-3">
             <div className="relative">
               <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
@@ -293,32 +293,32 @@ export default function AdminCompliancePage() {
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
               className="px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
             >
-              <option value="status">מיון: Status</option>
-              <option value="docs">מיון: אחוז ציs</option>
-              <option value="name">מיון: Name</option>
+              <option value="status">Sort: Status</option>
+              <option value="docs">Sort: Compliance %</option>
+              <option value="name">Sort: Name</option>
             </select>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="p-12 text-center text-slate-400">Loading נתוני ציs...</div>
+          <div className="p-12 text-center text-slate-400">Loading compliance data...</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-slate-700">
                   <th className="text-right py-3 px-6 text-sm font-medium text-slate-400">Therapist</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Status אימs</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">מסמכs</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">ציs</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Verification Status</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Documents</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Compliance</th>
                   <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Sessions</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">פעולה Requiredת</th>
+                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Required Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTherapists.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-slate-400">אין Therapists תואמs</td>
+                    <td colSpan={6} className="text-center py-12 text-slate-400">No matching therapists found</td>
                   </tr>
                 ) : (
                   filteredTherapists.map((therapist) => {
@@ -368,7 +368,7 @@ export default function AdminCompliancePage() {
                             </span>
                             <span className="text-xs text-slate-400">
                               {therapist.pendingDocuments > 0 && `${therapist.pendingDocuments} Pending`}
-                              {therapist.expiredDocuments > 0 && ` · ${therapist.expiredDocuments} פגי תוקף`}
+                              {therapist.expiredDocuments > 0 && ` · ${therapist.expiredDocuments} expired`}
                             </span>
                           </div>
                         </td>
@@ -404,11 +404,11 @@ export default function AdminCompliancePage() {
         <div className="flex items-start gap-3">
           <FileTextIcon className="w-5 h-5 text-blue-400 mt-0.5" />
           <div className="text-sm text-blue-300">
-            <p className="font-medium">Important note לציs</p>
+            <p className="font-medium">Important Compliance Note</p>
             <p className="mt-1">
-              דף זה Displays מידע סטטיסטי על ציs למסמכs בלבד.
-              <strong> תוYes קליני אינו נגיש לManagers</strong> בהתאם לדרישs Privates רפואית.
-              All theנתונs נשאבs ישירs ממסד הנתונs של הפלטפורמה בReal-Time.
+              This page displays statistical information about document compliance only.
+              <strong> Clinical content is not accessible to administrators</strong> in accordance with medical privacy requirements.
+              All data is pulled directly from the platform database in real-time.
             </p>
           </div>
         </div>

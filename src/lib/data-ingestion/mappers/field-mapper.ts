@@ -55,8 +55,8 @@ export class FieldMapper implements IFieldMapper {
     'session_price': 'sessionPrice',
 
     // Organization
-    'Name_מרפאה': 'clinicName',
-    'ארגון': 'organizationId',
+    'clinic_name': 'clinicName',
+    'organization': 'organizationId',
   };
 
   // Value mappings for common fields
@@ -73,18 +73,18 @@ export class FieldMapper implements IFieldMapper {
       'Clalit': 'clalit',
       'Maccabi': 'maccabi',
       'Meuhedet': 'meuhedet',
-      'Noומית': 'leumit',
+      'Leumit': 'leumit',
       'clalit': 'clalit',
       'maccabi': 'maccabi',
       'meuhedet': 'meuhedet',
       'leumit': 'leumit',
     },
     licenseType: {
-      'פסיכולוג': 'psychologist',
-      'פסיכולוג_קליני': 'clinical_psychologist',
-      'פסיכsרפיסט': 'psychotherapist',
-      'עובד_סוציאלי': 'social_worker',
-      'פסיכיאטר': 'psychiatrist',
+      'psychologist': 'psychologist',
+      'clinical_psychologist': 'clinical_psychologist',
+      'psychotherapist_alt': 'psychotherapist',
+      'social_worker': 'social_worker',
+      'psychiatrist': 'psychiatrist',
     },
   };
 

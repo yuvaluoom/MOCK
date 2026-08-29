@@ -99,7 +99,7 @@ export default function SessionDocumentationPage() {
 
   const handleSubmit = async () => {
     if (completionPercentage < 100) {
-      alert('Please complete all fields הRequired לפני הגשה');
+      alert('Please complete all required fields before submitting');
       return;
     }
 
@@ -119,13 +119,13 @@ export default function SessionDocumentationPage() {
 
   const handleExport = async () => {
     // TODO: Implement export
-    alert('ייצוא הDocumentation יופעל Coming soon');
+    alert('Documentation export coming soon');
   };
 
   const sections = [
     { id: 'notes' as FormSection, label: 'Clinical notes', icon: '📝' },
-    { id: 'safety' as FormSection, label: 'Assessment בטיחs', icon: '🛡️' },
-    { id: 'summary' as FormSection, label: 'Summary forPatient', icon: '📋' },
+    { id: 'safety' as FormSection, label: 'Safety Assessment', icon: '🛡️' },
+    { id: 'summary' as FormSection, label: 'Patient Summary', icon: '📋' },
   ];
 
   return (
@@ -141,7 +141,7 @@ export default function SessionDocumentationPage() {
                 onClick={() => router.push('/therapist/documentation')}
               >
                 <ArrowRight className="w-4 h-4 ml-1" />
-                חזרה
+                Back
               </Button>
               <div className="h-6 w-px bg-gray-200" />
               <div>
@@ -149,7 +149,7 @@ export default function SessionDocumentationPage() {
                   {sessionInfo.patientName} - Session #{sessionInfo.sessionNumber}
                 </h1>
                 <p className="text-xs text-gray-500">
-                  {new Date(sessionInfo.sessionDate).toLocaleDateString('he-IL')} •
+                  {new Date(sessionInfo.sessionDate).toLocaleDateString('en-US')} •
                   {sessionInfo.sessionType === 'IN_PERSON' ? ' In-Person' : ' Online'}
                 </p>
               </div>
@@ -161,17 +161,17 @@ export default function SessionDocumentationPage() {
                 {isSaving ? (
                   <span className="text-gray-500 flex items-center gap-1">
                     <span className="animate-spin">⏳</span>
-                    שומר...
+                    Saving...
                   </span>
                 ) : lastSaved ? (
                   <span className="text-green-600 flex items-center gap-1">
                     <CheckCircle className="w-4 h-4" />
-                    נשמר {lastSaved.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })}
+                    Saved {lastSaved.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 ) : hasUnsavedChanges ? (
                   <span className="text-yellow-600 flex items-center gap-1">
                     <Clock className="w-4 h-4" />
-                    שינויs No נשמרו
+                    Unsaved changes
                   </span>
                 ) : null}
               </div>
@@ -209,14 +209,14 @@ export default function SessionDocumentationPage() {
                     onClick={() => setShowSubmitConfirm(true)}
                     disabled={isSaving || completionPercentage < 100}
                   >
-                    הגשה
+                    Submit
                   </Button>
                 </>
               )}
               {isReadOnly && (
                 <Button variant="outline" size="sm" onClick={handleExport}>
                   <Download className="w-4 h-4 ml-1" />
-                  ייצוא
+                  Export
                 </Button>
               )}
             </div>
@@ -260,10 +260,10 @@ export default function SessionDocumentationPage() {
 
                 {/* Version Info */}
                 <div className="mt-4 pt-4 border-t text-sm text-gray-500">
-                  <p>גרTotal: {sessionInfo.currentVersion}</p>
+                  <p>Version: {sessionInfo.currentVersion}</p>
                   {sessionInfo.isOverdue && (
                     <p className="text-red-600 mt-1">
-                      edup to Otherון: {new Date(sessionInfo.deadline).toLocaleDateString('he-IL')}
+                      Deadline: {new Date(sessionInfo.deadline).toLocaleDateString('en-US')}
                     </p>
                   )}
                 </div>
@@ -304,17 +304,17 @@ export default function SessionDocumentationPage() {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <Card className="w-full max-w-md mx-4">
             <CardHeader>
-              <CardTitle>Confirm הגשה</CardTitle>
+              <CardTitle>Confirm Submission</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-gray-600">
-                Noחר ההגשה, הDocumentation ייסגר לEdit רגילה.
-                תיקונs יידרשו הסבר מפורט ויתוup toו בהיסטוריית הגרסorת.
+                After submission, the documentation will be locked for regular editing.
+                Corrections will require a detailed explanation and will be logged in the version history.
               </p>
               <div className="flex items-start gap-2 p-3 bg-yellow-50 rounded-lg">
                 <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5" />
                 <p className="text-sm text-yellow-800">
-                  נא לוודא שAll theמידע הקליני מדויק ומNo לפני ההגשה.
+                  Please ensure all clinical information is accurate and complete before submission.
                 </p>
               </div>
               <div className="flex gap-3 justify-end">
@@ -329,7 +329,7 @@ export default function SessionDocumentationPage() {
                   onClick={handleSubmit}
                   disabled={isSaving}
                 >
-                  {isSaving ? 'מגיש...' : 'Confirm והגשה'}
+                  {isSaving ? 'Submitting...' : 'Confirm & Submit'}
                 </Button>
               </div>
             </CardContent>
@@ -379,7 +379,7 @@ function getStatusBadge(status: DocumentationStatus, isOverdue: boolean) {
 
   const config: Record<DocumentationStatus, { label: string; className: string; icon?: React.ReactNode }> = {
     DRAFT: { label: 'Draft', className: 'bg-yellow-100 text-yellow-700' },
-    SUBMITTED: { label: 'הוגש', className: 'bg-green-100 text-green-700', icon: <CheckCircle className="w-3 h-3" /> },
+    SUBMITTED: { label: 'Submitted', className: 'bg-green-100 text-green-700', icon: <CheckCircle className="w-3 h-3" /> },
     AMENDED: { label: 'Fixed', className: 'bg-blue-100 text-blue-700' },
     LOCKED: { label: 'Locked', className: 'bg-gray-100 text-gray-700', icon: <Lock className="w-3 h-3" /> },
   };
@@ -406,10 +406,10 @@ function getRiskLevelStyle(riskLevel: RiskLevel): string {
 
 function getRiskLevelLabel(riskLevel: RiskLevel): string {
   const labels: Record<RiskLevel, string> = {
-    NONE: 'לNo',
+    NONE: 'None',
     LOW: 'Low',
-    MODERATE: 'בינוני',
-    HIGH: 'גבוה',
+    MODERATE: 'Moderate',
+    HIGH: 'High',
     CRITICAL: 'Critical',
   };
   return labels[riskLevel];

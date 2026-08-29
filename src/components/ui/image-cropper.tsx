@@ -53,17 +53,17 @@ export interface CropData {
 
 const labels = {
   he: {
-    upload: 'העNoת Image',
-    dragDrop: 'Drag an image לכאן or',
-    clickToUpload: 'לחצו לבחירה',
+    upload: 'Upload Image',
+    dragDrop: 'Drag an image here or',
+    clickToUpload: 'click to choose',
     supportedFormats: 'JPG, PNG - up to 5MB',
-    cropTitle: 'חיתוך Image',
-    cropInstructions: 'גררו את המסגרת לבחירת האThisר הרצוי',
+    cropTitle: 'Crop Image',
+    cropInstructions: 'Drag the frame to select the desired area',
     save: 'Save',
     cancel: 'Cancel',
-    change: 'החלפת Image',
-    fileTooLarge: 'הקובץ גדול מדי. גודל מקסימלי: 5MB',
-    invalidFormat: 'Format No נתמך. השתמשו ב-JPG or PNG',
+    change: 'Change Image',
+    fileTooLarge: 'File is too large. Maximum size: 5MB',
+    invalidFormat: 'Unsupported format. Use JPG or PNG',
   },
   en: {
     upload: 'Upload Image',
@@ -305,7 +305,7 @@ export function ImageCropper({
           {completedCrop && (
             <div className="mt-4 flex justify-center">
               <div className="text-center">
-                <p className="text-sm text-gray-500 mb-2">תצוגה מקדימה</p>
+                <p className="text-sm text-gray-500 mb-2">Preview</p>
                 <div
                   className="w-20 h-20 rounded-full overflow-hidden border-2 border-calm-200 mx-auto"
                   style={{

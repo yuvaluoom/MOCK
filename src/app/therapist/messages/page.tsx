@@ -11,30 +11,30 @@ export default function TherapistMessagesPage() {
 
   // Mock data
   const threads = [
-    { id: '1', patientName: 'Israel Israeli', lastMessage: 'Thank you very much על הSession הOtherונה', time: '10:30', unread: 2 },
-    { id: '2', patientName: 'Sarah Cohen', lastMessage: 'האם אפשר לשנs את הSession?', time: 'אתedל', unread: 0 },
-    { id: '3', patientName: 'David Levi', lastMessage: 'ראיתי את ההמלצs Your', time: '3 ימs', unread: 0 },
+    { id: '1', patientName: 'Israel Israeli', lastMessage: 'Thank you for the last session', time: '10:30', unread: 2 },
+    { id: '2', patientName: 'Sarah Cohen', lastMessage: 'Can we reschedule the session?', time: 'Yesterday', unread: 0 },
+    { id: '3', patientName: 'David Levi', lastMessage: 'I saw your recommendations', time: '3 days ago', unread: 0 },
   ];
 
   const messages = [
-    { id: '1', sender: 'patient', content: 'Hello, רציתי לשorל לגבי הSession Nextה', time: '10:00' },
-    { id: '2', sender: 'therapist', content: 'כedבן, אשמח לעThisר. מה רצית לשorל?', time: '10:15' },
-    { id: '3', sender: 'patient', content: 'האם אפשר להזיז את הSession בTime?', time: '10:20' },
-    { id: '4', sender: 'patient', content: 'Thank you very much על הSession הOtherונה', time: '10:30' },
+    { id: '1', sender: 'patient', content: 'Hello, I wanted to ask about the next session', time: '10:00' },
+    { id: '2', sender: 'therapist', content: 'Of course, I\'d be happy to help. What did you want to ask?', time: '10:15' },
+    { id: '3', sender: 'patient', content: 'Can we move the session time?', time: '10:20' },
+    { id: '4', sender: 'patient', content: 'Thank you for the last session', time: '10:30' },
   ];
 
   return (
     <div className="h-[calc(100vh-12rem)] flex flex-col">
       <div className="flex-shrink-0 mb-4">
         <h1 className="text-2xl font-bold text-gray-900">Messages</h1>
-        <p className="text-gray-600 mt-1">תקשורת With הPatients Your</p>
+        <p className="text-gray-600 mt-1">Communication with your patients</p>
       </div>
 
       <div className="flex-1 min-h-0 grid md:grid-cols-3 gap-4">
         {/* Thread List */}
         <Card className="md:col-span-1 flex flex-col">
           <CardHeader className="py-3 border-b flex-shrink-0">
-            <CardTitle className="text-sm font-medium text-gray-500">שיחs</CardTitle>
+            <CardTitle className="text-sm font-medium text-gray-500">Conversations</CardTitle>
           </CardHeader>
           <CardContent className="p-0 flex-1 overflow-y-auto">
             <div className="divide-y">
@@ -77,7 +77,7 @@ export default function TherapistMessagesPage() {
         <Card className="md:col-span-2 flex flex-col">
           {!selectedThread ? (
             <div className="flex-1 flex items-center justify-center text-gray-500">
-              בחר שיחה לView
+              Select a conversation to view
             </div>
           ) : (
             <>
@@ -85,7 +85,7 @@ export default function TherapistMessagesPage() {
               <CardHeader className="py-3 border-b flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-calm-100 flex items-center justify-center">
-                    <span className="text-calm-700 font-medium text-sm">י</span>
+                    <span className="text-calm-700 font-medium text-sm">T</span>
                   </div>
                   <CardTitle className="text-sm font-medium">Israel Israeli</CardTitle>
                 </div>
@@ -124,7 +124,7 @@ export default function TherapistMessagesPage() {
                   <Input
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="הקלד Message..."
+                    placeholder="Type a message..."
                     className="flex-1"
                   />
                   <Button variant="calm" disabled={!newMessage.trim()}>

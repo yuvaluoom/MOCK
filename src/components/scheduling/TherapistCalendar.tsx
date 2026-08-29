@@ -21,8 +21,8 @@ const ChevronRightIcon = () => (
 
 const DAY_NAMES_HE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTH_NAMES_HE = [
-  'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
-  'יולי', 'orגוסט', 'ספטמבר', 'orקGoodר', 'נובמבר', 'דצמבר'
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 interface TherapistCalendarProps {
@@ -131,7 +131,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
       alert(`Session With ${slot.patientName || 'Patient'} - ${slot.startTime}-${slot.endTime}`);
     } else if (slot.isBlocked) {
       // Unblock
-      if (confirm('לCancel חסימה?')) {
+      if (confirm('Remove block?')) {
         unblockSlotMutation.mutate({ slotId: slot.id });
       }
     } else {
@@ -139,7 +139,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
       if (onSlotSelect) {
         onSlotSelect(slot.date, slot.startTime, slot.endTime);
       } else {
-        if (confirm('לחסום זמן זה?')) {
+        if (confirm('Block this time?')) {
           blockSlotMutation.mutate({
             date: slot.date,
             startTime: slot.startTime,
@@ -165,7 +165,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
                   viewMode === 'week' ? 'bg-calm-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'
                 )}
               >
-                שבוע
+                Week
               </button>
               <button
                 type="button"
@@ -175,7 +175,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
                   viewMode === 'month' ? 'bg-calm-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'
                 )}
               >
-                חודש
+                Month
               </button>
             </div>
           </div>
@@ -200,7 +200,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
               onClick={navigateToday}
               className="text-xs text-calm-600 hover:text-calm-700"
             >
-              היום
+              Today
             </button>
           </div>
 
@@ -263,7 +263,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
                       )}
                     >
                       {daySlots.length === 0 && !isPast && (
-                        <p className="text-xs text-gray-400 text-center py-4">אין Availability</p>
+                        <p className="text-xs text-gray-400 text-center py-4">No availability</p>
                       )}
                       {daySlots.map((slot) => (
                         <button
@@ -283,7 +283,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
                           {slot.isBooked && slot.patientName && (
                             <span className="block truncate">{slot.patientName}</span>
                           )}
-                          {slot.isBlocked && <span className="block">חסום</span>}
+                          {slot.isBlocked && <span className="block">Blocked</span>}
                         </button>
                       ))}
                     </div>
@@ -298,15 +298,15 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
         <div className="px-4 py-3 border-t bg-gray-50 flex items-center gap-4 text-xs">
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 rounded bg-gray-100 border" />
-            <span className="text-gray-600">פנוי</span>
+            <span className="text-gray-600">Available</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 rounded bg-green-100" />
-            <span className="text-gray-600">תפוס</span>
+            <span className="text-gray-600">Occupied</span>
           </div>
           <div className="flex items-center gap-1">
             <div className="w-3 h-3 rounded bg-red-100" />
-            <span className="text-gray-600">חסום</span>
+            <span className="text-gray-600">Blocked</span>
           </div>
         </div>
       </CardContent>

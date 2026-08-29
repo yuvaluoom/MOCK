@@ -14,7 +14,7 @@ export default function UnauthorizedPage() {
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Unauthorized</h1>
         <p className="text-gray-600 mb-8">
-          You do not have permission to access this page. אנא התחברו With חשבון מתאs or חזרו לדף הבית.
+          You do not have permission to access this page. Please log in with an authorized account or return to the home page.
         </p>
         <Link href="/" className="inline-block px-6 py-3 bg-trust-600 hover:bg-trust-700 text-white font-medium rounded-lg transition-colors">
           Back to Home

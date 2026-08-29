@@ -58,7 +58,7 @@ const ClipboardIcon = () => (
 );
 
 function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('he-IL', {
+  return new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -66,7 +66,7 @@ function formatDate(date: Date): string {
 }
 
 function formatTime(date: Date): string {
-  return new Intl.DateTimeFormat('he-IL', {
+  return new Intl.DateTimeFormat('en-US', {
     hour: '2-digit',
     minute: '2-digit',
   }).format(date);
@@ -103,7 +103,7 @@ export default function PatientDashboard() {
   const questionnaireCompleted = profile?.questionnaireCompleted ?? false;
   const matches = matchesData?.matches ?? [];
   const sessions = sessionsData?.sessions ?? [];
-  const firstName = profile?.firstName ?? 'orרח';
+  const firstName = profile?.firstName ?? 'Guest';
 
   if (profileLoading) {
     return (
@@ -119,7 +119,7 @@ export default function PatientDashboard() {
       <div>
         <h1 className="text-xl font-bold text-gray-900">Hello, {firstName}!</h1>
         <p className="text-sm text-gray-600">
-          Manage your sessions ומצor Therapists edמלצs.
+          Manage your sessions and find recommended therapists.
         </p>
       </div>
 
@@ -129,11 +129,11 @@ export default function PatientDashboard() {
           <CardContent className="flex items-center gap-3 py-3">
             <ClipboardIcon />
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-gray-900 text-sm">השליed את שאלון הMatch</h3>
-              <p className="text-xs text-gray-600">קבלו המלצs מsאמs אישית לTherapists</p>
+              <h3 className="font-medium text-gray-900 text-sm">Complete the matching questionnaire</h3>
+              <p className="text-xs text-gray-600">Get personalized therapist recommendations</p>
             </div>
             <Link href="/questionnaire">
-              <Button variant="calm" size="sm">התחילו</Button>
+              <Button variant="calm" size="sm">Start</Button>
             </Link>
           </CardContent>
         </Card>
@@ -144,8 +144,8 @@ export default function PatientDashboard() {
           <CardContent className="flex items-center gap-3 py-3">
             <CheckCircleIcon />
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-gray-900 text-sm">We found {matches.length} התאמs!</h3>
-              <p className="text-xs text-gray-600">Therapists edמלצs מחכs לכם</p>
+              <h3 className="font-medium text-gray-900 text-sm">We found {matches.length} matches!</h3>
+              <p className="text-xs text-gray-600">Recommended therapists are waiting for you</p>
             </div>
             <Link href="/matches">
               <Button variant="calm" size="sm">View</Button>
@@ -159,8 +159,8 @@ export default function PatientDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
-              <CardTitle className="text-base">Sessions קרובs</CardTitle>
-              <CardDescription className="text-xs">הSessions Nexts שלכם</CardDescription>
+              <CardTitle className="text-base">Upcoming Sessions</CardTitle>
+              <CardDescription className="text-xs">Your next sessions</CardDescription>
             </div>
             <Link href="/sessions">
               <Button variant="ghost" size="sm" className="gap-1 text-xs h-7">
@@ -177,10 +177,10 @@ export default function PatientDashboard() {
             ) : sessions.length === 0 ? (
               <div className="text-center py-8">
                 <CalendarIcon />
-                <p className="text-gray-500 mt-2">אין Sessions קרובs</p>
+                <p className="text-gray-500 mt-2">No upcoming sessions</p>
                 <Link href="/matches">
                   <Button variant="outline" size="sm" className="mt-4">
-                    מצor Therapist
+                    Find a Therapist
                   </Button>
                 </Link>
               </div>
@@ -197,7 +197,7 @@ export default function PatientDashboard() {
                       {/* Therapist avatar */}
                       <div className="flex-shrink-0 w-10 h-10 rounded-full bg-calm-100 flex items-center justify-center">
                         <span className="text-calm-700 font-medium">
-                          {session.therapist?.firstName?.charAt(0) ?? 'מ'}
+                          {session.therapist?.firstName?.charAt(0) ?? 'T'}
                         </span>
                       </div>
 
@@ -237,8 +237,8 @@ export default function PatientDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <div>
-              <CardTitle className="text-base">Therapists edמלצs</CardTitle>
-              <CardDescription className="text-xs">ההתאמs הGoods ביsר שלכם</CardDescription>
+              <CardTitle className="text-base">Recommended Therapists</CardTitle>
+              <CardDescription className="text-xs">Your best matches</CardDescription>
             </div>
             <Link href="/matches">
               <Button variant="ghost" size="sm" className="gap-1 text-xs h-7">
@@ -254,10 +254,10 @@ export default function PatientDashboard() {
               </div>
             ) : matches.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-500">השליed את השאלון לקבלת התאמs</p>
+                <p className="text-gray-500">Complete the questionnaire to get matches</p>
                 <Link href="/questionnaire">
                   <Button variant="outline" size="sm" className="mt-4">
-                    מNoו שאלון
+                    Start Questionnaire
                   </Button>
                 </Link>
               </div>
@@ -272,7 +272,7 @@ export default function PatientDashboard() {
                     {/* Therapist avatar */}
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-calm-100 flex items-center justify-center">
                       <span className="text-calm-700 font-medium">
-                        {match.therapist?.firstName?.charAt(0) ?? 'מ'}
+                        {match.therapist?.firstName?.charAt(0) ?? 'T'}
                       </span>
                     </div>
 
@@ -311,9 +311,9 @@ export default function PatientDashboard() {
       {/* Quick tips */}
       <Card className="bg-trust-50 border-trust-200">
         <CardContent className="py-3">
-          <h3 className="font-medium text-gray-900 text-sm mb-1">טיפ: בחירת Therapist</h3>
+          <h3 className="font-medium text-gray-900 text-sm mb-1">Tip: Choosing a Therapist</h3>
           <p className="text-xs text-gray-600">
-            הMatch שלנו מבוססת על מדע פסיכולוגי, אבל התחושה האישית שלכם חשובה. קרor פרופילs ובחרו מישהו שאתם מרגישs חיבור אליו.
+            Our matching is based on psychological science, but your personal feeling matters too. Read profiles and choose someone you feel a connection with.
           </p>
         </CardContent>
       </Card>

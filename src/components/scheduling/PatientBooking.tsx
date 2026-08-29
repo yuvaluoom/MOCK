@@ -40,11 +40,11 @@ const MapPinIcon = () => (
   </svg>
 );
 
-const DAY_NAMES_HE = ['א\'', 'ב\'', 'ג\'', 'ד\'', 'ה\'', 'ו\'', 'ש\''];
-const DAY_NAMES_FULL_HE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const DAY_NAMES_HE = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+const DAY_NAMES_FULL = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTH_NAMES_HE = [
-  'ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני',
-  'יולי', 'orגוסט', 'ספטמבר', 'orקGoodר', 'נובמבר', 'דצמבר'
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
 interface PatientBookingProps {
@@ -175,18 +175,18 @@ export function PatientBooking({
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">הSession נקבעה בהצלחה!</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Session booked successfully!</h3>
           <p className="text-gray-600 mb-4">
-            קבעתם Session With {therapistName}
+            You booked a session with {therapistName}
             <br />
             {selectedSlot && (
               <>
-                יום {DAY_NAMES_FULL_HE[new Date(selectedSlot.date).getDay()]} בTime {selectedSlot.startTime}
+                {DAY_NAMES_FULL[new Date(selectedSlot.date).getDay()]} at {selectedSlot.startTime}
               </>
             )}
           </p>
           <p className="text-sm text-gray-500">
-            תקבלו Message With Confirm הSession Coming soon.
+            You will receive a confirmation message shortly.
           </p>
         </CardContent>
       </Card>
@@ -197,7 +197,7 @@ export function PatientBooking({
     <Card>
       <CardHeader className="border-b">
         <CardTitle className="text-lg">Booking Session</CardTitle>
-        <CardDescription>בחרו Date וTime מהAvailability של {therapistName}</CardDescription>
+        <CardDescription>Choose a date and time from the availability of {therapistName}</CardDescription>
       </CardHeader>
 
       <CardContent className="p-0">
@@ -259,7 +259,7 @@ export function PatientBooking({
                   {/* Time slots */}
                   <div className="p-1.5 space-y-1">
                     {daySlots.length === 0 && !isPast && (
-                      <p className="text-xs text-gray-400 text-center py-4">אין Availability</p>
+                      <p className="text-xs text-gray-400 text-center py-4">No availability</p>
                     )}
                     {daySlots.map((slot) => {
                       const isSelected = selectedSlot?.date === slot.date && selectedSlot?.startTime === slot.startTime;
@@ -292,7 +292,7 @@ export function PatientBooking({
             <div className="flex items-center gap-2 mb-4">
               <ClockIcon />
               <span className="font-medium text-gray-900">
-                {DAY_NAMES_FULL_HE[new Date(selectedSlot.date).getDay()]} {new Date(selectedSlot.date).getDate()}/{new Date(selectedSlot.date).getMonth() + 1}
+                {DAY_NAMES_FULL[new Date(selectedSlot.date).getDay()]} {new Date(selectedSlot.date).getDate()}/{new Date(selectedSlot.date).getMonth() + 1}
               </span>
               <span className="text-gray-600">
                 {selectedSlot.startTime} - {selectedSlot.endTime}
@@ -340,12 +340,12 @@ export function PatientBooking({
             {/* Notes */}
             <div className="mb-4">
               <label className="text-sm font-medium text-gray-700 mb-2 block">
-                הערs (Optional)
+                Notes (Optional)
               </label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="מה תרצו לשתף With הTherapist לפני הSession?"
+                placeholder="What would you like to share with the therapist before the session?"
                 className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-calm-500 focus:border-transparent"
                 rows={2}
               />

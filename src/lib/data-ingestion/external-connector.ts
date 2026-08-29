@@ -112,7 +112,7 @@ export const SUPPORTED_INTEGRATIONS = {
       supportedOperations: ['verify_member', 'check_coverage'],
     },
     LEUMIT: {
-      name: 'Noומית',
+      name: 'Leumit',
       nameEn: 'Leumit Health Fund',
       apiAvailable: false,
       supportedOperations: [],
@@ -122,7 +122,7 @@ export const SUPPORTED_INTEGRATIONS = {
   // Licensing & Credentials
   licensing: {
     MINISTRY_OF_HEALTH: {
-      name: 'משרד הבריorת',
+      name: 'Ministry of Health',
       nameEn: 'Ministry of Health',
       apiAvailable: false,
       supportedOperations: ['verify_license'],

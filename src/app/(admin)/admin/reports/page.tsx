@@ -27,14 +27,14 @@ export default function ReportsPage() {
         </div>
         <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors self-start">
           <DownloadIcon />
-          ייצוא
+          Export
         </button>
       </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Total״כ Patients</p>
+          <p className="text-sm text-slate-400">Total Patients</p>
           <p className="text-3xl font-bold text-white mt-2">
             {isLoading ? '...' : reports?.totalPatients ?? 0}
           </p>
@@ -46,13 +46,13 @@ export default function ReportsPage() {
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Total״כ Sessions</p>
+          <p className="text-sm text-slate-400">Total Sessions</p>
           <p className="text-3xl font-bold text-white mt-2">
             {isLoading ? '...' : reports?.totalSessions ?? 0}
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">שיעור Match</p>
+          <p className="text-sm text-slate-400">Match Rate</p>
           <p className="text-3xl font-bold text-white mt-2">
             {isLoading ? '...' : `${reports?.matchRate ?? 0}%`}
           </p>
@@ -63,7 +63,7 @@ export default function ReportsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Session Stats */}
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">סטטיסטיקת Sessions</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">Session Statistics</h2>
           {isLoading ? (
             <p className="text-slate-400">Loading...</p>
           ) : (
@@ -87,7 +87,7 @@ export default function ReportsPage() {
                     </div>
                     <div>
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">הושלed</span>
+                        <span className="text-slate-400">Completed</span>
                         <span className="text-white font-medium">{completed}</span>
                       </div>
                       <div className="w-full bg-slate-700 rounded-full h-2">
@@ -96,7 +96,7 @@ export default function ReportsPage() {
                     </div>
                     <div>
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">ממתינs</span>
+                        <span className="text-slate-400">Pending</span>
                         <span className="text-white font-medium">{pending}</span>
                       </div>
                       <div className="w-full bg-slate-700 rounded-full h-2">
@@ -105,7 +105,7 @@ export default function ReportsPage() {
                     </div>
                     <div>
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">Cancelledו</span>
+                        <span className="text-slate-400">Cancelled</span>
                         <span className="text-white font-medium">{cancelled}</span>
                       </div>
                       <div className="w-full bg-slate-700 rounded-full h-2">
@@ -121,7 +121,7 @@ export default function ReportsPage() {
 
         {/* Health Fund Distribution */}
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">התפלגs Health Funds</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">Health Fund Distribution</h2>
           {isLoading ? (
             <p className="text-slate-400">Loading...</p>
           ) : reports?.healthFundDistribution?.length ? (
@@ -135,13 +135,13 @@ export default function ReportsPage() {
               ))}
             </div>
           ) : (
-            <p className="text-slate-400">אין נתונs</p>
+            <p className="text-slate-400">No data</p>
           )}
         </div>
 
         {/* Top Therapists */}
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Therapists edבילs</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">Top Therapists</h2>
           {isLoading ? (
             <p className="text-slate-400">Loading...</p>
           ) : reports?.topTherapists?.length ? (
@@ -158,30 +158,30 @@ export default function ReportsPage() {
               ))}
             </div>
           ) : (
-            <p className="text-slate-400">אין נתונs</p>
+            <p className="text-slate-400">No data</p>
           )}
         </div>
       </div>
 
       {/* Export Options */}
       <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">ייצוא דוחs</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Export Reports</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">דוח Users</p>
-            <p className="text-slate-400 text-sm mt-1">All theUsers With Status וActives</p>
+            <p className="text-white font-medium">Users Report</p>
+            <p className="text-slate-400 text-sm mt-1">All users with status and activity</p>
           </button>
           <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">דוח Sessions</p>
-            <p className="text-slate-400 text-sm mt-1">היסטוריית Sessions וסטטיסטיקה</p>
+            <p className="text-white font-medium">Sessions Report</p>
+            <p className="text-slate-400 text-sm mt-1">Session history and statistics</p>
           </button>
           <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">דוח פיננסי</p>
-            <p className="text-slate-400 text-sm mt-1">הכנסs ונתוני חיוב</p>
+            <p className="text-white font-medium">Financial Report</p>
+            <p className="text-slate-400 text-sm mt-1">Revenue and billing data</p>
           </button>
           <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">דוח ציs</p>
-            <p className="text-slate-400 text-sm mt-1">יומני ביקורת ואירועי אבטחה</p>
+            <p className="text-white font-medium">Compliance Report</p>
+            <p className="text-slate-400 text-sm mt-1">Audit logs and security events</p>
           </button>
         </div>
       </div>

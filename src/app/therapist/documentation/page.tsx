@@ -104,7 +104,7 @@ export default function TherapistDocumentationPage() {
 
     const statusConfig = {
       DRAFT: { label: 'Draft', className: 'bg-yellow-100 text-yellow-700' },
-      SUBMITTED: { label: 'הוגש', className: 'bg-green-100 text-green-700' },
+      SUBMITTED: { label: 'Submitted', className: 'bg-green-100 text-green-700' },
       AMENDED: { label: 'Fixed', className: 'bg-blue-100 text-blue-700' },
       LOCKED: { label: 'Locked', className: 'bg-gray-100 text-gray-700' },
     };
@@ -125,8 +125,8 @@ export default function TherapistDocumentationPage() {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Documentation קליני</h1>
-          <p className="text-gray-600 mt-1">Management וDocumentation פTherapeutic approaches</p>
+          <h1 className="text-2xl font-bold text-gray-900">Clinical Documentation</h1>
+          <p className="text-gray-600 mt-1">Manage and document therapeutic sessions</p>
         </div>
       </div>
 
@@ -140,7 +140,7 @@ export default function TherapistDocumentationPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{pendingSessions.length}</p>
-                <p className="text-sm text-gray-600">Pending לDocumentation</p>
+                <p className="text-sm text-gray-600">Pending Documentation</p>
               </div>
             </div>
           </CardContent>
@@ -168,7 +168,7 @@ export default function TherapistDocumentationPage() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-gray-900">{completedSessions.length}</p>
-                <p className="text-sm text-gray-600">הושלed השבוע</p>
+                <p className="text-sm text-gray-600">Completed This Week</p>
               </div>
             </div>
           </CardContent>
@@ -183,8 +183,8 @@ export default function TherapistDocumentationPage() {
             <div>
               <h3 className="font-medium text-red-800">Documentation Overdue</h3>
               <p className="text-sm text-red-700 mt-1">
-                You have {overdueSessions.length} Sessions שחלף edup to הDocumentation שלהן.
-                Please complete את הDocumentation בהקדם האפשרי.
+                You have {overdueSessions.length} sessions past their documentation deadline.
+                Please complete the documentation as soon as possible.
               </p>
             </div>
           </div>
@@ -246,7 +246,7 @@ export default function TherapistDocumentationPage() {
                       {getStatusBadge(session.documentationStatus, session.isOverdue)}
                     </div>
                     <p className="text-sm text-gray-500">
-                      Session #{session.sessionNumber} • {new Date(session.sessionDate).toLocaleDateString('he-IL')}
+                      Session #{session.sessionNumber} • {new Date(session.sessionDate).toLocaleDateString('en-US')}
                     </p>
                     {session.documentationStatus === 'DRAFT' && (
                       <div className="flex items-center gap-2 mt-1">
@@ -271,7 +271,7 @@ export default function TherapistDocumentationPage() {
                         variant={session.isOverdue ? 'destructive' : 'calm'}
                         onClick={() => window.location.href = `/therapist/documentation/${session.id}`}
                       >
-                        המשך Documentation
+                        Continue Documentation
                       </Button>
                     </>
                   )}
@@ -300,7 +300,7 @@ export default function TherapistDocumentationPage() {
             {getFilteredSessions().length === 0 && (
               <div className="text-center py-12 text-gray-500">
                 <FileText className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p>אין Sessions להצגה</p>
+                <p>No sessions to display</p>
               </div>
             )}
           </div>

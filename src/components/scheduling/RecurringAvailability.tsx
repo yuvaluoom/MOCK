@@ -54,8 +54,8 @@ export function RecurringAvailability() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Availability קבועה</CardTitle>
-        <CardDescription>הגדירו את השעs הקבועs שלכם לכל יום בשבוע</CardDescription>
+        <CardTitle className="text-lg">Recurring Availability</CardTitle>
+        <CardDescription>Set your regular hours for each day of the week</CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (
@@ -90,7 +90,7 @@ export function RecurringAvailability() {
                           {dayData.startTime} - {dayData.endTime}
                         </p>
                       ) : (
-                        <p className="text-sm text-gray-400">No זGender</p>
+                        <p className="text-sm text-gray-400">Not available</p>
                       )}
                     </div>
                   </div>
@@ -149,7 +149,7 @@ export function RecurringAvailability() {
                           onClick={() => handleSave(index, false)}
                           className="text-sm text-red-600 hover:text-red-700"
                         >
-                          הSat
+                          Remove
                         </button>
                       )}
                     </div>
@@ -162,11 +162,11 @@ export function RecurringAvailability() {
 
         {/* Tips */}
         <div className="mt-6 p-4 rounded-lg bg-blue-50 border border-blue-200">
-          <h4 className="font-medium text-blue-900 text-sm mb-1">טיפs להגדרת Availability</h4>
+          <h4 className="font-medium text-blue-900 text-sm mb-1">Tips for setting availability</h4>
           <ul className="text-xs text-blue-700 space-y-1">
-            <li>• הAvailability הקבועה חוזרת על עצמה בכל שבוע</li>
-            <li>• ניתן לחסום זמנs ספציפיs בלוח השנה</li>
-            <li>• Patients ירor רק את הזמנs הפנויs שלכם</li>
+            <li>• Recurring availability repeats every week</li>
+            <li>• You can block specific times in the calendar</li>
+            <li>• Patients will only see your available times</li>
           </ul>
         </div>
       </CardContent>

@@ -15,7 +15,7 @@
  *
  * // Log an audit event
  * const auditLogger = getAuditLogger();
- * await auditLogger.log(createAuditEntry('user.login', 'User התחבר', {
+ * await auditLogger.log(createAuditEntry('user.login', 'User logged in', {
  *   actorId: userId,
  *   actorEmail: email,
  * }));

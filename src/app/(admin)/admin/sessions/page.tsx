@@ -22,7 +22,7 @@ const statusConfig: Record<string, { label: string; color: string }> = {
     color: 'bg-green-500/20 text-green-400',
   },
   REJECTED: {
-    label: 'נDecline',
+    label: 'Rejected',
     color: 'bg-red-500/20 text-red-400',
   },
   COMPLETED: {
@@ -91,12 +91,12 @@ export default function SessionsOverviewPage() {
         <div>
           <h1 className="text-2xl font-bold text-white">Session Review</h1>
           <p className="text-slate-400 mt-1">
-            ניטור וManagement All theSessions הTherapyיs בפלטפורמה
+            Monitor and manage all therapy sessions on the platform
           </p>
         </div>
         <div className="flex items-center gap-4 text-sm">
           <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2">
-            <span className="text-slate-400">Total״כ: </span>
+            <span className="text-slate-400">Total: </span>
             <span className="text-white font-medium">{data?.pagination.total ?? 0}</span>
           </div>
           <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2">
@@ -113,7 +113,7 @@ export default function SessionsOverviewPage() {
         <div className="flex flex-wrap gap-4">
           <input
             type="text"
-            placeholder="Search לפי Name Patient or Therapist..."
+            placeholder="Search by patient or therapist name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 min-w-[200px] px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -127,7 +127,7 @@ export default function SessionsOverviewPage() {
             <option value="PENDING_THERAPIST_APPROVAL">Pending Approval</option>
             <option value="APPROVED">Approved</option>
             <option value="COMPLETED">Completed</option>
-            <option value="REJECTED">נDecline</option>
+            <option value="REJECTED">Rejected</option>
             <option value="CANCELLED_BY_PATIENT">Cancelled (Patient)</option>
             <option value="CANCELLED_BY_THERAPIST">Cancelled (Therapist)</option>
           </select>
@@ -180,7 +180,7 @@ export default function SessionsOverviewPage() {
                               hour: '2-digit',
                               minute: '2-digit',
                             })}{' '}
-                            ({session.duration} דק׳)
+                            ({session.duration} min)
                           </div>
                         </div>
                       </div>
@@ -227,7 +227,7 @@ export default function SessionsOverviewPage() {
                       {session.price != null && session.price > 0
                         ? `₪${session.price}`
                         : session.healthFund
-                        ? `קופ״ח: ${session.healthFund}`
+                        ? `Health Fund: ${session.healthFund}`
                         : '—'}
                     </td>
                   </tr>
@@ -247,17 +247,17 @@ export default function SessionsOverviewPage() {
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">השבוע</h3>
+          <h3 className="text-sm font-medium text-slate-400">This Week</h3>
           <p className="text-3xl font-bold text-white mt-2">
             {data?.stats.weekSessions ?? 0}
           </p>
         </div>
         <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">הכנסs (Approveds)</h3>
+          <h3 className="text-sm font-medium text-slate-400">Revenue (Approved)</h3>
           <p className="text-3xl font-bold text-white mt-2">
             {data?.stats.totalRevenue != null && data.stats.totalRevenue > 0
               ? `₪${data.stats.totalRevenue.toLocaleString('he-IL')}`
-              : 'קופ״ח'}
+              : 'Health Fund'}
           </p>
         </div>
       </div>

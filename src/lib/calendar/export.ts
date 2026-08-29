@@ -74,7 +74,7 @@ SUMMARY:${escapeICSText(event.title)}`;
     ics += `
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:${escapeICSText(event.title)} - תזכורת
+DESCRIPTION:${escapeICSText(event.title)} - Reminder
 TRIGGER:-PT${event.reminder}M
 END:VALARM`;
   }

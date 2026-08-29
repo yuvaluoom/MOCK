@@ -42,9 +42,9 @@ export default function MessageModerationPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Management Messages</h1>
+          <h1 className="text-2xl font-bold text-white">Message Moderation</h1>
           <p className="text-slate-400 mt-1">
-            Review Messages Reported ומסומנs
+            Review reported and flagged messages
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -63,7 +63,7 @@ export default function MessageModerationPage() {
             </div>
             <input
               type="text"
-              placeholder="Search בMessages..."
+              placeholder="Search messages..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -92,40 +92,40 @@ export default function MessageModerationPage() {
         <div className="flex justify-center mb-4 text-green-400">
           <ShieldIcon />
         </div>
-        <p className="text-white font-medium text-lg">אין Messages מסומנs לבדיקה</p>
+        <p className="text-white font-medium text-lg">No flagged messages to review</p>
         <p className="text-slate-400 text-sm mt-2">
-          All theMessages בפלטפורמה תקינs. Messages שיסומנו על ידי מערכת הFilter הorטומטית or דיווחי Users יופיעו כאן.
+          All messages on the platform are compliant. Messages flagged by the automatic filter system or user reports will appear here.
         </p>
       </div>
 
       {/* Moderation Guidelines */}
       <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-        <h3 className="text-sm font-medium text-white mb-4">הנחיs Management</h3>
+        <h3 className="text-sm font-medium text-white mb-4">Moderation Guidelines</h3>
         <div className="grid md:grid-cols-3 gap-6 text-sm">
           <div>
-            <h4 className="text-amber-400 font-medium mb-2">טריגרs לסיedן orטומטי</h4>
+            <h4 className="text-amber-400 font-medium mb-2">Automatic Flagging Triggers</h4>
             <ul className="text-slate-400 space-y-1">
-              <li>• מילs מפתח של מצב חירום / משבר</li>
-              <li>• תוYes No הולם</li>
-              <li>• שיתוף Private קשר חיצוניs</li>
-              <li>• דיווחי Users</li>
+              <li>• Emergency / crisis keywords</li>
+              <li>• Inappropriate content</li>
+              <li>• Sharing private external contact info</li>
+              <li>• User reports</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-green-400 font-medium mb-2">Confirm Message אם</h4>
+            <h4 className="text-green-400 font-medium mb-2">Approve Message If</h4>
             <ul className="text-slate-400 space-y-1">
-              <li>• Alertאת שווא ממילת מפתח</li>
-              <li>• הקשר קליני מתאs</li>
-              <li>• אין הפרת מדיניs</li>
+              <li>• False alarm from keyword match</li>
+              <li>• Appropriate clinical context</li>
+              <li>• No policy violation</li>
             </ul>
           </div>
           <div>
-            <h4 className="text-red-400 font-medium mb-2">הסרת Message אם</h4>
+            <h4 className="text-red-400 font-medium mb-2">Remove Message If</h4>
             <ul className="text-slate-400 space-y-1">
-              <li>• הפרה ברורה של מדיניs</li>
-              <li>• הטרדה or התעללs</li>
-              <li>• ספאם or שידול</li>
-              <li>• מידע מסוYes שגוי</li>
+              <li>• Clear policy violation</li>
+              <li>• Harassment or abuse</li>
+              <li>• Spam or solicitation</li>
+              <li>• Incorrect sensitive information</li>
             </ul>
           </div>
         </div>

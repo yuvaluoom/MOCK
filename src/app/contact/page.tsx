@@ -9,12 +9,12 @@ export default function ContactPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-6">Contact Us</h1>
         <div className="bg-white rounded-2xl shadow-sm p-8 text-gray-600 leading-relaxed space-y-4">
           <p>
-            We'd love to hear from you! אם יש לכם שאלs, הצעs or משוב, אנא פנו אלינו.
+            We&#39;d love to hear from you! If you have questions, suggestions, or feedback, please reach out.
           </p>
           <p>
             Email: <span className="text-trust-600 font-medium">support@matchmind.co.il</span>
           </p>
-          <p className="text-sm text-muted-foreground">טופס יצירת קשר מNo יתווסף Coming soon.</p>
+          <p className="text-sm text-muted-foreground">A full contact form will be added soon.</p>
         </div>
         <Link href="/" className="inline-block mt-8 text-trust-600 hover:text-trust-700 font-medium transition-colors">
           &larr; Back to Home

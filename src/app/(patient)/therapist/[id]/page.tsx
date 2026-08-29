@@ -229,46 +229,46 @@ function generateMatchReasons(therapist: any, matchBreakdown: any): string[] {
 
   // Session type compatibility
   if (therapist.offersOnline && therapist.offersInPerson) {
-    reasons.push('Flexibility inType הSessions - Online וIn-Person');
+    reasons.push('Flexible session types - Online and In-Person');
   } else if (therapist.offersOnline) {
-    reasons.push('Offers Online Sessions לנוחיsך');
+    reasons.push('Offers convenient online sessions');
   }
 
   // Health fund match
   if (matchBreakdown?.healthFund >= 80) {
-    reasons.push('Match לthe health fund Your');
+    reasons.push('Compatible with your health fund');
   }
 
   // Experience
   if (therapist.yearsOfExperience >= 10) {
-    reasons.push('Experience מקצועי עשיר of overעשור');
+    reasons.push('Over a decade of professional experience');
   } else if (therapist.yearsOfExperience >= 5) {
-    reasons.push('Experience edכח בליווי Patients');
+    reasons.push('Proven experience supporting patients');
   }
 
   // Specializations match
   if (therapist.specializations?.length > 0) {
-    reasons.push('Specialization בתחומs הרלוונטיs לצרכs Your');
+    reasons.push('Specialization in areas relevant to your needs');
   }
 
   // X-Factor / Personal compatibility
   if (matchBreakdown?.xFactor >= 75) {
-    reasons.push('Match אישית גבוהה על בסיס Communication style');
+    reasons.push('High personal compatibility based on communication style');
   }
 
   // Approaches match
   if (therapist.approaches?.length > 0) {
-    reasons.push('Therapeutic approaches המתאימs להup toyour');
+    reasons.push('Therapeutic approaches suited to your preferences');
   }
 
   // Location
   if (therapist.city) {
-    reasons.push(`נגישs גיorגרפית - ${therapist.city}`);
+    reasons.push(`Conveniently located - ${therapist.city}`);
   }
 
   // Availability
   if (matchBreakdown?.availability >= 70) {
-    reasons.push('Availability המתאימה ללוח הזמנs Your');
+    reasons.push('Availability that fits your schedule');
   }
 
   return reasons.slice(0, 5); // Return top 5 reasons
@@ -310,7 +310,7 @@ export default function TherapistDetailsPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-calm-600 mx-auto" />
-          <p className="text-gray-600">Loading פרופיל Therapist...</p>
+          <p className="text-gray-600">Loading therapist profile...</p>
         </div>
       </div>
     );
@@ -333,12 +333,12 @@ export default function TherapistDetailsPage() {
               </svg>
             </div>
             <h2 className="text-xl font-bold text-gray-900 mb-2">
-              {isNotFound ? 'No Foundא Therapist' : 'Error בטעינת הפרופיל'}
+              {isNotFound ? 'Therapist Not Found' : 'Error Loading Profile'}
             </h2>
             <p className="text-gray-600 mb-6">
               {isNotFound
-                ? 'הTherapist המבוקש/ת No Foundא/ה במערכת or אינו/ה זGender/ה כרגע.'
-                : 'אירעה Error בטעינת Private הTherapist. אנא נסו שוב.'}
+                ? 'The requested therapist was not found in the system or is currently unavailable.'
+                : 'An error occurred while loading the therapist profile. Please try again.'}
             </p>
             {process.env.NODE_ENV === 'development' && error && (
               <p className="text-xs text-red-500 mb-4 font-mono bg-red-50 p-2 rounded">
@@ -347,10 +347,10 @@ export default function TherapistDetailsPage() {
             )}
             <div className="space-y-3">
               <Button variant="calm" className="w-full" onClick={() => router.push('/matches')}>
-                חזרה להתאמs
+                Back to Matches
               </Button>
               <Button variant="outline" className="w-full" onClick={() => router.back()}>
-                חזרה לדף Previous
+                Back to Previous Page
               </Button>
               {!isNotFound && (
                 <Button
@@ -358,7 +358,7 @@ export default function TherapistDetailsPage() {
                   className="w-full"
                   onClick={() => window.location.reload()}
                 >
-                  נסו שוב
+                  Try Again
                 </Button>
               )}
             </div>
@@ -382,11 +382,11 @@ export default function TherapistDetailsPage() {
             type="button"
             onClick={() => router.back()}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            aria-label="חזרה"
+            aria-label="Back"
           >
             <ArrowRightIcon />
           </button>
-          <h1 className="font-bold text-gray-900">פרופיל Therapist</h1>
+          <h1 className="font-bold text-gray-900">Therapist Profile</h1>
         </div>
       </div>
 
@@ -415,7 +415,7 @@ export default function TherapistDetailsPage() {
                     {matchQuality.text}
                   </span>
                 </div>
-                <p className="text-gray-600">{therapist.title || 'פסיכולוג/ית קליני/ת'}</p>
+                <p className="text-gray-600">{therapist.title || 'Clinical Psychologist'}</p>
                 <div className="flex items-center justify-center sm:justify-start gap-4 mt-2 text-sm text-gray-500">
                   {therapist.city && (
                     <span className="flex items-center gap-1">
@@ -442,10 +442,10 @@ export default function TherapistDetailsPage() {
               <div className="p-2 rounded-xl bg-gradient-to-br from-calm-500 to-trust-500 text-white">
                 <SparklesIcon className="w-5 h-5" />
               </div>
-              למה {therapist.firstName} מתאs/ה לך?
+              Why is {therapist.firstName} a good match for you?
             </CardTitle>
             <p className="text-gray-600 text-sm mt-1">
-              הMatch מבוססת על ניתוח מקיף של הפרופיל, ההup toOptions והצרכs Your
+              The match is based on a comprehensive analysis of your profile, preferences, and needs
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -461,36 +461,36 @@ export default function TherapistDetailsPage() {
               <div className="pt-4 border-t border-gray-100">
                 <h4 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <BrainIcon className="w-4 h-4 text-calm-600" />
-                  פירוט ציון הMatch
+                  Match Score Breakdown
                 </h4>
                 <div className="grid sm:grid-cols-2 gap-6">
                   <MatchFactorIndicator
                     icon={<BrainIcon className="w-4 h-4 text-calm-600" />}
-                    label="Match אישית"
+                    label="Personal Compatibility"
                     score={matchBreakdown.xFactor}
                     color="calm"
-                    description="על בסיס Communication style והup toOptions אישיs"
+                    description="Based on communication style and personal preferences"
                   />
                   <MatchFactorIndicator
                     icon={<ShieldIcon className="w-4 h-4 text-trust-600" />}
                     label="Health Fund"
                     score={matchBreakdown.healthFund}
                     color="trust"
-                    description="Match לביטוח הבריorת Your"
+                    description="Compatible with your health insurance"
                   />
                   <MatchFactorIndicator
                     icon={<ClockIcon className="w-4 h-4 text-green-600" />}
                     label="Availability"
                     score={matchBreakdown.availability}
                     color="green"
-                    description="Match ללוח הזמנs וType הSessions"
+                    description="Fits your schedule and session type preferences"
                   />
                   <MatchFactorIndicator
                     icon={<UserIcon className="w-4 h-4 text-purple-600" />}
-                    label="הup toOptions"
+                    label="Preferences"
                     score={matchBreakdown.preferences}
                     color="purple"
-                    description="מגדר, Language וגישה Therapyית"
+                    description="Gender, language, and therapeutic approach"
                   />
                 </div>
               </div>
@@ -525,7 +525,7 @@ export default function TherapistDetailsPage() {
               <div className="flex justify-center mb-1">
                 <StarIcon />
               </div>
-              <div className="text-sm text-gray-600">Therapist Recommended/ת</div>
+              <div className="text-sm text-gray-600">Recommended Therapist</div>
             </CardContent>
           </Card>
           <Card className="border-0 shadow-md">
@@ -546,7 +546,7 @@ export default function TherapistDetailsPage() {
           <Card className="border-0 shadow-md">
             <CardContent className="py-5 text-center">
               <div className="text-2xl font-bold text-gray-900">₪{therapist.sessionPrice || 400}</div>
-              <div className="text-sm text-gray-600">לSession</div>
+              <div className="text-sm text-gray-600">per session</div>
             </CardContent>
           </Card>
         </div>
@@ -555,7 +555,7 @@ export default function TherapistDetailsPage() {
         {(therapist.bio || therapist.bioHebrew) && (
           <Card className="border-0 shadow-md">
             <CardHeader>
-              <CardTitle className="text-lg">קצת על עצמי</CardTitle>
+              <CardTitle className="text-lg">About Me</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
@@ -572,14 +572,14 @@ export default function TherapistDetailsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <GraduationCapIcon />
-                Education והסמכs
+                Education &amp; Certifications
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {(therapist.education || [
-                'תואר Sun בפסיכולוגיה',
-                'תואר Mon בClinical Psychology',
-                'License פסיכולוג/ית קליני/ת - משרד הבריorת',
+                'B.A. in Psychology',
+                'M.A. in Clinical Psychology',
+                'Licensed Clinical Psychologist - Ministry of Health',
               ]).map((edu: string, i: number) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircleIcon className="w-5 h-5 flex-shrink-0 mt-0.5" />
@@ -638,12 +638,12 @@ export default function TherapistDetailsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <HeartHandshakeIcon />
-              תחומי Specialization
+              Areas of Specialization
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {(therapist.specializations || ['Anxiety', 'Depression', 'הפרעs אכילה', 'Trauma', 'קשרs Thisגיs']).map(
+              {(therapist.specializations || ['Anxiety', 'Depression', 'Eating Disorders', 'Trauma', 'Relationships']).map(
                 (spec: string, i: number) => (
                   <span
                     key={i}
@@ -702,13 +702,13 @@ export default function TherapistDetailsPage() {
           <Button variant="calm" className="flex-1 h-14 text-base font-medium gap-2 shadow-lg" asChild>
             <Link href={`/messages?therapist=${therapistId}`}>
               <MessageIcon />
-              Sending Message
+              Send Message
             </Link>
           </Button>
           <Button variant="outline" className="flex-1 h-14 text-base font-medium gap-2 bg-white shadow-md" asChild>
             <Link href={`/sessions`}>
               <CalendarIcon />
-              Booking Session
+              Book Session
             </Link>
           </Button>
         </div>

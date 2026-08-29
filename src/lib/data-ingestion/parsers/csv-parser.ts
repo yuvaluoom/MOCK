@@ -78,7 +78,7 @@ export class CsvParser implements IDataParser {
       // Check first line for headers
       const firstLine = this.parseLine(lines[0], delimiter);
       if (firstLine.length === 0) {
-        errors.push('No Foundor Columns in row הראשונה');
+        errors.push('No columns found in the first row');
         return { valid: false, errors };
       }
 
@@ -97,7 +97,7 @@ export class CsvParser implements IDataParser {
       }
 
       if (inconsistentRows.length > 0) {
-        errors.push(`שורs With מספר Columns No Match: ${inconsistentRows.join(', ')}`);
+        errors.push(`Rows with inconsistent column count: ${inconsistentRows.join(', ')}`);
       }
 
       // Parse sample rows
@@ -120,7 +120,7 @@ export class CsvParser implements IDataParser {
         sampleRows,
       };
     } catch (error) {
-      errors.push(`Error בקריאת הקובץ: ${error instanceof Error ? error.message : 'Error No Knownה'}`);
+      errors.push(`Error reading file: ${error instanceof Error ? error.message : 'Unknown error'}`);
       return { valid: false, errors };
     }
   }

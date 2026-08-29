@@ -9,10 +9,10 @@ export default function AccessibilityPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-6">Accessibility Statement</h1>
         <div className="bg-white rounded-2xl shadow-sm p-8 text-gray-600 leading-relaxed space-y-4">
           <p>
-            MatchMind committed to making the platform accessible לכלל הorכלוסייה, כולל אנשs With edגבלויs.
+            MatchMind is committed to making the platform accessible to all users, including people with disabilities.
           </p>
           <p>
-            אנו פועלs בהתאם לתקנs שוויון זכויs Noנשs With edגבלs ולתקן הישראלי SI 5568.
+            We operate in accordance with equal rights regulations for people with disabilities and the Israeli Standard SI 5568.
           </p>
           <p className="text-sm text-muted-foreground">Page under construction.</p>
         </div>

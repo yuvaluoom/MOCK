@@ -170,16 +170,16 @@ function generatePdfHtml(
 
   const sessionTypeLabels: Record<string, string> = {
     IN_PERSON: 'In-Person Session',
-    REMOTE_VIDEO: 'Call וידor',
+    REMOTE_VIDEO: 'Video Call',
     REMOTE_PHONE: 'Call Phone',
     HOME_VISIT: 'Home visit',
   };
 
   const riskLevelLabels: Record<string, string> = {
-    NONE: 'לNo סיכון',
+    NONE: 'No Risk',
     LOW: 'Low',
-    MODERATE: 'בינוני',
-    HIGH: 'גבוה',
+    MODERATE: 'Moderate',
+    HIGH: 'High',
     CRITICAL: 'Critical',
   };
 
@@ -254,9 +254,9 @@ function generatePdfHtml(
 </head>
 <body>
   <div class="header">
-    <h1>Documentation Session קלינית</h1>
+    <h1>Clinical Session Documentation</h1>
     <p class="meta">
-      Session מספר ${session.sessionNumber} |
+      Session Number ${session.sessionNumber} |
       ${formatDate(session.sessionDate)} |
       ${sessionTypeLabels[session.sessionType] || session.sessionType}
     </p>
@@ -266,7 +266,7 @@ function generatePdfHtml(
     notes
       ? `
   <div class="section">
-    <h2>Subject edצג</h2>
+    <h2>Presenting Issue</h2>
     <p>${meta.options.redactSensitiveInfo ? '[Hidden information]' : notes.presentingIssue || 'Not specified'}</p>
   </div>
 
@@ -276,7 +276,7 @@ function generatePdfHtml(
   </div>
 
   <div class="section">
-    <h2>התערבויs</h2>
+    <h2>Interventions</h2>
     <p>${meta.options.redactSensitiveInfo ? '[Hidden information]' : notes.interventions || 'Not specified'}</p>
   </div>
 
@@ -286,7 +286,7 @@ function generatePdfHtml(
   </div>
 
   <div class="section">
-    <h2>Assessment סיכון</h2>
+    <h2>Risk Assessment</h2>
     <p class="${notes.riskLevel === 'HIGH' || notes.riskLevel === 'CRITICAL' ? 'risk-high' : notes.riskLevel === 'MODERATE' ? 'risk-moderate' : ''}">
       ${riskLevelLabels[notes.riskLevel] || notes.riskLevel}
     </p>
@@ -294,13 +294,13 @@ function generatePdfHtml(
 
   ${notes.icdCodes && notes.icdCodes.length > 0 ? `
   <div class="section">
-    <h2>Code אבחנה</h2>
+    <h2>Diagnosis Codes</h2>
     <p><span class="field-label">ICD-10:</span> ${notes.icdCodes.join(', ')}</p>
     ${notes.dsmCodes && notes.dsmCodes.length > 0 ? `<p><span class="field-label">DSM-5:</span> ${notes.dsmCodes.join(', ')}</p>` : ''}
   </div>
   ` : ''}
   `
-      : '<p>אין Clinical notes לSession This.</p>'
+      : '<p>No clinical notes for this session.</p>'
   }
 
   ${
@@ -312,7 +312,7 @@ function generatePdfHtml(
     ${
       patientSummary.keyTakeaways && patientSummary.keyTakeaways.length > 0
         ? `
-    <h3>נקודs מפתח</h3>
+    <h3>Key Points</h3>
     <ul>
       ${patientSummary.keyTakeaways.map((t) => `<li>${t}</li>`).join('')}
     </ul>
@@ -326,18 +326,18 @@ function generatePdfHtml(
 
   <div class="footer">
     <p>
-      <strong>מטרת הייצוא:</strong> ${meta.purpose}<br>
-      <strong>יוצא על ידי:</strong> ${meta.exportedBy}<br>
-      <strong>Date ייצוא:</strong> ${formatDate(new Date())}
+      <strong>Export Purpose:</strong> ${meta.purpose}<br>
+      <strong>Exported By:</strong> ${meta.exportedBy}<br>
+      <strong>Export Date:</strong> ${formatDate(new Date())}
     </p>
     <p>
-      מסמך זה הינו חסוי ומיוup to אך ורק לגורמs הedרשs.
-      אין להעביר, להעתיק or לשתף לNo Confirm מתאs.
+      This document is confidential and intended only for authorized parties.
+      Do not distribute, copy, or share without proper authorization.
     </p>
   </div>
 
   <div class="watermark">
-    MatchMind - מערכת Documentation קליני
+    MatchMind - Clinical Documentation System
   </div>
 </body>
 </html>
@@ -428,15 +428,15 @@ export function validateExportRequest(request: ExportRequest): {
   const errors: string[] = [];
 
   if (!request.sessionRecordId) {
-    errors.push('מזהה Session Required');
+    errors.push('Session ID is required');
   }
 
   if (!request.format) {
-    errors.push('Format ייצוא Required');
+    errors.push('Export format is required');
   }
 
   if (!request.purpose || request.purpose.length < 5) {
-    errors.push('מטרת הייצוא Requiredת (at least 5 characters)');
+    errors.push('Export purpose is required (at least 5 characters)');
   }
 
   return {

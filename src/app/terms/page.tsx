@@ -9,10 +9,10 @@ export default function TermsPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-6">Terms of Service</h1>
         <div className="bg-white rounded-2xl shadow-sm p-8 text-gray-600 leading-relaxed space-y-4">
           <p>
-            Page זה יכיל את תנאי השיedש המNos של פלטפורמת MatchMind.
+            This page contains the complete terms of service for the MatchMind platform.
           </p>
           <p>
-            השיedש בפלטפורמה כפוף לתנאs המפורטs בPage זה. אנא קרor orתם בעיון לפני השיedש בשירs.
+            Use of the platform is subject to the terms detailed on this page. Please read them carefully before using our services.
           </p>
           <p className="text-sm text-muted-foreground">Page under construction.</p>
         </div>

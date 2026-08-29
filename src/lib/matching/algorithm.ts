@@ -473,14 +473,14 @@ function calculateObjectiveFitMatch(
         items.push({
           category: 'objective',
           matched: true,
-          labelHe: 'Background Cultural קרוב',
+          labelHe: 'Similar cultural background',
           labelEn: 'Close cultural background',
         });
       } else {
         items.push({
           category: 'objective',
           matched: false,
-          labelHe: 'Background Religious/Cultural שונה',
+          labelHe: 'Different religious/cultural background',
           labelEn: 'Different religious/cultural background',
         });
       }
@@ -507,14 +507,14 @@ function calculateObjectiveFitMatch(
       items.push({
         category: 'objective',
         matched: true,
-        labelHe: 'Specialization בTrauma צבאית',
+        labelHe: 'Specialization in military trauma',
         labelEn: 'Military trauma specialization',
       });
     } else {
       items.push({
         category: 'objective',
         matched: false,
-        labelHe: 'אין Experience צבאי ספציפי',
+        labelHe: 'No specific military experience',
         labelEn: 'No specific military experience',
       });
     }
@@ -532,7 +532,7 @@ function calculateObjectiveFitMatch(
       items.push({
         category: 'objective',
         matched: true,
-        labelHe: `Therapist בקבוצת הגיל Your`,
+        labelHe: `Therapist in your age group`,
         labelEn: `Treats your age group (${patientAgeGroup.toLowerCase()})`,
       });
     } else {
@@ -540,7 +540,7 @@ function calculateObjectiveFitMatch(
       items.push({
         category: 'objective',
         matched: false,
-        labelHe: 'קבוצת גיל No Matching',
+        labelHe: 'Non-matching age group',
         labelEn: 'Age group mismatch',
       });
     }
@@ -553,7 +553,7 @@ function calculateObjectiveFitMatch(
       items.push({
         category: 'objective',
         matched: true,
-        labelHe: 'שפת אם Matching',
+        labelHe: 'Native language match',
         labelEn: 'Native language match',
       });
     }
@@ -623,7 +623,7 @@ function calculateSubjectiveFitMatch(
       items.push({
         category: 'subjective',
         matched: false,
-        labelHe: 'Communication style No Match במלוor',
+        labelHe: 'Communication style not fully matching',
         labelEn: 'Communication style partial mismatch',
       });
     }
@@ -642,7 +642,7 @@ function calculateSubjectiveFitMatch(
       items.push({
         category: 'subjective',
         matched: true,
-        labelHe: 'מכTotal את הצרכs הרגשיs Your',
+        labelHe: 'Understands your emotional needs',
         labelEn: 'Covers your emotional needs',
       });
     } else if (coverage >= 0.5) {
@@ -650,14 +650,14 @@ function calculateSubjectiveFitMatch(
       items.push({
         category: 'subjective',
         matched: true,
-        labelHe: 'מכTotal חלק מהצרכs הרגשיs',
+        labelHe: 'Partially meets emotional needs',
         labelEn: 'Partially covers emotional needs',
       });
     } else {
       items.push({
         category: 'subjective',
         matched: false,
-        labelHe: 'Emotional needs coverage חלקי',
+        labelHe: 'Partial emotional needs coverage',
         labelEn: 'Limited emotional needs coverage',
       });
     }
@@ -671,7 +671,7 @@ function calculateSubjectiveFitMatch(
       items.push({
         category: 'subjective',
         matched: true,
-        labelHe: 'סגנון Therapyי edup toף Match',
+        labelHe: 'Preferred therapeutic style match',
         labelEn: 'Preferred therapy style match',
       });
     } else {
@@ -692,14 +692,14 @@ function calculateSubjectiveFitMatch(
         items.push({
           category: 'subjective',
           matched: true,
-          labelHe: 'סגנון Therapyי קרוב',
+          labelHe: 'Similar therapeutic style',
           labelEn: 'Compatible therapy style',
         });
       } else {
         items.push({
           category: 'subjective',
           matched: false,
-          labelHe: 'סגנון Therapyי שונה מהedup toף',
+          labelHe: 'Different therapeutic style from preferred',
           labelEn: 'Therapy style differs from preference',
         });
       }
@@ -796,7 +796,7 @@ export function calculateDetailedMatch(
     explanationItems.push({
       category: 'practical',
       matched: true,
-      labelHe: 'Availability וגישה נוחה',
+      labelHe: 'Convenient availability and access',
       labelEn: 'Good availability & access',
     });
   }
@@ -806,14 +806,14 @@ export function calculateDetailedMatch(
     explanationItems.push({
       category: 'therapeutic',
       matched: true,
-      labelHe: 'Match Therapyית גבוהה',
+      labelHe: 'High therapeutic match',
       labelEn: 'High therapeutic compatibility',
     });
   } else if (xFactorMatch.score < 50) {
     explanationItems.push({
       category: 'therapeutic',
       matched: false,
-      labelHe: 'Match Therapyית נedכה',
+      labelHe: 'Low therapeutic match',
       labelEn: 'Low therapeutic compatibility',
     });
   }

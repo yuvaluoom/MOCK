@@ -264,7 +264,7 @@ export class ConfigManager implements IConfigManager {
     // Audit log
     const auditLogger = getAuditLogger();
     await auditLogger.log(
-      createAuditEntry('admin.config_update', `הגדרה ${key} עודכנה`, {
+      createAuditEntry('admin.config_update', `Setting ${key} updated`, {
         actorId: changedBy,
         details: { key, scope, scopeId },
         previousValue: existing?.value,
@@ -425,20 +425,20 @@ export function getAvailableConfigs(): Record<ConfigType, string[]> {
 export function getConfigLabel(key: string): string {
   const labels: Record<string, string> = {
     'matching.default_config_id': 'Settings Match default',
-    'matching.minimum_score': 'Match Score מינימלי',
-    'matching.max_results': 'מספר תוצorת מקסימלי',
-    'matching.auto_refresh_hours': 'רענון orטומטי (שעs)',
-    'notification.email_enabled': 'אפשר Alertorת Email',
-    'notification.session_reminder_hours': 'תזכורת לפני Session (שעs)',
-    'security.max_login_attempts': 'ניסיונs Sign In מקסימליs',
-    'security.lockout_duration_minutes': 'זמן נעילה (Minutes)',
-    'security.session_timeout_minutes': 'פקיעת סשן (Minutes)',
-    'security.require_email_verification': 'דרוש אימs Email',
+    'matching.minimum_score': 'Minimum Match Score',
+    'matching.max_results': 'Maximum Results',
+    'matching.auto_refresh_hours': 'Auto Refresh (hours)',
+    'notification.email_enabled': 'Enable Email Notifications',
+    'notification.session_reminder_hours': 'Session Reminder (hours before)',
+    'security.max_login_attempts': 'Maximum Login Attempts',
+    'security.lockout_duration_minutes': 'Lockout Duration (minutes)',
+    'security.session_timeout_minutes': 'Session Timeout (minutes)',
+    'security.require_email_verification': 'Require Email Verification',
     'feature.online_sessions': 'Sessions orOnline',
-    'feature.military_matching': 'Match צבאית',
-    'feature.xfactor_v2': 'אלגוריתם X-Factor v2',
-    'ui.default_language': 'שפת ממשק',
-    'ui.theme': 'ערכת Subject',
+    'feature.military_matching': 'Military Matching',
+    'feature.xfactor_v2': 'X-Factor v2 Algorithm',
+    'ui.default_language': 'Interface Language',
+    'ui.theme': 'Theme',
   };
 
   return labels[key] || key;
