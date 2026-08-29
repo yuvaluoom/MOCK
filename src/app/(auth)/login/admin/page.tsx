@@ -40,13 +40,9 @@ export default function AdminLoginPage() {
     setError('');
     setIsLoading(true);
 
-    if (email === 'admin@matchmind.co.il' && password === 'admin123') {
-      // Set mock session cookie so tRPC context recognizes admin role
-      document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'ADMIN' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
-      router.push('/admin');
-    } else {
-      setError('Invalid credentials. Use admin@matchmind.co.il / admin123');
-    }
+    // Mock mode: accept any credentials
+    document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'ADMIN' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
+    router.push('/admin');
 
     setIsLoading(false);
   };

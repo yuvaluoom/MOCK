@@ -87,10 +87,11 @@ export function CookieConsent() {
                   We value your privacy
                 </h2>
                 <p id="cookie-description" className="text-sm text-gray-600 mb-4">
-                  We use cookies to enhance your browsing experience, provide personalized content, and analyze our traffic.
-                  By clicking "Accept All", you consent to our use of cookies. You can manage your preferences or learn more in our{' '}
+                  This website uses cookies (and tools such as Google Analytics) to improve your browsing experience,
+                  analyze site usage, and personalize content. For more information about how we use your data and your rights,
+                  please review our{' '}
                   <Link href="/privacy" className="text-calm-600 hover:underline focus:outline-none focus:underline">
-                    Privacy Policy
+                    full Privacy Policy
                   </Link>.
                 </p>
 
