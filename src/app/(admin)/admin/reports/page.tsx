@@ -10,7 +10,7 @@ const DownloadIcon = () => (
   </svg>
 );
 
-const fundColors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-amber-500', 'bg-slate-500', 'bg-rose-500'];
+const fundColors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-amber-500', 'bg-gray-400', 'bg-rose-500'];
 
 export default function ReportsPage() {
   const { data: reports, isLoading } = trpc.admin.getReportsData.useQuery();
@@ -20,12 +20,12 @@ export default function ReportsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Reports & Analytics</h1>
-          <p className="text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Reports & Analytics</h1>
+          <p className="text-gray-500 mt-1">
             Performance data and platform growth metrics
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors self-start">
+        <button className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors self-start text-sm font-medium">
           <DownloadIcon />
           Export
         </button>
@@ -33,27 +33,27 @@ export default function ReportsPage() {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Total Patients</p>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <p className="text-sm font-medium text-gray-500">Total Patients</p>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {isLoading ? '...' : reports?.totalPatients ?? 0}
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Active Therapists</p>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <p className="text-sm font-medium text-gray-500">Active Therapists</p>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {isLoading ? '...' : reports?.approvedTherapists ?? 0}
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Total Sessions</p>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <p className="text-sm font-medium text-gray-500">Total Sessions</p>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {isLoading ? '...' : reports?.totalSessions ?? 0}
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <p className="text-sm text-slate-400">Match Rate</p>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <p className="text-sm font-medium text-gray-500">Match Rate</p>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {isLoading ? '...' : `${reports?.matchRate ?? 0}%`}
           </p>
         </div>
@@ -62,10 +62,10 @@ export default function ReportsPage() {
       {/* Detailed Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Session Stats */}
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Session Statistics</h2>
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <h2 className="text-base font-semibold text-gray-900 mb-4">Session Statistics</h2>
           {isLoading ? (
-            <p className="text-slate-400">Loading...</p>
+            <p className="text-gray-400">Loading...</p>
           ) : (
             <div className="space-y-4">
               {(() => {
@@ -76,42 +76,22 @@ export default function ReportsPage() {
                 const cancelled = reports?.sessionsByStatus?.cancelled ?? 0;
                 return (
                   <>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">Approveds</span>
-                        <span className="text-white font-medium">{approved}</span>
+                    {[
+                      { label: 'Approved', value: approved, color: 'bg-green-500' },
+                      { label: 'Completed', value: completed, color: 'bg-blue-500' },
+                      { label: 'Pending', value: pending, color: 'bg-amber-500' },
+                      { label: 'Cancelled', value: cancelled, color: 'bg-red-500' },
+                    ].map((item) => (
+                      <div key={item.label}>
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-sm text-gray-500">{item.label}</span>
+                          <span className="text-sm font-semibold text-gray-900">{item.value}</span>
+                        </div>
+                        <div className="w-full bg-gray-100 rounded-full h-2">
+                          <div className={`${item.color} h-2 rounded-full`} style={{ width: `${Math.round((item.value / total) * 100)}%` }} />
+                        </div>
                       </div>
-                      <div className="w-full bg-slate-700 rounded-full h-2">
-                        <div className="bg-green-500 h-2 rounded-full" style={{ width: `${Math.round((approved / total) * 100)}%` }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">Completed</span>
-                        <span className="text-white font-medium">{completed}</span>
-                      </div>
-                      <div className="w-full bg-slate-700 rounded-full h-2">
-                        <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${Math.round((completed / total) * 100)}%` }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">Pending</span>
-                        <span className="text-white font-medium">{pending}</span>
-                      </div>
-                      <div className="w-full bg-slate-700 rounded-full h-2">
-                        <div className="bg-amber-500 h-2 rounded-full" style={{ width: `${Math.round((pending / total) * 100)}%` }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="text-slate-400">Cancelled</span>
-                        <span className="text-white font-medium">{cancelled}</span>
-                      </div>
-                      <div className="w-full bg-slate-700 rounded-full h-2">
-                        <div className="bg-red-500 h-2 rounded-full" style={{ width: `${Math.round((cancelled / total) * 100)}%` }} />
-                      </div>
-                    </div>
+                    ))}
                   </>
                 );
               })()}
@@ -120,69 +100,64 @@ export default function ReportsPage() {
         </div>
 
         {/* Health Fund Distribution */}
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Health Fund Distribution</h2>
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <h2 className="text-base font-semibold text-gray-900 mb-4">Health Fund Distribution</h2>
           {isLoading ? (
-            <p className="text-slate-400">Loading...</p>
+            <p className="text-gray-400">Loading...</p>
           ) : reports?.healthFundDistribution?.length ? (
             <div className="space-y-3">
               {reports.healthFundDistribution.map((fund, i) => (
                 <div key={fund.name} className="flex items-center gap-3">
                   <div className={`w-3 h-3 rounded ${fundColors[i % fundColors.length]}`} />
-                  <span className="text-slate-400 flex-1">{fund.name}</span>
-                  <span className="text-white font-medium">{fund.percent}%</span>
+                  <span className="text-sm text-gray-600 flex-1">{fund.name}</span>
+                  <span className="text-sm font-semibold text-gray-900">{fund.percent}%</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-slate-400">No data</p>
+            <p className="text-gray-400">No data</p>
           )}
         </div>
 
         {/* Top Therapists */}
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Top Therapists</h2>
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <h2 className="text-base font-semibold text-gray-900 mb-4">Top Therapists</h2>
           {isLoading ? (
-            <p className="text-slate-400">Loading...</p>
+            <p className="text-gray-400">Loading...</p>
           ) : reports?.topTherapists?.length ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {reports.topTherapists.map((therapist, index) => (
                 <div
                   key={therapist.id}
-                  className="flex items-center gap-3 p-2 bg-slate-700/50 rounded-lg"
+                  className="flex items-center gap-3 p-2.5 bg-gray-50 rounded-lg border border-gray-100"
                 >
-                  <span className="text-amber-400 font-medium w-6">{index + 1}</span>
-                  <span className="text-white flex-1">{therapist.name}</span>
-                  <span className="text-slate-400 text-sm">{therapist.sessions} Sessions</span>
+                  <span className="text-amber-600 font-bold w-6 text-sm">{index + 1}</span>
+                  <span className="text-sm font-medium text-gray-900 flex-1">{therapist.name}</span>
+                  <span className="text-xs text-gray-500">{therapist.sessions} sessions</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-slate-400">No data</p>
+            <p className="text-gray-400">No data</p>
           )}
         </div>
       </div>
 
       {/* Export Options */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-        <h2 className="text-lg font-semibold text-white mb-4">Export Reports</h2>
+      <div className="bg-white border border-gray-200 rounded-xl p-6">
+        <h2 className="text-base font-semibold text-gray-900 mb-4">Export Reports</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">Users Report</p>
-            <p className="text-slate-400 text-sm mt-1">All users with status and activity</p>
-          </button>
-          <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">Sessions Report</p>
-            <p className="text-slate-400 text-sm mt-1">Session history and statistics</p>
-          </button>
-          <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">Financial Report</p>
-            <p className="text-slate-400 text-sm mt-1">Revenue and billing data</p>
-          </button>
-          <button className="p-4 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors text-right">
-            <p className="text-white font-medium">Compliance Report</p>
-            <p className="text-slate-400 text-sm mt-1">Audit logs and security events</p>
-          </button>
+          {[
+            { name: 'Users Report', desc: 'All users with status and activity' },
+            { name: 'Sessions Report', desc: 'Session history and statistics' },
+            { name: 'Financial Report', desc: 'Revenue and billing data' },
+            { name: 'Compliance Report', desc: 'Audit logs and security events' },
+          ].map((item) => (
+            <button key={item.name} className="p-4 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors text-left">
+              <p className="text-sm font-semibold text-gray-900">{item.name}</p>
+              <p className="text-xs text-gray-500 mt-1">{item.desc}</p>
+            </button>
+          ))}
         </div>
       </div>
     </div>

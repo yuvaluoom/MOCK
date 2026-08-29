@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils/cn';
 import { trpc } from '@/lib/trpc/client';
 import { Logo } from '@/components/ui/Logo';
 
-// Icons
+// ============ ICONS ============
+
 const DashboardIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
     <rect width="7" height="9" x="3" y="3" rx="1" />
@@ -82,11 +83,17 @@ const AuditIcon = () => (
   </svg>
 );
 
-const ImportIcon = () => (
+const ComplianceIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-    <polyline points="17 8 12 3 7 8" />
-    <line x1="12" x2="12" y1="3" y2="15" />
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+    <path d="m9 12 2 2 4-4" />
+  </svg>
+);
+
+const MailIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+    <rect width="20" height="16" x="2" y="4" rx="2" />
+    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
   </svg>
 );
 
@@ -113,33 +120,73 @@ const XIcon = () => (
   </svg>
 );
 
-const ShieldIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-    <path d="m9 12 2 2 4-4" />
-  </svg>
-);
+// ============ GROUPED NAVIGATION ============
 
-const MailIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-    <rect width="20" height="16" x="2" y="4" rx="2" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-);
+type NavItem = {
+  name: string;
+  href: string;
+  icon: React.ComponentType;
+};
 
-const navigation = [
-  { name: 'Dashboard', href: '/admin', icon: DashboardIcon },
-  { name: 'User Management', href: '/admin/users', icon: UsersIcon },
-  { name: 'Therapist Approval', href: '/admin/therapists', icon: TherapistIcon },
-  { name: 'Email Center', href: '/admin/emails', icon: MailIcon },
-  { name: 'Data Import', href: '/admin/import', icon: ImportIcon },
-  { name: 'Session Review', href: '/admin/sessions', icon: SessionsIcon },
-  { name: 'Message Management', href: '/admin/messages', icon: MessagesIcon },
-  { name: 'Reports & Analytics', href: '/admin/reports', icon: ReportsIcon },
-  { name: 'Compliance & Verification', href: '/admin/compliance', icon: TherapistIcon },
-  { name: 'Audit Log', href: '/admin/audit', icon: AuditIcon },
-  { name: 'System Settings', href: '/admin/settings', icon: SettingsIcon },
+type NavGroup = {
+  label: string;
+  items: NavItem[];
+};
+
+const navigationGroups: NavGroup[] = [
+  {
+    label: 'Main',
+    items: [
+      { name: 'Dashboard', href: '/admin', icon: DashboardIcon },
+    ],
+  },
+  {
+    label: 'Management',
+    items: [
+      { name: 'Users', href: '/admin/users', icon: UsersIcon },
+      { name: 'Therapists', href: '/admin/therapists', icon: TherapistIcon },
+      { name: 'Sessions', href: '/admin/sessions', icon: SessionsIcon },
+    ],
+  },
+  {
+    label: 'Communication',
+    items: [
+      { name: 'Messages', href: '/admin/messages', icon: MessagesIcon },
+      { name: 'Email Center', href: '/admin/emails', icon: MailIcon },
+    ],
+  },
+  {
+    label: 'Analytics',
+    items: [
+      { name: 'Reports', href: '/admin/reports', icon: ReportsIcon },
+      { name: 'Compliance', href: '/admin/compliance', icon: ComplianceIcon },
+      { name: 'Audit Log', href: '/admin/audit', icon: AuditIcon },
+    ],
+  },
+  {
+    label: 'System',
+    items: [
+      { name: 'Settings', href: '/admin/settings', icon: SettingsIcon },
+    ],
+  },
 ];
+
+// Flat list for resolving page names
+const allNavItems = navigationGroups.flatMap((g) => g.items);
+
+function getPageTitle(pathname: string): string {
+  // Exact match first
+  const exact = allNavItems.find((item) => item.href === pathname);
+  if (exact) return exact.name;
+  // Prefix match (e.g. /admin/therapists/123)
+  const prefix = allNavItems
+    .filter((item) => item.href !== '/admin')
+    .find((item) => pathname.startsWith(item.href));
+  if (prefix) return prefix.name;
+  return 'Dashboard';
+}
+
+// ============ LAYOUT ============
 
 export default function AdminLayout({
   children,
@@ -150,19 +197,20 @@ export default function AdminLayout({
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Get dashboard stats for notifications badge
   const { data: stats } = trpc.admin.getDashboardStats.useQuery();
 
   const handleLogout = () => {
     router.push('/login/admin');
   };
 
+  const pageTitle = getPageTitle(pathname);
+
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Mobile sidebar backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -170,79 +218,93 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-72 bg-slate-800 border-r border-slate-700 transform transition-transform duration-300 ease-in-out lg:translate-x-0',
+          'fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
         <div className="flex flex-col h-full">
           {/* Logo & Admin Badge */}
-          <div className="flex items-center justify-between h-16 px-6 border-b border-slate-700">
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between h-16 px-5 border-b border-gray-200">
+            <div className="flex items-center gap-2.5">
               <Logo size="md" href="/admin" />
-              <span className="px-2 py-0.5 text-xs font-medium bg-amber-500/20 text-amber-400 rounded-full">
+              <span className="px-2 py-0.5 text-[11px] font-semibold bg-amber-100 text-amber-700 rounded-md tracking-wide uppercase">
                 Admin
               </span>
             </div>
             <button
               type="button"
-              className="lg:hidden p-2 -m-2 text-slate-400"
+              className="lg:hidden p-2 -m-2 text-gray-400 hover:text-gray-600"
               onClick={() => setSidebarOpen(false)}
             >
               <XIcon />
             </button>
           </div>
 
-          {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-            {navigation.map((item) => {
-              const isActive = pathname === item.href ||
-                (item.href !== '/admin' && pathname.startsWith(item.href));
-              const showBadge = item.href === '/admin/therapists' && stats?.therapists?.awaitingApproval;
+          {/* Grouped Navigation */}
+          <nav className="flex-1 px-3 py-4 overflow-y-auto">
+            {navigationGroups.map((group) => (
+              <div key={group.label} className="mb-5">
+                <p className="px-3 mb-1.5 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                  {group.label}
+                </p>
+                <div className="space-y-0.5">
+                  {group.items.map((item) => {
+                    const isActive =
+                      pathname === item.href ||
+                      (item.href !== '/admin' && pathname.startsWith(item.href));
+                    const showBadge =
+                      item.href === '/admin/therapists' &&
+                      stats?.therapists?.awaitingApproval;
 
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    'flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors',
-                    isActive
-                      ? 'bg-slate-700 text-white'
-                      : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
-                  )}
-                  onClick={() => setSidebarOpen(false)}
-                >
-                  <span className="flex items-center gap-3">
-                    <item.icon />
-                    {item.name}
-                  </span>
-                  {showBadge && (
-                    <span className="px-2 py-0.5 text-xs font-medium bg-amber-500 text-white rounded-full">
-                      {stats.therapists.awaitingApproval}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={cn(
+                          'flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                          isActive
+                            ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 border border-transparent'
+                        )}
+                        onClick={() => setSidebarOpen(false)}
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <span className={isActive ? 'text-amber-600' : 'text-gray-400'}>
+                            <item.icon />
+                          </span>
+                          {item.name}
+                        </span>
+                        {showBadge && (
+                          <span className="px-1.5 py-0.5 text-[11px] font-semibold bg-amber-500 text-white rounded-full min-w-[20px] text-center">
+                            {stats.therapists.awaitingApproval}
+                          </span>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
 
           {/* Admin info & logout */}
-          <div className="p-4 border-t border-slate-700">
-            <div className="flex items-center gap-3 px-4 py-3">
-              <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
-                <span className="text-amber-400 font-medium">A</span>
+          <div className="p-3 border-t border-gray-200">
+            <div className="flex items-center gap-3 px-3 py-2">
+              <div className="w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center">
+                <span className="text-amber-700 font-semibold text-sm">A</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
+                <p className="text-sm font-medium text-gray-900 truncate">
                   Admin User
                 </p>
-                <p className="text-xs text-slate-400 truncate">
+                <p className="text-xs text-gray-500 truncate">
                   admin@matchmind.co.il
                 </p>
               </div>
             </div>
             <button
               type="button"
-              className="flex items-center gap-3 w-full px-4 py-3 mt-2 text-sm font-medium text-slate-400 rounded-lg hover:bg-slate-700 hover:text-white transition-colors"
+              className="flex items-center gap-2.5 w-full px-3 py-2 mt-1 text-sm font-medium text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 transition-colors"
               onClick={handleLogout}
             >
               <LogOutIcon />
@@ -253,47 +315,47 @@ export default function AdminLayout({
       </aside>
 
       {/* Main content area */}
-      <div className="lg:ml-72">
+      <div className="lg:ml-64">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 flex items-center h-16 px-4 bg-slate-800 border-b border-slate-700 lg:px-8">
+        <header className="sticky top-0 z-30 flex items-center h-16 px-4 bg-white border-b border-gray-200 lg:px-8">
           <button
             type="button"
-            className="p-2 -m-2 text-slate-400 lg:hidden"
+            className="p-2 -m-2 text-gray-400 lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <MenuIcon />
           </button>
 
           <div className="flex-1 flex items-center gap-4 ml-4 lg:ml-0">
-            <h1 className="text-lg font-semibold text-white">
-              Supervision Portal
+            <h1 className="text-lg font-semibold text-gray-900">
+              {pageTitle}
             </h1>
-            <span className="hidden md:inline-flex items-center px-2.5 py-0.5 text-xs font-medium bg-green-500/20 text-green-400 rounded-full">
-              <span className="w-1.5 h-1.5 bg-green-400 rounded-full mr-1.5 animate-pulse" />
+            <span className="hidden md:inline-flex items-center px-2.5 py-0.5 text-xs font-medium bg-green-50 text-green-700 rounded-full border border-green-200">
+              <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1.5 animate-pulse" />
               System Online
             </span>
           </div>
 
           {/* Quick stats */}
           <div className="hidden md:flex items-center gap-6 text-sm">
-            <div className="text-slate-400">
-              <span className="text-white font-medium">{stats?.patients.total ?? 0}</span> Patients
+            <div className="text-gray-500">
+              <span className="text-gray-900 font-semibold">{stats?.patients.total ?? 0}</span> Patients
             </div>
-            <div className="text-slate-400">
-              <span className="text-white font-medium">{stats?.therapists.approved ?? 0}</span> Therapists
+            <div className="text-gray-500">
+              <span className="text-gray-900 font-semibold">{stats?.therapists.approved ?? 0}</span> Therapists
             </div>
-            <div className="text-slate-400">
-              <span className="text-white font-medium">{stats?.sessions.total ?? 0}</span> Sessions
+            <div className="text-gray-500">
+              <span className="text-gray-900 font-semibold">{stats?.sessions.total ?? 0}</span> Sessions
             </div>
           </div>
 
           {/* Notifications */}
           <button
             type="button"
-            className="ml-4 p-2 text-slate-400 hover:text-white relative"
+            className="ml-4 p-2 text-gray-400 hover:text-gray-600 relative"
             aria-label="Notifications"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
               <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
               <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
             </svg>
@@ -304,7 +366,7 @@ export default function AdminLayout({
         </header>
 
         {/* Page content */}
-        <main className="p-4 lg:p-8">
+        <main className="p-4 lg:p-8 bg-gray-50 min-h-[calc(100vh-4rem)]">
           {children}
         </main>
       </div>

@@ -4,19 +4,19 @@ import { useState } from 'react';
 import { trpc } from '@/lib/trpc/client';
 
 const actionConfig: Record<string, { color: string; label: string }> = {
-  CREATE: { color: 'bg-green-500/20 text-green-400', label: 'Create' },
-  UPDATE: { color: 'bg-blue-500/20 text-blue-400', label: 'Update' },
-  DELETE: { color: 'bg-red-500/20 text-red-400', label: 'Delete' },
-  APPROVE: { color: 'bg-green-500/20 text-green-400', label: 'Approve' },
-  REJECT: { color: 'bg-red-500/20 text-red-400', label: 'Reject' },
-  LOGIN: { color: 'bg-purple-500/20 text-purple-400', label: 'Login' },
-  LOGOUT: { color: 'bg-slate-500/20 text-slate-400', label: 'Logout' },
-  THERAPIST_APPROVED: { color: 'bg-green-500/20 text-green-400', label: 'Therapist Approved' },
-  THERAPIST_REJECTED: { color: 'bg-red-500/20 text-red-400', label: 'Therapist Rejected' },
-  THERAPIST_SUSPENDED: { color: 'bg-orange-500/20 text-orange-400', label: 'Therapist Suspended' },
-  THERAPIST_UNSUSPENDED: { color: 'bg-green-500/20 text-green-400', label: 'Suspension Lifted' },
-  DOCUMENTS_REQUESTED: { color: 'bg-amber-500/20 text-amber-400', label: 'Documents Requested' },
-  OWNER_STATUS_OVERRIDE: { color: 'bg-purple-500/20 text-purple-400', label: 'Status Override (Owner)' },
+  CREATE: { color: 'bg-green-50 text-green-700', label: 'Create' },
+  UPDATE: { color: 'bg-blue-50 text-blue-700', label: 'Update' },
+  DELETE: { color: 'bg-red-50 text-red-700', label: 'Delete' },
+  APPROVE: { color: 'bg-green-50 text-green-700', label: 'Approve' },
+  REJECT: { color: 'bg-red-50 text-red-700', label: 'Reject' },
+  LOGIN: { color: 'bg-purple-50 text-purple-700', label: 'Login' },
+  LOGOUT: { color: 'bg-gray-100 text-gray-600', label: 'Logout' },
+  THERAPIST_APPROVED: { color: 'bg-green-50 text-green-700', label: 'Therapist Approved' },
+  THERAPIST_REJECTED: { color: 'bg-red-50 text-red-700', label: 'Therapist Rejected' },
+  THERAPIST_SUSPENDED: { color: 'bg-orange-50 text-orange-700', label: 'Therapist Suspended' },
+  THERAPIST_UNSUSPENDED: { color: 'bg-green-50 text-green-700', label: 'Suspension Lifted' },
+  DOCUMENTS_REQUESTED: { color: 'bg-amber-50 text-amber-700', label: 'Documents Requested' },
+  OWNER_STATUS_OVERRIDE: { color: 'bg-purple-50 text-purple-700', label: 'Status Override (Owner)' },
 };
 
 const entityTypeLabels: Record<string, string> = {
@@ -61,35 +61,33 @@ export default function AuditLogsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">Audit Log</h1>
-        <p className="text-slate-400 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900">Audit Log</h1>
+        <p className="text-gray-500 mt-1">
           Track all significant activities and changes in the system
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
         <div className="flex flex-col md:flex-row gap-4">
-          {/* Search */}
           <div className="flex-1 relative">
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
               <SearchIcon />
             </div>
             <input
               type="text"
               placeholder="Search logs..."
-              className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full pr-10 pl-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
             />
           </div>
 
-          {/* Entity Type Filter */}
           <select
             value={entityTypeFilter}
             onChange={(e) => {
               setEntityTypeFilter(e.target.value);
               setPage(1);
             }}
-            className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
           >
             <option value="">All Entities</option>
             <option value="USER">User</option>
@@ -99,32 +97,31 @@ export default function AuditLogsPage() {
             <option value="DOCUMENT">Document</option>
           </select>
 
-          {/* Date Range */}
           <div className="flex items-center gap-2">
             <input
               type="date"
-              className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
             />
-            <span className="text-slate-400">up to</span>
+            <span className="text-gray-400 text-sm">to</span>
             <input
               type="date"
-              className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
             />
           </div>
         </div>
       </div>
 
       {/* Logs Table */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Timestamp</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">User</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Action</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Entity</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Details</th>
+              <tr className="border-b border-gray-200 bg-gray-50">
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Timestamp</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">User</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Action</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Entity</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Details</th>
               </tr>
             </thead>
             <tbody>
@@ -136,7 +133,7 @@ export default function AuditLogsPage() {
                 </tr>
               ) : data?.logs.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
+                  <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
                     No audit records found
                   </td>
                 </tr>
@@ -144,25 +141,25 @@ export default function AuditLogsPage() {
                 data?.logs.map((log) => (
                   <tr
                     key={log.id}
-                    className="border-b border-slate-700/50 hover:bg-slate-700/30"
+                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                   >
-                    <td className="px-6 py-4 text-sm text-slate-300">
-                      {new Date(log.createdAt).toLocaleString('en-US')}
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {new Date(log.createdAt).toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' })}
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-sm text-white">{log.userName}</span>
+                      <span className="text-sm font-medium text-gray-900">{log.userName}</span>
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-2.5 py-1 text-xs font-medium rounded-full ${actionConfig[log.action]?.color ?? 'bg-slate-500/20 text-slate-400'}`}
+                        className={`px-2.5 py-1 text-xs font-medium rounded-full ${actionConfig[log.action]?.color ?? 'bg-gray-100 text-gray-600'}`}
                       >
                         {actionConfig[log.action]?.label ?? log.action}
                       </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm">
-                        <span className="text-white">{entityTypeLabels[log.entityType] ?? log.entityType}</span>
-                        <span className="text-slate-500 mr-2 font-mono text-xs">
+                        <span className="text-gray-900 font-medium">{entityTypeLabels[log.entityType] ?? log.entityType}</span>
+                        <span className="text-gray-400 ml-2 font-mono text-xs">
                           {log.entityId}
                         </span>
                       </div>
@@ -170,7 +167,7 @@ export default function AuditLogsPage() {
                     <td className="px-6 py-4">
                       {log.previousValue && (
                         <button
-                          className="text-xs text-amber-400 hover:text-amber-300"
+                          className="text-xs font-medium text-amber-600 hover:text-amber-700"
                           onClick={() => {
                             alert(JSON.stringify({ previous: log.previousValue, new: log.newValue }, null, 2));
                           }}
@@ -188,8 +185,8 @@ export default function AuditLogsPage() {
 
         {/* Pagination */}
         {data && data.pagination.totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700">
-            <p className="text-sm text-slate-400">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <p className="text-sm text-gray-500">
               Showing {(page - 1) * data.pagination.limit + 1} to{' '}
               {Math.min(page * data.pagination.limit, data.pagination.total)} of{' '}
               {data.pagination.total} records
@@ -198,17 +195,17 @@ export default function AuditLogsPage() {
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="p-2 text-slate-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronLeftIcon />
               </button>
-              <span className="text-sm text-white">
+              <span className="text-sm text-gray-700 font-medium">
                 Page {page} of {data.pagination.totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(data.pagination.totalPages, p + 1))}
                 disabled={page === data.pagination.totalPages}
-                className="p-2 text-slate-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronRightIcon />
               </button>
@@ -218,9 +215,9 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Info Card */}
-      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-        <h3 className="text-sm font-medium text-slate-400 mb-2">About Audit Logs</h3>
-        <p className="text-sm text-slate-500">
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+        <h3 className="text-sm font-semibold text-gray-700 mb-2">About Audit Logs</h3>
+        <p className="text-sm text-gray-500">
           The audit log tracks all significant actions performed in the system, including user management,
           therapist approvals, session changes, and administrative updates. Records are retained
           for 90 days and can be exported for compliance purposes.

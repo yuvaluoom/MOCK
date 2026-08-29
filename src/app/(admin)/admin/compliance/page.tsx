@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { trpc } from '@/lib/trpc/client';
 
-// Inline Icons (consistent with other admin pages - no lucide dependency)
 const ShieldCheckIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className ?? 'w-5 h-5'}>
     <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
@@ -75,7 +74,6 @@ const HelpCircleIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// Structured Compliance Status System
 const verificationStatusConfig: Record<string, {
   label: string;
   color: string;
@@ -86,40 +84,40 @@ const verificationStatusConfig: Record<string, {
 }> = {
   VERIFIED: {
     label: 'Verified',
-    color: 'text-green-400',
-    bgColor: 'bg-green-500/20',
+    color: 'text-green-700',
+    bgColor: 'bg-green-50 border border-green-200',
     Icon: ShieldCheckIcon,
     tooltip: 'All documents are approved and valid. The therapist meets all compliance requirements.',
     action: 'No action required',
   },
   PENDING_VERIFICATION: {
     label: 'Pending Verification',
-    color: 'text-amber-400',
-    bgColor: 'bg-amber-500/20',
+    color: 'text-amber-700',
+    bgColor: 'bg-amber-50 border border-amber-200',
     Icon: ClockIcon,
     tooltip: 'Documents have been uploaded but not yet reviewed by the admin team.',
     action: 'Review pending documents',
   },
   PARTIALLY_VERIFIED: {
     label: 'Partially Verified',
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/20',
+    color: 'text-blue-700',
+    bgColor: 'bg-blue-50 border border-blue-200',
     Icon: ShieldAlertIcon,
     tooltip: 'Some documents have been approved, but others are still pending or missing.',
     action: 'Complete the verification process',
   },
   MISSING_DOCUMENTATION: {
     label: 'Missing Documents',
-    color: 'text-red-400',
-    bgColor: 'bg-red-500/20',
+    color: 'text-red-700',
+    bgColor: 'bg-red-50 border border-red-200',
     Icon: ShieldXIcon,
     tooltip: 'No documents have been uploaded. The therapist must upload all required documents.',
     action: 'Request document upload',
   },
   EXPIRED_CREDENTIALS: {
     label: 'Expired Credentials',
-    color: 'text-orange-400',
-    bgColor: 'bg-orange-500/20',
+    color: 'text-orange-700',
+    bgColor: 'bg-orange-50 border border-orange-200',
     Icon: FileWarningIcon,
     tooltip: 'The therapist has documents that have expired. Relevant credentials must be renewed.',
     action: 'Request document renewal',
@@ -151,19 +149,19 @@ export default function AdminCompliancePage() {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-2xl font-bold text-white">Compliance & Document Verification</h1>
-          <p className="text-slate-400 mt-1">Track verification status and compliance of therapists on the platform</p>
+          <h1 className="text-2xl font-bold text-gray-900">Compliance & Document Verification</h1>
+          <p className="text-gray-500 mt-1">Track verification status and compliance of therapists on the platform</p>
         </div>
       </div>
 
       {/* Alerts for critical issues */}
       {!isLoading && (overallStats?.expiredCreds ?? 0) > 0 && (
-        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4">
           <div className="flex items-start gap-3">
-            <AlertTriangleIcon className="w-6 h-6 text-red-400 mt-0.5" />
+            <AlertTriangleIcon className="w-6 h-6 text-red-500 mt-0.5" />
             <div>
-              <h3 className="font-semibold text-red-400">Critical Alerts</h3>
-              <p className="text-sm text-red-300 mt-1">
+              <h3 className="font-semibold text-red-700">Critical Alerts</h3>
+              <p className="text-sm text-red-600 mt-1">
                 {overallStats?.expiredCreds} therapists have expired documents. Please address this urgently.
               </p>
             </div>
@@ -173,94 +171,94 @@ export default function AdminCompliancePage() {
 
       {/* Overview Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+        <div className="bg-white border border-gray-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Verified</p>
-              <p className="text-2xl font-bold text-green-400">
+              <p className="text-sm text-gray-500">Verified</p>
+              <p className="text-2xl font-bold text-green-600">
                 {isLoading ? '...' : overallStats?.verified ?? 0}
               </p>
             </div>
-            <div className="p-2 rounded-full bg-green-500/20">
-              <ShieldCheckIcon className="w-5 h-5 text-green-400" />
+            <div className="p-2 rounded-full bg-green-50">
+              <ShieldCheckIcon className="w-5 h-5 text-green-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+        <div className="bg-white border border-gray-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Pending Verification</p>
-              <p className="text-2xl font-bold text-amber-400">
+              <p className="text-sm text-gray-500">Pending Verification</p>
+              <p className="text-2xl font-bold text-amber-600">
                 {isLoading ? '...' : overallStats?.pendingVerification ?? 0}
               </p>
             </div>
-            <div className="p-2 rounded-full bg-amber-500/20">
-              <ClockIcon className="w-5 h-5 text-amber-400" />
+            <div className="p-2 rounded-full bg-amber-50">
+              <ClockIcon className="w-5 h-5 text-amber-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+        <div className="bg-white border border-gray-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Partially Verified</p>
-              <p className="text-2xl font-bold text-blue-400">
+              <p className="text-sm text-gray-500">Partially Verified</p>
+              <p className="text-2xl font-bold text-blue-600">
                 {isLoading ? '...' : overallStats?.partiallyVerified ?? 0}
               </p>
             </div>
-            <div className="p-2 rounded-full bg-blue-500/20">
-              <ShieldAlertIcon className="w-5 h-5 text-blue-400" />
+            <div className="p-2 rounded-full bg-blue-50">
+              <ShieldAlertIcon className="w-5 h-5 text-blue-600" />
             </div>
           </div>
         </div>
 
-        <div className={`bg-slate-800 border rounded-xl p-4 ${(overallStats?.missingDocs ?? 0) > 0 ? 'border-red-500/50' : 'border-slate-700'}`}>
+        <div className={`bg-white border rounded-xl p-4 ${(overallStats?.missingDocs ?? 0) > 0 ? 'border-red-300' : 'border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Missing Documents</p>
-              <p className="text-2xl font-bold text-red-400">
+              <p className="text-sm text-gray-500">Missing Documents</p>
+              <p className="text-2xl font-bold text-red-600">
                 {isLoading ? '...' : overallStats?.missingDocs ?? 0}
               </p>
             </div>
-            <div className="p-2 rounded-full bg-red-500/20">
-              <ShieldXIcon className="w-5 h-5 text-red-400" />
+            <div className="p-2 rounded-full bg-red-50">
+              <ShieldXIcon className="w-5 h-5 text-red-600" />
             </div>
           </div>
         </div>
 
-        <div className={`bg-slate-800 border rounded-xl p-4 ${(overallStats?.expiredCreds ?? 0) > 0 ? 'border-orange-500/50' : 'border-slate-700'}`}>
+        <div className={`bg-white border rounded-xl p-4 ${(overallStats?.expiredCreds ?? 0) > 0 ? 'border-orange-300' : 'border-gray-200'}`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-slate-400">Expired</p>
-              <p className="text-2xl font-bold text-orange-400">
+              <p className="text-sm text-gray-500">Expired</p>
+              <p className="text-2xl font-bold text-orange-600">
                 {isLoading ? '...' : overallStats?.expiredCreds ?? 0}
               </p>
             </div>
-            <div className="p-2 rounded-full bg-orange-500/20">
-              <FileWarningIcon className="w-5 h-5 text-orange-400" />
+            <div className="p-2 rounded-full bg-orange-50">
+              <FileWarningIcon className="w-5 h-5 text-orange-600" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Overall Compliance Rate */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
+      <div className="bg-white border border-gray-200 rounded-xl p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <ShieldCheckIcon className={`w-8 h-8 ${(overallStats?.overallComplianceRate ?? 0) >= 75 ? 'text-green-400' : 'text-red-400'}`} />
+            <ShieldCheckIcon className={`w-8 h-8 ${(overallStats?.overallComplianceRate ?? 0) >= 75 ? 'text-green-600' : 'text-red-600'}`} />
             <div>
-              <p className="text-sm text-slate-400">Overall Compliance Rate</p>
-              <p className="text-3xl font-bold text-white">
+              <p className="text-sm text-gray-500">Overall Compliance Rate</p>
+              <p className="text-3xl font-bold text-gray-900">
                 {isLoading ? '...' : `${overallStats?.overallComplianceRate ?? 0}%`}
               </p>
             </div>
           </div>
-          <div className="text-sm text-slate-400">
+          <div className="text-sm text-gray-500">
             {overallStats?.totalTherapists ?? 0} Active Therapists
           </div>
         </div>
-        <div className="w-full bg-slate-700 rounded-full h-3 mt-3">
+        <div className="w-full bg-gray-100 rounded-full h-3 mt-3">
           <div
             className={`h-3 rounded-full transition-all ${
               (overallStats?.overallComplianceRate ?? 0) >= 90 ? 'bg-green-500' :
@@ -272,26 +270,26 @@ export default function AdminCompliancePage() {
       </div>
 
       {/* Therapist Compliance Table */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
-        <div className="p-4 border-b border-slate-700 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <h3 className="text-lg font-semibold text-white">Verification Status by Therapist</h3>
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="p-4 border-b border-gray-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <h3 className="text-base font-semibold text-gray-900">Verification Status by Therapist</h3>
           <div className="flex gap-3">
             <div className="relative">
-              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
                 <SearchIcon />
               </div>
               <input
                 type="text"
-                placeholder="Search Therapist..."
+                placeholder="Search therapist..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pr-9 pl-4 py-2 w-48 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="pr-9 pl-4 py-2 w-48 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               />
             </div>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-              className="px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
             >
               <option value="status">Sort: Status</option>
               <option value="docs">Sort: Compliance %</option>
@@ -301,41 +299,43 @@ export default function AdminCompliancePage() {
         </div>
 
         {isLoading ? (
-          <div className="p-12 text-center text-slate-400">Loading compliance data...</div>
+          <div className="p-12 text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500 mx-auto"></div>
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-slate-700">
-                  <th className="text-right py-3 px-6 text-sm font-medium text-slate-400">Therapist</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Verification Status</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Documents</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Compliance</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Sessions</th>
-                  <th className="text-center py-3 px-4 text-sm font-medium text-slate-400">Required Action</th>
+                <tr className="border-b border-gray-200 bg-gray-50">
+                  <th className="text-left py-3 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Therapist</th>
+                  <th className="text-center py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Verification Status</th>
+                  <th className="text-center py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Documents</th>
+                  <th className="text-center py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Compliance</th>
+                  <th className="text-center py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Sessions</th>
+                  <th className="text-center py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Required Action</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredTherapists.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="text-center py-12 text-slate-400">No matching therapists found</td>
+                    <td colSpan={6} className="text-center py-12 text-gray-400">No matching therapists found</td>
                   </tr>
                 ) : (
                   filteredTherapists.map((therapist) => {
                     const config = verificationStatusConfig[therapist.verificationStatus] ?? verificationStatusConfig.MISSING_DOCUMENTATION;
                     const IconComponent = config.Icon;
                     return (
-                      <tr key={therapist.id} className="border-b border-slate-700/50 hover:bg-slate-700/30">
+                      <tr key={therapist.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <td className="py-3 px-6">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                              <span className="text-slate-300 font-medium text-sm">
+                            <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                              <span className="text-gray-600 font-medium text-sm">
                                 {therapist.name.charAt(0)}
                               </span>
                             </div>
                             <div>
-                              <span className="font-medium text-white">{therapist.name}</span>
-                              <p className="text-xs text-slate-400">{therapist.email}</p>
+                              <span className="font-medium text-gray-900 text-sm">{therapist.name}</span>
+                              <p className="text-xs text-gray-500">{therapist.email}</p>
                             </div>
                           </div>
                         </td>
@@ -346,48 +346,47 @@ export default function AdminCompliancePage() {
                               onMouseEnter={() => setTooltipId(therapist.id)}
                               onMouseLeave={() => setTooltipId(null)}
                             >
-                              <IconComponent className="w-4 h-4" />
+                              <IconComponent className="w-3.5 h-3.5" />
                               {config.label}
                               <HelpCircleIcon className="w-3 h-3 opacity-50" />
                             </span>
-                            {/* Tooltip */}
                             {tooltipId === therapist.id && (
-                              <div className="absolute z-50 w-64 p-3 bg-slate-900 border border-slate-600 text-white text-xs rounded-lg shadow-lg -top-2 right-full mr-2">
+                              <div className="absolute z-50 w-64 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-lg -top-2 right-full mr-2">
                                 <p className="font-medium mb-1">{config.label}</p>
-                                <p className="text-slate-300">{config.tooltip}</p>
+                                <p className="text-gray-300">{config.tooltip}</p>
                                 <p className="text-amber-400 mt-2 font-medium">{config.action}</p>
-                                <div className="absolute top-3 -right-1 w-2 h-2 bg-slate-900 border-r border-t border-slate-600 rotate-45" />
+                                <div className="absolute top-3 -right-1 w-2 h-2 bg-gray-900 rotate-45" />
                               </div>
                             )}
                           </div>
                         </td>
                         <td className="text-center py-3 px-4">
                           <div className="flex flex-col items-center gap-0.5">
-                            <span className="text-sm font-medium text-white">
+                            <span className="text-sm font-semibold text-gray-900">
                               {therapist.approvedDocuments}/{therapist.documentCount}
                             </span>
-                            <span className="text-xs text-slate-400">
-                              {therapist.pendingDocuments > 0 && `${therapist.pendingDocuments} Pending`}
+                            <span className="text-xs text-gray-500">
+                              {therapist.pendingDocuments > 0 && `${therapist.pendingDocuments} pending`}
                               {therapist.expiredDocuments > 0 && ` · ${therapist.expiredDocuments} expired`}
                             </span>
                           </div>
                         </td>
                         <td className="text-center py-3 px-4">
-                          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
+                          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${
                             therapist.documentComplianceRate >= 90
-                              ? 'bg-green-500/20 text-green-400'
+                              ? 'bg-green-50 text-green-700 border-green-200'
                               : therapist.documentComplianceRate >= 75
-                              ? 'bg-amber-500/20 text-amber-400'
-                              : 'bg-red-500/20 text-red-400'
+                              ? 'bg-amber-50 text-amber-700 border-amber-200'
+                              : 'bg-red-50 text-red-700 border-red-200'
                           }`}>
                             {therapist.documentComplianceRate}%
                           </span>
                         </td>
-                        <td className="text-center py-3 px-4 text-slate-300">
+                        <td className="text-center py-3 px-4 text-sm text-gray-600">
                           {therapist.totalSessions}
                         </td>
                         <td className="text-center py-3 px-4">
-                          <span className="text-xs text-slate-400">{config.action}</span>
+                          <span className="text-xs text-gray-500">{config.action}</span>
                         </td>
                       </tr>
                     );
@@ -400,12 +399,12 @@ export default function AdminCompliancePage() {
       </div>
 
       {/* Compliance Notice */}
-      <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
         <div className="flex items-start gap-3">
-          <FileTextIcon className="w-5 h-5 text-blue-400 mt-0.5" />
-          <div className="text-sm text-blue-300">
-            <p className="font-medium">Important Compliance Note</p>
-            <p className="mt-1">
+          <FileTextIcon className="w-5 h-5 text-blue-600 mt-0.5" />
+          <div className="text-sm text-blue-800">
+            <p className="font-semibold">Important Compliance Note</p>
+            <p className="mt-1 text-blue-700">
               This page displays statistical information about document compliance only.
               <strong> Clinical content is not accessible to administrators</strong> in accordance with medical privacy requirements.
               All data is pulled directly from the platform database in real-time.

@@ -15,31 +15,31 @@ type SessionStatus =
 const statusConfig: Record<string, { label: string; color: string }> = {
   PENDING_THERAPIST_APPROVAL: {
     label: 'Pending Approval',
-    color: 'bg-amber-500/20 text-amber-400',
+    color: 'bg-amber-50 text-amber-700 border-amber-200',
   },
   APPROVED: {
     label: 'Approved',
-    color: 'bg-green-500/20 text-green-400',
+    color: 'bg-green-50 text-green-700 border-green-200',
   },
   REJECTED: {
     label: 'Rejected',
-    color: 'bg-red-500/20 text-red-400',
+    color: 'bg-red-50 text-red-700 border-red-200',
   },
   COMPLETED: {
     label: 'Completed',
-    color: 'bg-blue-500/20 text-blue-400',
+    color: 'bg-blue-50 text-blue-700 border-blue-200',
   },
   CANCELLED_BY_PATIENT: {
     label: 'Cancelled (Patient)',
-    color: 'bg-slate-500/20 text-slate-400',
+    color: 'bg-gray-100 text-gray-600 border-gray-200',
   },
   CANCELLED_BY_THERAPIST: {
     label: 'Cancelled (Therapist)',
-    color: 'bg-slate-500/20 text-slate-400',
+    color: 'bg-gray-100 text-gray-600 border-gray-200',
   },
   NO_SHOW: {
-    label: 'No Arrived',
-    color: 'bg-orange-500/20 text-orange-400',
+    label: 'No Show',
+    color: 'bg-orange-50 text-orange-700 border-orange-200',
   },
 };
 
@@ -89,19 +89,19 @@ export default function SessionsOverviewPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Session Review</h1>
-          <p className="text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">Session Review</h1>
+          <p className="text-gray-500 mt-1">
             Monitor and manage all therapy sessions on the platform
           </p>
         </div>
         <div className="flex items-center gap-4 text-sm">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2">
-            <span className="text-slate-400">Total: </span>
-            <span className="text-white font-medium">{data?.pagination.total ?? 0}</span>
+          <div className="bg-white border border-gray-200 rounded-lg px-4 py-2">
+            <span className="text-gray-500">Total: </span>
+            <span className="text-gray-900 font-semibold">{data?.pagination.total ?? 0}</span>
           </div>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2">
-            <span className="text-slate-400">Pending: </span>
-            <span className="text-amber-400 font-medium">
+          <div className="bg-white border border-gray-200 rounded-lg px-4 py-2">
+            <span className="text-gray-500">Pending: </span>
+            <span className="text-amber-600 font-semibold">
               {data?.sessions.filter(s => s.status === 'PENDING_THERAPIST_APPROVAL').length ?? 0}
             </span>
           </div>
@@ -109,21 +109,21 @@ export default function SessionsOverviewPage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
         <div className="flex flex-wrap gap-4">
           <input
             type="text"
             placeholder="Search by patient or therapist name..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 min-w-[200px] px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="flex-1 min-w-[200px] px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
           />
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as SessionStatus | '')}
-            className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
           >
-            <option value="">All theStatuss</option>
+            <option value="">All Statuses</option>
             <option value="PENDING_THERAPIST_APPROVAL">Pending Approval</option>
             <option value="APPROVED">Approved</option>
             <option value="COMPLETED">Completed</option>
@@ -135,76 +135,74 @@ export default function SessionsOverviewPage() {
       </div>
 
       {/* Sessions Table */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Session</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Patient</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Therapist</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Status</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Type</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">Price</th>
+              <tr className="border-b border-gray-200 bg-gray-50">
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Session</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Patient</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Therapist</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Price</th>
               </tr>
             </thead>
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
-                    Loading Sessions...
+                  <td colSpan={6} className="px-6 py-12 text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500 mx-auto"></div>
                   </td>
                 </tr>
               ) : !data?.sessions.length ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
-                    No Foundor Sessions
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                    No sessions found
                   </td>
                 </tr>
               ) : (
                 data.sessions.map((session) => (
                   <tr
                     key={session.id}
-                    className="border-b border-slate-700/50 hover:bg-slate-700/30"
+                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
                   >
                     <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-2 text-sm text-white">
-                            <CalendarIcon />
-                            {new Date(session.scheduledAt).toLocaleDateString('he-IL')}
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-slate-400 mt-1">
-                            <ClockIcon />
-                            {new Date(session.scheduledAt).toLocaleTimeString('he-IL', {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}{' '}
-                            ({session.duration} min)
-                          </div>
+                      <div className="flex flex-col">
+                        <div className="flex items-center gap-2 text-sm text-gray-900 font-medium">
+                          <CalendarIcon />
+                          {new Date(session.scheduledAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
+                          <ClockIcon />
+                          {new Date(session.scheduledAt).toLocaleTimeString('en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}{' '}
+                          ({session.duration} min)
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                          <span className="text-blue-400 text-xs font-medium">
+                        <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                          <span className="text-blue-600 text-xs font-semibold">
                             {session.patient.firstName[0]}
                           </span>
                         </div>
-                        <span className="text-sm text-white">
+                        <span className="text-sm text-gray-900">
                           {session.patient.firstName} {session.patient.lastName}
                         </span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                          <span className="text-green-400 text-xs font-medium">
+                        <div className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center">
+                          <span className="text-green-600 text-xs font-semibold">
                             {session.therapist.firstName[0]}
                           </span>
                         </div>
-                        <span className="text-sm text-white">
+                        <span className="text-sm text-gray-900">
                           {(session.therapist as { title?: string }).title ? `${(session.therapist as { title?: string }).title} ` : ''}
                           {session.therapist.firstName} {session.therapist.lastName}
                         </span>
@@ -212,18 +210,18 @@ export default function SessionsOverviewPage() {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-2.5 py-1 text-xs font-medium rounded-full ${statusConfig[session.status]?.color ?? 'bg-slate-500/20 text-slate-400'}`}
+                        className={`px-2.5 py-1 text-xs font-medium rounded-full border ${statusConfig[session.status]?.color ?? 'bg-gray-100 text-gray-600 border-gray-200'}`}
                       >
                         {statusConfig[session.status]?.label ?? session.status}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="flex items-center gap-1.5 text-sm text-slate-300">
+                      <span className="flex items-center gap-1.5 text-sm text-gray-600">
                         {session.isOnline ? <VideoIcon /> : <MapPinIcon />}
                         {session.isOnline ? 'Online' : 'In-Person'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-left text-sm text-white font-medium">
+                    <td className="px-6 py-4 text-sm text-gray-900 font-medium">
                       {session.price != null && session.price > 0
                         ? `₪${session.price}`
                         : session.healthFund
@@ -240,23 +238,23 @@ export default function SessionsOverviewPage() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">Today's Sessions</h3>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <h3 className="text-sm font-medium text-gray-500">Today's Sessions</h3>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {data?.stats.todaySessions ?? 0}
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">This Week</h3>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <h3 className="text-sm font-medium text-gray-500">This Week</h3>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {data?.stats.weekSessions ?? 0}
           </p>
         </div>
-        <div className="bg-slate-800 border border-slate-700 rounded-xl p-6">
-          <h3 className="text-sm font-medium text-slate-400">Revenue (Approved)</h3>
-          <p className="text-3xl font-bold text-white mt-2">
+        <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <h3 className="text-sm font-medium text-gray-500">Revenue (Approved)</h3>
+          <p className="text-3xl font-bold text-gray-900 mt-2">
             {data?.stats.totalRevenue != null && data.stats.totalRevenue > 0
-              ? `₪${data.stats.totalRevenue.toLocaleString('he-IL')}`
+              ? `₪${data.stats.totalRevenue.toLocaleString('en-US')}`
               : 'Health Fund'}
           </p>
         </div>

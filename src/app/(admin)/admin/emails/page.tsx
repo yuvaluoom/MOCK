@@ -175,7 +175,7 @@ export default function AdminEmailsPage() {
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px ${
               activeTab === tab.id
-                ? 'border-blue-600 text-blue-700'
+                ? 'border-amber-500 text-amber-700'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
             }`}
           >

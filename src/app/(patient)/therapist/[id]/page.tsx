@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -289,6 +290,53 @@ export default function TherapistDetailsPage() {
   const router = useRouter();
   const therapistId = params.id as string;
 
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [bookingDate, setBookingDate] = useState('');
+  const [bookingIsOnline, setBookingIsOnline] = useState(true);
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+
+  const { data: profile } = trpc.patient.getProfile.useQuery();
+  const utils = trpc.useUtils();
+
+  const requestSessionMutation = trpc.session.requestSession.useMutation({
+    onSuccess: () => {
+      setBookingSuccess(true);
+      setShowBookingForm(false);
+      utils.patient.getSessions.invalidate();
+    },
+  });
+
+  const getDefaultDateTime = useCallback(() => {
+    const now = new Date();
+    const next = new Date(now);
+    next.setDate(next.getDate() + 1);
+    while (next.getDay() === 0 || next.getDay() === 6) {
+      next.setDate(next.getDate() + 1);
+    }
+    next.setHours(10, 0, 0, 0);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${next.getFullYear()}-${pad(next.getMonth() + 1)}-${pad(next.getDate())}T${pad(next.getHours())}:${pad(next.getMinutes())}`;
+  }, []);
+
+  const handleBookSession = () => {
+    setBookingDate(getDefaultDateTime());
+    setBookingIsOnline(true);
+    setBookingSuccess(false);
+    setShowBookingForm(true);
+  };
+
+  const handleConfirmBooking = () => {
+    if (!therapistId || !bookingDate) return;
+    requestSessionMutation.mutate({
+      therapistId,
+      scheduledAt: new Date(bookingDate).toISOString(),
+      duration: 50,
+      type: 'INITIAL_CONSULTATION',
+      isOnline: bookingIsOnline,
+      ...(profile?.healthFund ? { healthFund: profile.healthFund as any } : {}),
+    });
+  };
+
   // Fetch therapist details with match data
   const { data: therapistData, isLoading, error, isError } = trpc.patient.getTherapistDetails.useQuery(
     { therapistId },
@@ -374,7 +422,7 @@ export default function TherapistDetailsPage() {
   const matchReasons = topReasons?.length > 0 ? topReasons : generateMatchReasons(therapist, matchBreakdown);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="bg-gradient-to-b from-gray-50 to-white pb-4">
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-20">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
@@ -702,19 +750,116 @@ export default function TherapistDetailsPage() {
         )}
 
         {/* ============ CTA BUTTONS ============ */}
-        <div className="flex flex-col sm:flex-row gap-3 sticky bottom-4 bg-white/80 backdrop-blur-sm p-4 -mx-4 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
-          <Button variant="calm" className="flex-1 h-14 text-base font-medium gap-2 shadow-lg" asChild>
-            <Link href={`/messages?therapist=${therapistId}`}>
-              <MessageIcon />
-              Send Message
-            </Link>
-          </Button>
-          <Button variant="outline" className="flex-1 h-14 text-base font-medium gap-2 bg-white shadow-md" asChild>
-            <Link href={`/sessions`}>
-              <CalendarIcon />
-              Book Session
-            </Link>
-          </Button>
+        <div className="bg-white border-t border-gray-200 p-4 -mx-4 -mb-4 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] space-y-4">
+          {bookingSuccess && (
+            <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+              <CheckCircleIcon className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <p className="text-sm text-green-800 font-medium">
+                Request sent! The therapist will review your request.
+              </p>
+            </div>
+          )}
+
+          {requestSessionMutation.error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
+              <p className="text-sm text-red-700">
+                {requestSessionMutation.error.message || 'Failed to send request. Please try again.'}
+              </p>
+            </div>
+          )}
+
+          {showBookingForm && (
+            <div className="p-4 bg-white border border-calm-200 rounded-xl space-y-4">
+              <h4 className="text-sm font-semibold text-gray-900">Schedule Your Appointment</h4>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <label htmlFor="booking-date-therapist" className="block text-sm text-gray-600 mb-1">
+                    Preferred Date & Time
+                  </label>
+                  <input
+                    id="booking-date-therapist"
+                    type="datetime-local"
+                    value={bookingDate}
+                    onChange={(e) => setBookingDate(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-calm-500 focus:border-calm-500"
+                  />
+                </div>
+                <div>
+                  <span className="block text-sm text-gray-600 mb-1">Session Type</span>
+                  <div className="flex rounded-lg border border-gray-200 bg-white overflow-hidden h-[38px]" role="group" aria-label="Session type">
+                    <button
+                      type="button"
+                      onClick={() => setBookingIsOnline(true)}
+                      className={`flex-1 px-4 text-sm transition-colors ${
+                        bookingIsOnline
+                          ? 'bg-calm-500 text-white'
+                          : 'hover:bg-gray-100 text-gray-700'
+                      }`}
+                      aria-pressed={bookingIsOnline}
+                    >
+                      Online
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setBookingIsOnline(false)}
+                      className={`flex-1 px-4 text-sm transition-colors ${
+                        !bookingIsOnline
+                          ? 'bg-calm-500 text-white'
+                          : 'hover:bg-gray-100 text-gray-700'
+                      }`}
+                      aria-pressed={!bookingIsOnline}
+                    >
+                      In-Person
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowBookingForm(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="calm"
+                  size="sm"
+                  onClick={handleConfirmBooking}
+                  disabled={!bookingDate || requestSessionMutation.isPending}
+                >
+                  {requestSessionMutation.isPending ? 'Sending...' : 'Confirm Request'}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button variant="calm" className="flex-1 h-14 text-base font-medium gap-2 shadow-lg" asChild>
+              <Link href={`/messages?therapist=${therapistId}`}>
+                <MessageIcon />
+                Send Message
+              </Link>
+            </Button>
+            {!bookingSuccess ? (
+              <Button
+                variant="outline"
+                className="flex-1 h-14 text-base font-medium gap-2 bg-white shadow-md"
+                onClick={handleBookSession}
+                disabled={showBookingForm}
+              >
+                <CalendarIcon />
+                Book Session
+              </Button>
+            ) : (
+              <Button variant="outline" className="flex-1 h-14 text-base font-medium gap-2 bg-white shadow-md" asChild>
+                <Link href="/sessions">
+                  <CalendarIcon />
+                  View Sessions
+                </Link>
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>

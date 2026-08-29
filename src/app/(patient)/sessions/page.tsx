@@ -34,8 +34,12 @@ function statusBadge(s: string) {
 
 export default function SessionsPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('upcoming');
+  const [cancellingSessionId, setCancellingSessionId] = useState<string | null>(null);
+  const [cancelReason, setCancelReason] = useState('');
+  const [cancelSuccess, setCancelSuccess] = useState<string | null>(null);
 
   const tab = tabs.find((t) => t.key === activeTab)!;
+  const utils = trpc.useUtils();
 
   const { data, isLoading } = trpc.patient.getSessions.useQuery({
     status: tab.status as any,
@@ -43,6 +47,30 @@ export default function SessionsPage() {
     page: 1,
     limit: 20,
   });
+
+  const cancelMutation = trpc.session.cancelSessionAsPatient.useMutation({
+    onSuccess: () => {
+      setCancelSuccess(cancellingSessionId);
+      setCancellingSessionId(null);
+      setCancelReason('');
+      utils.patient.getSessions.invalidate();
+    },
+  });
+
+  const handleCancelClick = (sessionId: string) => {
+    setCancellingSessionId(sessionId);
+    setCancelReason('');
+    setCancelSuccess(null);
+    cancelMutation.reset();
+  };
+
+  const handleConfirmCancel = () => {
+    if (!cancellingSessionId) return;
+    cancelMutation.mutate({
+      sessionId: cancellingSessionId,
+      ...(cancelReason.trim() ? { reason: cancelReason.trim() } : {}),
+    });
+  };
 
   const sessions = data?.sessions ?? [];
 
@@ -121,12 +149,80 @@ export default function SessionsPage() {
                         variant="outline"
                         size="sm"
                         className="text-red-600 border-red-200 hover:bg-red-50"
+                        onClick={() => handleCancelClick(s.id)}
                       >
                         Cancel
                       </Button>
                     </div>
                   )}
+                  {s.status === 'PENDING_THERAPIST_APPROVAL' && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-red-600 border-red-200 hover:bg-red-50"
+                      onClick={() => handleCancelClick(s.id)}
+                    >
+                      Withdraw
+                    </Button>
+                  )}
                 </div>
+
+                {/* Cancel confirmation inline */}
+                {cancellingSessionId === s.id && (
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl space-y-3">
+                    <p className="text-sm font-medium text-red-800">
+                      Are you sure you want to cancel this session?
+                    </p>
+                    <div>
+                      <label htmlFor={`cancel-reason-${s.id}`} className="block text-sm text-gray-600 mb-1">
+                        Reason (optional)
+                      </label>
+                      <textarea
+                        id={`cancel-reason-${s.id}`}
+                        value={cancelReason}
+                        onChange={(e) => setCancelReason(e.target.value)}
+                        placeholder="Let the therapist know why you need to cancel..."
+                        rows={2}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300 resize-none"
+                      />
+                    </div>
+                    {cancelMutation.error && (
+                      <p className="text-sm text-red-700">
+                        {cancelMutation.error.message || 'Failed to cancel session. Please try again.'}
+                      </p>
+                    )}
+                    <div className="flex items-center justify-end gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setCancellingSessionId(null);
+                          setCancelReason('');
+                          cancelMutation.reset();
+                        }}
+                      >
+                        Keep Session
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={handleConfirmCancel}
+                        disabled={cancelMutation.isPending}
+                      >
+                        {cancelMutation.isPending ? 'Cancelling...' : 'Confirm Cancellation'}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Cancellation success message */}
+                {cancelSuccess === s.id && (
+                  <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-xl">
+                    <p className="text-sm text-green-800 font-medium">
+                      Session cancelled successfully.
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))

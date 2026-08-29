@@ -247,6 +247,56 @@ interface TherapistModalProps {
 }
 
 function TherapistDetailModal({ match, isOpen, onClose }: TherapistModalProps) {
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const [bookingDate, setBookingDate] = useState('');
+  const [bookingIsOnline, setBookingIsOnline] = useState(true);
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+
+  const { data: profile } = trpc.patient.getProfile.useQuery();
+  const utils = trpc.useUtils();
+
+  const requestSessionMutation = trpc.session.requestSession.useMutation({
+    onSuccess: () => {
+      setBookingSuccess(true);
+      setShowBookingForm(false);
+      utils.patient.getSessions.invalidate();
+    },
+  });
+
+  // Compute a default datetime: next weekday at 10:00
+  const getDefaultDateTime = useCallback(() => {
+    const now = new Date();
+    const next = new Date(now);
+    next.setDate(next.getDate() + 1);
+    // Skip to Monday if Saturday or Sunday
+    while (next.getDay() === 0 || next.getDay() === 6) {
+      next.setDate(next.getDate() + 1);
+    }
+    next.setHours(10, 0, 0, 0);
+    // Format as datetime-local value
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${next.getFullYear()}-${pad(next.getMonth() + 1)}-${pad(next.getDate())}T${pad(next.getHours())}:${pad(next.getMinutes())}`;
+  }, []);
+
+  const handleRequestAppointment = () => {
+    setBookingDate(getDefaultDateTime());
+    setBookingIsOnline(true);
+    setBookingSuccess(false);
+    setShowBookingForm(true);
+  };
+
+  const handleConfirmBooking = () => {
+    if (!match?.therapistId || !bookingDate) return;
+    requestSessionMutation.mutate({
+      therapistId: match.therapistId,
+      scheduledAt: new Date(bookingDate).toISOString(),
+      duration: 50,
+      type: 'INITIAL_CONSULTATION',
+      isOnline: bookingIsOnline,
+      ...(profile?.healthFund ? { healthFund: profile.healthFund as any } : {}),
+    });
+  };
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -261,6 +311,15 @@ function TherapistDetailModal({ match, isOpen, onClose }: TherapistModalProps) {
       document.body.style.overflow = '';
     };
   }, [isOpen, onClose]);
+
+  // Reset booking state when modal closes
+  useEffect(() => {
+    if (!isOpen) {
+      setShowBookingForm(false);
+      setBookingSuccess(false);
+      requestSessionMutation.reset();
+    }
+  }, [isOpen]);
 
   if (!isOpen || !match) return null;
 
@@ -519,20 +578,112 @@ function TherapistDetailModal({ match, isOpen, onClose }: TherapistModalProps) {
         </div>
 
         {/* Footer Actions */}
-        <div className="flex-shrink-0 px-6 py-4 bg-gray-50 border-t flex items-center justify-between gap-4">
-          <Button variant="outline" onClick={onClose}>
-            Close
-          </Button>
-          <div className="flex items-center gap-3">
-            <Link href={`/messages?therapist=${match.therapistId}`}>
-              <Button variant="outline" className="gap-2">
-                <MessageIcon className="w-4 h-4" />
-                Message
-              </Button>
-            </Link>
-            <Button variant="calm" className="gap-2">
-              Request Appointment
+        <div className="flex-shrink-0 px-6 py-4 bg-gray-50 border-t space-y-4">
+          {bookingSuccess && (
+            <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-xl">
+              <CheckCircleIcon className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <p className="text-sm text-green-800 font-medium">
+                Request sent! The therapist will review your request.
+              </p>
+            </div>
+          )}
+
+          {requestSessionMutation.error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
+              <p className="text-sm text-red-700">
+                {requestSessionMutation.error.message || 'Failed to send request. Please try again.'}
+              </p>
+            </div>
+          )}
+
+          {showBookingForm && (
+            <div className="p-4 bg-white border border-calm-200 rounded-xl space-y-4">
+              <h4 className="text-sm font-semibold text-gray-900">Schedule Your Appointment</h4>
+              <div className="space-y-3">
+                <div>
+                  <label htmlFor="booking-date" className="block text-sm text-gray-600 mb-1">
+                    Preferred Date & Time
+                  </label>
+                  <input
+                    id="booking-date"
+                    type="datetime-local"
+                    value={bookingDate}
+                    onChange={(e) => setBookingDate(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-calm-500 focus:border-calm-500"
+                  />
+                </div>
+                <div>
+                  <span className="block text-sm text-gray-600 mb-1">Session Type</span>
+                  <div className="flex rounded-lg border border-gray-200 bg-white overflow-hidden" role="group" aria-label="Session type">
+                    <button
+                      type="button"
+                      onClick={() => setBookingIsOnline(true)}
+                      className={`flex-1 px-4 py-2 text-sm transition-colors ${
+                        bookingIsOnline
+                          ? 'bg-calm-500 text-white'
+                          : 'hover:bg-gray-100 text-gray-700'
+                      }`}
+                      aria-pressed={bookingIsOnline}
+                    >
+                      Online
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setBookingIsOnline(false)}
+                      className={`flex-1 px-4 py-2 text-sm transition-colors ${
+                        !bookingIsOnline
+                          ? 'bg-calm-500 text-white'
+                          : 'hover:bg-gray-100 text-gray-700'
+                      }`}
+                      aria-pressed={!bookingIsOnline}
+                    >
+                      In-Person
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowBookingForm(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="calm"
+                  size="sm"
+                  onClick={handleConfirmBooking}
+                  disabled={!bookingDate || requestSessionMutation.isPending}
+                >
+                  {requestSessionMutation.isPending ? 'Sending...' : 'Confirm Request'}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between gap-4">
+            <Button variant="outline" onClick={onClose}>
+              Close
             </Button>
+            <div className="flex items-center gap-3">
+              <Link href={`/messages?therapist=${match.therapistId}`}>
+                <Button variant="outline" className="gap-2">
+                  <MessageIcon className="w-4 h-4" />
+                  Message
+                </Button>
+              </Link>
+              {!bookingSuccess && (
+                <Button
+                  variant="calm"
+                  className="gap-2"
+                  onClick={handleRequestAppointment}
+                  disabled={showBookingForm}
+                >
+                  Request Appointment
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

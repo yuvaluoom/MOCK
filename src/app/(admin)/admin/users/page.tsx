@@ -7,16 +7,16 @@ type UserRole = 'PATIENT' | 'THERAPIST' | 'ADMIN';
 type UserStatus = 'PENDING_VERIFICATION' | 'ACTIVE' | 'SUSPENDED' | 'DEACTIVATED';
 
 const roleColors: Record<UserRole, string> = {
-  PATIENT: 'bg-blue-500/20 text-blue-400',
-  THERAPIST: 'bg-green-500/20 text-green-400',
-  ADMIN: 'bg-amber-500/20 text-amber-400',
+  PATIENT: 'bg-blue-50 text-blue-700 border-blue-200',
+  THERAPIST: 'bg-green-50 text-green-700 border-green-200',
+  ADMIN: 'bg-amber-50 text-amber-700 border-amber-200',
 };
 
 const statusColors: Record<UserStatus, string> = {
-  PENDING_VERIFICATION: 'bg-yellow-500/20 text-yellow-400',
-  ACTIVE: 'bg-green-500/20 text-green-400',
-  SUSPENDED: 'bg-red-500/20 text-red-400',
-  DEACTIVATED: 'bg-slate-500/20 text-slate-400',
+  PENDING_VERIFICATION: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+  ACTIVE: 'bg-green-50 text-green-700 border-green-200',
+  SUSPENDED: 'bg-red-50 text-red-700 border-red-200',
+  DEACTIVATED: 'bg-gray-100 text-gray-500 border-gray-200',
 };
 
 const SearchIcon = () => (
@@ -38,11 +38,20 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
+const MoreIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <circle cx="12" cy="12" r="1" />
+    <circle cx="19" cy="12" r="1" />
+    <circle cx="5" cy="12" r="1" />
+  </svg>
+);
+
 export default function UsersPage() {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState<UserRole | ''>('');
   const [statusFilter, setStatusFilter] = useState<UserStatus | ''>('');
   const [page, setPage] = useState(1);
+  const [actionMenu, setActionMenu] = useState<string | null>(null);
 
   const { data, isLoading } = trpc.admin.getUsers.useQuery({
     search: search || undefined,
@@ -52,38 +61,59 @@ export default function UsersPage() {
     limit: 10,
   });
 
-  // Status updates are handled through specific therapist actions (suspend, etc.)
-  // For now, status display is read-only until updateUserStatus is implemented
+  const handleAction = (userId: string, action: string) => {
+    setActionMenu(null);
+    switch (action) {
+      case 'view':
+        // In a real app, navigate to user detail
+        alert(`View user profile: ${userId}`);
+        break;
+      case 'suspend':
+        if (window.confirm('Suspend this user? They will lose access to the platform.')) {
+          alert(`User ${userId} suspended (demo only -- not persisted)`);
+        }
+        break;
+      case 'activate':
+        alert(`User ${userId} activated (demo only -- not persisted)`);
+        break;
+      case 'email':
+        window.location.href = '/admin/emails';
+        break;
+    }
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">User Management</h1>
-          <p className="text-slate-400 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
+          <p className="text-gray-500 mt-1">
             View and manage all platform users
           </p>
+        </div>
+        <div className="text-sm text-gray-500">
+          {data ? `${data.pagination.total} users total` : ''}
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl p-4">
+      <div className="bg-white border border-gray-200 rounded-xl p-4">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1 relative">
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
               <SearchIcon />
             </div>
             <input
               type="text"
-              placeholder="Search by email..."
+              placeholder="Search by name or email..."
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pr-10 pl-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full pr-10 pl-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
             />
           </div>
 
@@ -94,7 +124,7 @@ export default function UsersPage() {
               setRoleFilter(e.target.value as UserRole | '');
               setPage(1);
             }}
-            className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
           >
             <option value="">All Roles</option>
             <option value="PATIENT">Patient</option>
@@ -109,9 +139,9 @@ export default function UsersPage() {
               setStatusFilter(e.target.value as UserStatus | '');
               setPage(1);
             }}
-            className="px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
           >
-            <option value="">All theStatuss</option>
+            <option value="">All Statuses</option>
             <option value="ACTIVE">Active</option>
             <option value="PENDING_VERIFICATION">Pending</option>
             <option value="SUSPENDED">Suspended</option>
@@ -121,16 +151,16 @@ export default function UsersPage() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-slate-800 border border-slate-700 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-700">
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">User</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Role</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Status</th>
-                <th className="text-right px-6 py-4 text-sm font-medium text-slate-400">Joined</th>
-                <th className="text-left px-6 py-4 text-sm font-medium text-slate-400">Actions</th>
+              <tr className="border-b border-gray-200 bg-gray-50">
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">User</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Role</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Joined</th>
+                <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -142,8 +172,8 @@ export default function UsersPage() {
                 </tr>
               ) : data?.users.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
-                    No Foundor Users
+                  <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
+                    No users found
                   </td>
                 </tr>
               ) : (
@@ -155,47 +185,98 @@ export default function UsersPage() {
                       ? `${user.therapist.firstName} ${user.therapist.lastName}`
                       : (user.role === 'ADMIN' || user.role === 'OWNER')
                       ? user.email.split('@')[0]
-                      : 'No Known';
+                      : 'Unknown';
 
                   return (
-                    <tr key={user.id} className="border-b border-slate-700/50 hover:bg-slate-700/30">
+                    <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center">
-                            <span className="text-slate-300 font-medium">
+                          <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center">
+                            <span className="text-gray-600 font-medium text-sm">
                               {name[0]}
                             </span>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-white">{name}</p>
-                            <p className="text-xs text-slate-400">{user.email}</p>
+                            <p className="text-sm font-medium text-gray-900">{name}</p>
+                            <p className="text-xs text-gray-500">{user.email}</p>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${roleColors[user.role as UserRole]}`}>
+                        <span className={`px-2.5 py-1 text-xs font-medium rounded-full border ${roleColors[user.role as UserRole] || 'bg-gray-50 text-gray-600 border-gray-200'}`}>
                           {user.role === 'PATIENT' ? 'Patient' : user.role === 'THERAPIST' ? 'Therapist' : user.role === 'ADMIN' ? 'Manager' : user.role === 'OWNER' ? 'Owner' : user.role}
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${statusColors[user.status as UserStatus]}`}>
-                          {user.status === 'ACTIVE' ? 'Active' : user.status === 'PENDING_VERIFICATION' ? 'Pending Verification' : user.status === 'SUSPENDED' ? 'Suspended' : user.status === 'DEACTIVATED' ? 'Deactivated' : user.status}
+                        <span className={`px-2.5 py-1 text-xs font-medium rounded-full border ${statusColors[user.status as UserStatus] || 'bg-gray-50 text-gray-600 border-gray-200'}`}>
+                          {user.status === 'ACTIVE' ? 'Active' : user.status === 'PENDING_VERIFICATION' ? 'Pending' : user.status === 'SUSPENDED' ? 'Suspended' : user.status === 'DEACTIVATED' ? 'Deactivated' : user.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-slate-400">
-                        {new Date(user.createdAt).toLocaleDateString('he-IL')}
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {new Date(user.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                       </td>
-                      <td className="px-6 py-4 text-left">
-                        {user.role === 'THERAPIST' && user.therapist ? (
-                          <a
-                            href={`/admin/therapists/${user.id.replace('user-', 'therapist-')}`}
-                            className="px-3 py-1.5 text-xs bg-amber-500 text-white rounded-lg hover:bg-amber-600"
-                          >
-                            Management
-                          </a>
-                        ) : (
-                          <span className="text-xs text-slate-500">—</span>
-                        )}
+                      <td className="px-6 py-4 text-right">
+                        <div className="relative inline-block">
+                          {user.role === 'THERAPIST' && user.therapist ? (
+                            <div className="flex items-center gap-2 justify-end">
+                              <a
+                                href={`/admin/therapists/${user.id.replace('user-', 'therapist-')}`}
+                                className="px-3 py-1.5 text-xs font-medium bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
+                              >
+                                Manage
+                              </a>
+                              <button
+                                onClick={() => setActionMenu(actionMenu === user.id ? null : user.id)}
+                                className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+                              >
+                                <MoreIcon />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => setActionMenu(actionMenu === user.id ? null : user.id)}
+                              className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+                            >
+                              <MoreIcon />
+                            </button>
+                          )}
+
+                          {actionMenu === user.id && (
+                            <>
+                              <div className="fixed inset-0 z-10" onClick={() => setActionMenu(null)} />
+                              <div className="absolute right-0 top-full mt-1 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-20 py-1">
+                                <button
+                                  onClick={() => handleAction(user.id, 'view')}
+                                  className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                                >
+                                  View Profile
+                                </button>
+                                <button
+                                  onClick={() => handleAction(user.id, 'email')}
+                                  className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                                >
+                                  Send Email
+                                </button>
+                                {user.status === 'ACTIVE' && (
+                                  <button
+                                    onClick={() => handleAction(user.id, 'suspend')}
+                                    className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50"
+                                  >
+                                    Suspend User
+                                  </button>
+                                )}
+                                {user.status === 'SUSPENDED' && (
+                                  <button
+                                    onClick={() => handleAction(user.id, 'activate')}
+                                    className="w-full px-4 py-2 text-left text-sm text-green-600 hover:bg-green-50"
+                                  >
+                                    Activate User
+                                  </button>
+                                )}
+                              </div>
+                            </>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   );
@@ -207,27 +288,27 @@ export default function UsersPage() {
 
         {/* Pagination */}
         {data && data.pagination.totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-slate-700">
-            <p className="text-sm text-slate-400">
-              Displays {(page - 1) * data.pagination.limit + 1} up to{' '}
+          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <p className="text-sm text-gray-500">
+              Showing {(page - 1) * data.pagination.limit + 1} to{' '}
               {Math.min(page * data.pagination.limit, data.pagination.total)} of{' '}
-              {data.pagination.total} Users
+              {data.pagination.total} users
             </p>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="p-2 text-slate-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronLeftIcon />
               </button>
-              <span className="text-sm text-white">
+              <span className="text-sm text-gray-700 font-medium">
                 Page {page} of {data.pagination.totalPages}
               </span>
               <button
                 onClick={() => setPage((p) => Math.min(data.pagination.totalPages, p + 1))}
                 disabled={page === data.pagination.totalPages}
-                className="p-2 text-slate-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronRightIcon />
               </button>
