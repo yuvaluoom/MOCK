@@ -238,14 +238,14 @@ export function NotificationBell() {
                             'text-sm text-gray-900',
                             !notification.isRead && 'font-medium'
                           )}>
-                            {notification.titleHe}
+                            {notification.title}
                           </p>
                           {!notification.isRead && (
                             <span className="flex-shrink-0 w-2 h-2 bg-calm-500 rounded-full mt-1.5" aria-label="New" />
                           )}
                         </div>
                         <p className="text-sm text-gray-600 mt-0.5 line-clamp-2">
-                          {notification.messageHe}
+                          {notification.message}
                         </p>
                         <p className="text-xs text-gray-400 mt-1">
                           {formatRelativeTime(notification.createdAt)}

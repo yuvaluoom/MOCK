@@ -312,7 +312,7 @@ export function TherapistNotificationBell() {
                                 'text-sm text-gray-900',
                                 !notification.isRead && 'font-semibold'
                               )}>
-                                {notification.titleHe}
+                                {notification.title}
                               </p>
                               {isUrgent && (
                                 <span className="inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium bg-red-100 text-red-700 rounded mt-1">
@@ -325,7 +325,7 @@ export function TherapistNotificationBell() {
                             )}
                           </div>
                           <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                            {notification.messageHe}
+                            {notification.message}
                           </p>
                           {/* Metadata */}
                           {notification.metadata?.patientName && (

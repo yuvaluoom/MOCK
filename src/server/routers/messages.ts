@@ -9,6 +9,7 @@ import {
   type UserRole,
 } from '../mock-data';
 import { sendNewMessageNotification } from '@/lib/email';
+import { notifyNewMessage } from '@/lib/notifications/service';
 import {
   chatEmitter,
   getThreadChannel,
@@ -222,6 +223,8 @@ export const messagesRouter = router({
               `${mockPatient.firstName} ${mockPatient.lastName}`,
               input.content.substring(0, 100)
             );
+            // In-app notification for therapist
+            notifyNewMessage(input.recipientId, `${mockPatient.firstName} ${mockPatient.lastName}`, input.content, true);
           }
         } else {
           await sendNewMessageNotification(
@@ -230,6 +233,8 @@ export const messagesRouter = router({
             senderName,
             input.content.substring(0, 100)
           );
+          // In-app notification for patient
+          notifyNewMessage(mockPatient.id, senderName, input.content, false);
         }
       }
 

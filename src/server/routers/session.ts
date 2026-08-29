@@ -14,6 +14,13 @@ import {
   sendSessionRejected,
   sendSessionCancelled,
 } from '@/lib/email';
+import {
+  notifySessionRequested,
+  notifySessionApproved,
+  notifySessionRejected,
+  notifySessionCancelledByPatient,
+  notifySessionCancelledByTherapist,
+} from '@/lib/notifications/service';
 
 const requestSessionSchema = z.object({
   therapistId: z.string(),
@@ -77,6 +84,13 @@ export const sessionRouter = router({
         input.isOnline
       );
 
+      // In-app notification for therapist
+      notifySessionRequested(
+        input.therapistId,
+        `${mockPatient.firstName} ${mockPatient.lastName}`,
+        new Date(input.scheduledAt)
+      );
+
       return {
         ...newSession,
         therapist: {
@@ -117,15 +131,19 @@ export const sessionRouter = router({
       const therapist = getTherapistById(session.therapistId);
 
       // Send email notification to patient
+      const therapistFullName = therapist ? `${therapist.firstName} ${therapist.lastName}` : 'Your therapist';
       await sendSessionApproved(
         mockPatient.email,
         mockPatient.firstName,
-        therapist ? `${therapist.firstName} ${therapist.lastName}` : 'Your therapist',
+        therapistFullName,
         session.scheduledAt,
         session.isOnline,
         input.meetingUrl,
         input.meetingLocation
       );
+
+      // In-app notification for patient
+      notifySessionApproved(session.patientId, therapistFullName, session.scheduledAt, session.isOnline);
 
       return {
         ...session,
@@ -167,12 +185,16 @@ export const sessionRouter = router({
       const therapist = getTherapistById(session.therapistId);
 
       // Send email notification to patient
+      const rejectTherapistName = therapist ? `${therapist.firstName} ${therapist.lastName}` : 'Your therapist';
       await sendSessionRejected(
         mockPatient.email,
         mockPatient.firstName,
-        therapist ? `${therapist.firstName} ${therapist.lastName}` : 'Your therapist',
+        rejectTherapistName,
         input.responseNote
       );
+
+      // In-app notification for patient
+      notifySessionRejected(session.patientId, rejectTherapistName, input.responseNote);
 
       return {
         ...session,
@@ -220,6 +242,13 @@ export const sessionRouter = router({
           session.scheduledAt,
           'patient'
         );
+
+        // In-app notification for therapist
+        notifySessionCancelledByPatient(
+          session.therapistId,
+          `${mockPatient.firstName} ${mockPatient.lastName}`,
+          session.scheduledAt
+        );
       }
 
       return {
@@ -259,13 +288,17 @@ export const sessionRouter = router({
       const therapist = getTherapistById(session.therapistId);
 
       // Send email notification to patient
+      const cancelTherapistName = therapist ? `${therapist.firstName} ${therapist.lastName}` : 'Your therapist';
       await sendSessionCancelled(
         mockPatient.email,
         mockPatient.firstName,
-        therapist ? `${therapist.firstName} ${therapist.lastName}` : 'Your therapist',
+        cancelTherapistName,
         session.scheduledAt,
         'therapist'
       );
+
+      // In-app notification for patient
+      notifySessionCancelledByTherapist(session.patientId, cancelTherapistName, session.scheduledAt);
 
       return {
         ...session,

@@ -35,108 +35,134 @@ export const mockNotifications: MockNotification[] = [
   // Patient notifications
   {
     id: 'notif-1',
-    userId: 'user-patient-1',
+    userId: 'patient-1',
     type: 'MATCH_NEW',
     title: 'New therapist match found!',
-    titleHe: 'New match found forTherapist!',
-    message: 'We found a new therapist match for you with 92% compatibility.',
-    messageHe: 'We found a new therapist match for you with 92% compatibility.',
+    titleHe: 'New therapist match found!',
+    message: 'We found a new match: Dr. Rachel Cohen with 92% compatibility. Review your matches to learn more.',
+    messageHe: 'We found a new match: Dr. Rachel Cohen with 92% compatibility.',
     link: '/matches',
     isRead: false,
     emailSent: true,
-    createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
+    createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000),
   },
   {
     id: 'notif-2',
-    userId: 'user-patient-1',
+    userId: 'patient-1',
     type: 'MESSAGE_NEW',
     title: 'New message from Dr. Rachel Cohen',
-    titleHe: 'New Message from Dr. Rachel Cohen',
-    message: 'You have a new message regarding your upcoming session.',
-    messageHe: 'You have a new message regarding your upcoming session.',
+    titleHe: 'New message from Dr. Rachel Cohen',
+    message: 'Hi! I wanted to follow up on our conversation about scheduling your first session.',
+    messageHe: 'Hi! I wanted to follow up on our conversation about scheduling.',
     link: '/messages',
     isRead: false,
     emailSent: true,
-    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
   },
   {
     id: 'notif-3',
-    userId: 'user-patient-1',
+    userId: 'patient-1',
     type: 'SESSION_APPROVED',
     title: 'Session confirmed!',
-    titleHe: 'Session Approved!',
-    message: 'Your session with Dr. Rachel Cohen has been confirmed for Sunday at 10:00.',
-    messageHe: 'Your session with Dr. Rachel Cohen has been approved for Sunday at 10:00.',
+    titleHe: 'Session confirmed!',
+    message: 'Your session with Dr. Rachel Cohen on Sunday at 10:00 AM has been approved. A meeting link will be shared before the session.',
+    messageHe: 'Your session with Dr. Rachel Cohen on Sunday at 10:00 has been approved.',
     link: '/sessions',
     isRead: true,
     emailSent: true,
-    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
   },
   {
     id: 'notif-4',
-    userId: 'user-patient-1',
+    userId: 'patient-1',
     type: 'SESSION_REMINDER',
-    title: 'Session reminder',
-    titleHe: 'Session Reminder',
-    message: 'Your session is scheduled for tomorrow at 10:00 AM.',
-    messageHe: 'Your session is scheduled for tomorrow at 10:00.',
+    title: 'Upcoming session reminder',
+    titleHe: 'Upcoming session reminder',
+    message: 'Reminder: You have a session with Dr. Rachel Cohen tomorrow at 10:00 AM.',
+    messageHe: 'Reminder: You have a session with Dr. Rachel Cohen tomorrow at 10:00.',
     link: '/sessions',
     isRead: true,
     emailSent: true,
-    createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000), // 2 days ago
+    createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000),
+  },
+  {
+    id: 'notif-5',
+    userId: 'patient-1',
+    type: 'MATCH_UPDATED',
+    title: 'Your matches have been updated',
+    titleHe: 'Your matches have been updated',
+    message: 'Based on your questionnaire responses, we\'ve updated your therapist recommendations.',
+    messageHe: 'Based on your questionnaire responses, we\'ve updated your recommendations.',
+    link: '/matches',
+    isRead: true,
+    emailSent: false,
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
   },
   // Therapist notifications
   {
     id: 'notif-therapist-1',
     userId: 'therapist-1',
-    type: 'MATCH_NEW',
-    title: 'New patient request!',
-    titleHe: 'New Patient Request!',
-    message: 'A new patient has requested to schedule a session with you.',
-    messageHe: 'A new patient has requested to schedule a session with you.',
+    type: 'PATIENT_REQUEST',
+    title: 'New session request',
+    titleHe: 'New session request',
+    message: 'Sarah Cohen has requested a session on Monday, Sep 15 at 02:00 PM.',
+    messageHe: 'Sarah Cohen has requested a session on Monday, Sep 15.',
     link: '/therapist/sessions?tab=pending',
     isRead: false,
     emailSent: true,
-    createdAt: new Date(Date.now() - 30 * 60 * 1000), // 30 mins ago
+    createdAt: new Date(Date.now() - 30 * 60 * 1000),
   },
   {
     id: 'notif-therapist-2',
     userId: 'therapist-1',
     type: 'MESSAGE_NEW',
-    title: 'New message from patient',
-    titleHe: 'New Message from Patient',
-    message: 'You have a new message from Israel Israeli.',
-    messageHe: 'You have a new message from Israel Israeli.',
+    title: 'New message from Sarah Cohen',
+    titleHe: 'New message from Sarah Cohen',
+    message: 'I had a question about the intake form before our session.',
+    messageHe: 'I had a question about the intake form before our session.',
     link: '/therapist/messages',
     isRead: false,
     emailSent: true,
-    createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago
+    createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000),
   },
   {
     id: 'notif-therapist-3',
     userId: 'therapist-1',
     type: 'SESSION_REMINDER',
-    title: 'Session in 1 hour',
-    titleHe: 'Session Coming Up',
-    message: 'Reminder: You have a session with Sarah Cohen at 11:30.',
-    messageHe: 'Reminder: You have a session with Sarah Cohen at 11:30.',
+    title: 'Upcoming session reminder',
+    titleHe: 'Upcoming session reminder',
+    message: 'Reminder: You have a session with Sarah Cohen today at 11:30 AM.',
+    messageHe: 'Reminder: You have a session with Sarah Cohen today at 11:30.',
     link: '/therapist/sessions',
     isRead: false,
     emailSent: true,
-    createdAt: new Date(Date.now() - 15 * 60 * 1000), // 15 mins ago
+    createdAt: new Date(Date.now() - 15 * 60 * 1000),
   },
   {
     id: 'notif-therapist-4',
     userId: 'therapist-1',
     type: 'PROFILE_APPROVED',
     title: 'Profile approved!',
-    titleHe: 'Your Profile is Approved!',
-    message: 'Your therapist profile has been approved. You can now receive patient requests.',
-    messageHe: 'Your therapist profile has been approved. You can now receive patient requests.',
+    titleHe: 'Profile approved!',
+    message: 'Your therapist profile has been approved by our team. You can now receive patient requests and start accepting sessions.',
+    messageHe: 'Your therapist profile has been approved. You can now receive patients.',
     link: '/therapist/profile',
     isRead: true,
     emailSent: true,
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+  },
+  {
+    id: 'notif-therapist-5',
+    userId: 'therapist-1',
+    type: 'SESSION_CANCELLED',
+    title: 'Session cancelled',
+    titleHe: 'Session cancelled',
+    message: 'David Levi has cancelled the session scheduled for Wednesday, Sep 10.',
+    messageHe: 'David Levi has cancelled the session scheduled for Wednesday.',
+    link: '/therapist/sessions',
+    isRead: true,
+    emailSent: true,
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
   },
 ];
 
@@ -154,7 +180,7 @@ export const notificationRouter = router({
       }).optional()
     )
     .query(async ({ ctx, input }) => {
-      const userId = ctx.session?.user?.id || 'user-patient-1'; // Mock for demo
+      const userId = ctx.session?.user?.id || 'patient-1';
       const limit = input?.limit ?? 20;
       const unreadOnly = input?.unreadOnly ?? false;
 
@@ -180,7 +206,7 @@ export const notificationRouter = router({
    * Get unread notification count
    */
   getUnreadCount: protectedProcedure.query(async ({ ctx }) => {
-    const userId = ctx.session?.user?.id || 'user-patient-1';
+    const userId = ctx.session?.user?.id || 'patient-1';
     return mockNotifications.filter((n) => n.userId === userId && !n.isRead).length;
   }),
 
@@ -201,7 +227,7 @@ export const notificationRouter = router({
    * Mark all notifications as read
    */
   markAllAsRead: protectedProcedure.mutation(async ({ ctx }) => {
-    const userId = ctx.session?.user?.id || 'user-patient-1';
+    const userId = ctx.session?.user?.id || 'patient-1';
     for (const notification of mockNotifications) {
       if (notification.userId === userId) {
         notification.isRead = true;

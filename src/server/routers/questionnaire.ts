@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { router, patientProcedure, adminProcedure } from '../trpc';
 import { mockQuestionnaireQuestions, mockPatient, mockXFactorProfile } from '../mock-data';
+import { notifyMatchUpdated, notifyNewMatch } from '@/lib/notifications/service';
 
 // In-memory answer store: Record<questionId, value>
 const mockAnswers: Record<string, any> = {};
@@ -112,6 +113,12 @@ export const questionnaireRouter = router({
     // Mark as completed
     mockResponseStatus = 'completed';
     mockPatient.questionnaireCompleted = true;
+
+    // Notify patient about new matches
+    notifyNewMatch(mockPatient.id, 'Dr. Rachel Cohen', 92);
+    notifyNewMatch(mockPatient.id, 'Dr. David Levi', 87);
+    notifyNewMatch(mockPatient.id, 'Dr. Sarah Mizrahi', 84);
+    notifyMatchUpdated(mockPatient.id);
 
     return { success: true };
   }),
