@@ -206,16 +206,6 @@ function calculatePreferenceScore(
   let score = 70; // Base score
   const factors: string[] = [];
 
-  // Gender preference
-  if (patient.preferredGender) {
-    if (therapist.gender === patient.preferredGender) {
-      score += 15;
-      factors.push('Gender preference matched');
-    } else {
-      score -= 10;
-    }
-  }
-
   // Language match
   const commonLanguages = patient.preferredLanguages?.filter(
     (lang) => therapist.languages.includes(lang)
@@ -409,7 +399,7 @@ export const matchingRouter = router({
             score: scores.preferenceScore,
             weight: config.preferenceWeight,
             label: 'Personal Preferences',
-            description: 'Language, gender, and approach preferences',
+            description: 'Language and approach preferences',
           },
         },
       };

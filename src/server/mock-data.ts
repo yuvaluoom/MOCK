@@ -854,26 +854,6 @@ export const mockQuestionnaireQuestions: MockQuestionnaireQuestion[] = [
     isRequired: true,
     order: 16,
   },
-  {
-    id: 'q-17',
-    sectionId: 'preferences',
-    sectionName: 'Session Preferences',
-    sectionNameHe: 'Session Preferences',
-    questionText: 'Do you have a gender preference for your therapist?',
-    questionTextHe: 'Do you have a gender preference for your therapist?',
-    helpText: null,
-    helpTextHe: null,
-    questionType: 'MULTIPLE_CHOICE',
-    options: { choices: [
-      { value: 'no_preference', label: 'No preference', labelEn: 'No preference' },
-      { value: 'female', label: 'Prefer female', labelEn: 'Prefer female' },
-      { value: 'male', label: 'Prefer male', labelEn: 'Prefer male' }
-    ]},
-    dimension: 'gender_preference',
-    scoringWeight: 0.8,
-    isRequired: true,
-    order: 17,
-  },
   // Section 7: Personal/Objective Data
   {
     id: 'q-18',

@@ -4,10 +4,14 @@
  * A scientific, multi-dimensional matching engine that calculates
  * therapist-patient compatibility based on:
  *
- * 1. X-Factor Therapeutic Compatibility (40%) - Psychological profile matching
- * 2. Health Fund / Insurance Match (25%) - Financial/practical compatibility
- * 3. Availability & Location Match (20%) - Geography, session format
- * 4. Personal Preferences (15%) - Gender, language, approach preferences
+ * 1. X-Factor Therapeutic Compatibility (30%) - Psychological profile matching
+ * 2. Health Fund / Insurance Match (20%) - Financial/practical compatibility
+ * 3. Availability & Location Match (15%) - Geography, session format
+ * 4. Personal Preferences (10%) - Language, approach preferences
+ * 5. Objective Fit (10%) - Demographic and background alignment
+ * 6. Subjective Fit (15%) - Communication and therapy style compatibility
+ *
+ * Enhanced with Anthropic AI analysis for deeper clinical insights.
  */
 
 import type {
@@ -375,16 +379,6 @@ function calculatePreferenceMatch(
 ): MatchFactor {
   const reasons: string[] = [];
   let score = 65;
-
-  // Gender preference
-  if (patient.preferredGender) {
-    if (therapist.gender === patient.preferredGender) {
-      score += 20;
-      reasons.push('Matches your therapist gender preference');
-    } else {
-      score -= 10;
-    }
-  }
 
   // Language match
   const patientLangs = patient.preferredLanguages || ['he'];

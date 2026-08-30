@@ -30,7 +30,6 @@ export default function ProfilePage() {
     city: '',
     healthFund: '',
     preferredOnline: true,
-    preferredGender: '',
   });
   const [saved, setSaved] = useState(false);
 
@@ -45,7 +44,6 @@ export default function ProfilePage() {
         city: profile.city ?? '',
         healthFund: profile.healthFund ?? '',
         preferredOnline: profile.preferredOnline ?? true,
-        preferredGender: profile.preferredGender ?? '',
       });
     }
   }, [profile]);
@@ -70,13 +68,6 @@ export default function ProfilePage() {
       city: form.city,
       healthFund: form.healthFund as 'CLALIT' | 'MACCABI' | 'MEUHEDET' | 'LEUMIT' | 'PRIVATE' | undefined,
     });
-
-    // Update preferences (only gender for now)
-    if (form.preferredGender) {
-      await updatePrefMutation.mutateAsync({
-        preferredGender: form.preferredGender as 'MALE' | 'FEMALE' | 'OTHER' | 'PREFER_NOT_TO_SAY' | null | undefined,
-      });
-    }
 
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
@@ -142,35 +133,19 @@ export default function ProfilePage() {
             <CardTitle className="text-base">Treatment Preferences</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-1">
-                <Label htmlFor="healthFund" className="text-sm">Health Fund</Label>
-                <select
-                  id="healthFund"
-                  name="healthFund"
-                  value={form.healthFund}
-                  onChange={handleChange}
-                  className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  {healthFunds.map((f) => (
-                    <option key={f.value} value={f.value}>{f.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="preferredGender" className="text-sm">Therapist Gender</Label>
-                <select
-                  id="preferredGender"
-                  name="preferredGender"
-                  value={form.preferredGender}
-                  onChange={handleChange}
-                  className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <option value="">No preference</option>
-                  <option value="MALE">Male</option>
-                  <option value="FEMALE">Female</option>
-                </select>
-              </div>
+            <div className="space-y-1">
+              <Label htmlFor="healthFund" className="text-sm">Health Fund</Label>
+              <select
+                id="healthFund"
+                name="healthFund"
+                value={form.healthFund}
+                onChange={handleChange}
+                className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {healthFunds.map((f) => (
+                  <option key={f.value} value={f.value}>{f.label}</option>
+                ))}
+              </select>
             </div>
 
             <label className="flex items-center gap-2 cursor-pointer">

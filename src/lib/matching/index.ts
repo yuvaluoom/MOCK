@@ -5,6 +5,7 @@
  * - Layered scoring architecture
  * - Configurable algorithm weights
  * - Explainable AI approach
+ * - Anthropic AI-powered clinical analysis
  * - Future ML-ready infrastructure
  *
  * Usage:
@@ -51,6 +52,15 @@ export {
   generateMatchExplanation,
   generateAllExplanations,
 } from './explanation-engine';
+
+// AI analysis (Anthropic Claude)
+export {
+  analyzeMatchWithAI,
+  analyzePatientProfile,
+  batchAnalyzeMatches,
+  type AIMatchInsight,
+  type AIPatientProfile,
+} from './ai-analysis';
 
 // Main matching service
 export {

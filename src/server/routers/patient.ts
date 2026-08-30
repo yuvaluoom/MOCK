@@ -11,6 +11,7 @@ import {
 } from '../mock-data';
 import { mockDb } from '@/lib/database/mock-db';
 import { calculateDetailedMatch, getMatchQualityLabel, type DetailedMatchResult } from '@/lib/matching';
+import { analyzeMatchWithAI, analyzePatientProfile, batchAnalyzeMatches, type AIMatchInsight, type AIPatientProfile } from '@/lib/matching/ai-analysis';
 
 // Helper function to get therapist by ID from unified DB - only returns approved therapists for patient-facing queries
 function getTherapistById(id: string) {
@@ -256,6 +257,16 @@ export const patientRouter = router({
         therapist
       );
 
+      // Run AI analysis in parallel (non-blocking — falls back gracefully)
+      let aiInsight: AIMatchInsight | null = null;
+      try {
+        aiInsight = await analyzeMatchWithAI(
+          mockPatient, mockXFactorProfile, therapist, detailedMatch.overallScore
+        );
+      } catch {
+        // AI analysis is additive; continue without it
+      }
+
       return {
         therapist: {
           id: therapist.id,
@@ -284,7 +295,7 @@ export const patientRouter = router({
             'Licensed Clinical Psychologist - Ministry of Health',
           ],
         },
-        matchScore: detailedMatch.overallScore,
+        matchScore: aiInsight?.adjustedScore ?? detailedMatch.overallScore,
         matchQuality: detailedMatch.matchQuality,
         matchBreakdown: {
           xFactor: Math.round(detailedMatch.factors.find(f => f.key === 'xFactor')?.score ?? 0),
@@ -294,6 +305,13 @@ export const patientRouter = router({
         },
         topReasons: detailedMatch.topReasons,
         insights: detailedMatch.insights,
+        aiAnalysis: aiInsight ? {
+          narrative: aiInsight.compatibilityNarrative,
+          strengths: aiInsight.strengthAreas,
+          challenges: aiInsight.potentialChallenges,
+          rationale: aiInsight.therapeuticRationale,
+          confidence: aiInsight.confidenceLevel,
+        } : null,
       };
     }),
 
@@ -325,9 +343,18 @@ export const patientRouter = router({
         existingMatch.isViewed = true;
       }
 
+      let aiInsight: AIMatchInsight | null = null;
+      try {
+        aiInsight = await analyzeMatchWithAI(
+          mockPatient, mockXFactorProfile, therapist, detailedMatch.overallScore
+        );
+      } catch {
+        // AI analysis is additive
+      }
+
       return {
         therapistId: therapist.id,
-        overallScore: detailedMatch.overallScore,
+        overallScore: aiInsight?.adjustedScore ?? detailedMatch.overallScore,
         matchQuality: detailedMatch.matchQuality,
         matchQualityLabel: getMatchQualityLabel(detailedMatch.matchQuality),
         factors: detailedMatch.factors,
@@ -343,6 +370,13 @@ export const patientRouter = router({
             { dayOfWeek: 'THURSDAY', startTime: '09:00', endTime: '15:00', isOnline: true, isInPerson: false },
           ],
         },
+        aiAnalysis: aiInsight ? {
+          narrative: aiInsight.compatibilityNarrative,
+          strengths: aiInsight.strengthAreas,
+          challenges: aiInsight.potentialChallenges,
+          rationale: aiInsight.therapeuticRationale,
+          confidence: aiInsight.confidenceLevel,
+        } : null,
       };
     }),
 
@@ -494,5 +528,70 @@ export const patientRouter = router({
           hasMore: skip + paged.length < total,
         },
       };
+    }),
+
+  /**
+   * AI-powered patient profile analysis
+   */
+  getAIProfile: patientProcedure
+    .query(async () => {
+      try {
+        const profile = await analyzePatientProfile(mockPatient, mockXFactorProfile);
+        return { available: true as const, ...profile };
+      } catch {
+        return {
+          available: false as const,
+          psychologicalSummary: 'AI analysis is currently unavailable.',
+          coreNeeds: [] as string[],
+          therapeuticRecommendations: [] as string[],
+          riskFactors: [] as string[],
+          idealTherapistTraits: [] as string[],
+        };
+      }
+    }),
+
+  /**
+   * AI-enhanced batch match analysis for the top matches
+   */
+  getAIMatchInsights: patientProcedure
+    .input(z.object({ therapistIds: z.array(z.string()).max(10) }))
+    .query(async ({ input }) => {
+      const therapists = input.therapistIds
+        .map((id) => {
+          const therapist = getTherapistById(id);
+          if (!therapist) return null;
+          const match = calculateDetailedMatch(mockPatient, mockXFactorProfile, therapist);
+          return { therapist, algorithmScore: match.overallScore };
+        })
+        .filter((t): t is NonNullable<typeof t> => t !== null);
+
+      if (therapists.length === 0) return { insights: {} };
+
+      try {
+        const aiResults = await batchAnalyzeMatches(mockPatient, mockXFactorProfile, therapists);
+        const insights: Record<string, {
+          narrative: string;
+          strengths: string[];
+          challenges: string[];
+          rationale: string;
+          confidence: string;
+          adjustedScore: number;
+        }> = {};
+
+        aiResults.forEach((insight, therapistId) => {
+          insights[therapistId] = {
+            narrative: insight.compatibilityNarrative,
+            strengths: insight.strengthAreas,
+            challenges: insight.potentialChallenges,
+            rationale: insight.therapeuticRationale,
+            confidence: insight.confidenceLevel,
+            adjustedScore: insight.adjustedScore,
+          };
+        });
+
+        return { insights };
+      } catch {
+        return { insights: {} };
+      }
     }),
 });
