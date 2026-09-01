@@ -11,6 +11,7 @@ import { notificationRouter } from './notification';
 import { schedulingRouter } from './scheduling';
 import { clinicalRouter } from './clinical';
 import { adminEmailRouter } from './admin-email';
+import { documentsRouter } from './documents';
 
 /**
  * Main application router
@@ -29,6 +30,7 @@ export const appRouter = router({
   notification: notificationRouter,
   scheduling: schedulingRouter,
   clinical: clinicalRouter,
+  documents: documentsRouter,
 });
 
 // Export type definition of API

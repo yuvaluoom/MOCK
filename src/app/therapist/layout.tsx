@@ -92,12 +92,19 @@ const FileTextIcon = () => (
   </svg>
 );
 
+const FolderIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+    <path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2" />
+  </svg>
+);
+
 const navigation = [
   { name: 'Dashboard', href: '/therapist/dashboard', icon: HomeIcon },
   { name: 'My Patients', href: '/therapist/patients', icon: UsersIcon },
   { name: 'Sessions', href: '/therapist/sessions', icon: CalendarIcon },
   { name: 'Schedule', href: '/therapist/schedule', icon: ClockIcon },
   { name: 'Documentation', href: '/therapist/documentation', icon: FileTextIcon },
+  { name: 'My Documents', href: '/therapist/documents', icon: FolderIcon },
   { name: 'Messages', href: '/therapist/messages', icon: MessageIcon },
   { name: 'My Profile', href: '/therapist/profile', icon: UserIcon },
 ];
