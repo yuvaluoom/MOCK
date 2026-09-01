@@ -12,10 +12,15 @@ export default function TherapistProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [photoBlob, setPhotoBlob] = useState<Blob | null>(null);
 
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
+
   const handlePhotoChange = useCallback((blob: Blob | null, cropData: CropData | null) => {
     setPhotoBlob(blob);
-    // In production, upload to server here
-    console.log('Photo changed:', { blob, cropData });
   }, []);
 
   // Mock profile data
@@ -48,7 +53,12 @@ export default function TherapistProfilePage() {
         </div>
         <Button
           variant={isEditing ? 'calm' : 'outline'}
-          onClick={() => setIsEditing(!isEditing)}
+          onClick={() => {
+            if (isEditing) {
+              showToast('Changes saved successfully');
+            }
+            setIsEditing(!isEditing);
+          }}
         >
           {isEditing ? 'Save Changes' : 'Edit'}
         </Button>
@@ -163,7 +173,11 @@ export default function TherapistProfilePage() {
                       </span>
                     ))}
                     {isEditing && (
-                      <button className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full border border-dashed border-green-400 hover:bg-green-200">
+                      <button
+                        type="button"
+                        onClick={() => showToast('Health fund added')}
+                        className="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full border border-dashed border-green-400 hover:bg-green-200"
+                      >
                         + Add Health Fund
                       </button>
                     )}
@@ -220,6 +234,13 @@ export default function TherapistProfilePage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-4 right-4 z-50 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg text-sm">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

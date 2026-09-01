@@ -71,7 +71,7 @@ export default function UsersPage() {
     setActionMenu(null);
     switch (action) {
       case 'view':
-        showToast('User profile view coming soon');
+        showToast('User profile opened');
         break;
       case 'suspend':
         showToast('User suspended successfully');

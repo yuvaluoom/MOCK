@@ -20,7 +20,7 @@ const AppleIcon = () => (
 );
 
 interface SocialAuthButtonsProps {
-  role: 'PATIENT' | 'ADMIN';
+  role: 'PATIENT' | 'THERAPIST' | 'ADMIN';
   redirectTo: string;
 }
 

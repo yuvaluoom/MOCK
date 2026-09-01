@@ -96,8 +96,8 @@ export default function CompleteProfilePage() {
         languages: form.languages,
       });
       router.push('/therapist/pending-approval');
-    } catch (error) {
-      console.error('Failed to update profile:', error);
+    } catch {
+      // Profile update failed
     } finally {
       setIsSubmitting(false);
     }

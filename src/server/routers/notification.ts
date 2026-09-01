@@ -303,12 +303,5 @@ export async function createNotification({
  * Send notification email (mock implementation)
  */
 async function sendNotificationEmail(userId: string, notification: MockNotification): Promise<void> {
-  // In production, this would use a real email service like SendGrid, Mailgun, or Resend
-  console.log(`[EMAIL] Sending notification email to user ${userId}:`);
-  console.log(`  Subject: ${notification.title}`);
-  console.log(`  Body: ${notification.message}`);
-  console.log(`  Link: ${notification.link}`);
-
-  // Simulate email sending delay
   await new Promise((resolve) => setTimeout(resolve, 100));
 }

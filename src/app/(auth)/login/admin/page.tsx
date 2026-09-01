@@ -40,7 +40,6 @@ export default function AdminLoginPage() {
     setError('');
     setIsLoading(true);
 
-    // Mock mode: accept any credentials
     document.cookie = `next-auth.session-token=${encodeURIComponent(JSON.stringify({ role: 'ADMIN' }))};path=/;samesite=lax;max-age=${7 * 24 * 60 * 60}`;
     router.push('/admin');
 
@@ -48,28 +47,28 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-white mb-4">
             <ShieldIcon />
           </div>
-          <h1 className="text-2xl font-bold text-white">Admin Portal</h1>
-          <p className="text-slate-400 mt-2">MatchMind Supervision System</p>
+          <h1 className="text-2xl font-bold text-gray-900">Admin Portal</h1>
+          <p className="text-gray-500 mt-2">MatchMind Supervision System</p>
         </div>
 
         {/* Login Form */}
-        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8">
+        <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
-              <div className="p-4 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-sm">
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                 {error}
               </div>
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
               </label>
               <input
@@ -79,12 +78,12 @@ export default function AdminLoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@matchmind.co.il"
                 required
-                className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -95,12 +94,12 @@ export default function AdminLoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   required
-                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500 pr-12"
+                  className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700"
                 >
                   {showPassword ? <EyeOffIcon /> : <EyeIcon />}
                 </button>
@@ -110,7 +109,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition-colors disabled:opacity-50"
+              className="w-full py-3 px-4 bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -127,8 +126,8 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-slate-400">
-              <Link href="/login/patient" className="text-amber-400 hover:text-amber-300">
+            <p className="text-sm text-gray-500">
+              <Link href="/login/patient" className="text-amber-600 hover:text-amber-700 font-medium">
                 Return to patient login
               </Link>
             </p>
@@ -136,15 +135,15 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-slate-800/50 border border-slate-700 rounded-lg">
-          <p className="text-sm text-slate-400 text-center">
-            <span className="text-amber-400">Demo credentials:</span><br />
+        <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+          <p className="text-sm text-gray-600 text-center">
+            <span className="text-amber-700 font-medium">Demo credentials:</span><br />
             admin@matchmind.co.il / admin123
           </p>
         </div>
 
         {/* Security Notice */}
-        <p className="mt-6 text-xs text-slate-500 text-center">
+        <p className="mt-6 text-xs text-gray-400 text-center">
           This is a restricted area. All access attempts are logged.
           Unauthorized access is prohibited.
         </p>

@@ -639,9 +639,6 @@ export const clinicalRouter = router({
       session.updatedAt = new Date();
       session.currentVersion += 1;
 
-      // Audit log would include amendmentReason
-      console.log(`Amendment reason: ${input.amendmentReason}`);
-
       return {
         success: true,
         version: session.currentVersion,

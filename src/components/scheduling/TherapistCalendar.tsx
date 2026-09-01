@@ -33,6 +33,13 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'month' | 'week'>('week');
+  const [toast, setToast] = useState<string | null>(null);
+  const [confirmAction, setConfirmAction] = useState<{ message: string; onConfirm: () => void } | null>(null);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   // Get date range for current view
   const dateRange = useMemo(() => {
@@ -127,25 +134,24 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
 
   const handleSlotClick = (slot: any) => {
     if (slot.isBooked) {
-      // Show session details
-      alert(`Session With ${slot.patientName || 'Patient'} - ${slot.startTime}-${slot.endTime}`);
+      showToast(`Session with ${slot.patientName || 'Patient'} - ${slot.startTime}-${slot.endTime}`);
     } else if (slot.isBlocked) {
-      // Unblock
-      if (confirm('Remove block?')) {
-        unblockSlotMutation.mutate({ slotId: slot.id });
-      }
+      setConfirmAction({
+        message: 'Remove block?',
+        onConfirm: () => unblockSlotMutation.mutate({ slotId: slot.id }),
+      });
     } else {
-      // Block or select
       if (onSlotSelect) {
         onSlotSelect(slot.date, slot.startTime, slot.endTime);
       } else {
-        if (confirm('Block this time?')) {
-          blockSlotMutation.mutate({
+        setConfirmAction({
+          message: 'Block this time?',
+          onConfirm: () => blockSlotMutation.mutate({
             date: slot.date,
             startTime: slot.startTime,
             endTime: slot.endTime,
-          });
-        }
+          }),
+        });
       }
     }
   };
@@ -310,6 +316,41 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
           </div>
         </div>
       </CardContent>
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-4 right-4 z-50 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg text-sm">
+          {toast}
+        </div>
+      )}
+
+      {/* Confirm Modal */}
+      {confirmAction && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 max-w-sm mx-4 shadow-xl">
+            <p className="text-gray-900 font-medium mb-4">{confirmAction.message}</p>
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => setConfirmAction(null)}
+                className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  confirmAction.onConfirm();
+                  setConfirmAction(null);
+                }}
+                className="px-4 py-2 text-sm bg-calm-600 text-white rounded-lg hover:bg-calm-700 transition-colors"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Card>
   );
 }

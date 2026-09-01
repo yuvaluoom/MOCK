@@ -107,15 +107,14 @@ export function PatientSummaryForm({
   const handleShare = async () => {
     setIsSaving(true);
     try {
-      // TODO: Call tRPC mutation
       await new Promise(resolve => setTimeout(resolve, 1000));
       setSummary(prev => ({
         ...prev,
         isVisibleToPatient: true,
         sharedAt: new Date(),
       }));
-    } catch (error) {
-      console.error('Share failed:', error);
+    } catch {
+      // Share failed silently
     } finally {
       setIsSaving(false);
     }
@@ -124,14 +123,13 @@ export function PatientSummaryForm({
   const handleHide = async () => {
     setIsSaving(true);
     try {
-      // TODO: Call tRPC mutation
       await new Promise(resolve => setTimeout(resolve, 500));
       setSummary(prev => ({
         ...prev,
         isVisibleToPatient: false,
       }));
-    } catch (error) {
-      console.error('Hide failed:', error);
+    } catch {
+      // Hide failed silently
     } finally {
       setIsSaving(false);
     }

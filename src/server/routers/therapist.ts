@@ -196,8 +196,6 @@ function createTherapistNotification(notification: Omit<TherapistNotification, '
 
   mockTherapistNotifications.unshift(newNotification);
 
-  // Mock email sending
-  console.log(`[EMAIL] Sending to therapist ${notification.therapistId}:`, notification.titleHe);
   newNotification.emailSent = true;
 
   return newNotification;

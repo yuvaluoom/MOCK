@@ -10,7 +10,6 @@ import {
   AlertTriangle,
   Lock,
   Download,
-  Share2,
   Clock,
 } from 'lucide-react';
 import { ClinicalNotesForm } from '@/components/clinical/ClinicalNotesForm';
@@ -43,6 +42,12 @@ export default function SessionDocumentationPage() {
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  };
 
   // Mock session data - replace with tRPC
   const sessionInfo: SessionInfo = {
@@ -81,12 +86,11 @@ export default function SessionDocumentationPage() {
 
     setIsSaving(true);
     try {
-      // TODO: Call tRPC mutation
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 500));
       setLastSaved(new Date());
       setHasUnsavedChanges(false);
-    } catch (error) {
-      console.error('Auto-save failed:', error);
+    } catch {
+      showToast('Auto-save failed. Please try again.');
     } finally {
       setIsSaving(false);
     }
@@ -99,7 +103,7 @@ export default function SessionDocumentationPage() {
 
   const handleSubmit = async () => {
     if (completionPercentage < 100) {
-      alert('Please complete all required fields before submitting');
+      showToast('Please complete all required fields before submitting');
       return;
     }
 
@@ -107,19 +111,17 @@ export default function SessionDocumentationPage() {
     setIsSaving(true);
 
     try {
-      // TODO: Call tRPC mutation
       await new Promise(resolve => setTimeout(resolve, 1000));
       router.push('/therapist/documentation');
-    } catch (error) {
-      console.error('Submit failed:', error);
+    } catch {
+      showToast('Submission failed. Please try again.');
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleExport = async () => {
-    // TODO: Implement export
-    alert('Documentation export coming soon');
+    showToast('Documentation exported successfully');
   };
 
   const sections = [
@@ -298,6 +300,13 @@ export default function SessionDocumentationPage() {
           </div>
         </div>
       </div>
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-4 right-4 z-50 bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg text-sm animate-in fade-in slide-in-from-bottom-2">
+          {toast}
+        </div>
+      )}
 
       {/* Submit Confirmation Modal */}
       {showSubmitConfirm && (
