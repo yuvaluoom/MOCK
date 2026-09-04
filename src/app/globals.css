@@ -181,40 +181,50 @@
   }
 }
 
-/* Accessibility Menu Classes */
+/* =========================================================
+   Accessibility Features — WCAG 2.1 AA / Israeli SI 5568
+   ========================================================= */
 
-/* Font size adjustments */
-.a11y-font-normal {
-  font-size: 100%;
-}
-
-.a11y-font-large {
-  font-size: 112.5%;
-}
-
-.a11y-font-xlarge {
-  font-size: 125%;
-}
-
-/* High contrast mode */
+/* High contrast (WCAG 1.4.3 / 1.4.6) */
 .a11y-high-contrast {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 0%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 0%;
-  --border: 0 0% 0%;
+  filter: contrast(1.4) !important;
+}
+.a11y-high-contrast *::selection {
+  background: #000 !important;
+  color: #ff0 !important;
 }
 
-.a11y-high-contrast * {
-  border-color: currentColor !important;
+/* Invert colors */
+.a11y-invert {
+  filter: invert(1) hue-rotate(180deg) !important;
+}
+.a11y-invert img,
+.a11y-invert video,
+.a11y-invert svg:not([aria-hidden]),
+.a11y-invert [style*="background-image"] {
+  filter: invert(1) hue-rotate(180deg) !important;
 }
 
-.a11y-high-contrast a,
-.a11y-high-contrast button {
-  text-decoration: underline;
+/* Combined filters */
+.a11y-high-contrast.a11y-invert {
+  filter: contrast(1.4) invert(1) hue-rotate(180deg) !important;
+}
+.a11y-high-contrast.a11y-grayscale {
+  filter: contrast(1.4) grayscale(1) !important;
+}
+.a11y-invert.a11y-grayscale {
+  filter: invert(1) hue-rotate(180deg) grayscale(1) !important;
+}
+.a11y-high-contrast.a11y-invert.a11y-grayscale {
+  filter: contrast(1.4) invert(1) hue-rotate(180deg) grayscale(1) !important;
 }
 
-/* Reduce motion */
+/* Grayscale */
+.a11y-grayscale {
+  filter: grayscale(1) !important;
+}
+
+/* Reduce motion (WCAG 2.3.3) */
 .a11y-reduce-motion *,
 .a11y-reduce-motion *::before,
 .a11y-reduce-motion *::after {
@@ -224,55 +234,62 @@
   scroll-behavior: auto !important;
 }
 
-/* Highlight links */
-.a11y-highlight-links a {
-  background-color: yellow !important;
-  color: black !important;
-  padding: 2px 4px;
+/* Highlight links (WCAG 2.4.7) */
+.a11y-highlight-links a:not([role="button"]) {
+  outline: 2px solid #0000ff !important;
+  outline-offset: 2px !important;
+  background-color: rgba(255, 255, 0, 0.3) !important;
   text-decoration: underline !important;
+  text-underline-offset: 3px !important;
 }
 
-/* Enhanced focus indicator */
+/* Enhanced focus indicator (WCAG 2.4.7 / 2.4.12) */
 .a11y-focus-indicator *:focus-visible {
   outline: 3px solid #005fcc !important;
   outline-offset: 3px !important;
-  box-shadow: 0 0 0 6px rgba(0, 95, 204, 0.3) !important;
-}
-
-/* Line spacing */
-.a11y-line-normal {
-  line-height: 1.5;
-}
-
-.a11y-line-relaxed {
-  line-height: 1.75;
-}
-
-.a11y-line-loose {
-  line-height: 2;
+  box-shadow: 0 0 0 6px rgba(0, 95, 204, 0.25) !important;
 }
 
 /* Dyslexia-friendly font */
-.a11y-dyslexia-font {
-  font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
-  letter-spacing: 0.05em;
-  word-spacing: 0.1em;
-}
-
+.a11y-dyslexia-font,
 .a11y-dyslexia-font * {
-  font-family: inherit !important;
+  font-family: 'OpenDyslexic', 'Comic Sans MS', 'Trebuchet MS', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
 }
 
 /* Large cursor */
 .a11y-cursor-large,
 .a11y-cursor-large * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23000' d='M8 2l18 14-10 2-6 12z'/%3E%3Cpath fill='%23fff' d='M9.5 5l13.5 10.5-7.5 1.5-4.5 9z'/%3E%3C/svg%3E"), auto !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath fill='%23000' stroke='%23fff' stroke-width='2' d='M12 3l27 21-15 3-9 18z'/%3E%3C/svg%3E") 12 3, auto !important;
 }
-
 .a11y-cursor-large a:hover,
 .a11y-cursor-large button:hover,
-.a11y-cursor-large [role="button"]:hover {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23000' d='M14 2v12h6l-7 16v-12H7z'/%3E%3Cpath fill='%23fff' d='M15 5v10h4l-5 12v-10H9z'/%3E%3C/svg%3E"), pointer !important;
+.a11y-cursor-large [role="button"]:hover,
+.a11y-cursor-large input:hover,
+.a11y-cursor-large select:hover,
+.a11y-cursor-large textarea:hover,
+.a11y-cursor-large label:hover {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath fill='%23000' stroke='%23fff' stroke-width='2' d='M21 3v18h9l-10.5 24V27H10.5z'/%3E%3C/svg%3E") 21 3, pointer !important;
+}
+
+/* Hide images */
+.a11y-hide-images img:not([role="presentation"]),
+.a11y-hide-images svg:not([aria-hidden="true"]):not(.w-5):not(.w-6):not(.w-4):not(.mm-logo-svg),
+.a11y-hide-images picture,
+.a11y-hide-images video {
+  opacity: 0.05 !important;
+}
+
+/* Text alignment overrides */
+.a11y-align-left * {
+  text-align: left !important;
+}
+.a11y-align-center * {
+  text-align: center !important;
+}
+.a11y-align-right * {
+  text-align: right !important;
 }
 
 /* OpenDyslexic font */
@@ -283,7 +300,6 @@
   font-display: swap;
   src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/woff/OpenDyslexic-Regular.woff') format('woff');
 }
-
 @font-face {
   font-family: 'OpenDyslexic';
   font-style: normal;
@@ -292,30 +308,14 @@
   src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/woff/OpenDyslexic-Bold.woff') format('woff');
 }
 
-/* Ensure minimum touch targets */
-@layer base {
-  button:not(.skip-link):not([class*="w-"]):not([class*="h-"]),
-  [role="button"]:not([class*="w-"]):not([class*="h-"]) {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Links in navigation should have proper touch targets */
-  nav a {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-  }
-}
-
-/* Print styles for accessibility */
+/* Print styles */
 @media print {
   .skip-link,
   [aria-hidden="true"],
-  button[aria-label="Open accessibility menu"] {
+  button[aria-label*="accessibility"],
+  #a11y-reading-guide {
     display: none !important;
   }
-
   a[href]::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;

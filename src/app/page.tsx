@@ -5,13 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Logo } from '@/components/ui/Logo';
-import dynamic from 'next/dynamic';
 
-// Dynamically import AccessibilityMenu to prevent SSR issues
-const AccessibilityMenu = dynamic(
-  () => import('@/components/accessibility/AccessibilityMenu').then(mod => mod.AccessibilityMenu),
-  { ssr: false }
-);
 
 // Icons (inline SVG for landing page - no external dependencies)
 const HeartIcon = () => (
@@ -442,8 +436,6 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* Accessibility Menu Component */}
-      <AccessibilityMenu />
     </div>
   );
 }
