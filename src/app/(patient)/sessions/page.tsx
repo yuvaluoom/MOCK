@@ -126,11 +126,10 @@ export default function SessionsPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <p className="font-medium text-gray-900">
-                        {s.therapist?.firstName} {s.therapist?.lastName}
+                        {s.therapist?.title ? `${s.therapist.title} ` : ''}{s.therapist?.firstName} {s.therapist?.lastName}
                       </p>
                       {statusBadge(s.status)}
                     </div>
-                    <p className="text-sm text-gray-500">{s.therapist?.title}</p>
                     <p className="text-sm text-gray-600 mt-1">
                       {fmt(s.scheduledAt)} · {s.isOnline ? 'Online' : 'In-Person'}
                     </p>

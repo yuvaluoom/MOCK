@@ -381,7 +381,7 @@ export function SafetyAssessmentForm({
                 size="sm"
                 onClick={addEmergencyContact}
               >
-                <Plus className="w-4 h-4 ml-1" />
+                <Plus className="w-4 h-4 mr-1" />
                 Add Contact
               </Button>
             )}

@@ -209,7 +209,7 @@ export function PatientBooking({
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
             disabled={currentWeekStart <= new Date(new Date().toDateString())}
           >
-            <ChevronRightIcon />
+            <ChevronLeftIcon />
           </button>
 
           <div className="text-center">
@@ -223,7 +223,7 @@ export function PatientBooking({
             onClick={navigateNextWeek}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ChevronLeftIcon />
+            <ChevronRightIcon />
           </button>
         </div>
 

@@ -464,12 +464,20 @@ export interface MockSession {
   createdAt: Date;
 }
 
+/** A date N days from today at a round hour (keeps demo sessions on sensible times) */
+function atDay(days: number, hour: number): Date {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  d.setHours(hour, 0, 0, 0);
+  return d;
+}
+
 export const mockSessions: MockSession[] = [
   {
     id: 'session-1',
     patientId: 'patient-1',
     therapistId: 'therapist-1',
-    scheduledAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+    scheduledAt: atDay(2, 10), // 2 days from now
     duration: 50,
     type: 'REGULAR',
     isOnline: true,
@@ -484,7 +492,7 @@ export const mockSessions: MockSession[] = [
     id: 'session-2',
     patientId: 'patient-1',
     therapistId: 'therapist-1',
-    scheduledAt: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000), // 9 days from now
+    scheduledAt: atDay(9, 16), // 9 days from now
     duration: 50,
     type: 'REGULAR',
     isOnline: true,
@@ -499,7 +507,7 @@ export const mockSessions: MockSession[] = [
     id: 'session-3',
     patientId: 'patient-1',
     therapistId: 'therapist-4',
-    scheduledAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 days ago
+    scheduledAt: atDay(-7, 11), // 7 days ago
     duration: 50,
     type: 'INITIAL_CONSULTATION',
     isOnline: false,
@@ -514,7 +522,7 @@ export const mockSessions: MockSession[] = [
     id: 'session-4',
     patientId: 'patient-1',
     therapistId: 'therapist-2',
-    scheduledAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+    scheduledAt: atDay(-14, 10),
     duration: 50,
     type: 'INITIAL_CONSULTATION',
     isOnline: true,
@@ -529,7 +537,7 @@ export const mockSessions: MockSession[] = [
     id: 'session-5',
     patientId: 'patient-1',
     therapistId: 'therapist-1',
-    scheduledAt: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000),
+    scheduledAt: atDay(-21, 14),
     duration: 50,
     type: 'REGULAR',
     isOnline: true,
@@ -544,7 +552,7 @@ export const mockSessions: MockSession[] = [
     id: 'session-6',
     patientId: 'patient-1',
     therapistId: 'therapist-1',
-    scheduledAt: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000),
+    scheduledAt: atDay(-28, 12),
     duration: 50,
     type: 'INITIAL_CONSULTATION',
     isOnline: true,
@@ -559,7 +567,7 @@ export const mockSessions: MockSession[] = [
     id: 'session-7',
     patientId: 'patient-1',
     therapistId: 'therapist-5',
-    scheduledAt: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+    scheduledAt: atDay(5, 17),
     duration: 50,
     type: 'INITIAL_CONSULTATION',
     isOnline: true,

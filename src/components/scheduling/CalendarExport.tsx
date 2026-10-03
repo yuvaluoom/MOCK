@@ -117,7 +117,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
             <button
               type="button"
               onClick={handleGoogleCalendar}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-right hover:bg-gray-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-50 transition-colors"
             >
               <GoogleIcon />
               <span className="text-sm text-gray-700">Google Calendar</span>
@@ -126,7 +126,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
             <button
               type="button"
               onClick={handleAppleCalendar}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-right hover:bg-gray-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-50 transition-colors"
             >
               <AppleIcon />
               <span className="text-sm text-gray-700">Apple Calendar</span>
@@ -135,7 +135,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
             <button
               type="button"
               onClick={handleOutlook}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-right hover:bg-gray-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-50 transition-colors"
             >
               <OutlookIcon />
               <span className="text-sm text-gray-700">Outlook</span>
@@ -146,7 +146,7 @@ export function CalendarExport({ event, className }: CalendarExportProps) {
             <button
               type="button"
               onClick={handleDownloadICS}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-right hover:bg-gray-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-gray-50 transition-colors"
             >
               <DownloadIcon />
               <span className="text-sm text-gray-700">Download file ICS</span>

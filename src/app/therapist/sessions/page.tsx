@@ -32,7 +32,7 @@ export default function TherapistSessionsPage() {
   const [activeTab, setActiveTab] = useState<TabType>('upcoming');
 
   // Dynamic session data for investor demo
-  const sessions: Record<TabType, SessionData[]> = {
+  const [sessions, setSessions] = useState<Record<TabType, SessionData[]>>(() => ({
     upcoming: [
       { id: 'session-1', patientName: 'Israel Israeli', patientEmail: 'patient@example.com', date: getUpcomingDate(2, 10), type: 'online', status: 'confirmed', meetingUrl: 'https://meet.google.com/abc-defg-hij', paymentType: 'HMO', healthFund: 'MACCABI' },
       { id: 'session-2', patientName: 'Sarah Cohen', patientEmail: 'sarah@example.com', date: getUpcomingDate(2, 14), type: 'in-person', status: 'confirmed', paymentType: 'PRIVATE', price: 450 },
@@ -46,6 +46,22 @@ export default function TherapistSessionsPage() {
       { id: 'session-6', patientName: 'Israel Israeli', patientEmail: 'patient@example.com', date: getUpcomingDate(-7, 10), type: 'online', status: 'completed', paymentType: 'HMO', healthFund: 'MACCABI' },
       { id: 'session-7', patientName: 'Sarah Cohen', patientEmail: 'sarah@example.com', date: getUpcomingDate(-14, 11), type: 'in-person', status: 'completed', paymentType: 'PRIVATE', price: 450 },
     ],
+  }));
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const decide = (id: string, approve: boolean) => {
+    const target = sessions.pending.find((x) => x.id === id);
+    if (!target) return;
+    setSessions((prev) => ({
+      ...prev,
+      pending: prev.pending.filter((x) => x.id !== id),
+      upcoming: approve
+        ? [...prev.upcoming, { ...target, status: 'confirmed' as const, meetingUrl: target.type === 'online' ? 'https://meet.google.com/new' : undefined }]
+            .sort((a, b) => a.date.getTime() - b.date.getTime())
+        : prev.upcoming,
+    }));
+    setNotice(approve ? `Session with ${target.patientName} approved — the patient has been notified.` : `Request from ${target.patientName} declined.`);
+    setTimeout(() => setNotice(null), 3500);
   };
 
   const tabs = [
@@ -62,6 +78,12 @@ export default function TherapistSessionsPage() {
         <p className="text-gray-600 mt-1">View and manage your sessions</p>
       </div>
 
+      {notice && (
+        <div className="p-3 rounded-lg bg-green-50 border border-green-200 text-sm text-green-800" role="status">
+          {notice}
+        </div>
+      )}
+
       {/* Tabs */}
       <div className="flex gap-2 border-b">
         {tabs.map((tab) => (
@@ -76,7 +98,7 @@ export default function TherapistSessionsPage() {
           >
             {tab.label}
             {tab.count > 0 && (
-              <span className={`mr-2 px-2 py-0.5 rounded-full text-xs ${
+              <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
                 activeTab === tab.id ? 'bg-calm-100 text-calm-700' : 'bg-gray-100 text-gray-600'
               }`}>
                 {tab.count}
@@ -124,8 +146,8 @@ export default function TherapistSessionsPage() {
                 <div className="flex items-center gap-2">
                   {session.status === 'pending' && (
                     <>
-                      <Button size="sm" variant="calm">Approve</Button>
-                      <Button size="sm" variant="outline">Decline</Button>
+                      <Button size="sm" variant="calm" onClick={() => decide(session.id, true)}>Approve</Button>
+                      <Button size="sm" variant="outline" onClick={() => decide(session.id, false)}>Decline</Button>
                     </>
                   )}
                   {session.status === 'confirmed' && (
@@ -134,7 +156,7 @@ export default function TherapistSessionsPage() {
                         sessionId={session.id}
                         scheduledAt={session.date}
                         duration={50}
-                        therapistName="Rachel Cohen"
+                        therapistName="Dr. Ronit Shapira"
                         isOnline={session.type === 'online'}
                         meetingUrl={session.meetingUrl}
                         patientName={session.patientName}
@@ -150,7 +172,7 @@ export default function TherapistSessionsPage() {
                   )}
                   {session.status === 'completed' && (
                     <span className="text-sm text-green-600 flex items-center gap-1">
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       Completed

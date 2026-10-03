@@ -347,7 +347,7 @@ export function AccessibilityMenu() {
         ref={triggerRef}
         type="button"
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-4 left-4 z-[60] w-12 h-12 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-calm-500 focus:ring-offset-2 transition-colors flex items-center justify-center ${
+        className={`fixed bottom-4 right-4 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 lg:right-3 z-[60] w-11 h-11 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-calm-500 focus:ring-offset-2 transition-colors flex items-center justify-center ${
           isModified ? 'bg-calm-700 text-white hover:bg-calm-800' : 'bg-calm-600 text-white hover:bg-calm-700'
         }`}
         aria-label="Open accessibility menu (Alt+A)"
@@ -373,7 +373,7 @@ export function AccessibilityMenu() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="a11y-menu-title"
-            className="fixed bottom-0 left-0 right-0 sm:bottom-4 sm:left-4 sm:right-auto z-[60] w-full sm:w-[420px] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden flex flex-col"
+            className="fixed bottom-0 left-0 right-0 sm:bottom-4 sm:right-16 sm:left-auto z-[60] w-full sm:w-[420px] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-h-[85vh] overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b bg-white rounded-t-2xl flex-shrink-0">

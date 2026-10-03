@@ -31,10 +31,12 @@ const CheckCircleIcon = () => (
 function Toggle({
   checked,
   onChange,
+  label,
   variant = 'default',
 }: {
   checked: boolean;
   onChange: () => void;
+  label?: string;
   variant?: 'default' | 'danger' | 'success';
 }) {
   const colors = {
@@ -46,6 +48,9 @@ function Toggle({
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
       onClick={onChange}
       className={`relative w-11 h-6 rounded-full transition-colors ${colors[variant]}`}
     >
@@ -211,6 +216,7 @@ export default function SettingsPage() {
                 <Toggle
                   checked={settings[item.key]}
                   onChange={() => setSettings({ ...settings, [item.key]: !settings[item.key] })}
+                  label={item.label}
                 />
               </div>
             ))}
@@ -270,6 +276,7 @@ export default function SettingsPage() {
               <Toggle
                 checked={settings.requireMFA}
                 onChange={() => setSettings({ ...settings, requireMFA: !settings.requireMFA })}
+                label="Require MFA"
               />
             </div>
             <div className="pt-3 border-t border-gray-100">
@@ -301,6 +308,7 @@ export default function SettingsPage() {
                 checked={settings.maintenanceMode}
                 onChange={() => setSettings({ ...settings, maintenanceMode: !settings.maintenanceMode })}
                 variant="danger"
+                label="Maintenance Mode"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -311,6 +319,7 @@ export default function SettingsPage() {
               <Toggle
                 checked={settings.debugMode}
                 onChange={() => setSettings({ ...settings, debugMode: !settings.debugMode })}
+                label="Debug Mode"
               />
             </div>
             <div className="flex items-center justify-between">
@@ -322,6 +331,7 @@ export default function SettingsPage() {
                 checked={settings.allowNewRegistrations}
                 onChange={() => setSettings({ ...settings, allowNewRegistrations: !settings.allowNewRegistrations })}
                 variant="success"
+                label="Allow New Registrations"
               />
             </div>
             <div className="pt-3 border-t border-gray-100">
@@ -359,7 +369,7 @@ export default function SettingsPage() {
       {/* Reset Confirmation */}
       {showResetConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-sm mx-4 shadow-xl">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-sm mx-4 shadow-xl" role="dialog" aria-modal="true" aria-label="Confirm settings">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Reset Settings</h3>
             <p className="text-sm text-gray-500 mb-5">Reset all settings to defaults? This cannot be undone.</p>
             <div className="flex justify-end gap-3">

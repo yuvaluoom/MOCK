@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { Logo } from '@/components/ui/Logo';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -307,12 +308,7 @@ export default function TherapistRegisterPage() {
     <div className="min-h-screen bg-gradient-hero flex flex-col">
       {/* Header */}
       <header className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 w-fit">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-calm-500 to-trust-500 flex items-center justify-center">
-            <span className="text-white font-bold text-xl">M</span>
-          </div>
-          <span className="text-xl font-bold text-gray-900">MatchMind</span>
-        </Link>
+        <Logo size="lg" href="/" />
         <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
           Therapist Registration
         </span>
@@ -343,7 +339,7 @@ export default function TherapistRegisterPage() {
                       )}
                     >
                       {idx < currentStepIndex ? (
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       ) : (
@@ -561,7 +557,7 @@ export default function TherapistRegisterPage() {
                                 multiple
                               />
                               <span className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-calm-600 bg-calm-50 rounded-lg hover:bg-calm-100 transition-colors">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                 </svg>
                                 Upload
@@ -636,7 +632,7 @@ export default function TherapistRegisterPage() {
                         <ul className="space-y-1 text-sm">
                           {uploadedFiles.map((file) => (
                             <li key={file.id} className="flex items-center gap-2 text-gray-700">
-                              <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                               </svg>
                               {documentLabels[file.type]}: {file.name}
@@ -648,7 +644,7 @@ export default function TherapistRegisterPage() {
 
                     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                       <div className="flex items-start gap-2">
-                        <svg className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
                         <div>

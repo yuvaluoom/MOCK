@@ -629,10 +629,19 @@ export const therapistRouter = router({
       pendingRequests: pendingRequests.length,
       unreadMessages: unreadNotifications.filter((n) => n.type === 'MESSAGE_NEW').length,
       totalPatients: patientIds.size,
-      upcomingSessions: todaySessions.map((s) => ({
+      // Today's sessions, or — if the day is free — the next approved sessions
+      upcomingSessions: (todaySessions.length > 0
+        ? todaySessions
+        : mockSessions
+            .filter((s) => s.therapistId === therapistId && s.status === 'APPROVED' && s.scheduledAt > new Date())
+            .sort((a, b) => a.scheduledAt.getTime() - b.scheduledAt.getTime())
+            .slice(0, 4)
+      ).map((s) => ({
         id: s.id,
         patientName: `${mockPatient.firstName} ${mockPatient.lastName}`,
-        time: s.scheduledAt.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }),
+        time: s.scheduledAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        day: s.scheduledAt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
+        isToday: s.scheduledAt >= today && s.scheduledAt < tomorrow,
         type: s.isOnline ? 'online' : 'in-person',
       })),
     };

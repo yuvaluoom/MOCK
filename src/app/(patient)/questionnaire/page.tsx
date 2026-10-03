@@ -135,7 +135,7 @@ export default function QuestionnairePage() {
       <div className="h-[calc(100vh-8rem)] flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-green-600"><path d="M20 6 9 17l-5-5" /></svg>
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 text-green-600"><path d="M20 6 9 17l-5-5" /></svg>
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Questionnaire Complete!</h2>
           <p className="text-gray-600 text-sm">Calculating your matches...</p>
@@ -184,7 +184,7 @@ export default function QuestionnairePage() {
               <p className="text-[11px] text-gray-400">{answeredCount}/{totalQuestions}</p>
             </div>
             <div className="w-11 h-11 relative">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+              <svg aria-hidden="true" className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                 <circle cx="18" cy="18" r="15" fill="none" stroke="#e5e7eb" strokeWidth="3" />
                 <circle cx="18" cy="18" r="15" fill="none" className="text-calm-500" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeDasharray={`${progress}, 100`} />
               </svg>
@@ -224,7 +224,7 @@ export default function QuestionnairePage() {
               >
                 <span className="flex items-center gap-1.5">
                   {isComplete && !isCurrent && (
-                    <svg className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <svg aria-hidden="true" className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   )}
@@ -265,7 +265,7 @@ export default function QuestionnairePage() {
                       selectedValue !== undefined ? 'bg-calm-200 text-calm-700' : 'bg-gray-200 text-gray-500'
                     }`} aria-hidden="true">
                       {selectedValue !== undefined ? (
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                        <svg aria-hidden="true" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                         </svg>
                       ) : (idx + 1)}
@@ -367,7 +367,7 @@ export default function QuestionnairePage() {
           disabled={isFirst}
           className="gap-1.5 flex-shrink-0 h-10 sm:h-9"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           <span className="hidden sm:inline">Previous</span>
@@ -386,7 +386,7 @@ export default function QuestionnairePage() {
             className="gap-1.5 flex-shrink-0 h-10 sm:h-9"
           >
             Submit
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </Button>
@@ -398,7 +398,7 @@ export default function QuestionnairePage() {
             className="gap-1.5 flex-shrink-0 h-10 sm:h-9"
           >
             Next
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Button>

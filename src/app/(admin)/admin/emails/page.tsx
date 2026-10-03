@@ -629,11 +629,11 @@ export default function AdminEmailsPage() {
       {/* Email Detail Modal */}
       {emailDetailId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={() => setEmailDetailId(null)}>
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto" role="dialog" aria-modal="true" aria-label="Email details" onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold">Email Details</h3>
-                <button onClick={() => setEmailDetailId(null)} className="p-2 hover:bg-gray-100 rounded-lg">
+                <button onClick={() => setEmailDetailId(null)} className="p-2 hover:bg-gray-100 rounded-lg" aria-label="Close">
                   ×
                 </button>
               </div>

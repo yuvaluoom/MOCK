@@ -194,7 +194,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
             onClick={navigatePrev}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ChevronRightIcon />
+            <ChevronLeftIcon />
           </button>
 
           <div className="text-center">
@@ -215,7 +215,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
             onClick={navigateNext}
             className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ChevronLeftIcon />
+            <ChevronRightIcon />
           </button>
         </div>
       </CardHeader>
@@ -278,7 +278,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
                           onClick={() => handleSlotClick(slot)}
                           disabled={isPast}
                           className={cn(
-                            'w-full text-right px-2 py-1.5 rounded text-xs transition-colors',
+                            'w-full text-left px-2 py-1.5 rounded text-xs transition-colors',
                             slot.isBooked && 'bg-green-100 text-green-700 hover:bg-green-200',
                             slot.isBlocked && 'bg-red-100 text-red-700 hover:bg-red-200',
                             !slot.isBooked && !slot.isBlocked && 'bg-gray-100 text-gray-600 hover:bg-calm-100 hover:text-calm-700',
@@ -327,7 +327,7 @@ export function TherapistCalendar({ onSlotSelect }: TherapistCalendarProps) {
       {/* Confirm Modal */}
       {confirmAction && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 max-w-sm mx-4 shadow-xl">
+          <div className="bg-white rounded-xl p-6 max-w-sm mx-4 shadow-xl" role="dialog" aria-modal="true" aria-label="Confirm action">
             <p className="text-gray-900 font-medium mb-4">{confirmAction.message}</p>
             <div className="flex gap-3 justify-end">
               <button

@@ -7,7 +7,7 @@ import { trpc } from '@/lib/trpc/client';
 
 // Icons
 const CalendarIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
     <path d="M8 2v4" />
     <path d="M16 2v4" />
     <rect width="18" height="18" x="3" y="4" rx="2" />
@@ -16,42 +16,42 @@ const CalendarIcon = () => (
 );
 
 const ClockIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
     <circle cx="12" cy="12" r="10" />
     <polyline points="12 6 12 12 16 14" />
   </svg>
 );
 
 const VideoIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
     <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" />
     <rect x="2" y="6" width="14" height="12" rx="2" />
   </svg>
 );
 
 const MapPinIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
     <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
     <circle cx="12" cy="10" r="3" />
   </svg>
 );
 
 const ArrowLeftIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-    <path d="m12 5-7 7 7 7" />
-    <path d="M19 12H5" />
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <path d="M5 12h14" />
+    <path d="m12 5 7 7-7 7" />
   </svg>
 );
 
 const CheckCircleIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-green-500">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-green-500">
     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
     <path d="m9 11 3 3L22 4" />
   </svg>
 );
 
 const ClipboardIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-500">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-500">
     <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
   </svg>
@@ -104,6 +104,7 @@ export default function PatientDashboard() {
   const matches = matchesData?.matches ?? [];
   const sessions = sessionsData?.sessions ?? [];
   const firstName = profile?.firstName ?? 'Guest';
+  const nextSession = sessions.find((x: { status: string }) => x.status === 'APPROVED');
 
   if (profileLoading) {
     return (
@@ -117,11 +118,38 @@ export default function PatientDashboard() {
     <div className="space-y-5">
       {/* Welcome section */}
       <div>
-        <h1 className="text-xl font-bold text-gray-900">Hello, {firstName}!</h1>
-        <p className="text-sm text-gray-600">
-          Manage your sessions and find recommended therapists.
+        <h1 className="text-2xl font-bold text-gray-900">Hello, {firstName} 👋</h1>
+        <p className="text-sm text-gray-600 mt-1">
+          Here&apos;s an overview of your therapy journey.
         </p>
       </div>
+
+      {/* Next session highlight */}
+      {nextSession && (
+        <div className="rounded-2xl bg-gradient-to-r from-calm-600 to-calm-700 text-white p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-md">
+          <div className="flex-1">
+            <p className="text-xs uppercase tracking-wide text-calm-100 font-medium">Your next session</p>
+            <p className="text-lg font-semibold mt-1">
+              {nextSession.therapist?.firstName} {nextSession.therapist?.lastName}
+            </p>
+            <p className="text-sm text-calm-50 mt-0.5">
+              {new Date(nextSession.scheduledAt).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+              {' · '}
+              {new Date(nextSession.scheduledAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+              {' · '}
+              {nextSession.isOnline ? 'Online' : 'In-person'}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Link href={`/messages?therapist=${nextSession.therapist?.id ?? ''}`}>
+              <Button size="sm" className="bg-white/15 hover:bg-white/25 text-white border border-white/30">Message</Button>
+            </Link>
+            <Link href="/sessions">
+              <Button size="sm" className="bg-white text-calm-700 hover:bg-calm-50">View details</Button>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Quick actions / Status cards */}
       {!questionnaireCompleted && (
@@ -144,7 +172,7 @@ export default function PatientDashboard() {
           <CardContent className="flex items-center gap-3 py-3">
             <CheckCircleIcon />
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-gray-900 text-sm">We found {matches.length} matches!</h3>
+              <h3 className="font-medium text-gray-900 text-sm">We found {matchesData?.pagination?.total ?? matches.length} strong matches for you</h3>
               <p className="text-xs text-gray-600">Recommended therapists are waiting for you</p>
             </div>
             <Link href="/matches">
@@ -164,7 +192,7 @@ export default function PatientDashboard() {
             </div>
             <Link href="/sessions">
               <Button variant="ghost" size="sm" className="gap-1 text-xs h-7">
-                All
+                View all
                 <ArrowLeftIcon />
               </Button>
             </Link>
@@ -242,7 +270,7 @@ export default function PatientDashboard() {
             </div>
             <Link href="/matches">
               <Button variant="ghost" size="sm" className="gap-1 text-xs h-7">
-                All
+                View all
                 <ArrowLeftIcon />
               </Button>
             </Link>

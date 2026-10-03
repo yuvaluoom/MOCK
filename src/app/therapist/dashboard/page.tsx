@@ -9,7 +9,7 @@ import { PatientProfileModal } from '@/components/PatientProfileModal';
 
 // Icons
 const CalendarIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
     <path d="M8 2v4" />
     <path d="M16 2v4" />
     <rect width="18" height="18" x="3" y="4" rx="2" />
@@ -18,7 +18,7 @@ const CalendarIcon = () => (
 );
 
 const UsersIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
     <circle cx="9" cy="7" r="4" />
     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -27,33 +27,33 @@ const UsersIcon = () => (
 );
 
 const MessageIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
     <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
   </svg>
 );
 
 const ClockIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
     <circle cx="12" cy="12" r="10" />
     <polyline points="12 6 12 12 16 14" />
   </svg>
 );
 
 const CheckIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
     <path d="M20 6 9 17l-5-5" />
   </svg>
 );
 
 const XIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
     <path d="M18 6 6 18" />
     <path d="m6 6 12 12" />
   </svg>
 );
 
 const EyeIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
     <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
     <circle cx="12" cy="12" r="3" />
   </svg>
@@ -63,7 +63,12 @@ export default function TherapistDashboardPage() {
   const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
 
   // Fetch dashboard stats
-  const { data: stats, isLoading: statsLoading } = trpc.therapist.getDashboardStats.useQuery();
+  const { data: stats, isLoading: statsLoading, refetch: refetchStats } = trpc.therapist.getDashboardStats.useQuery();
+  const hasTodaySessions = (stats?.todaySessions ?? 0) > 0;
+  const greeting = (() => {
+    const h = new Date().getHours();
+    return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+  })();
 
   // Fetch pending patient requests
   const { data: requestsData, isLoading: requestsLoading, refetch: refetchRequests } = trpc.therapist.getPatientRequests.useQuery({
@@ -74,11 +79,17 @@ export default function TherapistDashboardPage() {
 
   // Mutations for approve/decline
   const approveRequestMutation = trpc.therapist.approvePatientRequest.useMutation({
-    onSuccess: () => refetchRequests(),
+    onSuccess: () => {
+      refetchRequests();
+      refetchStats();
+    },
   });
 
   const declineRequestMutation = trpc.therapist.declinePatientRequest.useMutation({
-    onSuccess: () => refetchRequests(),
+    onSuccess: () => {
+      refetchRequests();
+      refetchStats();
+    },
   });
 
   const handleApprove = (requestId: string) => {
@@ -93,8 +104,10 @@ export default function TherapistDashboardPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Hello, Dr. Ronit Shapira</h1>
-        <p className="text-gray-600 mt-1">Your Dashboard</p>
+        <h1 className="text-2xl font-bold text-gray-900">{greeting}, Dr. Shapira</h1>
+        <p className="text-gray-600 mt-1">
+          {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })} · Here&apos;s what needs your attention today
+        </p>
       </div>
 
       {/* Stats Cards */}
@@ -172,7 +185,7 @@ export default function TherapistDashboardPage() {
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg flex items-center gap-2">
                 <CalendarIcon />
-                Today's Sessions
+                {statsLoading || hasTodaySessions ? "Today's Sessions" : 'Upcoming Sessions'}
               </CardTitle>
               <Link
                 href="/therapist/sessions"
@@ -201,13 +214,15 @@ export default function TherapistDashboardPage() {
                       <div>
                         <p className="font-medium text-gray-900">{session.patientName}</p>
                         <p className="text-sm text-gray-500">
-                          {session.time} • {session.type === 'online' ? 'Online' : 'In-Person'}
+                          {session.isToday ? 'Today' : session.day} · {session.time} • {session.type === 'online' ? 'Online' : 'In-Person'}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       {session.type === 'online' && (
-                        <Button size="sm" variant="calm">Join</Button>
+                        <Button size="sm" variant="calm" asChild>
+                          <Link href="/therapist/sessions">{session.isToday ? 'Join' : 'Details'}</Link>
+                        </Button>
                       )}
                       <button
                         type="button"
@@ -224,7 +239,7 @@ export default function TherapistDashboardPage() {
             ) : (
               <div className="p-6 text-center text-gray-500">
                 <CalendarIcon />
-                <p className="mt-2">No sessions scheduled for today</p>
+                <p className="mt-2">No upcoming sessions</p>
               </div>
             )}
           </CardContent>

@@ -1,5 +1,6 @@
 'use client';
 
+import { isoDay } from '@/lib/demo/therapist-demo';
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,41 +33,41 @@ export default function TherapistDocumentationPage() {
     {
       id: '1',
       patientName: 'Israel Israeli',
-      sessionDate: '2024-02-06',
+      sessionDate: isoDay(-4),
       sessionNumber: 5,
       documentationStatus: 'DRAFT',
       isOverdue: true,
-      deadline: '2024-02-08',
+      deadline: isoDay(-1),
       completionPercentage: 45,
     },
     {
       id: '2',
       patientName: 'Sarah Cohen',
-      sessionDate: '2024-02-07',
+      sessionDate: isoDay(-1),
       sessionNumber: 3,
       documentationStatus: 'DRAFT',
       isOverdue: false,
-      deadline: '2024-02-09',
+      deadline: isoDay(1),
       completionPercentage: 80,
     },
     {
       id: '3',
       patientName: 'David Levi',
-      sessionDate: '2024-02-05',
+      sessionDate: isoDay(-3),
       sessionNumber: 8,
       documentationStatus: 'SUBMITTED',
       isOverdue: false,
-      deadline: '2024-02-07',
+      deadline: isoDay(-1),
       completionPercentage: 100,
     },
     {
       id: '4',
       patientName: 'Miriam Abraham',
-      sessionDate: '2024-02-04',
+      sessionDate: isoDay(-6),
       sessionNumber: 12,
       documentationStatus: 'LOCKED',
       isOverdue: false,
-      deadline: '2024-02-06',
+      deadline: isoDay(-4),
       completionPercentage: 100,
     },
   ];
@@ -205,7 +206,7 @@ export default function TherapistDocumentationPage() {
           >
             {tab.label}
             {tab.count > 0 && (
-              <span className={`mr-2 px-2 py-0.5 rounded-full text-xs ${
+              <span className={`ml-2 px-2 py-0.5 rounded-full text-xs ${
                 activeTab === tab.id ? 'bg-calm-100 text-calm-700' : 'bg-gray-100 text-gray-600'
               }`}>
                 {tab.count}

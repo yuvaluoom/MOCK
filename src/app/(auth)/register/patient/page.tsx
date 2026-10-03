@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Logo } from '@/components/ui/Logo';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -105,12 +106,7 @@ export default function PatientRegisterPage() {
     <div className="min-h-screen bg-gradient-hero flex flex-col">
       {/* Header */}
       <header className="container mx-auto px-4 py-4">
-        <Link href="/" className="flex items-center gap-2 w-fit">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-calm-500 to-trust-500 flex items-center justify-center">
-            <span className="text-white font-bold text-xl">M</span>
-          </div>
-          <span className="text-xl font-bold text-gray-900">MatchMind</span>
-        </Link>
+        <Logo size="lg" href="/" />
       </header>
 
       {/* Main Content */}

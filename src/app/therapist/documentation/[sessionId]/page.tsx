@@ -1,11 +1,13 @@
 'use client';
 
+import { isoDay } from '@/lib/demo/therapist-demo';
 import { useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
   ArrowRight,
+  ArrowLeft,
   CheckCircle,
   AlertTriangle,
   Lock,
@@ -55,11 +57,11 @@ export default function SessionDocumentationPage() {
     patientName: 'Israel Israeli',
     patientId: 'patient-1',
     sessionNumber: 5,
-    sessionDate: '2024-02-06',
+    sessionDate: isoDay(-4),
     sessionType: 'IN_PERSON',
     documentationStatus: 'DRAFT',
     isOverdue: false,
-    deadline: '2024-02-08',
+    deadline: isoDay(-1),
     currentVersion: 1,
   };
 
@@ -142,7 +144,7 @@ export default function SessionDocumentationPage() {
                 size="sm"
                 onClick={() => router.push('/therapist/documentation')}
               >
-                <ArrowRight className="w-4 h-4 ml-1" />
+                <ArrowLeft className="w-4 h-4 mr-1" />
                 Back
               </Button>
               <div className="h-6 w-px bg-gray-200" />
@@ -217,7 +219,7 @@ export default function SessionDocumentationPage() {
               )}
               {isReadOnly && (
                 <Button variant="outline" size="sm" onClick={handleExport}>
-                  <Download className="w-4 h-4 ml-1" />
+                  <Download className="w-4 h-4 mr-1" />
                   Export
                 </Button>
               )}
@@ -238,7 +240,7 @@ export default function SessionDocumentationPage() {
                     <button
                       key={section.id}
                       onClick={() => setActiveSection(section.id)}
-                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-right transition-colors ${
+                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                         activeSection === section.id
                           ? 'bg-calm-50 text-calm-700 font-medium'
                           : 'text-gray-600 hover:bg-gray-50'
@@ -311,7 +313,7 @@ export default function SessionDocumentationPage() {
       {/* Submit Confirmation Modal */}
       {showSubmitConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Card className="w-full max-w-md mx-4">
+          <Card className="w-full max-w-md mx-4" role="dialog" aria-modal="true" aria-label="Document details">
             <CardHeader>
               <CardTitle>Confirm Submission</CardTitle>
             </CardHeader>

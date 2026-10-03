@@ -353,7 +353,7 @@ export default function TherapistDetailPage({ params }: { params: Promise<{ id: 
       {/* Reject Modal */}
       {showRejectModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-md mx-4 shadow-xl">
+          <div className="bg-white border border-gray-200 rounded-xl p-6 w-full max-w-md mx-4 shadow-xl" role="dialog" aria-modal="true" aria-label="Reject therapist">
             <h3 className="text-lg font-semibold text-gray-900 mb-1">Reject Application</h3>
             <p className="text-sm text-gray-500 mb-4">The therapist will be notified of this decision.</p>
             <textarea
@@ -361,6 +361,7 @@ export default function TherapistDetailPage({ params }: { params: Promise<{ id: 
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="Reason for rejection (at least 10 characters)..."
               rows={4}
+              aria-label="Rejection reason"
               className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
             />
             <div className="flex justify-end gap-3 mt-4">

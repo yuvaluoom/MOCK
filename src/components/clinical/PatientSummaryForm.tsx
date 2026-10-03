@@ -196,7 +196,7 @@ export function PatientSummaryForm({
                     onClick={handleHide}
                     disabled={isSaving}
                   >
-                    <EyeOff className="w-4 h-4 ml-1" />
+                    <EyeOff className="w-4 h-4 mr-1" />
                     Hide
                   </Button>
                 ) : (
@@ -206,7 +206,7 @@ export function PatientSummaryForm({
                     onClick={handleShare}
                     disabled={isSaving || !summary.summaryHebrew}
                   >
-                    <Share2 className="w-4 h-4 ml-1" />
+                    <Share2 className="w-4 h-4 mr-1" />
                     {isSaving ? 'Sharing...' : 'Share with Patient'}
                   </Button>
                 )}
@@ -405,7 +405,7 @@ export function PatientSummaryForm({
                 size="sm"
                 onClick={addHomework}
               >
-                <Plus className="w-4 h-4 ml-1" />
+                <Plus className="w-4 h-4 mr-1" />
                 Add Task
               </Button>
             )}

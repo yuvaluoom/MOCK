@@ -59,17 +59,17 @@ export function CookieConsent() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6"
+      className="fixed bottom-4 left-4 right-4 sm:right-auto sm:left-6 sm:bottom-6 z-50 sm:w-[420px]"
       role="dialog"
-      aria-modal="true"
+      aria-modal="false"
       aria-labelledby="cookie-title"
       aria-describedby="cookie-description"
     >
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-2xl border overflow-hidden">
         {!showSettings ? (
           // Main banner
-          <div className="p-6">
-            <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+          <div className="p-5">
+            <div className="flex items-start gap-3">
               {/* Cookie icon */}
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-600">
@@ -83,13 +83,11 @@ export function CookieConsent() {
 
               {/* Text content */}
               <div className="flex-1">
-                <h2 id="cookie-title" className="text-lg font-semibold text-gray-900 mb-1">
+                <h2 id="cookie-title" className="text-base font-semibold text-gray-900 mb-1">
                   We value your privacy
                 </h2>
                 <p id="cookie-description" className="text-sm text-gray-600 mb-4">
-                  This website uses cookies (and tools such as Google Analytics) to improve your browsing experience,
-                  analyze site usage, and personalize content. For more information about how we use your data and your rights,
-                  please review our{' '}
+                  We use cookies to improve your experience and analyze site usage. Learn more in our{' '}
                   <Link href="/privacy" className="text-calm-600 hover:underline focus:outline-none focus:underline">
                     full Privacy Policy
                   </Link>.
@@ -100,14 +98,14 @@ export function CookieConsent() {
                   <Button
                     variant="calm"
                     onClick={handleAcceptAll}
-                    className="min-w-[120px]"
+                    size="sm"
                   >
                     Accept All
                   </Button>
                   <Button
                     variant="outline"
                     onClick={handleRejectAll}
-                    className="min-w-[120px]"
+                    size="sm"
                   >
                     Reject All
                   </Button>

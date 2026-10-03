@@ -135,8 +135,10 @@ export const messagesRouter = router({
       if (!threadId) {
         const existingThread = mockMessageThreads.find(
           (t) =>
-            (t.patientId === mockPatient.id && t.therapistId === input.recipientId) ||
-            (t.therapistId === input.recipientId)
+            ctx.user.role === 'PATIENT'
+              ? t.patientId === mockPatient.id && t.therapistId === input.recipientId
+              : t.patientId === input.recipientId &&
+                t.therapistId === (mockTherapists.find((th) => th.userId === ctx.user.id)?.id ?? mockTherapists[0].id)
         );
 
         if (existingThread) {
@@ -145,7 +147,9 @@ export const messagesRouter = router({
           const newThread = {
             id: `thread-${Date.now()}`,
             patientId: ctx.user.role === 'PATIENT' ? mockPatient.id : input.recipientId,
-            therapistId: ctx.user.role === 'THERAPIST' ? mockTherapists[0].id : input.recipientId,
+            therapistId: ctx.user.role === 'THERAPIST'
+              ? (mockTherapists.find((th) => th.userId === ctx.user.id)?.id ?? mockTherapists[0].id)
+              : input.recipientId,
             subject: null,
             lastMessageAt: new Date(),
             createdAt: new Date(),
@@ -306,6 +310,29 @@ export const messagesRouter = router({
   /**
    * Get unread message count
    */
+  /**
+   * Get or create a conversation thread between the current patient and a therapist
+   * (used by "Send Message" deep links from match cards / therapist profiles)
+   */
+  startThread: protectedProcedure
+    .input(z.object({ therapistId: z.string() }))
+    .mutation(async ({ input }) => {
+      const existing = mockMessageThreads.find(
+        (t) => t.patientId === mockPatient.id && t.therapistId === input.therapistId
+      );
+      if (existing) return { threadId: existing.id };
+      const thread = {
+        id: `thread-${Date.now()}`,
+        patientId: mockPatient.id,
+        therapistId: input.therapistId,
+        subject: null,
+        lastMessageAt: new Date(),
+        createdAt: new Date(),
+      };
+      mockMessageThreads.unshift(thread);
+      return { threadId: thread.id };
+    }),
+
   getUnreadCount: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.user.id;
     const unread = mockMessages.filter(
