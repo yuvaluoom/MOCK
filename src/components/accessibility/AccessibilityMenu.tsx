@@ -121,7 +121,7 @@ function StepperControl({
           <button
             type="button"
             onClick={onReset}
-            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-calm-500"
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-calm-500"
             aria-label={`Reset ${label} to default`}
           >
             <ResetIcon />
@@ -219,6 +219,9 @@ export function AccessibilityMenu() {
   const [settings, setSettings] = useState<AccessibilitySettings>(defaultSettings);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  // Saving is blocked until saved settings were read, otherwise the defaults
+  // overwrite storage before it is loaded (React StrictMode runs effects twice).
+  const [loaded, setLoaded] = useState(false);
 
   // Load settings on mount and apply
   useEffect(() => {
@@ -235,23 +238,21 @@ export function AccessibilityMenu() {
     }
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setSettings(prev => {
-        const next = { ...prev, reduceMotion: true };
-        applySettings(next);
-        return next;
-      });
+      setSettings(prev => ({ ...prev, reduceMotion: true }));
     }
+    setLoaded(true);
   }, []);
 
   // Apply settings whenever they change
   useEffect(() => {
     applySettings(settings);
+    if (!loaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     } catch {
       // Storage full or unavailable
     }
-  }, [settings]);
+  }, [settings, loaded]);
 
   // Reading guide mouse follower
   useEffect(() => {
@@ -287,17 +288,21 @@ export function AccessibilityMenu() {
 
   const isModified = JSON.stringify(settings) !== JSON.stringify(defaultSettings);
 
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  }, []);
+
   // Keyboard: Escape to close, Alt+A to toggle
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape' && isOpen) {
-      setIsOpen(false);
-      triggerRef.current?.focus();
+      closeMenu();
     }
     if (e.altKey && e.key.toLowerCase() === 'a' && !e.ctrlKey && !e.metaKey) {
       e.preventDefault();
       setIsOpen(prev => !prev);
     }
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown);
@@ -306,26 +311,35 @@ export function AccessibilityMenu() {
 
   // Focus trap
   useEffect(() => {
-    if (isOpen && menuRef.current) {
-      const focusable = menuRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    if (!isOpen || !menuRef.current) return;
+    const menu = menuRef.current;
+    const getFocusable = () =>
+      Array.from(
+        menu.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
       );
+
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = getFocusable();
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
+      if (!menu.contains(document.activeElement)) {
+        e.preventDefault();
+        first?.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
 
-      const trap = (e: KeyboardEvent) => {
-        if (e.key !== 'Tab') return;
-        if (e.shiftKey) {
-          if (document.activeElement === first) { e.preventDefault(); last?.focus(); }
-        } else {
-          if (document.activeElement === last) { e.preventDefault(); first?.focus(); }
-        }
-      };
-
-      document.addEventListener('keydown', trap);
-      first?.focus();
-      return () => document.removeEventListener('keydown', trap);
-    }
+    document.addEventListener('keydown', trap);
+    getFocusable()[0]?.focus();
+    return () => document.removeEventListener('keydown', trap);
   }, [isOpen]);
 
   // Click outside
@@ -333,12 +347,12 @@ export function AccessibilityMenu() {
     const handler = (e: MouseEvent) => {
       if (isOpen && menuRef.current && !menuRef.current.contains(e.target as Node)) {
         if (triggerRef.current?.contains(e.target as Node)) return;
-        setIsOpen(false);
+        closeMenu();
       }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
-  }, [isOpen]);
+  }, [isOpen, closeMenu]);
 
   return (
     <>
@@ -365,7 +379,7 @@ export function AccessibilityMenu() {
       {/* Menu overlay */}
       {isOpen && (
         <>
-          <div className="fixed inset-0 z-[60] bg-black/50" aria-hidden="true" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-0 z-[60] bg-black/50" aria-hidden="true" onClick={closeMenu} />
 
           <div
             ref={menuRef}
@@ -385,12 +399,12 @@ export function AccessibilityMenu() {
                   <h2 id="a11y-menu-title" className="text-base font-semibold text-gray-900">
                     Accessibility Settings
                   </h2>
-                  <p className="text-[10px] text-gray-400">WCAG 2.1 AA &bull; SI 5568 &bull; Alt+A</p>
+                  <p className="text-xs text-gray-600">WCAG 2.1 AA &bull; SI 5568 &bull; Alt+A</p>
                 </div>
               </div>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={closeMenu}
                 className="p-2 text-gray-500 hover:text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-calm-500"
                 aria-label="Close accessibility menu"
               >
@@ -403,7 +417,7 @@ export function AccessibilityMenu() {
 
               {/* Text Adjustments */}
               <section aria-labelledby="a11y-text-heading">
-                <h3 id="a11y-text-heading" className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 id="a11y-text-heading" className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                   Text Adjustments
                 </h3>
                 <div className="space-y-0.5 bg-gray-50 rounded-xl p-3">
@@ -461,10 +475,10 @@ export function AccessibilityMenu() {
 
               {/* Text Alignment */}
               <section aria-labelledby="a11y-align-heading">
-                <h3 id="a11y-align-heading" className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 id="a11y-align-heading" className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                   Text Alignment
                 </h3>
-                <div className="grid grid-cols-4 gap-2" role="radiogroup" aria-label="Text alignment">
+                <div className="grid grid-cols-4 gap-2" role="group" aria-label="Text alignment">
                   {([
                     { value: 'default' as const, label: 'Default', icon: '⊞' },
                     { value: 'left' as const, label: 'Left', icon: '☰' },
@@ -474,8 +488,7 @@ export function AccessibilityMenu() {
                     <button
                       key={opt.value}
                       type="button"
-                      role="radio"
-                      aria-checked={settings.textAlign === opt.value}
+                      aria-pressed={settings.textAlign === opt.value}
                       onClick={() => update('textAlign', opt.value)}
                       className={`py-2 px-2 rounded-lg text-xs font-medium border-2 transition-all focus:outline-none focus:ring-2 focus:ring-calm-500 ${
                         settings.textAlign === opt.value
@@ -491,7 +504,7 @@ export function AccessibilityMenu() {
 
               {/* Visual & Color */}
               <section aria-labelledby="a11y-visual-heading">
-                <h3 id="a11y-visual-heading" className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 id="a11y-visual-heading" className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                   Color & Display
                 </h3>
                 <div className="grid grid-cols-3 gap-2">
@@ -536,7 +549,7 @@ export function AccessibilityMenu() {
 
               {/* Reading & Navigation */}
               <section aria-labelledby="a11y-reading-heading">
-                <h3 id="a11y-reading-heading" className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <h3 id="a11y-reading-heading" className="text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2">
                   Reading & Navigation
                 </h3>
                 <div className="grid grid-cols-3 gap-2">

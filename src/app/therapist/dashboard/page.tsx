@@ -122,7 +122,7 @@ export default function TherapistDashboardPage() {
                 <p className="text-2xl font-bold text-gray-900">
                   {statsLoading ? '-' : stats?.todaySessions ?? 0}
                 </p>
-                <p className="text-sm text-gray-500">Today's Sessions</p>
+                <p className="text-sm text-gray-500">Today&apos;s Sessions</p>
               </div>
             </div>
           </CardContent>
