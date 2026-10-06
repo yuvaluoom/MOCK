@@ -153,7 +153,7 @@ export function SafetyAssessmentForm({
                 />
                 <div>
                   <span className="font-medium text-gray-900">Suicidal Ideation</span>
-                  <p className="text-xs text-gray-500">Thoughts of ending one's life</p>
+                  <p className="text-xs text-gray-500">Thoughts of ending one&apos;s life</p>
                 </div>
               </label>
             </div>

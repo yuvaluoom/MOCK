@@ -277,7 +277,7 @@ export function TherapistNotificationBell() {
               <div className="p-8 text-center text-gray-500">
                 <BellIcon className="w-12 h-12 mx-auto mb-3 text-gray-300" />
                 <p className="text-sm font-medium">No new notifications</p>
-                <p className="text-xs text-gray-400 mt-1">We'll notify you when there are updates</p>
+                <p className="text-xs text-gray-400 mt-1">We&apos;ll notify you when there are updates</p>
               </div>
             ) : (
               <ul className="divide-y divide-gray-100" role="list">

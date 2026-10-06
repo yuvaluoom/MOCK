@@ -454,7 +454,7 @@ export default function AdminEmailsPage() {
                 {['firstName', 'lastName', 'email'].map((placeholder) => (
                   <div key={placeholder} className="flex items-center gap-2 p-2 bg-gray-50 rounded">
                     <code className="px-2 py-1 bg-white rounded text-sm">{`{{${placeholder}}}`}</code>
-                    <span className="text-sm text-gray-600">User's {placeholder}</span>
+                    <span className="text-sm text-gray-600">User&apos;s {placeholder}</span>
                   </div>
                 ))}
               </div>

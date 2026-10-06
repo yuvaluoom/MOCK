@@ -44,6 +44,12 @@ export async function createContext(opts?: FetchCreateContextFnOptions): Promise
     }
   }
 
+  // Header/Referer/default fallbacks below are dev conveniences only; in
+  // production an unauthenticated request must not receive a session.
+  if (process.env.NODE_ENV === 'production') {
+    return { session: null };
+  }
+
   // 2. Check for x-mock-role header (useful for testing)
   const mockRole = opts?.req?.headers?.get('x-mock-role');
   if (mockRole && MOCK_USERS[mockRole]) {

@@ -691,7 +691,7 @@ class AuthService {
   }
 
   private generateToken(): string {
-    return `${Date.now()}-${Math.random().toString(36).substr(2, 32)}`;
+    return `${globalThis.crypto.randomUUID()}${globalThis.crypto.randomUUID()}`.replace(/-/g, '');
   }
 }
 
